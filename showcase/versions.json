@@ -120,6 +120,32 @@
           "batch ledger hanya boleh tayang kalau stok per batch memang dilacak; kalau tidak, angka sisa harus dihapus"
         ]
       }
+    },
+    {
+      "id": "v4",
+      "file": "design-v4.html",
+      "label": "v4",
+      "sublabel": "Brief produksi client",
+      "notes": {
+        "summary": "Dibangun langsung dari brief client (2026-08-10), bukan eksplorasi desain: palet resmi (#f8f8f0 / #e0d9b5 / #392319 + aksen #8a5a44 / #c68642), tipografi jauh lebih kecil & minimal, homepage dipangkas ke 3 kategori (Dresses/Sets/Swim), Sale dipindah ke menu utama, signature dress (Zaye) dapat section spotlight sendiri, halaman Collection bergaya editorial ala Faithfull \"Costa Brava\", plus halaman About Us dengan copy final dari client. Semua copy dalam Bahasa Inggris sesuai instruksi (artisan bukan knitter, \"in Bali\" bukan \"outside Ubud\", per piece bukan per dress, batch dijelaskan sebagai limited quantity bukan limited-edition-lalu-hilang).",
+        "added": [
+          "Nav minimal dengan Sale di menu utama",
+          "Hero split 2-foto ala Asta Resort",
+          "3-tile kategori (Dresses/Sets/Swim)",
+          "Signature dress spotlight",
+          "Section Essence dari copy client",
+          "Strip sustainability (reusable tote, no plastic, limited quantity bukan limited edition)",
+          "Halaman Collection editorial ala Faithfull Costa Brava",
+          "Halaman About Us penuh"
+        ],
+        "effort": "desain selesai; build asli butuh font berlisensi + size guide per produk dari client",
+        "risks": [
+          "Guess Sans kemungkinan besar typeface eksklusif brand ritel GUESS — risiko trademark tinggi, JANGAN dipasang sebelum client konfirmasi sumber lisensinya. Mockup ini pakai stand-in gratis (General Sans).",
+          "Agrandir & The Seasons adalah font berbayar (Pangram Pangram & lainnya) — file berlisensi belum ada, mockup pakai stand-in gratis (Cabinet Grotesk, Fraunces) sampai client kirim file asli.",
+          "Size guide per produk belum ada filenya (beda-beda per style) — accordion Fit & sizing di PDP masih placeholder sampai dikirim satu per satu.",
+          "Foto campaign asli untuk halaman Collection belum ada — masih pakai foto katalog yang tersedia."
+        ]
+      }
     }
   ]
 }
