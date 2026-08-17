@@ -1,0 +1,125 @@
+{
+  "brand": "Lisandra The Label",
+  "versions": [
+    {
+      "id": "v1",
+      "file": "design-direction-v2.html",
+      "label": "v1",
+      "sublabel": "Arah desain awal",
+      "notes": {
+        "summary": "Arah desain awal. Homepage + PDP. Menetapkan sistem: Bodoni Moda + Inter, radius 0, hairline sebagai satu-satunya pembatas, craft spec strip sebagai elemen penanda. Belum punya sistem navigasi.",
+        "added": [],
+        "effort": "referensi, tidak untuk dibangun",
+        "risks": []
+      }
+    },
+    {
+      "id": "v2",
+      "file": "design-v2.html",
+      "label": "v2",
+      "sublabel": "Navbar + grid custom ala2",
+      "notes": {
+        "summary": "Navbar Uniqlo + grid custom.",
+        "added": [
+          "Utility bar",
+          "search sebagai input yang terlihat",
+          "mega menu multi-kolom",
+          "grid 5 kolom",
+          "promo tile",
+          "tab filter cepat",
+          "footer padat"
+        ],
+        "effort": "3–4 minggu di luar perbaikan katalog",
+        "risks": [
+          "paling banyak blok custom, jadi biaya merge paling tinggi setiap Shopify merilis update Horizon"
+        ]
+      }
+    },
+    {
+      "id": "v2-1",
+      "file": "design-v2-1.html",
+      "label": "v2.1",
+      "sublabel": "Gen Z",
+      "notes": {
+        "summary": "Arah Gen Z dari v2. Bricolage Grotesque + Inter, palet dua warna (ink + sun yellow), sudut membulat, nol gradasi. Sticker miring sebagai elemen penanda, rail klip vertikal shoppable, bento grid ukuran campur, nav chip yang di-scroll menggantikan mega menu. Section \"In the making\" berisi video proses + tiga kartu penghalang beli. Substansi kerajinan dipertahankan, temponya yang dinaikkan.",
+        "added": [
+          "Marquee kuning",
+          "nav chip",
+          "rail klip 9:16 dengan tag harga",
+          "bento grid",
+          "sticker fakta produksi",
+          "band kerajinan hitam",
+          "section In the making",
+          "footer membulat"
+        ],
+        "effort": "3–4 minggu, setara v2.",
+        "risks": [
+          "Butuh aset yang belum tentu ada — video vertikal untuk dua rail, dan video proses artisan. Tanpa itu dua section terkuatnya kosong.",
+          "Isi tiga kartu penghalang beli masih template dan harus dikonfirmasi ke owner, terutama SLA kirim, kebijakan retur, dan tawaran perbaikan gratis.",
+          "Palet dan tipografi berbeda dari sistem v1/v3.5, jadi kalau arah ini dipilih, assets/brand-type.css dan assets/brand.css di repo harus disesuaikan."
+        ]
+      }
+    },
+    {
+      "id": "v2-5",
+      "file": "design-v2-5.html",
+      "label": "v2.5",
+      "sublabel": "Atelier",
+      "notes": {
+        "summary": "Atelier + perbaikan seperlunya. Basis preset Atelier, ditambah 8 komponen:",
+        "added": [
+          "search input",
+          "baris kategori",
+          "hero 62vh",
+          "grid 4 kolom",
+          "swatch",
+          "craft spec",
+          "\"model wears\"",
+          "badge stok",
+          "shop the set",
+          "notify me",
+          "trust row"
+        ],
+        "effort": "±1 minggu",
+        "risks": [
+          "bagian yang tidak disentuh tetap terasa template",
+          "grid 4 kolom masih lebih longgar dari kompetitor"
+        ]
+      }
+    },
+    {
+      "id": "v3",
+      "file": "design-v3-atelier.html",
+      "label": "v3",
+      "sublabel": "Shopify Atelier, stock",
+      "notes": {
+        "summary": "Shopify Atelier apa adanya.",
+        "added": [],
+        "effort": "2–3 hari",
+        "risks": [
+          "menjual suasana, bukan produk. Card hanya judul + harga, tanpa swatch, tanpa craft spec, tanpa shop-the-set, search hanya ikon, hero full-screen"
+        ]
+      }
+    },
+    {
+      "id": "v3-5",
+      "file": "design-v3-5.html",
+      "label": "v3.5",
+      "sublabel": "permak total",
+      "notes": {
+        "summary": "Permak penuh.",
+        "added": [
+          "Homepage + PDP lengkap",
+          "mega menu",
+          "batch ledger",
+          "sel teks di dalam grid",
+          "sticky ATC mobile"
+        ],
+        "effort": "4–6 minggu bersama perbaikan katalog",
+        "risks": [
+          "batch ledger hanya boleh tayang kalau stok per batch memang dilacak; kalau tidak, angka sisa harus dihapus"
+        ]
+      }
+    }
+  ]
+}
