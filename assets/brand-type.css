@@ -2,83 +2,104 @@
    brand-type.css — tipografi Lisandra
    Dimuat SETELAH CSS bawaan Horizon. Lihat docs/02-conventions.md.
 
-   ⚠️ WAJIB DIVERIFIKASI SETELAH BASELINE DI-PULL
-   Nama variabel font Horizon di bawah adalah dugaan berdasarkan 4 slot tipografi
-   tema (Heading / Subheading / Body / Accent). Sebelum dipakai, jalankan:
+   ✅ Nama variabel di bawah TERVERIFIKASI terhadap github.com/Shopify/horizon
+   (reference theme publik Shopify, bukan tema live store — dicek 2026-08-10).
+   --font-heading--family / --font-subheading--family / --font-body--family /
+   --font-accent--family memang nama variabel Horizon yang benar, digenerate
+   di snippets/theme-styles-variables.liquid dari 4 setting font_picker
+   (Theme editor -> Theme settings -> Typography).
 
-       grep -rn "\-\-font" assets/*.css | sort -u | head -50
-       grep -rn "font_face\|font_url" snippets/ layout/
+   ⚠️ STATUS FONT BRIEF PRODUKSI (2026-08-10, direvisi) — BACA SEBELUM PAKAI
 
-   lalu ganti nama variabel di blok :root { } agar cocok dengan sumber aslinya.
-   Kalau nama tidak cocok, override ini tidak akan berefek apa pun.
+   Client minta 4 font:
+     Main:       Guess Sans, Agrandir
+     Additional: The Seasons, Lora Italic
+
+   Status: Guess Sans kemungkinan besar typeface eksklusif brand ritel GUESS
+   (risiko trademark, belum dikonfirmasi client) dan Agrandir/The Seasons
+   adalah font berbayar tanpa file berlisensi yang tersedia. Karena 3 dari
+   4 font itu tidak bisa dipasang sekarang, keputusan (2026-08-10): pakai
+   pasangan Inter + Bodoni Moda — bukan stand-in visual acak, tapi font yang
+   SAMA dipakai di semua versi mockup lain di repo ini (v1–v3.5) dan sudah
+   terverifikasi 2026-08-10 ada langsung di Shopify Fonts (font_picker),
+   tanpa CDN eksternal, tanpa risiko lisensi sama sekali.
+
+   | Font        | Status                    | Dipakai sebagai |
+   |-------------|---------------------------|-----------------|
+   | Guess Sans  | 🚩 Diganti permanen       | Inter (native Shopify Fonts) |
+   | Agrandir    | 💰 Diganti permanen       | Bodoni Moda (native Shopify Fonts) |
+   | The Seasons | 💰 Diganti permanen       | Bodoni Moda italic (native Shopify Fonts) |
+   | Lora Italic | ✅ Font asli, tetap dipakai | Lora italic (native Shopify Fonts) |
+
+   Kalau client nanti benar-benar membeli lisensi Agrandir/The Seasons atau
+   mengonfirmasi sumber Guess Sans, override ini tinggal diganti — strukturnya
+   (4 slot Horizon) tidak berubah, cuma nama font di :root di bawah.
    ========================================================================== */
 
-/* --- 1. Font files -------------------------------------------------------
-   Upload .woff2 ke Content > Files di admin (BUKAN ke folder assets/ lewat
-   code editor — file font bisa korup lewat jalur itu), lalu tempel URL CDN-nya
-   di bawah. Dua-duanya variable font, jadi satu file per famili sudah cukup.
-   Inter dan Bodoni Moda berlisensi OFL — aman untuk komersial & self-host.    */
+/* --- 1. Font — semua lewat Shopify Fonts native picker, TANPA @font-face ---
+   Inter, Bodoni Moda, Lora: semuanya Google Fonts asli, ada langsung di
+   Theme editor -> Theme settings -> Typography. Tidak perlu upload manual,
+   tidak perlu CDN eksternal (beda dari draft sebelumnya yang sempat pakai
+   Fontshare untuk General Sans/Cabinet Grotesk/Fraunces — itu sudah dilepas
+   supaya nol dependency luar dan nol risiko lisensi).                     */
 
-@font-face {
-  font-family: "Inter";
-  src: url("REPLACE_WITH_CDN_URL/InterVariable.woff2") format("woff2");
-  font-weight: 400 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Bodoni Moda";
-  src: url("REPLACE_WITH_CDN_URL/BodoniModa-Variable.woff2") format("woff2");
-  font-weight: 400 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* --- 2. Override slot tipografi Horizon ---------------------------------- */
+/* --- 2. Override slot tipografi Horizon -----------------------------------
+   Pemetaan revisi -> 4 slot Horizon:
+     Heading (nama section, H1)      -> Bodoni Moda (Agrandir role)
+     Subheading (label kecil, nav)   -> Inter Medium (Guess Sans role)
+     Body (paragraf, deskripsi)      -> Inter (Guess Sans role)
+     Accent (quote, eyebrow italic)  -> Lora Italic (font asli, gratis)     */
 
 :root {
   --font-heading--family: "Bodoni Moda", Georgia, "Times New Roman", serif;
   --font-subheading--family: "Inter", -apple-system, Helvetica, Arial, sans-serif;
   --font-body--family: "Inter", -apple-system, Helvetica, Arial, sans-serif;
-  --font-accent--family: "Inter", -apple-system, Helvetica, Arial, sans-serif;
+  --font-accent--family: "Lora", Georgia, serif;
 
   --font-heading--weight: 400;
   --font-subheading--weight: 500;
   --font-body--weight: 400;
-  --font-accent--weight: 500;
+  --font-accent--weight: 400;
 }
 
-/* --- 3. Type scale -------------------------------------------------------
-   Maksimal 2 ukuran display per halaman. Kesan mahal datang dari pengulangan
-   yang disiplin, bukan dari variasi.                                        */
+/* --- 3. Type scale ---------------------------------------------------------
+   Brief eksplisit: "title/font gamau besar-besar, mau minimalis." Skala di
+   bawah jauh lebih kecil dari draft v3.5 (yang pakai display Bodoni besar).
+   Maksimal 2 ukuran display per halaman tetap berlaku.                      */
 
 :root {
-  --ls-display-xl: clamp(2rem, 6.4vw, 4rem);      /* hero            40 -> 64 */
-  --ls-display-l:  clamp(1.5rem, 3.6vw, 2.5rem);  /* judul section   24 -> 40 */
-  --ls-display-m:  clamp(1.375rem, 3vw, 1.75rem); /* nama produk PDP 22 -> 28 */
-  --ls-body-l:     1.0625rem;                     /* 17 */
-  --ls-body-m:     0.9375rem;                     /* 15 */
-  --ls-body-s:     0.8125rem;                     /* 13 */
-  --ls-label:      0.6875rem;                     /* 11 */
-  --ls-spec:       0.65625rem;                    /* 10.5 */
-  --ls-track-label: 0.14em;
-  --ls-track-spec:  0.16em;
+  --ls-display-xl: clamp(1.5rem, 3.2vw, 2.125rem);  /* hero            24 -> 34 */
+  --ls-display-l:  clamp(1.25rem, 2.2vw, 1.625rem); /* judul section   20 -> 26 */
+  --ls-display-m:  clamp(1.125rem, 1.8vw, 1.375rem);/* nama produk PDP 18 -> 22 */
+  --ls-body-l:     1rem;                            /* 16 */
+  --ls-body-m:     0.875rem;                        /* 14 */
+  --ls-body-s:     0.78125rem;                      /* 12.5 */
+  --ls-label:      0.6875rem;                       /* 11 */
+  --ls-spec:       0.65625rem;                       /* 10.5 */
+  --ls-track-label: 0.1em;
+  --ls-track-spec:  0.14em;
 }
 
 h1, h2, h3,
 .ls-display-xl, .ls-display-l, .ls-display-m {
   font-family: var(--font-heading--family);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-weight: var(--font-heading--weight);
+  letter-spacing: -0.005em;
 }
 
-.ls-display-xl { font-size: var(--ls-display-xl); line-height: 0.98; letter-spacing: -0.02em; }
-.ls-display-l  { font-size: var(--ls-display-l);  line-height: 1.04; }
-.ls-display-m  { font-size: var(--ls-display-m);  line-height: 1.12; }
+.ls-display-xl { font-size: var(--ls-display-xl); line-height: 1.08; letter-spacing: -0.01em; }
+.ls-display-l  { font-size: var(--ls-display-l);  line-height: 1.15; }
+.ls-display-m  { font-size: var(--ls-display-m);  line-height: 1.2; }
 
-/* Harga, ukuran, dan tabel: angka tabular supaya kolom sejajar.
-   Ini salah satu detail yang bikin grid Uniqlo/H&M terasa rapi. */
+/* Quote/eyebrow italic — satu-satunya tempat serif (Lora Italic) muncul,
+   sesuai brief "additional font". Jangan pakai untuk body/UI. */
+.ls-accent-quote {
+  font-family: var(--font-accent--family);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Harga, ukuran, dan tabel: angka tabular supaya kolom sejajar. */
 .price, .ls-price, .ls-size, td, th {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;

@@ -7,13 +7,19 @@
    ========================================================================== */
 
 :root {
-  --ls-paper: #ffffff;   /* semua surface shopping — putih menjual produk   */
-  --ls-sand:  #efe9e0;   /* hanya untuk band editorial / cerita             */
-  --ls-cocoa: #2e2320;   /* ink utama, tombol, footer                       */
-  --ls-ink60: #6e6259;   /* teks sekunder                                   */
-  --ls-line:  #e4ded6;   /* hairline                                        */
-  --ls-butter:#d9a93a;   /* aksen tunggal — badge & progress bar ongkir     */
-  --ls-sale:  #9a3f2b;   /* KHUSUS harga diskon. Jangan dipakai untuk lain  */
+  /* --- Palet resmi client (2026-08-10) ------------------------------------
+     Main: #f8f8f0 / #e0d9b5 / #392319 · Additional: #8a5a44 / #c68642      */
+  --ls-paper: #f8f8f0;   /* dulu putih murni — sekarang ivory hangat sesuai brief */
+  --ls-sand:  #e0d9b5;   /* band editorial / cerita / campaign section      */
+  --ls-cocoa: #392319;   /* ink utama, tombol, footer                       */
+  --ls-ink60: #6e5c52;   /* teks sekunder — turunan cocoa, kontras dicek §a11y */
+  --ls-line:  #d9cfa9;   /* hairline — turunan sand, bukan dari palet client */
+  --ls-clay:  #8a5a44;   /* aksen tambahan client — dipakai terbatas (lihat bawah) */
+  --ls-caramel:#c68642;  /* aksen tambahan client — badge / hover state     */
+  --ls-butter:#c68642;   /* alias lama; sekarang = caramel client, bukan kuning */
+  --ls-sale:  #9a3f2b;   /* KHUSUS harga diskon — TIDAK ada di palet client, pertahankan
+                             warna terpisah supaya diskon tetap punya sinyal sendiri.
+                             Konfirmasi ke client: boleh dipertahankan atau diganti clay/caramel? */
 
   --ls-gut: clamp(1rem, 3vw, 1.75rem);
   --ls-radius: 0;
