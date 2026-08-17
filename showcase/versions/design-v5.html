@@ -35,11 +35,12 @@
       }
       body {
         margin: 0;
-        background: #ded5c2;
+        background: #f8f8f0;
         font-family: var(--ui);
         color: var(--cocoa);
         font-size: 14px;
-        line-height: 1.55;
+        line-height: 1.6;
+        letter-spacing: 0.01em;
       }
       img {
         display: block;
@@ -50,6 +51,10 @@
       a {
         color: inherit;
         text-decoration: none;
+        transition: opacity 0.25s ease;
+      }
+      a:hover {
+        opacity: 0.7;
       }
       button {
         font: inherit;
@@ -76,17 +81,21 @@
         align-items: center;
         gap: 16px;
         padding: 7px clamp(12px, 2vw, 26px);
-        border-bottom: 1px solid var(--line);
+        background: var(--cocoa);
+        color: #fff;
         font-size: 10.5px;
-        color: var(--ink60);
         text-align: center;
       }
       .hdr {
-        display: flex;
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        gap: 12px;
-        padding: 16px clamp(12px, 2vw, 26px) 0;
+        padding: 16px clamp(14px, 2vw, 26px);
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+        position: sticky;
+        top: 0;
+        z-index: 100;
       }
       .wordmark {
         font-family: var(--heading);
@@ -94,11 +103,12 @@
         font-size: 19px;
         letter-spacing: 0.2em;
         text-transform: uppercase;
+        justify-self: center;
       }
       .wordmark img {
         display: block;
         width: auto;
-        height: 26px;
+        height: 40px;
         object-fit: contain;
         mix-blend-mode: multiply;
       }
@@ -111,11 +121,16 @@
       }
       .mainnav {
         display: flex;
-        justify-content: center;
-        gap: clamp(16px, 3vw, 34px);
-        padding: 10px clamp(12px, 2vw, 26px) 14px;
-        border-bottom: 1px solid var(--line);
+        justify-content: flex-start;
+        align-items: center;
+        gap: clamp(16px, 2vw, 28px);
         flex-wrap: wrap;
+      }
+      .hdr-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: clamp(16px, 2vw, 28px);
       }
       .mainnav a {
         font-size: 11px;
@@ -127,6 +142,22 @@
       }
       .mainnav a:hover {
         border-bottom-color: var(--cocoa);
+      }
+      .hdr-actions a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cocoa);
+        transition: opacity 0.2s;
+        padding: 4px;
+      }
+      .hdr-actions a:hover {
+        opacity: 0.6;
+      }
+      .hdr-actions svg {
+        width: 19px;
+        height: 19px;
+        stroke-width: 1.35;
       }
       .mainnav a.sale {
         color: var(--sale);
@@ -181,7 +212,7 @@
         font-size: clamp(24px, 3.6vw, 38px);
         line-height: 1.18;
         margin: 0;
-        max-width: 16ch;
+        max-width: 24ch;
       }
       .hero-in p {
         margin: 0;
@@ -828,6 +859,234 @@
         white-space: nowrap;
       }
 
+      /* ---------- Additions for v5 ---------- */
+      .best-seller-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        z-index: 2;
+        padding: 4px 10px;
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        background: var(--cocoa);
+        color: var(--paper);
+      }
+
+      /* UGC Grid */
+      .ugc-section {
+        padding: clamp(30px, 5vw, 60px) clamp(14px, 2vw, 26px);
+        text-align: center;
+      }
+      .ugc-section h3 {
+        font-family: var(--heading);
+        font-size: clamp(20px, 2.4vw, 28px);
+        font-weight: 500;
+        margin-bottom: 24px;
+      }
+      .ugc-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+      }
+      .ugc-grid figure {
+        margin: 0;
+        aspect-ratio: 4/5;
+        background: var(--sand);
+        overflow: hidden;
+      }
+      .ugc-grid figure img {
+        transition: transform 0.6s ease;
+      }
+      .ugc-grid figure:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Social Grid (Faithfull the Brand editorial style) */
+      .social-section {
+        border-top: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .social-header {
+        display: flex;
+        justify-content: flex-end;
+        gap: 24px;
+        align-items: center;
+        padding: 14px clamp(14px, 2vw, 26px);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .social-title {
+        color: var(--cocoa);
+      }
+      .social-link {
+        color: var(--ink60);
+        border-bottom: 1px solid transparent;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .social-link:hover {
+        color: var(--cocoa);
+        border-bottom-color: var(--cocoa);
+      }
+      .social-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--line);
+      }
+      .social-grid a {
+        position: relative;
+        display: block;
+        aspect-ratio: 1/1;
+        overflow: hidden;
+        background: var(--sand);
+      }
+      .social-grid a + a {
+        border-left: 1px solid var(--line);
+      }
+      .social-grid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .social-grid a:hover img {
+        transform: scale(1.04);
+      }
+      .social-grid a::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(57, 35, 25, 0.12);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .social-grid a:hover::after {
+        opacity: 1;
+      }
+
+      /* Dialogs */
+      dialog {
+        border: none;
+        padding: 0;
+        background: transparent;
+        color: var(--cocoa);
+      }
+      dialog::backdrop {
+        background: rgba(20, 12, 8, 0.4);
+        backdrop-filter: blur(2px);
+      }
+
+      .size-modal-inner {
+        background: var(--paper);
+        padding: 32px;
+        width: 90vw;
+        max-width: 500px;
+        position: relative;
+      }
+      .modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 24px;
+        line-height: 1;
+      }
+      .size-toggle {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .size-toggle button {
+        padding: 4px 12px;
+        border: 1px solid var(--line);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      .size-toggle button.active {
+        background: var(--cocoa);
+        color: #fff;
+        border-color: var(--cocoa);
+      }
+      .size-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        text-align: left;
+      }
+      .size-table th,
+      .size-table td {
+        padding: 12px 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      .size-table th {
+        font-weight: 600;
+        color: var(--ink60);
+      }
+      .size-unit.hidden {
+        display: none;
+      }
+
+      /* Drawer */
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 380px;
+        background: var(--paper);
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .drawer.open {
+        transform: translateX(0);
+      }
+      .drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 12, 8, 0.4);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+      .drawer-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .drawer-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--line);
+      }
+      .drawer-head h2 {
+        font-family: var(--heading);
+        font-size: 18px;
+        margin: 0;
+        font-weight: 500;
+      }
+      .drawer-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        color: var(--ink60);
+        font-size: 13px;
+      }
+
       @media (max-width: 860px) {
         .grid {
           grid-template-columns: 1fr 1fr;
@@ -855,6 +1114,15 @@
         .foot-nav {
           gap: 14px 22px;
         }
+        .social-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .social-grid a:nth-child(2n + 1) {
+          border-left: none;
+        }
+        .social-grid a:nth-child(n + 3) {
+          border-top: 1px solid var(--line);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         * {
@@ -869,28 +1137,64 @@
     </div>
 
     <header class="hdr" id="home">
+      <nav class="mainnav" aria-label="Main">
+        <a
+          href="#shop"
+          title="Demo: New Arrivals reuses the Shop grid, filtered differently"
+          >New Arrivals</a
+        >
+        <a href="#shop">Shop</a>
+        <a
+          class="sale"
+          href="#shop"
+          title="Demo: Sale reuses the Shop grid, filtered differently"
+          >Sale</a
+        >
+        <a href="#collections">Collections</a>
+        <a href="#our-story">Our Story</a>
+      </nav>
       <a class="wordmark" href="#home"
         ><img
           src="../../assets/logo/lisandra-wordmark.png"
           alt="Lisandra The Label"
       /></a>
+      <div class="hdr-actions">
+        <a href="#" aria-label="Search">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+        <a href="#" aria-label="Account">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+        <a href="javascript:void(0)" aria-label="Cart" onclick="openCart()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </a>
+      </div>
     </header>
-    <nav class="mainnav" aria-label="Main">
-      <a
-        href="#shop"
-        title="Demo: New Arrivals reuses the Shop grid, filtered differently"
-        >New Arrivals</a
-      >
-      <a href="#shop">Shop</a>
-      <a
-        class="sale"
-        href="#shop"
-        title="Demo: Sale reuses the Shop grid, filtered differently"
-        >Sale</a
-      >
-      <a href="#collections">Collections</a>
-      <a href="#our-story">Our Story</a>
-    </nav>
 
     <!-- hero: single full-bleed, centered text (ref: Chalay + v1 direction, kept smaller) -->
     <section class="hero-full">
@@ -901,8 +1205,7 @@
       </figure>
       <div class="hero-in">
         <span class="hero-eyebrow">New Collection</span>
-        <h1>Hand-knit in Bali,<br />two days at a time</h1>
-        <p>Small-batch resortwear, made by artisans we know by name.</p>
+        <h1>Handmade Resortwear<br />Made by Balinese Artisans</h1>
         <div
           class="ctas"
           style="
@@ -912,25 +1215,25 @@
             justify-content: center;
             margin-top: 6px;
           ">
-          <a class="btn" href="#">Shop the collection</a>
-          <a class="btn btn--ghost" href="#">See how it's made</a>
+          <a class="btn" href="#shop">Shop the collection</a>
+          <a class="btn btn--ghost" href="#our-story">See how it's made</a>
         </div>
       </div>
     </section>
 
     <!-- 3-tile category, sesuai instruksi: hanya Dresses / Sets / Swim -->
     <div class="cats3">
-      <a class="cat3" href="#"
+      <a class="cat3" href="#shop"
         ><img
           src="https://lisandrathelabel.com/cdn/shop/collections/Untitled_design-18.jpg?width=700"
           alt="Dresses" /><span>Dresses</span></a
       >
-      <a class="cat3" href="#"
+      <a class="cat3" href="#shop"
         ><img
           src="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"
           alt="Sets" /><span>Sets</span></a
       >
-      <a class="cat3" href="#"
+      <a class="cat3" href="#shop"
         ><img
           src="https://lisandrathelabel.com/cdn/shop/collections/5.jpg?width=700"
           alt="Swim" /><span>Swim</span></a
@@ -942,7 +1245,7 @@
       <figure>
         <img
           src="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=1000"
-          alt="Zaye Hand-Knit Maxi Dress, signature piece" />
+          alt="Zaye Knit Maxi Dress, signature piece" />
       </figure>
       <div class="spotlight-copy">
         <span class="lbl">The Signature</span>
@@ -951,10 +1254,10 @@
           curves.
         </h2>
         <p>
-          The Zaye Hand-Knit Maxi Dress, open back, adjustable straps, made by
-          one artisan at a time.
+          The Zaye Knit Maxi Dress, open back, adjustable straps, made by one
+          artisan at a time.
         </p>
-        <a class="btn" href="#">Shop the Zaye Dress</a>
+        <a class="btn" href="#pdp">Shop the Zaye Dress</a>
       </div>
     </section>
 
@@ -964,7 +1267,7 @@
           <h3>Best sellers</h3>
           <p>Ranked by what actually leaves first.</p>
         </div>
-        <a class="more" href="#">View all</a>
+        <a class="more" href="#shop">View all</a>
       </div>
       <div class="grid">
         <article class="card">
@@ -977,7 +1280,7 @@
               alt="Zaye dress, open back" />
           </figure>
           <p class="spec">Hand-knit · 2 days per piece</p>
-          <h4>Zaye Hand-Knit Maxi Dress</h4>
+          <h4>Zaye Knit Maxi Dress</h4>
           <p class="price">Rp 1.999.000</p>
           <div class="sw-row" role="group" aria-label="Colour">
             <button
@@ -1003,7 +1306,7 @@
               alt="Amara top, second view" />
           </figure>
           <p class="spec">Hand-knit · Made in Bali</p>
-          <h4>Amara Hand-Knit Top</h4>
+          <h4>Amara Knit Top</h4>
           <p class="price">Rp 899.000</p>
           <div class="sw-row" role="group" aria-label="Colour">
             <button
@@ -1029,7 +1332,7 @@
               alt="Mentari dress, second view" />
           </figure>
           <p class="spec">Hand-knit · Made in Bali</p>
-          <h4>Mentari Hand-Knit Long Dress</h4>
+          <h4>Mentari Knit Long Dress</h4>
           <p class="price">Rp 1.499.000</p>
           <div class="sw-row" role="group" aria-label="Colour">
             <button
@@ -1073,7 +1376,7 @@
         dinner table. We make fewer pieces, slowly by hand, so every woman who
         wears us feels radiantly, herself.
       </p>
-      <a class="more" href="#">Read How a Piece Is Made</a>
+      <a class="more" href="#our-story">Read How a Piece Is Made</a>
     </section>
 
     <!-- sustainability — permintaan tambahan client -->
@@ -1083,8 +1386,8 @@
         you can use again.</span
       >
       <span
-        ><b>Small batches, not limited edition.</b> Quantities are limited, a
-        restock may take a while, or it may not come at all.</span
+        ><b>Small batches.</b> Quantities are limited, a restock may take a
+        while, or it may not come at all.</span
       >
       <span
         ><b>All handmade.</b> Every piece is hand-knitted or crocheted by
@@ -1092,10 +1395,10 @@
       >
     </div>
 
-    <section class="sec" style="padding-top: 0; margin-top: 36px">
+    <section class="sec" id="reviews" style="padding-top: 0; margin-top: 36px">
       <div class="sec-top">
         <div><h3>What people say</h3></div>
-        <a class="more" href="#">All 74 reviews</a>
+        <a class="more" href="#reviews">All 74 reviews</a>
       </div>
       <div class="revs">
         <div class="rev">
@@ -1110,6 +1413,57 @@
           <q>You can see it was made by a person. That's the point.</q
           ><cite>Baia Crochet Top · Sydney</cite>
         </div>
+      </div>
+    </section>
+
+    <section class="social-section" id="social">
+      <div class="social-header">
+        <span class="social-title">FOLLOW US ON SOCIAL</span>
+        <a
+          href="https://instagram.com/lisandra.thelabel"
+          target="_blank"
+          rel="noopener"
+          class="social-link"
+          >SHOP (INSTAGRAM)</a
+        >
+      </div>
+      <div class="social-grid">
+        <a
+          href="https://instagram.com/lisandra.thelabel"
+          target="_blank"
+          rel="noopener"
+          aria-label="Ocean ripple golden hour">
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/1.jpg?v=1762245035&width=3840"
+            alt="Resort mood, sea ripples" />
+        </a>
+        <a
+          href="https://instagram.com/lisandra.thelabel"
+          target="_blank"
+          rel="noopener"
+          aria-label="Kayu Bikini Set">
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/Untitleddesign-4_0b602b36-76da-4b9d-9ff2-5ee34dd0014d.png?v=1754144532&width=3840"
+            alt="Lisandra Kayu Bikini Set" />
+        </a>
+        <a
+          href="https://instagram.com/lisandra.thelabel"
+          target="_blank"
+          rel="noopener"
+          aria-label="Handmade knit texture">
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?v=1766110052&width=1800"
+            alt="Knit texture flat lay" />
+        </a>
+        <a
+          href="https://instagram.com/lisandra.thelabel"
+          target="_blank"
+          rel="noopener"
+          aria-label="Zaye campaign on coast">
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=800"
+            alt="Coastal editorial campaign" />
+        </a>
       </div>
     </section>
 
@@ -1174,7 +1528,7 @@
             alt="Zaye dress" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Zaye Hand-Knit Maxi Dress</h4>
+        <h4>Zaye Knit Maxi Dress</h4>
         <p class="price">Rp 1.999.000</p>
       </article>
       <article class="card">
@@ -1184,7 +1538,7 @@
             alt="Amara top" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Amara Hand-Knit Top</h4>
+        <h4>Amara Knit Top</h4>
         <p class="price">Rp 899.000</p>
       </article>
       <article class="card">
@@ -1194,7 +1548,7 @@
             alt="Mentari dress" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Mentari Hand-Knit Long Dress</h4>
+        <h4>Mentari Knit Long Dress</h4>
         <p class="price">Rp 1.499.000</p>
       </article>
       <article class="card">
@@ -1225,6 +1579,7 @@
     <div class="filterbar">
       <div class="chips" role="group" aria-label="Filter">
         <button class="chip" aria-pressed="true">All</button>
+        <button class="chip">Best Sellers</button>
         <button class="chip">Dresses</button>
         <button class="chip">Sets</button>
         <button class="chip">Tops</button>
@@ -1237,22 +1592,24 @@
     <div class="grid" style="padding: 0 clamp(14px, 2vw, 26px) 34px">
       <article class="card">
         <figure>
+          <span class="best-seller-badge">Best Seller</span>
           <img
             src="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700"
             alt="Zaye hand-knit maxi dress in cocoa" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Zaye Hand-Knit Maxi Dress</h4>
+        <h4>Zaye Knit Maxi Dress</h4>
         <p class="price">Rp 1.999.000</p>
       </article>
       <article class="card">
         <figure>
+          <span class="best-seller-badge">Best Seller</span>
           <img
             src="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"
             alt="Amara hand-knit top" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Amara Hand-Knit Top</h4>
+        <h4>Amara Knit Top</h4>
         <p class="price">Rp 899.000</p>
       </article>
       <article class="card">
@@ -1262,7 +1619,7 @@
             alt="Mentari hand-knit long dress" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Mentari Hand-Knit Long Dress</h4>
+        <h4>Mentari Knit Long Dress</h4>
         <p class="price">Rp 1.499.000</p>
       </article>
       <article class="card">
@@ -1292,7 +1649,7 @@
             alt="Tala hand-knit mini skirt" />
         </figure>
         <p class="spec">Hand-knit</p>
-        <h4>Tala Hand-Knit Mini Skirt</h4>
+        <h4>Tala Knit Mini Skirt</h4>
         <p class="price">Rp 699.000</p>
       </article>
       <article class="card">
@@ -1337,14 +1694,14 @@
       </p>
       <p>
         Every order ships in a reusable tote, no plastic. We work in small
-        batches by design, not for a limited-edition drop: quantities are
-        limited, and a restock may take a while, or it may not come at all.
-        That's the trade-off for pieces made by hand, one artisan at a time.
+        batches by design: quantities are limited, and a restock may take a
+        while, or it may not come at all. That's the trade-off for pieces made
+        by hand, one artisan at a time.
       </p>
     </div>
 
-    <div class="pagebreak"><span>Product Page</span></div>
-    <p class="crumbs">Home / Dresses / Zaye Hand-Knit Maxi Dress</p>
+    <div class="pagebreak" id="pdp"><span>Product Page</span></div>
+    <p class="crumbs">Home / Dresses / Zaye Knit Maxi Dress</p>
     <div class="pdp">
       <div class="gal">
         <figure>
@@ -1370,17 +1727,24 @@
       </div>
       <div class="info">
         <p class="spec">Hand-knit · Made in Bali</p>
-        <h1>Zaye Hand-Knit Maxi Dress</h1>
+        <h1>Zaye Knit Maxi Dress</h1>
         <p class="p-price">Rp 1.999.000</p>
         <p class="hook">
           Two days on the needles, then it skims wherever you happen to have
           curves. Open back, raisin beads, straps you can set yourself.
         </p>
-        <ul class="bullets">
-          <li>Hand-knit by one artisan in Bali, two days per piece</li>
-          <li>Adjustable back straps, so one size covers a real range</li>
-          <li>Lightly sheer, you'll want something underneath for dinner</li>
-          <li>100% rayon, hand-knit in Bali</li>
+        <ul
+          class="bullets"
+          style="
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            line-height: 1.6;
+          ">
+          <li>HAND-KNIT IN BALI BY ONE ARTISAN, TAKING TWO DAYS PER PIECE</li>
+          <li>ADJUSTABLE BACK STRAPS, SO ONE SIZE COVERS A REAL RANGE</li>
+          <li>LIGHTLY SHEER, BEST WORN WITH SKIN-TONED UNDERWEAR</li>
+          <li>100% RAYON WITH A SOFT, LIGHTWEIGHT FEEL</li>
         </ul>
         <div class="opt-head"><span class="lbl">Colour, Cocoa</span></div>
         <div
@@ -1397,27 +1761,33 @@
             class="sw"
             style="width: 20px; height: 20px; background: #efe3d2"
             aria-pressed="false"
-            aria-label="Ivory"></button>
+            aria-label="Beige"></button>
+          <button
+            class="sw"
+            style="width: 20px; height: 20px; background: #8b9d88"
+            aria-pressed="false"
+            aria-label="Sage"></button>
         </div>
         <div class="opt-head">
-          <span class="lbl">Size</span><button type="button">Size guide</button>
+          <span class="lbl">Size</span
+          ><button type="button" onclick="openSizeModal()">Size guide</button>
         </div>
         <div class="sizes" role="group" aria-label="Size">
           <button class="size" aria-pressed="true">XS-S</button>
           <button class="size" aria-pressed="false">M-L</button>
         </div>
-        <p class="stock">
-          Limited quantity, once it's gone, restock may take a while
+        <p class="stock" style="color: var(--sale); font-weight: 600">
+          Only 3 pieces left
         </p>
         <div class="row-atc">
           <a class="btn btn--block" href="#">Add to cart</a>
           <button class="wish" aria-label="Save to wishlist">♡</button>
         </div>
-        <p class="assure">
-          Ships in 1–2 business days · Free shipping across Indonesia
-        </p>
+        <p class="assure">Ships next day · Free shipping across Indonesia</p>
         <p class="assure">14-day returns on unworn pieces</p>
-        <p class="assure">Ships in a reusable tote, no plastic packaging</p>
+        <p class="assure">
+          Ships in a reusable tote bag and biodegradable polymailer
+        </p>
         <div class="pays">
           <span class="pay">QRIS</span><span class="pay">VA</span
           ><span class="pay">GoPay</span> <span class="pay">Visa</span
@@ -1462,5 +1832,144 @@
         </details>
       </div>
     </div>
+
+    <section class="ugc-section">
+      <h3>As Styled By You</h3>
+      <div class="ugc-grid">
+        <figure>
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=600"
+            alt="UGC 1" />
+        </figure>
+        <figure>
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/1_3b4c41c7-3a87-48c8-a258-5db23f395d1a.jpg?width=600"
+            alt="UGC 2" />
+        </figure>
+        <figure>
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/2_1044f32f-d221-4278-a46b-053597603c32.jpg?width=600"
+            alt="UGC 3" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- Cart Drawer -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeCart()"></div>
+    <div
+      class="drawer"
+      id="cartDrawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Your Cart">
+      <div class="drawer-head">
+        <h2>Your Cart</h2>
+        <button onclick="closeCart()" aria-label="Close cart">✕</button>
+      </div>
+      <div class="drawer-body">
+        <p>Your cart is empty.</p>
+      </div>
+    </div>
+
+    <!-- Size Guide Modal -->
+    <dialog id="sizeModal" aria-labelledby="sizeModalTitle">
+      <div class="size-modal-inner">
+        <button
+          class="modal-close"
+          onclick="closeSizeModal()"
+          aria-label="Close size guide">
+          ✕
+        </button>
+        <h2
+          id="sizeModalTitle"
+          style="
+            font-family: var(--display2);
+            font-style: italic;
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-size: 24px;
+          ">
+          Size Guide
+        </h2>
+        <div class="size-toggle">
+          <button class="active" onclick="setSizeUnit('cm')" id="btn-cm">
+            cm
+          </button>
+          <button onclick="setSizeUnit('inch')" id="btn-inch">inch</button>
+        </div>
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust</th>
+              <th>Waist</th>
+              <th>Hip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>XS-S</strong></td>
+              <td>
+                <span class="size-unit cm">80-86</span
+                ><span class="size-unit inch hidden">31.5-33.8</span>
+              </td>
+              <td>
+                <span class="size-unit cm">60-66</span
+                ><span class="size-unit inch hidden">23.6-26.0</span>
+              </td>
+              <td>
+                <span class="size-unit cm">88-94</span
+                ><span class="size-unit inch hidden">34.6-37.0</span>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>M-L</strong></td>
+              <td>
+                <span class="size-unit cm">88-96</span
+                ><span class="size-unit inch hidden">34.6-37.8</span>
+              </td>
+              <td>
+                <span class="size-unit cm">68-76</span
+                ><span class="size-unit inch hidden">26.8-29.9</span>
+              </td>
+              <td>
+                <span class="size-unit cm">96-104</span
+                ><span class="size-unit inch hidden">37.8-40.9</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </dialog>
+
+    <script>
+      function openCart() {
+        document.getElementById("cartDrawer").classList.add("open");
+        document.getElementById("drawerOverlay").classList.add("open");
+      }
+      function closeCart() {
+        document.getElementById("cartDrawer").classList.remove("open");
+        document.getElementById("drawerOverlay").classList.remove("open");
+      }
+      function openSizeModal() {
+        document.getElementById("sizeModal").showModal();
+      }
+      function closeSizeModal() {
+        document.getElementById("sizeModal").close();
+      }
+      function setSizeUnit(unit) {
+        document
+          .querySelectorAll(".size-toggle button")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("btn-" + unit).classList.add("active");
+
+        document
+          .querySelectorAll(".size-unit.cm")
+          .forEach((el) => el.classList.toggle("hidden", unit !== "cm"));
+        document
+          .querySelectorAll(".size-unit.inch")
+          .forEach((el) => el.classList.toggle("hidden", unit !== "inch"));
+      }
+    </script>
   </body>
 </html>

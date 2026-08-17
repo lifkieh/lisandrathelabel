@@ -146,6 +146,31 @@
           "Foto campaign asli untuk halaman Collection belum ada — masih pakai foto katalog yang tersedia."
         ]
       }
+    },
+    {
+      "id": "v5",
+      "file": "design-v5.html",
+      "label": "v5",
+      "sublabel": "Revisi Brief Client",
+      "notes": {
+        "summary": "Revisi dari v4 berdasarkan brief lengkap client: Mengubah background menjadi #f8f8f0, memindahkan nav ke kiri, membesarkan logo, memperbarui banner free shipping, menyederhanakan teks hero, menambahkan detail produk (warna Zaye, stock badge merah 'Only X pieces left', info pengiriman, spesifikasi uppercase), galeri UGC 'as styled by you', size guide dengan converter cm/inch, serta section instagram 'follow us on social'.",
+        "added": [
+          "Navigasi rata kiri & logo lebih besar",
+          "Hero title & subtext disederhanakan",
+          "Warna background #f8f8f0 (lebih terang)",
+          "PDP: Swatch warna Cocoa/Beige/Sage untuk Zaye",
+          "PDP: Badges ramah lingkungan & stock limit badge merah",
+          "PDP: Craft specs uppercase",
+          "PDP: Size Guide pop-up (cm/inch)",
+          "PDP: Section As Styled By You",
+          "Instagram section Follow Us On Social"
+        ],
+        "effort": "3-5 hari",
+        "risks": [
+          "Membutuhkan aset foto tambahan untuk varian warna baru",
+          "Size guide perlu disesuaikan dengan data ukuran riil produk"
+        ]
+      }
     }
   ]
 }
