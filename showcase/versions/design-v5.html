@@ -473,7 +473,26 @@
       .grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: clamp(8px, 1.2vw, 16px);
+        gap: 2px;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+      .grid.grid--3col {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+      .grid.switching {
+        opacity: 0.35;
+        transform: scale(0.995);
+      }
+      .card {
+        padding-bottom: 24px;
+      }
+      .card .spec,
+      .card h4,
+      .card .price,
+      .card .sw-row,
+      .card .fit {
+        padding-left: 6px;
+        padding-right: 6px;
       }
       .card figure {
         position: relative;
@@ -591,37 +610,240 @@
         border-block: 1px solid var(--line);
         margin: 20px 0 18px;
       }
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-      }
-      .chip {
-        padding: 7px 13px;
-        border: 1px solid var(--line);
+      .filter-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px;
+        font-family: var(--body);
         font-size: 11px;
-        letter-spacing: 0.02em;
-        transition:
-          transform 0.25s ease,
-          background 0.25s ease,
-          color 0.25s ease,
-          border-color 0.25s ease,
-          box-shadow 0.25s ease;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--cocoa);
+        background: transparent;
+        border: 1px solid var(--line);
+        cursor: pointer;
+        transition: transform 0.25s ease, border-color 0.25s ease;
       }
-      .chip:hover {
+      .filter-btn:hover {
         border-color: var(--cocoa);
         transform: translateY(-1px);
-        box-shadow: 0 3px 8px rgba(20, 12, 8, 0.08);
       }
-      .chip[aria-pressed="true"] {
-        background: var(--cocoa);
-        color: #fff;
-        border-color: var(--cocoa);
+      .filter-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 12, 8, 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+        z-index: 1000;
+      }
+      .filter-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .filter-drawer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 360px;
+        background: #f8f8f0;
+        z-index: 1001;
+        transform: translateX(-100%);
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .filter-drawer.open {
+        transform: translateX(0);
+      }
+      .filter-drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px clamp(16px, 3vw, 32px);
+        border-bottom: 1px solid var(--line);
+      }
+      .filter-drawer-header h2 {
+        margin: 0;
+        font-family: var(--heading);
+        font-weight: 400;
+        font-size: 20px;
+        color: #392319;
+      }
+      .filter-close-btn {
+        background: none;
+        border: none;
+        color: #392319;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .filter-drawer-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 4px clamp(16px, 3vw, 32px) 32px;
+      }
+      .filter-group {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .filter-group h3 {
+        margin: 0 0 16px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 500;
+        color: #392319;
+      }
+      .filter-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: #392319;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+      .filter-checkbox input[type="checkbox"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 1px solid #392319;
+        border-radius: 2px;
+        margin: 0;
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+        background: transparent;
+      }
+      .filter-checkbox input[type="checkbox"]::before {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: #392319;
+        transform: scale(0);
+        transition: 0.12s transform ease-in-out;
+      }
+      .filter-checkbox input[type="checkbox"]:checked::before {
+        transform: scale(1);
+      }
+      .filter-color-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .filter-color-btn {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+      .filter-color-btn:hover {
+        transform: scale(1.1);
+        border-color: #392319;
+      }
+      .filter-drawer-footer {
+        padding: 20px clamp(16px, 3vw, 32px);
+        border-top: 1px solid var(--line);
+        background: #f8f8f0;
+      }
+      .filter-apply-btn {
+        width: 100%;
+        background: #392319;
+        color: #f8f8f0;
+        border: none;
+        padding: 12px 24px;
+        font-family: var(--body);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .filter-apply-btn:hover {
+        background: #8a5a44;
+      }
+      .filterbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .grid-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        border: 1px solid var(--line);
+        padding: 3px;
+        background: transparent;
+      }
+      .grid-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 24px;
+        color: var(--ink60);
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        transition:
+          color 0.2s ease,
+          background-color 0.2s ease,
+          transform 0.15s ease;
+      }
+      .grid-toggle-btn:hover {
+        color: var(--cocoa);
+      }
+      .grid-toggle-btn.active {
+        color: var(--cocoa);
+        background: rgba(57, 35, 25, 0.08);
+      }
+      .grid-toggle-btn svg {
+        width: 15px;
+        height: 12px;
+      }
+      @media (max-width: 900px) {
+        .grid-toggle {
+          display: none;
+        }
       }
       .sortby {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 12px;
+        border: 1px solid var(--line);
         font-size: 11px;
-        color: var(--ink60);
+        font-weight: 500;
         letter-spacing: 0.02em;
+        color: var(--cocoa);
+        background: transparent;
+        cursor: pointer;
+        transition:
+          border-color 0.25s ease,
+          color 0.25s ease,
+          transform 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .sortby:hover {
+        border-color: var(--cocoa);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(20, 12, 8, 0.08);
+      }
+      .sortby svg {
+        width: 10px;
+        height: 10px;
+        transition: transform 0.2s ease;
+      }
+      .sortby:hover svg {
+        transform: translateY(1px);
       }
 
       /* ---------- essence (centered, minimal, small type) ---------- */
@@ -750,7 +972,7 @@
       .gal {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0;
+        gap: 1px;
       }
       .gal figure {
         margin: 0;
@@ -1867,6 +2089,7 @@
         /* Layout grids */
         .grid {
           grid-template-columns: 1fr 1fr;
+          gap: 1px;
         }
         .cats3 {
           grid-template-columns: 1fr 1fr 1fr;
@@ -1977,7 +2200,7 @@
         /* Product grid */
         .grid {
           grid-template-columns: 1fr 1fr;
-          gap: 8px;
+          gap: 1px;
         }
         .card h4 {
           font-size: 11.5px;
@@ -2030,13 +2253,7 @@
           padding: 12px 16px;
           margin: 14px 0 12px;
         }
-        .chips {
-          gap: 6px;
-        }
-        .chip {
-          padding: 6px 10px;
-          font-size: 10px;
-        }
+
         .grid[style] {
           padding: 0 16px 24px !important;
         }
@@ -2682,48 +2899,92 @@
     <div class="plp-head">
       <span class="lbl">124 pieces</span>
       <h1>Shop All</h1>
-      <p>
-        Every piece we make, hand-knit and crocheted in small batches in Bali.
-        This exact layout, grid, filters, sort, is reused for New Arrivals and
-        Sale, filtered to a different set of products each time. Not a separate
-        design.
-      </p>
+      <p>Hand-knit and crocheted in small batches by Balinese artisans.</p>
     </div>
     <div class="filterbar">
-      <div class="chips" role="group" aria-label="Filter">
-        <button class="chip" aria-pressed="true">All</button>
-        <button class="chip">Best Sellers</button>
-        <button class="chip">Dresses</button>
-        <button class="chip">Sets</button>
-        <button class="chip">Tops</button>
-        <button class="chip">Bottoms</button>
-        <button class="chip">Swim</button>
-        <button class="chip">In stock</button>
+      <button class="filter-btn" id="openFilterBtn" onclick="openFilter()" aria-label="Open filters" aria-haspopup="true" aria-expanded="false">
+        FILTER +
+      </button>
+      <div class="filterbar-actions">
+        <div class="grid-toggle" role="group" aria-label="Grid column view">
+          <button
+            class="grid-toggle-btn"
+            id="gridToggle3"
+            onclick="setGridCols(3)"
+            aria-label="3 columns editorial view"
+            aria-pressed="false"
+            title="3 Columns (Editorial)">
+            <svg viewBox="0 0 18 14" fill="currentColor">
+              <rect x="0" y="0" width="4.8" height="14" rx="0.5" />
+              <rect x="6.6" y="0" width="4.8" height="14" rx="0.5" />
+              <rect x="13.2" y="0" width="4.8" height="14" rx="0.5" />
+            </svg>
+          </button>
+          <button
+            class="grid-toggle-btn active"
+            id="gridToggle4"
+            onclick="setGridCols(4)"
+            aria-label="4 columns compact view"
+            aria-pressed="true"
+            title="4 Columns (Compact)">
+            <svg viewBox="0 0 18 14" fill="currentColor">
+              <rect x="0" y="0" width="3.4" height="14" rx="0.5" />
+              <rect x="4.8" y="0" width="3.4" height="14" rx="0.5" />
+              <rect x="9.6" y="0" width="3.4" height="14" rx="0.5" />
+              <rect x="14.4" y="0" width="3.4" height="14" rx="0.5" />
+            </svg>
+          </button>
+        </div>
+        <button class="sortby" type="button" aria-label="Sort products">
+          <span>Sort: Featured</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
       </div>
-      <span class="sortby">Sort: Featured</span>
     </div>
-    <div class="grid" style="padding: 0 clamp(14px, 2vw, 26px) 34px">
+    <div class="grid" id="plpGrid" style="padding: 0 clamp(14px, 2vw, 26px) 34px">
       <article class="card">
         <figure>
           <span class="best-seller-badge">Best Seller</span>
           <img
+            class="main-img"
             src="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700"
             alt="Zaye hand-knit maxi dress in cocoa" />
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=700"
+            alt="Zaye dress, open back" />
         </figure>
         <p class="spec">Hand-knit</p>
         <h4>Zaye Knit Maxi Dress</h4>
         <p class="price">Rp 1.999.000</p>
+        <div class="sw-row" role="group" aria-label="Colour">
+          <button class="sw" style="background: #392319;" aria-pressed="true" aria-label="Cocoa" data-img="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700"></button>
+          <button class="sw" style="background: #efe9e5;" aria-pressed="false" aria-label="Ivory" data-img="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=700"></button>
+          <button class="sw" style="background: #8e9483;" aria-pressed="false" aria-label="Sage" data-img="https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=700"></button>
+        </div>
       </article>
       <article class="card">
         <figure>
           <span class="best-seller-badge">Best Seller</span>
           <img
+            class="main-img"
             src="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"
             alt="Amara hand-knit top" />
         </figure>
         <p class="spec">Hand-knit</p>
         <h4>Amara Knit Top</h4>
         <p class="price">Rp 899.000</p>
+        <div class="sw-row" role="group" aria-label="Colour">
+          <button class="sw" style="background: #efe9e5;" aria-pressed="true" aria-label="Ivory" data-img="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"></button>
+          <button class="sw" style="background: #111;" aria-pressed="false" aria-label="Black" data-img="https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?width=700"></button>
+        </div>
       </article>
       <article class="card">
         <figure>
@@ -3256,6 +3517,46 @@
       </div>
     </dialog>
 
+    <!-- Filter Drawer (Phase 3) -->
+    <div class="filter-overlay" id="filterOverlay" aria-hidden="true" onclick="closeFilter()"></div>
+    <div class="filter-drawer" id="filterDrawer" role="dialog" aria-modal="true" aria-label="Product Filters">
+      <div class="filter-drawer-header">
+        <h2>Filter &amp; Sort</h2>
+        <button class="filter-close-btn" id="closeFilterBtn" onclick="closeFilter()" aria-label="Close filters">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="filter-drawer-content">
+        <div class="filter-group">
+          <h3>Category</h3>
+          <label class="filter-checkbox"><input type="checkbox" checked /> All</label>
+          <label class="filter-checkbox"><input type="checkbox" /> Dresses</label>
+          <label class="filter-checkbox"><input type="checkbox" /> Sets</label>
+          <label class="filter-checkbox"><input type="checkbox" /> Tops</label>
+          <label class="filter-checkbox"><input type="checkbox" /> Bottoms</label>
+          <label class="filter-checkbox"><input type="checkbox" /> Swim</label>
+        </div>
+        <div class="filter-group">
+          <h3>Color</h3>
+          <div class="filter-color-grid">
+            <button class="filter-color-btn" style="background: #efe9e5;" aria-label="Ivory"></button>
+            <button class="filter-color-btn" style="background: #d6ccbd;" aria-label="Sand"></button>
+            <button class="filter-color-btn" style="background: #8e9483;" aria-label="Sage"></button>
+            <button class="filter-color-btn" style="background: #392319;" aria-label="Cocoa"></button>
+            <button class="filter-color-btn" style="background: #111;" aria-label="Black"></button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <h3>Availability</h3>
+          <label class="filter-checkbox"><input type="checkbox" checked /> In Stock</label>
+          <label class="filter-checkbox"><input type="checkbox" /> Pre-order</label>
+        </div>
+      </div>
+      <div class="filter-drawer-footer">
+        <button class="filter-apply-btn" onclick="closeFilter()">Apply Filters</button>
+      </div>
+    </div>
+    
     <script>
       // 10. Add to Bag Micro-Feedback
       function handleAddToBag(btn, event) {
@@ -3491,6 +3792,98 @@
         window.addEventListener("scroll", updateHeader);
         updateHeader(); // Init
       }
+
+      // PLP Grid Column Switcher (3 cols vs 4 cols)
+      function setGridCols(cols) {
+        const grid = document.getElementById("plpGrid");
+        const btn3 = document.getElementById("gridToggle3");
+        const btn4 = document.getElementById("gridToggle4");
+        if (!grid || !btn3 || !btn4) return;
+
+        grid.classList.add("switching");
+        btn3.classList.toggle("active", cols === 3);
+        btn4.classList.toggle("active", cols === 4);
+        btn3.setAttribute("aria-pressed", cols === 3);
+        btn4.setAttribute("aria-pressed", cols === 4);
+
+        setTimeout(() => {
+          if (cols === 3) {
+            grid.classList.add("grid--3col");
+          } else {
+            grid.classList.remove("grid--3col");
+          }
+          grid.classList.remove("switching");
+        }, 120);
+      }
+
+      // Filter Drawer Handlers
+      function openFilter() {
+        const drawer = document.getElementById("filterDrawer");
+        const overlay = document.getElementById("filterOverlay");
+        const btn = document.getElementById("openFilterBtn");
+        drawer.classList.add("open");
+        overlay.classList.add("open");
+        if (btn) btn.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden"; // Prevent background scroll
+      }
+
+      function closeFilter() {
+        const drawer = document.getElementById("filterDrawer");
+        const overlay = document.getElementById("filterOverlay");
+        const btn = document.getElementById("openFilterBtn");
+        drawer.classList.remove("open");
+        overlay.classList.remove("open");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      }
+
+      // Swatch Hover Image Swap
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".sw").forEach((swatch) => {
+          // Store original image source when mouse enters the swatch area
+          swatch.addEventListener("mouseenter", (e) => {
+            const card = e.target.closest(".card");
+            const mainImg = card.querySelector("img");
+            
+            // Only save if not already saved during this hover session
+            if (!card.dataset.origImg) {
+              card.dataset.origImg = mainImg.src;
+            }
+            
+            const newSrc = e.target.getAttribute("data-img");
+            if (newSrc) {
+              mainImg.style.opacity = "0.5"; // simple flash effect
+              setTimeout(() => {
+                mainImg.src = newSrc;
+                mainImg.style.opacity = "1";
+              }, 150);
+              
+              // update pressed state visually
+              card.querySelectorAll(".sw").forEach(s => s.setAttribute("aria-pressed", "false"));
+              e.target.setAttribute("aria-pressed", "true");
+            }
+          });
+        });
+        
+        // Restore original image when mouse leaves the card entirely
+        document.querySelectorAll(".card").forEach(card => {
+          card.addEventListener("mouseleave", (e) => {
+            if (card.dataset.origImg) {
+              const mainImg = card.querySelector("img");
+              mainImg.style.opacity = "0.5";
+              setTimeout(() => {
+                mainImg.src = card.dataset.origImg;
+                mainImg.style.opacity = "1";
+                // Optionally reset active swatch state to default
+                card.querySelectorAll(".sw").forEach((s, idx) => {
+                  s.setAttribute("aria-pressed", idx === 0 ? "true" : "false");
+                });
+                delete card.dataset.origImg;
+              }, 150);
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>
