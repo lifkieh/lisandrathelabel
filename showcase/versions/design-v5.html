@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Lisandra The Label — v4 (production brief)</title>
+    <title>Lisandra The Label — v5 (refined briefa)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,6 +62,15 @@
         border: 0;
         background: none;
         cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      button:active, .btn:active, .chip:active, .size:active, .wish:active, .more:active, .quick-add-btn:active {
+        transform: scale(0.96) !important;
       }
       :focus-visible {
         outline: 2px solid var(--cocoa);
@@ -90,13 +99,30 @@
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        padding: 16px clamp(14px, 2vw, 26px);
+        padding: 12px clamp(14px, 2vw, 26px);
         border-bottom: 1px solid var(--line);
         background: var(--paper);
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 1000;
+        transition:
+          background 0.3s ease,
+          border-color 0.3s ease,
+          color 0.3s ease;
       }
+
+      /* Transparent Header logic */
+      .hdr.is-transparent {
+        background: transparent;
+        border-bottom-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+      }
+      .hdr.is-transparent:hover {
+        background: var(--paper);
+        border-bottom-color: var(--line);
+        color: var(--cocoa);
+      }
+
       .wordmark {
         font-family: var(--heading);
         font-weight: 500;
@@ -104,13 +130,42 @@
         letter-spacing: 0.2em;
         text-transform: uppercase;
         justify-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
       }
       .wordmark img {
         display: block;
         width: auto;
-        height: 40px;
+        height: 130px;
+        margin: -43px 0;
         object-fit: contain;
-        mix-blend-mode: multiply;
+      }
+
+      /* Logo switching */
+      .hdr .logo-light {
+        display: none;
+      }
+      .hdr.is-transparent .logo-dark {
+        display: none;
+      }
+      .hdr.is-transparent .logo-light {
+        display: block;
+      }
+      .hdr.is-transparent:hover .logo-dark {
+        display: block;
+      }
+      .hdr.is-transparent:hover .logo-light {
+        display: none;
+      }
+
+      /* Hamburger menu color toggle */
+      .hdr.is-transparent .nav-toggle span {
+        background: #fff;
+      }
+      .hdr.is-transparent:hover .nav-toggle span {
+        background: var(--cocoa);
       }
       .foot-logo {
         display: block;
@@ -123,8 +178,53 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        gap: clamp(16px, 2vw, 28px);
-        flex-wrap: wrap;
+        gap: clamp(14px, 1.8vw, 26px);
+        flex-wrap: nowrap;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, 1.8vw, 26px);
+      }
+      .nav-drawer-head,
+      .nav-drawer-footer {
+        display: none;
+      }
+      /* Hamburger button — hidden on desktop */
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 32px;
+        height: 32px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        z-index: 102;
+      }
+      .nav-toggle span {
+        display: block;
+        height: 1.5px;
+        background: var(--cocoa);
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+      .nav-toggle.open span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .nav-toggle.open span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+      /* Mobile nav overlay */
+      .mobile-nav-overlay {
+        display: none;
       }
       .hdr-actions {
         display: flex;
@@ -163,26 +263,25 @@
         color: var(--sale);
       }
 
-      /* ---------- hero: single full-bleed, centered (ref: Chalay + v1 direction) -----
-   Kept smaller/more restrained than both references per brief ("gamau besar2"). */
+      /* ---------- hero: full-bleed center text (ref: Flook scale, Chalay center) ----- */
       .hero-full {
         position: relative;
-        height: clamp(360px, 62vh, 560px);
-      }
-      .hero-full figure {
-        margin: 0;
-        height: 100%;
-        position: relative;
+        height: calc(
+          100vh - 31px
+        ); /* Full screen menutupi seluruh layar desktop */
+        min-height: 600px;
+        margin-top: -69px; /* Presisi sama dengan tinggi navbar (12+44+12+1) */
       }
       .hero-full figure::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          to top,
-          rgba(20, 12, 8, 0.34),
-          rgba(20, 12, 8, 0.05) 45%,
-          rgba(20, 12, 8, 0.16)
+        /* Radial gradient ensures the center text is readable without darkening the edges too much */
+        background: radial-gradient(
+          circle at center,
+          rgba(20, 12, 8, 0.35) 0%,
+          rgba(20, 12, 8, 0.15) 50%,
+          rgba(20, 12, 8, 0.05) 100%
         );
       }
       .hero-in {
@@ -194,8 +293,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        gap: 14px;
-        padding: 0 20px;
+        padding: clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px);
         color: #fff;
       }
       .hero-eyebrow {
@@ -204,15 +302,32 @@
         text-transform: uppercase;
         color: #fff;
         opacity: 0.9;
+        margin-bottom: 8px;
       }
       .hero-in h1 {
-        font-family: var(--display2);
+        font-family: var(--heading);
         font-style: italic;
         font-weight: 400;
-        font-size: clamp(24px, 3.6vw, 38px);
-        line-height: 1.18;
-        margin: 0;
+        font-size: clamp(32px, 5vw, 56px);
+        line-height: 1.1;
+        margin: 0 0 16px 0;
         max-width: 24ch;
+      }
+      .hero-link {
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #fff;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 6px;
+        transition: opacity 0.2s;
+      }
+      .hero-link:hover {
+        opacity: 0.7;
       }
       .hero-in p {
         margin: 0;
@@ -228,13 +343,19 @@
         font-weight: 500;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        transition: 0.18s;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         background: var(--cocoa);
         color: #fff;
       }
       .btn:hover {
         background: transparent;
         color: var(--cocoa);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(20, 12, 8, 0.12);
       }
       .btn--ghost {
         background: transparent;
@@ -244,6 +365,8 @@
       .btn--ghost:hover {
         background: #fff;
         color: var(--cocoa);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
       }
       .btn--block {
         display: block;
@@ -258,21 +381,6 @@
         grid-template-columns: repeat(3, 1fr);
         border-top: 1px solid var(--line);
       }
-      .cat3 {
-        position: relative;
-        aspect-ratio: 3/4;
-      }
-      .cat3 span {
-        position: absolute;
-        inset: auto 0 16px 0;
-        text-align: center;
-        color: #fff;
-        font-size: 11px;
-        font-weight: 500;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
       /* ---------- signature spotlight ---------- */
       .spotlight {
         display: grid;
@@ -334,12 +442,20 @@
         color: var(--ink60);
       }
       .more {
+        display: inline-block;
         font-size: 10.5px;
         font-weight: 500;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         border-bottom: 1px solid var(--cocoa);
         padding-bottom: 2px;
+        transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+      }
+      .more:hover {
+        color: var(--clay);
+        border-color: var(--clay);
+        transform: translateY(-1.5px);
+        opacity: 1;
       }
 
       /* ---------- grid + card ---------- */
@@ -474,6 +590,12 @@
         border: 1px solid var(--line);
         font-size: 11px;
         letter-spacing: 0.02em;
+        transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+      .chip:hover {
+        border-color: var(--cocoa);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(20, 12, 8, 0.08);
       }
       .chip[aria-pressed="true"] {
         background: var(--cocoa);
@@ -660,6 +782,11 @@
         letter-spacing: 0.05em;
         border-bottom: 1px solid var(--cocoa);
         padding-bottom: 1px;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+      .opt-head button:hover {
+        opacity: 0.7;
+        transform: translateY(-1px);
       }
       .sizes {
         display: flex;
@@ -672,6 +799,11 @@
         border: 1px solid var(--line);
         font-size: 12px;
         text-align: center;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .size:hover {
+        border-color: var(--cocoa);
+        transform: translateY(-1px);
       }
       .size[aria-pressed="true"] {
         border-color: var(--cocoa);
@@ -693,6 +825,13 @@
         display: grid;
         place-items: center;
         font-size: 15px;
+        transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .wish:hover {
+        border-color: var(--sale);
+        color: var(--sale);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 8px rgba(154, 63, 43, 0.15);
       }
       .assure {
         font-size: 11.5px;
@@ -718,6 +857,11 @@
         border-block: 1px solid var(--line);
         padding: 10px 0;
         margin-bottom: 4px;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink60);
       }
       details {
         border-bottom: 1px solid var(--line);
@@ -736,21 +880,6 @@
       summary::-webkit-details-marker {
         display: none;
       }
-      summary::after {
-        content: "+";
-        font-size: 13px;
-        letter-spacing: 0;
-      }
-      details[open] summary::after {
-        content: "–";
-      }
-      details div {
-        padding: 0 0 14px;
-        font-size: 12.5px;
-        color: #4a382e;
-        max-width: 52ch;
-      }
-
       /* ---------- collection / campaign page (ref: Faithfull "Costa Brava") ---------- */
       .campaign-hero {
         aspect-ratio: 16/9;
@@ -874,33 +1003,107 @@
         color: var(--paper);
       }
 
-      /* UGC Grid */
+      /* UGC Grid (As Styled By You) */
       .ugc-section {
-        padding: clamp(30px, 5vw, 60px) clamp(14px, 2vw, 26px);
+        padding: clamp(40px, 6vw, 80px) 0;
         text-align: center;
+        background-color: var(--bg);
       }
       .ugc-section h3 {
-        font-family: var(--heading);
-        font-size: clamp(20px, 2.4vw, 28px);
-        font-weight: 500;
-        margin-bottom: 24px;
+        font-family: var(--display2);
+        font-size: clamp(28px, 4vw, 40px);
+        font-weight: 400;
+        margin-bottom: clamp(24px, 4vw, 40px);
+        color: var(--ink);
       }
       .ugc-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 12px;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        gap: 4px;
+        padding: 0 clamp(14px, 2vw, 26px);
+        /* Hide scrollbar */
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .ugc-grid::-webkit-scrollbar {
+        display: none;
       }
       .ugc-grid figure {
+        flex: 0 0 75vw; /* Shows 75% of screen width on mobile, so the next image peeks */
+        scroll-snap-align: center;
         margin: 0;
         aspect-ratio: 4/5;
         background: var(--sand);
         overflow: hidden;
+        cursor: pointer;
       }
       .ugc-grid figure img {
-        transition: transform 0.6s ease;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition:
+          transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+          opacity 0.4s ease;
       }
-      .ugc-grid figure:hover img {
-        transform: scale(1.05);
+
+      @media (min-width: 900px) {
+        .ugc-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          overflow-x: visible;
+        }
+        .ugc-grid figure {
+          flex: none;
+          width: auto;
+          scroll-snap-align: none;
+        }
+        .ugc-grid figure:hover img {
+          transform: scale(1.03);
+          opacity: 0.95;
+        }
+      }
+
+      /* UGC Main Slider Navigation Buttons */
+      .ugc-slider-wrap {
+        position: relative;
+        width: 100%;
+      }
+      .ugc-slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 5;
+        color: var(--ink);
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        padding: 0;
+      }
+      .ugc-slider-btn:hover {
+        background: #ffffff;
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      }
+      .ugc-slider-btn.prev {
+        left: clamp(20px, 2.5vw, 36px);
+      }
+      .ugc-slider-btn.next {
+        right: clamp(20px, 2.5vw, 36px);
+      }
+      .ugc-slider-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 1.5;
       }
 
       /* Social Grid (Faithfull the Brand editorial style) */
@@ -953,21 +1156,47 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      .social-grid a:hover img {
-        transform: scale(1.04);
-      }
-      .social-grid a::after {
-        content: "";
+      .social-overlay {
         position: absolute;
         inset: 0;
-        background: rgba(57, 35, 25, 0.12);
+        background: rgba(45, 28, 20, 0.45);
+        backdrop-filter: blur(1.5px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #fff;
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 2;
       }
-      .social-grid a:hover::after {
+      .social-icon {
+        width: 22px;
+        height: 22px;
+        transform: translateY(6px);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .social-caption {
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.95);
+        transform: translateY(6px);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.04s;
+      }
+      .social-grid a:hover img {
+        transform: scale(1.05);
+      }
+      .social-grid a:hover .social-overlay {
         opacity: 1;
+      }
+      .social-grid a:hover .social-icon,
+      .social-grid a:hover .social-caption {
+        transform: translateY(0);
       }
 
       /* Dialogs */
@@ -977,9 +1206,169 @@
         background: transparent;
         color: var(--cocoa);
       }
+      dialog[open] {
+        animation: modalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
       dialog::backdrop {
-        background: rgba(20, 12, 8, 0.4);
-        backdrop-filter: blur(2px);
+        background: rgba(
+          20,
+          12,
+          8,
+          0.85
+        ); /* Darker opacity instead of expensive blur */
+      }
+      dialog[open]::backdrop {
+        animation: backdropFadeIn 0.35s ease forwards;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(16px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes backdropFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* UGC Shop The Look Modal */
+      .ugc-modal-inner {
+        background: var(--paper);
+        width: 95vw;
+        max-width: 900px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      }
+      .ugc-image-wrap {
+        width: 100%;
+        background: var(--sand);
+        position: relative;
+      }
+      .ugc-image-wrap img {
+        width: 100%;
+        height: 100%;
+        max-height: 60vh;
+        object-fit: cover;
+        display: block;
+        transition: opacity 0.3s ease;
+      }
+      .ugc-image-wrap img.fading {
+        opacity: 0.5;
+      }
+      .ugc-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: background 0.3s ease;
+        color: var(--ink);
+      }
+      .ugc-nav-btn:hover {
+        background: #fff;
+      }
+      .ugc-prev {
+        left: 16px;
+      }
+      .ugc-next {
+        right: 16px;
+      }
+
+      .ugc-shop-wrap {
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+      }
+      .ugc-shop-title {
+        font-family: var(--display2);
+        font-size: 20px;
+        font-style: italic;
+        margin-bottom: 24px;
+        margin-top: 0;
+      }
+      .ugc-product-card {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .ugc-product-card img {
+        width: 80px;
+        height: 100px;
+        object-fit: cover;
+      }
+      .ugc-product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .ugc-product-info h4 {
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+      }
+      .ugc-product-info .price {
+        font-size: 13px;
+        color: var(--ink60);
+      }
+      .ugc-modal-close {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        font-size: 24px;
+        line-height: 1;
+        z-index: 10;
+        background: var(--paper);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+      }
+      @media (min-width: 768px) {
+        .ugc-modal-inner {
+          flex-direction: row;
+        }
+        .ugc-image-wrap {
+          width: 55%;
+        }
+        .ugc-image-wrap img {
+          max-height: 80vh;
+        }
+        .ugc-shop-wrap {
+          width: 45%;
+          justify-content: center;
+        }
+        .ugc-modal-close {
+          background: transparent;
+          box-shadow: none;
+        }
       }
 
       .size-modal-inner {
@@ -1031,6 +1420,190 @@
       }
       .size-unit.hidden {
         display: none;
+      }
+
+      /* ---------- 1. Scroll Reveal ---------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---------- 2. Hero Ken Burns ---------- */
+      .hero-full figure {
+        margin: 0;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-full figure img {
+        animation: kenBurns 25s ease-out forwards;
+      }
+      @keyframes kenBurns {
+        from { transform: scale(1); }
+        to { transform: scale(1.08); }
+      }
+
+      /* ---------- 4. Category Tile Hover ---------- */
+      .cat3 {
+        position: relative;
+        aspect-ratio: 3/4;
+        overflow: hidden;
+      }
+      .cat3 img {
+        transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .cat3 span {
+        position: absolute;
+        inset: auto 0 16px 0;
+        text-align: center;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: transform 0.4s ease;
+        z-index: 2;
+      }
+      .cat3::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(20, 12, 8, 0.05);
+        transition: background 0.4s ease;
+        z-index: 1;
+        pointer-events: none;
+      }
+      .cat3:hover img {
+        transform: scale(1.04);
+      }
+      .cat3:hover span {
+        transform: translateY(-6px);
+      }
+      .cat3:hover::after {
+        background: rgba(20, 12, 8, 0.25);
+      }
+
+      /* ---------- 3. Product Card Quick Add Hover ---------- */
+      .card-actions {
+        position: absolute;
+        bottom: -40px;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        background: linear-gradient(transparent, rgba(20,12,8,0.7));
+        transition: bottom 0.3s ease;
+        z-index: 3;
+      }
+      .card figure:hover .card-actions {
+        bottom: 0;
+      }
+      .quick-add-btn {
+        background: #fff;
+        color: var(--cocoa);
+        border: none;
+        padding: 8px 16px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background 0.2s, color 0.2s;
+        width: 100%;
+      }
+      .quick-add-btn:hover {
+        background: var(--cocoa);
+        color: #fff;
+      }
+
+      /* ---------- 5. Spotlight Stagger & 7. Sustain Stagger ---------- */
+      .reveal-stagger figure,
+      .reveal-stagger .spotlight-copy > *,
+      .reveal-stagger.sustain > span {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal-stagger.active figure,
+      .reveal-stagger.active .spotlight-copy > *,
+      .reveal-stagger.active.sustain > span {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* Ensure image comes first */
+      .reveal-stagger.active figure { transition-delay: 0s; }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(1), .reveal-stagger.active.sustain > span:nth-child(1) { transition-delay: 0.1s; }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(2), .reveal-stagger.active.sustain > span:nth-child(2) { transition-delay: 0.25s; }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(3), .reveal-stagger.active.sustain > span:nth-child(3) { transition-delay: 0.4s; }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(4), .reveal-stagger.active.sustain > span:nth-child(4) { transition-delay: 0.55s; }
+
+      /* ---------- 8. Review Cards Hover Lift ---------- */
+      .rev {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: #fff; /* to ensure shadow looks right */
+      }
+      .rev:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(20, 12, 8, 0.06);
+      }
+
+      /* ---------- 9. Footer Link Underline ---------- */
+      .foot-nav a {
+        position: relative;
+        text-decoration: none;
+      }
+      .foot-nav a:hover {
+        text-decoration: none;
+      }
+      .foot-nav a::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background-color: #eee6d9;
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+      }
+      .foot-nav a:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+
+      /* ---------- 6. Accordion Smooth Transition ---------- */
+      details div {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        padding: 0;
+        font-size: 12.5px;
+        color: #4a382e;
+        max-width: 52ch;
+        transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.4s ease;
+      }
+      details[open] div {
+        max-height: 400px;
+        opacity: 1;
+        padding: 0 0 14px;
+      }
+      summary::after {
+        content: "+";
+        font-size: 16px;
+        font-weight: 400;
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+      details[open] summary::after {
+        content: "−";
+        transform: rotate(180deg);
       }
 
       /* Drawer */
@@ -1087,22 +1660,166 @@
         font-size: 13px;
       }
 
-      @media (max-width: 860px) {
+      /* ===================================
+         RESPONSIVE: TABLET & BELOW (≤900px)
+         =================================== */
+      @media (max-width: 900px) {
+        /* Header switches to clean 3-part layout: Hamburger | Centered Wordmark | Icons */
+        .hdr {
+          grid-template-columns: auto 1fr auto;
+          padding: 10px clamp(14px, 2vw, 24px);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .wordmark {
+          justify-self: center;
+          height: 38px;
+        }
+        .wordmark img {
+          height: 110px;
+          margin: -36px 0;
+        }
+        .hdr-actions {
+          gap: 16px;
+        }
+        .hero-full {
+          margin-top: -59px; /* Presisi sama dengan header tablet (10+38+10+1) */
+        }
+        /* Mobile Drawer */
+        .mainnav {
+          display: flex;
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: min(340px, 86vw);
+          background: #f8f8f0;
+          z-index: 1002;
+          flex-direction: column;
+          align-items: stretch;
+          justify-content: space-between;
+          padding: 24px 28px;
+          box-shadow: 10px 0 40px rgba(45, 28, 20, 0.18);
+          transform: translateX(-100%);
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          overflow-y: auto;
+        }
+        .mainnav.open {
+          transform: translateX(0);
+        }
+        .nav-drawer-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-bottom: 20px;
+          border-bottom: 1px solid var(--line);
+        }
+        .nav-drawer-logo {
+          height: 26px;
+          width: auto;
+          mix-blend-mode: multiply;
+        }
+        .nav-drawer-close {
+          background: none;
+          border: none;
+          font-size: 20px;
+          color: var(--cocoa);
+          cursor: pointer;
+          padding: 4px 8px;
+          line-height: 1;
+        }
+        .nav-links {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 16px;
+          padding: 28px 0;
+          flex: 1;
+        }
+        .nav-links a {
+          font-size: 13px;
+          font-weight: 500;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--cocoa);
+          padding: 6px 0;
+          display: block;
+          width: 100%;
+        }
+        .nav-links a.sale {
+          color: var(--sale);
+        }
+        .nav-drawer-footer {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          padding-top: 20px;
+          border-top: 1px solid var(--line);
+        }
+        .nav-drawer-secondary {
+          display: flex;
+          gap: 16px;
+        }
+        .nav-sublink {
+          font-size: 11px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--ink60);
+        }
+        .nav-drawer-social {
+          display: flex;
+          gap: 8px;
+          font-size: 11px;
+          color: var(--ink60);
+        }
+        .nav-drawer-tagline {
+          margin: 0;
+          font-size: 10px;
+          letter-spacing: 0.06em;
+          color: var(--clay);
+          font-style: italic;
+          font-family: var(--display2);
+        }
+        .mobile-nav-overlay {
+          display: block;
+          position: fixed;
+          inset: 0;
+          background: rgba(20, 12, 8, 0.65);
+          z-index: 998;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.35s ease;
+        }
+        .mobile-nav-overlay.open {
+          opacity: 1;
+          pointer-events: auto;
+        }
+
+        /* Layout grids */
         .grid {
           grid-template-columns: 1fr 1fr;
         }
         .cats3 {
-          grid-template-columns: 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
         }
         .hero-full {
-          height: clamp(320px, 72vh, 480px);
+          height: clamp(300px, 65vh, 480px);
         }
         .spotlight {
           grid-template-columns: 1fr;
         }
-        .revs,
-        .editorial-row,
-        .shop-strip {
+        .spotlight figure {
+          aspect-ratio: 3/2;
+          max-height: 380px;
+        }
+        .revs {
+          grid-template-columns: 1fr 1fr;
+        }
+        .editorial-row {
           grid-template-columns: 1fr;
         }
         .shop-strip {
@@ -1110,20 +1827,231 @@
         }
         .pdp {
           grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        .gal {
+          grid-template-columns: 1fr 1fr;
+        }
+        .gal figure:first-child {
+          aspect-ratio: 3/2;
         }
         .foot-nav {
           gap: 14px 22px;
         }
         .social-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .sec {
+          padding: clamp(24px, 4vw, 44px) clamp(14px, 2vw, 22px);
+        }
+        .ugc-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* ===================================
+         RESPONSIVE: MOBILE (≤600px)
+         =================================== */
+      @media (max-width: 600px) {
+        .hdr {
+          padding: 8px 16px;
+        }
+        .wordmark {
+          height: 34px;
+        }
+        .wordmark img {
+          height: 96px;
+          margin: -31px 0;
+        }
+        .hdr-actions {
+          gap: 12px;
+        }
+        .hdr-actions svg {
+          width: 18px;
+          height: 18px;
+        }
+
+        /* Utility bar */
+        .util {
+          font-size: 9.5px;
+          padding: 6px 12px;
+        }
+
+        /* Hero */
+        .hero-full {
+          margin-top: -51px; /* Presisi sama dengan header HP (8+34+8+1) */
+          height: clamp(280px, 75vh, 440px);
+        }
+        .hero-in h1 {
+          font-size: clamp(20px, 5.8vw, 26px);
+        }
+        .hero-in .ctas {
+          flex-direction: column;
+          gap: 8px;
+          align-items: center;
+        }
+        .btn {
+          padding: 10px 20px;
+          font-size: 10px;
+        }
+
+        /* Categories */
+        .cats3 {
+          grid-template-columns: 1fr;
+        }
+        .cat3 {
+          aspect-ratio: 3/2;
+        }
+
+        /* Product grid */
+        .grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .card h4 {
+          font-size: 11.5px;
+        }
+        .price {
+          font-size: 11.5px;
+        }
+
+        /* Spotlight */
+        .spotlight figure {
+          aspect-ratio: 4/5;
+          max-height: 400px;
+        }
+        .spotlight-copy {
+          padding: 24px 16px 30px;
+        }
+        .spotlight-copy h2 {
+          font-size: clamp(18px, 5vw, 22px);
+        }
+
+        /* Essence */
+        .essence {
+          padding: 36px 16px;
+        }
+        .essence q {
+          font-size: clamp(16px, 5vw, 20px);
+        }
+
+        /* Sustainability strip */
+        .sustain {
+          flex-direction: column;
+          gap: 12px;
+          padding: 20px 16px;
+          text-align: left;
+        }
+        .sustain span {
+          max-width: none;
+        }
+
+        /* Reviews */
+        .revs {
+          grid-template-columns: 1fr;
+        }
+
+        /* Shop page */
+        .plp-head {
+          padding: 20px 16px 0;
+        }
+        .filterbar {
+          padding: 12px 16px;
+          margin: 14px 0 12px;
+        }
+        .chips {
+          gap: 6px;
+        }
+        .chip {
+          padding: 6px 10px;
+          font-size: 10px;
+        }
+        .grid[style] {
+          padding: 0 16px 24px !important;
+        }
+
+        /* PDP */
+        .crumbs {
+          padding: 12px 16px 0;
+        }
+        .pdp {
+          grid-template-columns: 1fr;
+          padding: 14px 16px;
+          gap: 20px;
+        }
+        .gal {
+          grid-template-columns: 1fr 1fr;
+          gap: 5px;
+        }
+        .gal figure:first-child {
+          aspect-ratio: 4/5;
+        }
+        .info h1 {
+          font-size: 20px;
+        }
+        .sizes {
+          gap: 5px;
+        }
+        .row-atc .btn.btn--block {
+          padding: 14px;
+        }
+        .wish {
+          width: 44px;
+        }
+
+        /* About */
+        .about {
+          padding: 36px 16px;
+          text-align: left;
+        }
+        .about h2 {
+          font-size: clamp(18px, 5vw, 22px);
+          text-align: left;
+        }
+
+        /* Social grid */
+        .social-grid {
           grid-template-columns: repeat(2, 1fr);
         }
-        .social-grid a:nth-child(2n + 1) {
+        .social-grid a + a {
           border-left: none;
+        }
+        .social-grid a:nth-child(2) {
+          border-left: 1px solid var(--line);
         }
         .social-grid a:nth-child(n + 3) {
           border-top: 1px solid var(--line);
         }
+        .social-header {
+          padding: 12px 16px;
+        }
+
+        /* UGC */
+        .ugc-section {
+          padding: 24px 16px;
+        }
+        .ugc-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 6px;
+        }
+
+        /* Footer */
+        .foot {
+          padding: 28px 16px 16px;
+        }
+        .foot-nav {
+          gap: 12px 16px;
+          font-size: 9.5px;
+        }
+
+        /* Collections/campaign */
+        .shop-strip {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          padding: 14px 16px 24px;
+        }
       }
+
       @media (prefers-reduced-motion: reduce) {
         * {
           transition: none !important;
@@ -1137,27 +2065,75 @@
     </div>
 
     <header class="hdr" id="home">
-      <nav class="mainnav" aria-label="Main">
-        <a
-          href="#shop"
-          title="Demo: New Arrivals reuses the Shop grid, filtered differently"
-          >New Arrivals</a
-        >
-        <a href="#shop">Shop</a>
-        <a
-          class="sale"
-          href="#shop"
-          title="Demo: Sale reuses the Shop grid, filtered differently"
-          >Sale</a
-        >
-        <a href="#collections">Collections</a>
-        <a href="#our-story">Our Story</a>
+      <!-- Hamburger (visible on mobile only) -->
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        aria-expanded="false"
+        aria-controls="mainNav"
+        aria-label="Open navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="mainnav" id="mainNav" aria-label="Main">
+        <div class="nav-drawer-head">
+          <img
+            src="../../assets/logo/1.png"
+            alt="Lisandra The Label"
+            class="nav-drawer-logo" />
+          <button
+            class="nav-drawer-close"
+            onclick="closeNav()"
+            aria-label="Close menu">
+            ✕
+          </button>
+        </div>
+        <div class="nav-links">
+          <a
+            href="#shop"
+            title="Demo: New Arrivals reuses the Shop grid, filtered differently"
+            >New Arrivals</a
+          >
+          <a href="#shop">Shop</a>
+          <a
+            class="sale"
+            href="#shop"
+            title="Demo: Sale reuses the Shop grid, filtered differently"
+            >Sale</a
+          >
+          <a href="#collections">Collections</a>
+          <a href="#our-story">Our Story</a>
+        </div>
+        <div class="nav-drawer-footer">
+          <div class="nav-drawer-secondary">
+            <a href="#" class="nav-sublink">Search</a>
+            <a href="#" class="nav-sublink">Account</a>
+            <a href="#" class="nav-sublink">Wishlist</a>
+          </div>
+          <div class="nav-drawer-social">
+            <a
+              href="https://instagram.com/lisandra.thelabel"
+              target="_blank"
+              rel="noopener"
+              >Instagram</a
+            >
+            <span>·</span>
+            <a href="#">WhatsApp</a>
+          </div>
+          <p class="nav-drawer-tagline">Handmade Resortwear · Bali</p>
+        </div>
       </nav>
-      <a class="wordmark" href="#home"
-        ><img
-          src="../../assets/logo/lisandra-wordmark.png"
+      <a class="wordmark" href="#home">
+        <img
+          src="../../assets/logo/1.png"
           alt="Lisandra The Label"
-      /></a>
+          class="logo-dark" />
+        <img
+          src="../../assets/logo/3.png"
+          alt="Lisandra The Label"
+          class="logo-light" />
+      </a>
       <div class="hdr-actions">
         <a href="#" aria-label="Search">
           <svg
@@ -1196,7 +2172,13 @@
       </div>
     </header>
 
-    <!-- hero: single full-bleed, centered text (ref: Chalay + v1 direction, kept smaller) -->
+    <!-- Mobile nav overlay -->
+    <div
+      class="mobile-nav-overlay"
+      id="mobileNavOverlay"
+      onclick="closeNav()"></div>
+
+    <!-- hero: single full-bleed, center text -->
     <section class="hero-full">
       <figure>
         <img
@@ -1436,6 +2418,21 @@
           <img
             src="https://lisandrathelabel.com/cdn/shop/files/1.jpg?v=1762245035&width=3840"
             alt="Resort mood, sea ripples" />
+          <div class="social-overlay">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="social-icon">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span class="social-caption">View Post</span>
+          </div>
         </a>
         <a
           href="https://instagram.com/lisandra.thelabel"
@@ -1445,6 +2442,21 @@
           <img
             src="https://lisandrathelabel.com/cdn/shop/files/Untitleddesign-4_0b602b36-76da-4b9d-9ff2-5ee34dd0014d.png?v=1754144532&width=3840"
             alt="Lisandra Kayu Bikini Set" />
+          <div class="social-overlay">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="social-icon">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span class="social-caption">View Post</span>
+          </div>
         </a>
         <a
           href="https://instagram.com/lisandra.thelabel"
@@ -1454,6 +2466,21 @@
           <img
             src="https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?v=1766110052&width=1800"
             alt="Knit texture flat lay" />
+          <div class="social-overlay">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="social-icon">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span class="social-caption">View Post</span>
+          </div>
         </a>
         <a
           href="https://instagram.com/lisandra.thelabel"
@@ -1463,6 +2490,21 @@
           <img
             src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=800"
             alt="Coastal editorial campaign" />
+          <div class="social-overlay">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="social-icon">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span class="social-caption">View Post</span>
+          </div>
         </a>
       </div>
     </section>
@@ -1780,7 +2822,7 @@
           Only 3 pieces left
         </p>
         <div class="row-atc">
-          <a class="btn btn--block" href="#">Add to cart</a>
+          <button class="btn btn--block" onclick="handleAddToBag(this)">Add to cart</button>
           <button class="wish" aria-label="Save to wishlist">♡</button>
         </div>
         <p class="assure">Ships next day · Free shipping across Indonesia</p>
@@ -1794,7 +2836,7 @@
           ><span class="pay">Mastercard</span>
         </div>
         <p class="spec specbar">
-          Hand-knit · 2 days per piece · 100% rayon · Made in Bali
+          HAND-KNIT · 2 DAYS PER PIECE · 100% RAYON · MADE IN BALI
         </p>
         <details open>
           <summary>Fit &amp; sizing</summary>
@@ -1834,23 +2876,40 @@
     </div>
 
     <section class="ugc-section">
-      <h3>As Styled By You</h3>
-      <div class="ugc-grid">
-        <figure>
-          <img
-            src="https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=600"
-            alt="UGC 1" />
-        </figure>
-        <figure>
-          <img
-            src="https://lisandrathelabel.com/cdn/shop/files/1_3b4c41c7-3a87-48c8-a258-5db23f395d1a.jpg?width=600"
-            alt="UGC 2" />
-        </figure>
-        <figure>
-          <img
-            src="https://lisandrathelabel.com/cdn/shop/files/2_1044f32f-d221-4278-a46b-053597603c32.jpg?width=600"
-            alt="UGC 3" />
-        </figure>
+      <h3>As Styled by You</h3>
+      <div class="ugc-slider-wrap">
+        <button class="ugc-slider-btn prev" onclick="slideUgcGallery(-1)" aria-label="Previous image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="ugc-grid" id="ugcGrid">
+          <figure onclick="openUgcModal(this.querySelector('img').src)">
+            <img
+              src="../../assets/pic/CAL03331.jpg"
+              alt="As styled by you 1"
+              loading="lazy" />
+          </figure>
+          <figure onclick="openUgcModal(this.querySelector('img').src)">
+            <img
+              src="../../assets/pic/IMG_4174.JPG"
+              alt="As styled by you 2"
+              loading="lazy" />
+          </figure>
+          <figure onclick="openUgcModal(this.querySelector('img').src)">
+            <img
+              src="../../assets/pic/IMG_7653.JPG"
+              alt="As styled by you 3"
+              loading="lazy" />
+          </figure>
+          <figure onclick="openUgcModal(this.querySelector('img').src)">
+            <img
+              src="../../assets/pic/IMG_9902.jpg"
+              alt="As styled by you 4"
+              loading="lazy" />
+          </figure>
+        </div>
+        <button class="ugc-slider-btn next" onclick="slideUgcGallery(1)" aria-label="Next image">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
     </section>
 
@@ -1889,60 +2948,277 @@
             margin-bottom: 24px;
             font-size: 24px;
           ">
-          Size Guide
+          Zaye Knit Maxi Dress Size Guide
         </h2>
-        <div class="size-toggle">
-          <button class="active" onclick="setSizeUnit('cm')" id="btn-cm">
-            cm
-          </button>
-          <button onclick="setSizeUnit('inch')" id="btn-inch">inch</button>
+
+        <h3
+          style="
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink60);
+            margin-bottom: 8px;
+          ">
+          Size Conversion Chart
+        </h3>
+        <table class="size-table" style="margin-bottom: 32px">
+          <thead>
+            <tr>
+              <th>Region</th>
+              <th>XS-S</th>
+              <th>M-L</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EU</td>
+              <td>34-36</td>
+              <td>38-42</td>
+            </tr>
+            <tr>
+              <td>UK</td>
+              <td>6-8</td>
+              <td>10-14</td>
+            </tr>
+            <tr>
+              <td>USA</td>
+              <td>2-4</td>
+              <td>6-10</td>
+            </tr>
+            <tr>
+              <td>AUS</td>
+              <td>8-10</td>
+              <td>12-16</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 8px;
+          ">
+          <h3
+            style="
+              font-size: 11px;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: var(--ink60);
+              margin: 0;
+            ">
+            Garment Measurements
+          </h3>
+          <div class="size-toggle">
+            <button class="active" onclick="setSizeUnit('cm')" id="btn-cm">
+              cm
+            </button>
+            <button onclick="setSizeUnit('inch')" id="btn-inch">inch</button>
+          </div>
         </div>
         <table class="size-table">
           <thead>
             <tr>
               <th>Size</th>
-              <th>Bust</th>
-              <th>Waist</th>
-              <th>Hip</th>
+              <th>XS-S</th>
+              <th>M-L</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>XS-S</strong></td>
+              <td>Dress Length</td>
               <td>
-                <span class="size-unit cm">80-86</span
-                ><span class="size-unit inch hidden">31.5-33.8</span>
+                <span class="size-unit cm">137</span
+                ><span class="size-unit inch hidden">53.9</span>
               </td>
               <td>
-                <span class="size-unit cm">60-66</span
-                ><span class="size-unit inch hidden">23.6-26.0</span>
-              </td>
-              <td>
-                <span class="size-unit cm">88-94</span
-                ><span class="size-unit inch hidden">34.6-37.0</span>
+                <span class="size-unit cm">139</span
+                ><span class="size-unit inch hidden">54.7</span>
               </td>
             </tr>
             <tr>
-              <td><strong>M-L</strong></td>
+              <td>Bust</td>
               <td>
-                <span class="size-unit cm">88-96</span
-                ><span class="size-unit inch hidden">34.6-37.8</span>
+                <span class="size-unit cm">85</span
+                ><span class="size-unit inch hidden">33.5</span>
               </td>
               <td>
-                <span class="size-unit cm">68-76</span
-                ><span class="size-unit inch hidden">26.8-29.9</span>
+                <span class="size-unit cm">95</span
+                ><span class="size-unit inch hidden">37.4</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Waist</td>
+              <td>
+                <span class="size-unit cm">70</span
+                ><span class="size-unit inch hidden">27.6</span>
               </td>
               <td>
-                <span class="size-unit cm">96-104</span
-                ><span class="size-unit inch hidden">37.8-40.9</span>
+                <span class="size-unit cm">80</span
+                ><span class="size-unit inch hidden">31.5</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Hips</td>
+              <td>
+                <span class="size-unit cm">95</span
+                ><span class="size-unit inch hidden">37.4</span>
+              </td>
+              <td>
+                <span class="size-unit cm">105</span
+                ><span class="size-unit inch hidden">41.3</span>
               </td>
             </tr>
           </tbody>
         </table>
+
+        <div
+          style="
+            margin-top: 24px;
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--ink60);
+          ">
+          <p style="margin: 0 0 4px 0; color: var(--cocoa)">
+            <strong>Model Sydney wears size XS-S</strong>
+          </p>
+          <ul style="margin: 0; padding-left: 16px">
+            <li>Height: 170cm / 5ft7</li>
+            <li>Bust: 83cm / 32.5"</li>
+            <li>Waist: 62cm / 24.5"</li>
+            <li>Hip: 89cm / 35"</li>
+          </ul>
+          <p style="margin: 12px 0 0 0">
+            <strong>Fit Notes:</strong> Fabric has a fluid fit that follows your
+            body’s curves and stretches up to 15 cm.
+          </p>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- UGC Shop The Look Modal -->
+    <dialog id="ugcModal" aria-labelledby="ugcModalTitle">
+      <div class="ugc-modal-inner">
+        <button
+          class="ugc-modal-close"
+          onclick="closeUgcModal()"
+          aria-label="Close shop the look">
+          ✕
+        </button>
+        <div class="ugc-image-wrap">
+          <button
+            class="ugc-nav-btn ugc-prev"
+            onclick="prevUgcImage()"
+            aria-label="Previous image">
+            ❮
+          </button>
+          <img id="ugcModalImage" src="" alt="As styled by you" />
+          <button
+            class="ugc-nav-btn ugc-next"
+            onclick="nextUgcImage()"
+            aria-label="Next image">
+            ❯
+          </button>
+        </div>
+        <div class="ugc-shop-wrap">
+          <h2 id="ugcModalTitle" class="ugc-shop-title">
+            Featured in this look
+          </h2>
+          <div class="ugc-product-card">
+            <img
+              src="https://lisandrathelabel.com/cdn/shop/files/1_3b4c41c7-3a87-48c8-a258-5db23f395d1a.jpg?width=600"
+              alt="Zaye Dress" />
+            <div class="ugc-product-info">
+              <h4>Zaye Knit Maxi Dress</h4>
+              <div class="price">Rp 1.999.000</div>
+            </div>
+          </div>
+          <div class="form-row" style="margin-bottom: 16px">
+            <select
+              aria-label="Select size"
+              style="
+                width: 100%;
+                border: 1px solid var(--line);
+                padding: 12px;
+                font-family: inherit;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                background: transparent;
+                cursor: pointer;
+              ">
+              <option value="">Select Size</option>
+              <option value="xs-s">XS-S</option>
+              <option value="m-l">M-L</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" style="width: 100%" onclick="handleAddToBag(this)">
+            Add to Bag
+          </button>
+        </div>
       </div>
     </dialog>
 
     <script>
+      // 10. Add to Bag Micro-Feedback
+      function handleAddToBag(btn, event) {
+        if (event) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        
+        const originalText = btn.innerText;
+        btn.innerText = "✓ Added!";
+        const origBg = btn.style.backgroundColor;
+        const origBorder = btn.style.borderColor;
+        const origColor = btn.style.color;
+        
+        btn.style.backgroundColor = "var(--ink60)";
+        btn.style.borderColor = "var(--ink60)";
+        btn.style.color = "#fff";
+        btn.style.pointerEvents = "none";
+        
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.backgroundColor = origBg;
+          btn.style.borderColor = origBorder;
+          btn.style.color = origColor;
+          btn.style.pointerEvents = "auto";
+        }, 1500);
+      }
+
+      // 1. Scroll Reveal Animation
+      document.addEventListener("DOMContentLoaded", () => {
+        // 3. Product Card Quick Add Injector
+        document.querySelectorAll(".card figure").forEach(fig => {
+          const actions = document.createElement("div");
+          actions.className = "card-actions";
+          actions.innerHTML = `<button class="quick-add-btn" onclick="handleAddToBag(this, event)">+ Quick Add</button>`;
+          fig.appendChild(actions);
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: "0px 0px -20px 0px" });
+
+        document.querySelectorAll(".cats3, .sec, .essence, .social-section, .foot, .ugc-section, .plp-head, .editorial-row, .shop-strip").forEach((el) => {
+          el.classList.add("reveal");
+          observer.observe(el);
+        });
+
+        document.querySelectorAll(".spotlight, .sustain").forEach((el) => {
+          el.classList.add("reveal-stagger");
+          observer.observe(el);
+        });
+      });
+
+      // Cart Drawer
       function openCart() {
         document.getElementById("cartDrawer").classList.add("open");
         document.getElementById("drawerOverlay").classList.add("open");
@@ -1951,12 +3227,110 @@
         document.getElementById("cartDrawer").classList.remove("open");
         document.getElementById("drawerOverlay").classList.remove("open");
       }
+
+      // Size Guide Modal
+      const sizeModal = document.getElementById("sizeModal");
       function openSizeModal() {
-        document.getElementById("sizeModal").showModal();
+        sizeModal.showModal();
+        document.body.style.overflow = "hidden";
       }
       function closeSizeModal() {
-        document.getElementById("sizeModal").close();
+        sizeModal.close();
+        document.body.style.overflow = "auto";
       }
+      sizeModal.addEventListener("click", (e) => {
+        const dialogDimensions = sizeModal.getBoundingClientRect();
+        if (
+          e.clientX < dialogDimensions.left ||
+          e.clientX > dialogDimensions.right ||
+          e.clientY < dialogDimensions.top ||
+          e.clientY > dialogDimensions.bottom
+        ) {
+          closeSizeModal();
+        }
+      });
+
+      // UGC Modal
+      const ugcModal = document.getElementById("ugcModal");
+      const ugcModalImage = document.getElementById("ugcModalImage");
+
+      const ugcImages = [
+        "../../assets/pic/CAL03331.jpg",
+        "../../assets/pic/IMG_4174.JPG",
+        "../../assets/pic/IMG_7653.JPG",
+        "../../assets/pic/IMG_9902.jpg",
+      ];
+      let currentUgcIndex = 0;
+
+      function openUgcModal(imgSrc) {
+        // Try to find the index of the clicked image to start the loop there
+        const filename = imgSrc.substring(imgSrc.lastIndexOf("/") + 1);
+        currentUgcIndex = ugcImages.findIndex((src) => src.includes(filename));
+        if (currentUgcIndex === -1) currentUgcIndex = 0;
+
+        ugcModalImage.src = ugcImages[currentUgcIndex];
+        ugcModal.showModal();
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeUgcModal() {
+        ugcModal.close();
+        document.body.style.overflow = "auto";
+      }
+
+      function changeUgcImage(direction) {
+        currentUgcIndex =
+          (currentUgcIndex + direction + ugcImages.length) % ugcImages.length;
+
+        // Smooth crossfade logic
+        ugcModalImage.classList.add("fading");
+        setTimeout(() => {
+          ugcModalImage.src = ugcImages[currentUgcIndex];
+          ugcModalImage.onload = () => {
+            ugcModalImage.classList.remove("fading");
+          };
+        }, 150); // half of CSS transition time
+      }
+
+      function prevUgcImage() {
+        changeUgcImage(-1);
+      }
+      function nextUgcImage() {
+        changeUgcImage(1);
+      }
+
+      // Close UGC modal when clicking backdrop
+      ugcModal.addEventListener("click", (e) => {
+        const dialogDimensions = ugcModal.getBoundingClientRect();
+        if (
+          e.clientX < dialogDimensions.left ||
+          e.clientX > dialogDimensions.right ||
+          e.clientY < dialogDimensions.top ||
+          e.clientY > dialogDimensions.bottom
+        ) {
+          closeUgcModal();
+        }
+      });
+
+      // UGC Main Gallery Slide / Looping
+      let ugcGalleryOffset = 0;
+      function slideUgcGallery(direction) {
+        ugcGalleryOffset = (ugcGalleryOffset + direction + ugcImages.length) % ugcImages.length;
+        const images = document.querySelectorAll("#ugcGrid figure img");
+        images.forEach((img, index) => {
+          img.style.opacity = "0.3";
+          img.style.transform = direction > 0 ? "translateX(-8px)" : "translateX(8px)";
+          setTimeout(() => {
+            const nextIdx = (ugcGalleryOffset + index) % ugcImages.length;
+            img.src = ugcImages[nextIdx];
+            img.onload = () => {
+              img.style.opacity = "1";
+              img.style.transform = "translateX(0)";
+            };
+          }, 140);
+        });
+      }
+
       function setSizeUnit(unit) {
         document
           .querySelectorAll(".size-toggle button")
@@ -1969,6 +3343,48 @@
         document
           .querySelectorAll(".size-unit.inch")
           .forEach((el) => el.classList.toggle("hidden", unit !== "inch"));
+      }
+
+      // Mobile Navigation Handler
+      const navToggle = document.getElementById("navToggle");
+      const mainNav = document.getElementById("mainNav");
+      const mobileNavOverlay = document.getElementById("mobileNavOverlay");
+
+      if (navToggle) {
+        navToggle.addEventListener("click", () => {
+          const isOpen = mainNav.classList.toggle("open");
+          navToggle.classList.toggle("open", isOpen);
+          mobileNavOverlay.classList.toggle("open", isOpen);
+          navToggle.setAttribute("aria-expanded", isOpen);
+        });
+      }
+
+      function closeNav() {
+        if (mainNav) mainNav.classList.remove("open");
+        if (navToggle) {
+          navToggle.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+        if (mobileNavOverlay) mobileNavOverlay.classList.remove("open");
+      }
+
+      // Auto-close mobile navigation when link is clicked
+      document.querySelectorAll(".mainnav a").forEach((link) => {
+        link.addEventListener("click", closeNav);
+      });
+
+      // Transparent Header Logic
+      const header = document.querySelector(".hdr");
+      if (header) {
+        function updateHeader() {
+          if (window.scrollY > 10) {
+            header.classList.remove("is-transparent");
+          } else {
+            header.classList.add("is-transparent");
+          }
+        }
+        window.addEventListener("scroll", updateHeader);
+        updateHeader(); // Init
       }
     </script>
   </body>

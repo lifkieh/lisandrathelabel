@@ -151,24 +151,40 @@
       "id": "v5",
       "file": "design-v5.html",
       "label": "v5",
-      "sublabel": "Revisi Brief Client",
+      "sublabel": "Revisi Brief Client, Tampilan Minimalis & UI/UX Interaktivitas Full Suite",
       "notes": {
-        "summary": "Revisi dari v4 berdasarkan brief lengkap client: Mengubah background menjadi #f8f8f0, memindahkan nav ke kiri, membesarkan logo, memperbarui banner free shipping, menyederhanakan teks hero, menambahkan detail produk (warna Zaye, stock badge merah 'Only X pieces left', info pengiriman, spesifikasi uppercase), galeri UGC 'as styled by you', size guide dengan converter cm/inch, serta section instagram 'follow us on social'.",
+        "summary": "Revisi menyeluruh sesuai arahan & brief terbaru client: Tampilan website dibuat lebih bersih, terang (warna #f8f8f0), dan minimalis ala brand resortwear premium (Faithfull / Asta Resort). Dilengkapi hero banner full-screen dengan animasi sinematik, navbar transparan interaktif, detail lengkap produk Zaye Dress, galeri UGC 'As Styled By You' 4-kolom dengan modal pop-up sinematik, serta penerapan tuntas 10-point UI/UX Interactivity Audit (scroll reveal, quick-add hover, smooth accordion, micro-feedback, dan transisi CTA seragam).",
         "added": [
-          "Navigasi rata kiri & logo lebih besar",
-          "Hero title & subtext disederhanakan",
-          "Warna background #f8f8f0 (lebih terang)",
-          "PDP: Swatch warna Cocoa/Beige/Sage untuk Zaye",
-          "PDP: Badges ramah lingkungan & stock limit badge merah",
-          "PDP: Craft specs uppercase",
-          "PDP: Size Guide pop-up (cm/inch)",
-          "PDP: Section As Styled By You",
-          "Instagram section Follow Us On Social"
+          "Hero banner foto full-screen sinematik dengan efek Ken Burns slow zoom (25s)",
+          "Navbar transparan elegan (otomatis solid & ganti warna logo saat di-scroll/hover)",
+          "Menu mobile (hamburger) compact & overlay terpotong bersih tanpa blur berat",
+          "Bar Free Shipping bagian paling atas dengan warna cokelat kontras",
+          "Navigasi menu di sebelah kiri & logo pas",
+          "Judul hero disederhanakan: 'Handmade Resortwear Made by Balinese Artisans'",
+          "PDP: 3 pilihan warna Zaye Dress (Cocoa, Beige, Sage)",
+          "PDP: Peringatan stok warna merah ('Only X pieces left')",
+          "PDP: Badge pengiriman cepat & packaging ramah lingkungan (tote bag & polymailer)",
+          "PDP: Cerita artisan & bahan (Hand-knit in Bali, 100% rayon, saran underwear)",
+          "PDP: Spesifikasi garmen UPPERCASE",
+          "PDP: Pop-up Size Guide dengan animasi fade-in/scale-up & toggle cm/inch",
+          "PDP: Accordion 'Fit & sizing' dengan transisi smooth height & animasi ikon +/– berputar",
+          "UGC: Layout 4-kolom desktop 'As Styled By You' dengan tombol panah slide & seamless looping",
+          "UGC: Pop-up modal foto pelanggan interaktif dengan navigasi crossfade foto",
+          "UI/UX Audit: Scroll-triggered reveal pada seluruh section halaman (IntersectionObserver)",
+          "UI/UX Audit: Floating '+ QUICK ADD' button pada product card hover",
+          "UI/UX Audit: Category tiles 3-kolom dengan hover zoom & label translateY",
+          "UI/UX Audit: Text stagger animation berurutan pada Spotlight & Sustainability strip",
+          "UI/UX Audit: Hover lift & subtle shadow pada kartu review pelanggan",
+          "UI/UX Audit: Animated underline effect pada navigasi footer",
+          "UI/UX Audit: Micro-feedback tombol ('✓ Added!') pada aksi Add to Cart / Add to Bag",
+          "UI/UX Audit: Standarisasi transisi tombol CTA & tactile click feedback (:active scale 0.96)",
+          "Section Instagram 'Follow Us On Social' dengan preview hover",
+          "Katalog: Penambahan filter & badge 'Best Sellers' pada produk favorit"
         ],
-        "effort": "3-5 hari",
+        "effort": "Selesai diterapkan secara tuntas dan siap di-review",
         "risks": [
-          "Membutuhkan aset foto tambahan untuk varian warna baru",
-          "Size guide perlu disesuaikan dengan data ukuran riil produk"
+          "Aset foto resmi untuk varian warna Beige & Sage masih menunggu file asli dari photoshoot studio client",
+          "Tabel ukuran size guide akan disesuaikan kembali saat data chart final per produk sudah dikirim oleh client"
         ]
       }
     }
