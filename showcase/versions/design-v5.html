@@ -62,14 +62,21 @@
         border: 0;
         background: none;
         cursor: pointer;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        transition:
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      button:active, .btn:active, .chip:active, .size:active, .wish:active, .more:active, .quick-add-btn:active {
+      button:active,
+      .btn:active,
+      .chip:active,
+      .size:active,
+      .wish:active,
+      .more:active,
+      .quick-add-btn:active {
         transform: scale(0.96) !important;
       }
       :focus-visible {
@@ -343,11 +350,12 @@
         font-weight: 500;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        transition:
+          transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         background: var(--cocoa);
         color: #fff;
       }
@@ -449,7 +457,10 @@
         text-transform: uppercase;
         border-bottom: 1px solid var(--cocoa);
         padding-bottom: 2px;
-        transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        transition:
+          transform 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease;
       }
       .more:hover {
         color: var(--clay);
@@ -590,7 +601,12 @@
         border: 1px solid var(--line);
         font-size: 11px;
         letter-spacing: 0.02em;
-        transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        transition:
+          transform 0.25s ease,
+          background 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
       }
       .chip:hover {
         border-color: var(--cocoa);
@@ -634,7 +650,7 @@
         max-width: 52ch;
         margin: 0 auto 20px;
         color: #4a382e;
-        font-size: 13px;
+        font-size: 14px;
       }
 
       /* ---------- sustainability strip ---------- */
@@ -646,7 +662,7 @@
         padding: 20px clamp(14px, 2vw, 26px);
         border-top: 1px solid var(--line);
         border-bottom: 1px solid var(--line);
-        font-size: 11px;
+        font-size: 13px;
         color: var(--ink60);
         text-align: center;
       }
@@ -793,7 +809,9 @@
         letter-spacing: 0.05em;
         border-bottom: 1px solid var(--cocoa);
         padding-bottom: 1px;
-        transition: transform 0.2s ease, opacity 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          opacity 0.2s ease;
       }
       .opt-head button:hover {
         opacity: 0.7;
@@ -810,7 +828,10 @@
         border: 1px solid var(--line);
         font-size: 12px;
         text-align: center;
-        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
       }
       .size:hover {
         border-color: var(--cocoa);
@@ -836,7 +857,11 @@
         display: grid;
         place-items: center;
         font-size: 15px;
-        transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          color 0.2s ease,
+          box-shadow 0.2s ease;
       }
       .wish:hover {
         border-color: var(--sale);
@@ -1437,7 +1462,9 @@
       .reveal {
         opacity: 0;
         transform: translateY(24px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        transition:
+          opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .reveal.active {
         opacity: 1;
@@ -1455,8 +1482,12 @@
         animation: kenBurns 25s ease-out forwards;
       }
       @keyframes kenBurns {
-        from { transform: scale(1); }
-        to { transform: scale(1.08); }
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.08);
+        }
       }
 
       /* ---------- 4. Category Tile Hover ---------- */
@@ -1508,7 +1539,7 @@
         padding: 10px;
         display: flex;
         justify-content: center;
-        background: linear-gradient(transparent, rgba(20,12,8,0.7));
+        background: linear-gradient(transparent, rgba(20, 12, 8, 0.7));
         transition: bottom 0.3s ease;
         z-index: 3;
       }
@@ -1525,7 +1556,9 @@
         letter-spacing: 0.05em;
         cursor: pointer;
         text-transform: uppercase;
-        transition: background 0.2s, color 0.2s;
+        transition:
+          background 0.2s,
+          color 0.2s;
         width: 100%;
       }
       .quick-add-btn:hover {
@@ -1539,7 +1572,9 @@
       .reveal-stagger.sustain > span {
         opacity: 0;
         transform: translateY(16px);
-        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        transition:
+          opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
       }
       .reveal-stagger.active figure,
       .reveal-stagger.active .spotlight-copy > *,
@@ -1548,15 +1583,31 @@
         transform: translateY(0);
       }
       /* Ensure image comes first */
-      .reveal-stagger.active figure { transition-delay: 0s; }
-      .reveal-stagger.active .spotlight-copy > *:nth-child(1), .reveal-stagger.active.sustain > span:nth-child(1) { transition-delay: 0.1s; }
-      .reveal-stagger.active .spotlight-copy > *:nth-child(2), .reveal-stagger.active.sustain > span:nth-child(2) { transition-delay: 0.25s; }
-      .reveal-stagger.active .spotlight-copy > *:nth-child(3), .reveal-stagger.active.sustain > span:nth-child(3) { transition-delay: 0.4s; }
-      .reveal-stagger.active .spotlight-copy > *:nth-child(4), .reveal-stagger.active.sustain > span:nth-child(4) { transition-delay: 0.55s; }
+      .reveal-stagger.active figure {
+        transition-delay: 0s;
+      }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(1),
+      .reveal-stagger.active.sustain > span:nth-child(1) {
+        transition-delay: 0.1s;
+      }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(2),
+      .reveal-stagger.active.sustain > span:nth-child(2) {
+        transition-delay: 0.25s;
+      }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(3),
+      .reveal-stagger.active.sustain > span:nth-child(3) {
+        transition-delay: 0.4s;
+      }
+      .reveal-stagger.active .spotlight-copy > *:nth-child(4),
+      .reveal-stagger.active.sustain > span:nth-child(4) {
+        transition-delay: 0.55s;
+      }
 
       /* ---------- 8. Review Cards Hover Lift ---------- */
       .rev {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
         background: #fff; /* to ensure shadow looks right */
       }
       .rev:hover {
@@ -1573,7 +1624,7 @@
         text-decoration: none;
       }
       .foot-nav a::after {
-        content: '';
+        content: "";
         position: absolute;
         width: 100%;
         transform: scaleX(0);
@@ -1598,7 +1649,10 @@
         font-size: 12.5px;
         color: #4a382e;
         max-width: 52ch;
-        transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.4s ease;
+        transition:
+          max-height 0.4s ease-out,
+          opacity 0.3s ease-out,
+          padding 0.4s ease;
       }
       details[open] div {
         max-height: 400px;
@@ -2839,7 +2893,9 @@
           Only 3 pieces left
         </p>
         <div class="row-atc">
-          <button class="btn btn--block" onclick="handleAddToBag(this)">Add to cart</button>
+          <button class="btn btn--block" onclick="handleAddToBag(this)">
+            Add to cart
+          </button>
           <button class="wish" aria-label="Save to wishlist">♡</button>
         </div>
         <p class="assure">Ships next day · Free shipping across Indonesia</p>
@@ -2895,8 +2951,18 @@
     <section class="ugc-section">
       <h3>As Styled by You</h3>
       <div class="ugc-slider-wrap">
-        <button class="ugc-slider-btn prev" onclick="slideUgcGallery(-1)" aria-label="Previous image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        <button
+          class="ugc-slider-btn prev"
+          onclick="slideUgcGallery(-1)"
+          aria-label="Previous image">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
         <div class="ugc-grid" id="ugcGrid">
           <figure onclick="openUgcModal(this.querySelector('img').src)">
@@ -2924,8 +2990,18 @@
               loading="lazy" />
           </figure>
         </div>
-        <button class="ugc-slider-btn next" onclick="slideUgcGallery(1)" aria-label="Next image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <button
+          class="ugc-slider-btn next"
+          onclick="slideUgcGallery(1)"
+          aria-label="Next image">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
     </section>
@@ -3170,7 +3246,10 @@
               <option value="m-l">M-L</option>
             </select>
           </div>
-          <button class="btn btn-primary" style="width: 100%" onclick="handleAddToBag(this)">
+          <button
+            class="btn btn-primary"
+            style="width: 100%"
+            onclick="handleAddToBag(this)">
             Add to Bag
           </button>
         </div>
@@ -3184,18 +3263,18 @@
           event.preventDefault();
           event.stopPropagation();
         }
-        
+
         const originalText = btn.innerText;
         btn.innerText = "✓ Added!";
         const origBg = btn.style.backgroundColor;
         const origBorder = btn.style.borderColor;
         const origColor = btn.style.color;
-        
+
         btn.style.backgroundColor = "var(--ink60)";
         btn.style.borderColor = "var(--ink60)";
         btn.style.color = "#fff";
         btn.style.pointerEvents = "none";
-        
+
         setTimeout(() => {
           btn.innerText = originalText;
           btn.style.backgroundColor = origBg;
@@ -3208,26 +3287,33 @@
       // 1. Scroll Reveal Animation
       document.addEventListener("DOMContentLoaded", () => {
         // 3. Product Card Quick Add Injector
-        document.querySelectorAll(".card figure").forEach(fig => {
+        document.querySelectorAll(".card figure").forEach((fig) => {
           const actions = document.createElement("div");
           actions.className = "card-actions";
           actions.innerHTML = `<button class="quick-add-btn" onclick="handleAddToBag(this, event)">+ Quick Add</button>`;
           fig.appendChild(actions);
         });
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("active");
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.15, rootMargin: "0px 0px -20px 0px" });
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -20px 0px" },
+        );
 
-        document.querySelectorAll(".cats3, .sec, .essence, .social-section, .foot, .ugc-section, .plp-head, .editorial-row, .shop-strip").forEach((el) => {
-          el.classList.add("reveal");
-          observer.observe(el);
-        });
+        document
+          .querySelectorAll(
+            ".cats3, .sec, .essence, .social-section, .foot, .ugc-section, .plp-head, .editorial-row, .shop-strip",
+          )
+          .forEach((el) => {
+            el.classList.add("reveal");
+            observer.observe(el);
+          });
 
         document.querySelectorAll(".spotlight, .sustain").forEach((el) => {
           el.classList.add("reveal-stagger");
@@ -3332,11 +3418,13 @@
       // UGC Main Gallery Slide / Looping
       let ugcGalleryOffset = 0;
       function slideUgcGallery(direction) {
-        ugcGalleryOffset = (ugcGalleryOffset + direction + ugcImages.length) % ugcImages.length;
+        ugcGalleryOffset =
+          (ugcGalleryOffset + direction + ugcImages.length) % ugcImages.length;
         const images = document.querySelectorAll("#ugcGrid figure img");
         images.forEach((img, index) => {
           img.style.opacity = "0.3";
-          img.style.transform = direction > 0 ? "translateX(-8px)" : "translateX(8px)";
+          img.style.transform =
+            direction > 0 ? "translateX(-8px)" : "translateX(8px)";
           setTimeout(() => {
             const nextIdx = (ugcGalleryOffset + index) % ugcImages.length;
             img.src = ugcImages[nextIdx];
