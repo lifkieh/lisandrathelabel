@@ -474,7 +474,9 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 2px;
-        transition: opacity 0.2s ease, transform 0.2s ease;
+        transition:
+          opacity 0.2s ease,
+          transform 0.2s ease;
       }
       .grid.grid--3col {
         grid-template-columns: repeat(3, 1fr) !important;
@@ -624,7 +626,9 @@
         background: transparent;
         border: 1px solid var(--line);
         cursor: pointer;
-        transition: transform 0.25s ease, border-color 0.25s ease;
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease;
       }
       .filter-btn:hover {
         border-color: var(--cocoa);
@@ -1678,6 +1682,287 @@
       }
       .size-unit.hidden {
         display: none;
+      }
+
+      /* ---------- Sticky Newsletter Teaser (Bottom-Left) ---------- */
+      .newsletter-teaser {
+        position: fixed;
+        bottom: 24px;
+        left: 24px;
+        z-index: 995;
+        display: inline-flex;
+        align-items: center;
+        background: #f8f8f0;
+        border: 1px solid #392319;
+        box-shadow: 0 10px 30px rgba(57, 35, 25, 0.15);
+        padding: 0;
+        transition:
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.3s ease,
+          box-shadow 0.3s ease;
+        animation: teaserSlideUp 0.6s 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+      @keyframes teaserSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .newsletter-teaser:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 36px rgba(57, 35, 25, 0.22);
+      }
+      .newsletter-teaser.hidden {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+        pointer-events: none;
+      }
+      .teaser-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 16px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        color: #392319;
+      }
+      .teaser-badge-icon {
+        font-size: 12px;
+        color: #c68642;
+        display: flex;
+        align-items: center;
+      }
+      .teaser-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+      }
+      .teaser-text span {
+        font-family: var(--body);
+        font-size: 9.5px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #8a5a44;
+      }
+      .teaser-text strong {
+        font-family: var(--body);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #392319;
+      }
+      .teaser-close {
+        background: transparent;
+        border: none;
+        border-left: 1px solid rgba(57, 35, 25, 0.15);
+        color: #392319;
+        padding: 14px 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.2s ease,
+          color 0.2s ease;
+      }
+      .teaser-close:hover {
+        background: rgba(57, 35, 25, 0.06);
+        color: #8a5a44;
+      }
+
+      /* ---------- Newsletter Modal (2-Column Luxury) ---------- */
+      .newsletter-modal-inner {
+        background: #f8f8f0;
+        width: 92vw;
+        max-width: 760px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        box-shadow: 0 25px 70px rgba(20, 12, 8, 0.35);
+      }
+      @media (min-width: 680px) {
+        .newsletter-modal-inner {
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          min-height: 460px;
+        }
+      }
+      .newsletter-image-wrap {
+        position: relative;
+        background: var(--sand);
+        min-height: 220px;
+      }
+      @media (min-width: 680px) {
+        .newsletter-image-wrap {
+          min-height: 100%;
+        }
+      }
+      .newsletter-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .newsletter-content-wrap {
+        padding: clamp(28px, 4vw, 44px) clamp(24px, 3.5vw, 36px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: #f8f8f0;
+      }
+      .newsletter-modal-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 10;
+        background: rgba(248, 248, 240, 0.85);
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #392319;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+      .newsletter-modal-close:hover {
+        background: #392319;
+        color: #f8f8f0;
+        transform: rotate(90deg);
+      }
+      .newsletter-subtitle-kicker {
+        font-family: var(--body);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #8a5a44;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .newsletter-modal-title {
+        font-family: var(--heading);
+        font-size: clamp(20px, 2.5vw, 24px);
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #392319;
+        margin: 0 0 12px;
+        line-height: 1.2;
+      }
+      .newsletter-modal-desc {
+        font-family: var(--body);
+        font-size: 12.5px;
+        line-height: 1.55;
+        color: #5a463c;
+        margin: 0 0 22px;
+        max-width: 34ch;
+      }
+      .newsletter-modal-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .newsletter-input-group {
+        width: 100%;
+      }
+      .newsletter-modal-form input[type="email"] {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #392319;
+        background: #fff;
+        font-family: var(--body);
+        font-size: 12.5px;
+        color: #392319;
+        outline: none;
+        border-radius: 0;
+        box-sizing: border-box;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .newsletter-modal-form input[type="email"]:focus {
+        border-color: #c68642;
+        box-shadow: 0 0 0 1px #c68642;
+      }
+      .newsletter-submit-btn {
+        width: 100%;
+        padding: 13px 20px;
+        background: #e0d9b5;
+        color: #392319;
+        border: 1px solid #392319;
+        font-family: var(--body);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+      .newsletter-submit-btn:hover {
+        background: #392319;
+        color: #f8f8f0;
+      }
+      .newsletter-privacy-note {
+        font-size: 10px;
+        color: #8c786e;
+        margin-top: 4px;
+      }
+      .newsletter-success-msg {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+      }
+      .newsletter-success-msg .success-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #392319;
+        color: #f8f8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .newsletter-success-msg h4 {
+        font-family: var(--heading);
+        font-size: 18px;
+        color: #392319;
+        margin: 0 0 8px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .newsletter-success-msg p {
+        font-size: 12.5px;
+        color: #5a463c;
+        margin: 0;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 600px) {
+        .newsletter-teaser {
+          bottom: 16px;
+          left: 16px;
+        }
       }
 
       /* ---------- 1. Scroll Reveal ---------- */
@@ -2902,7 +3187,13 @@
       <p>Hand-knit and crocheted in small batches by Balinese artisans.</p>
     </div>
     <div class="filterbar">
-      <button class="filter-btn" id="openFilterBtn" onclick="openFilter()" aria-label="Open filters" aria-haspopup="true" aria-expanded="false">
+      <button
+        class="filter-btn"
+        id="openFilterBtn"
+        onclick="openFilter()"
+        aria-label="Open filters"
+        aria-haspopup="true"
+        aria-expanded="false">
         FILTER +
       </button>
       <div class="filterbar-actions">
@@ -2949,7 +3240,10 @@
         </button>
       </div>
     </div>
-    <div class="grid" id="plpGrid" style="padding: 0 clamp(14px, 2vw, 26px) 34px">
+    <div
+      class="grid"
+      id="plpGrid"
+      style="padding: 0 clamp(14px, 2vw, 26px) 34px">
       <article class="card">
         <figure>
           <span class="best-seller-badge">Best Seller</span>
@@ -2965,9 +3259,24 @@
         <h4>Zaye Knit Maxi Dress</h4>
         <p class="price">Rp 1.999.000</p>
         <div class="sw-row" role="group" aria-label="Colour">
-          <button class="sw" style="background: #392319;" aria-pressed="true" aria-label="Cocoa" data-img="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700"></button>
-          <button class="sw" style="background: #efe9e5;" aria-pressed="false" aria-label="Ivory" data-img="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=700"></button>
-          <button class="sw" style="background: #8e9483;" aria-pressed="false" aria-label="Sage" data-img="https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=700"></button>
+          <button
+            class="sw"
+            style="background: #392319"
+            aria-pressed="true"
+            aria-label="Cocoa"
+            data-img="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700"></button>
+          <button
+            class="sw"
+            style="background: #efe9e5"
+            aria-pressed="false"
+            aria-label="Ivory"
+            data-img="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=700"></button>
+          <button
+            class="sw"
+            style="background: #8e9483"
+            aria-pressed="false"
+            aria-label="Sage"
+            data-img="https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=700"></button>
         </div>
       </article>
       <article class="card">
@@ -2982,8 +3291,18 @@
         <h4>Amara Knit Top</h4>
         <p class="price">Rp 899.000</p>
         <div class="sw-row" role="group" aria-label="Colour">
-          <button class="sw" style="background: #efe9e5;" aria-pressed="true" aria-label="Ivory" data-img="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"></button>
-          <button class="sw" style="background: #111;" aria-pressed="false" aria-label="Black" data-img="https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?width=700"></button>
+          <button
+            class="sw"
+            style="background: #efe9e5"
+            aria-pressed="true"
+            aria-label="Ivory"
+            data-img="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"></button>
+          <button
+            class="sw"
+            style="background: #111"
+            aria-pressed="false"
+            aria-label="Black"
+            data-img="https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?width=700"></button>
         </div>
       </article>
       <article class="card">
@@ -3517,46 +3836,199 @@
       </div>
     </dialog>
 
+    <!-- Sticky Newsletter Teaser (Bottom-Left) -->
+    <div
+      id="newsletterTeaser"
+      class="newsletter-teaser"
+      role="complementary"
+      aria-label="Special Welcome Offer">
+      <button
+        class="teaser-content"
+        onclick="openNewsletterModal()"
+        aria-label="Sign up and get 10% off">
+        <span class="teaser-badge-icon">✦</span>
+        <span class="teaser-text">
+          <span>Sign up &amp;</span>
+          <strong>Get 10% Off</strong>
+        </span>
+      </button>
+      <button
+        class="teaser-close"
+        onclick="dismissNewsletterTeaser(event)"
+        aria-label="Dismiss offer">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Newsletter Modal (2-Column Klaviyo Style) -->
+    <dialog id="newsletterModal" aria-labelledby="newsletterModalTitle">
+      <div class="newsletter-modal-inner">
+        <button
+          class="newsletter-modal-close"
+          onclick="closeNewsletterModal()"
+          aria-label="Close welcome modal">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="newsletter-image-wrap">
+          <img
+            src="https://lisandrathelabel.com/cdn/shop/files/2_9111b215-f06b-463a-993f-65bddfd70949.jpg?v=1766110053&width=1800"
+            alt="Lisandra Muse in Bali" />
+        </div>
+        <div class="newsletter-content-wrap">
+          <span class="newsletter-subtitle-kicker">Exclusive Welcome</span>
+          <h2 id="newsletterModalTitle" class="newsletter-modal-title">
+            BECOME A LISANDRA MUSE
+          </h2>
+          <p class="newsletter-modal-desc">
+            Sign up to be the first to know about new drops &amp; secret sales.
+            Plus, 10% off your first order.
+          </p>
+          <form
+            class="newsletter-modal-form"
+            id="newsletterForm"
+            onsubmit="handleNewsletterSubmit(event)">
+            <div class="newsletter-input-group">
+              <input
+                type="email"
+                id="newsletterEmailInput"
+                placeholder="Email address"
+                required
+                aria-label="Email address" />
+            </div>
+            <button
+              type="submit"
+              class="newsletter-submit-btn"
+              id="newsletterSubmitBtn">
+              SUBMIT
+            </button>
+            <div class="newsletter-privacy-note">
+              By subscribing you agree to our Terms &amp; Privacy Policy.
+            </div>
+          </form>
+          <div
+            class="newsletter-success-msg"
+            id="newsletterSuccessMsg"
+            style="display: none">
+            <div class="success-icon">✓</div>
+            <h4>YOU'RE ON THE LIST</h4>
+            <p>
+              Use code <strong>WELCOME10</strong> at checkout for 10% off your
+              first order.
+            </p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
     <!-- Filter Drawer (Phase 3) -->
-    <div class="filter-overlay" id="filterOverlay" aria-hidden="true" onclick="closeFilter()"></div>
-    <div class="filter-drawer" id="filterDrawer" role="dialog" aria-modal="true" aria-label="Product Filters">
+    <div
+      class="filter-overlay"
+      id="filterOverlay"
+      aria-hidden="true"
+      onclick="closeFilter()"></div>
+    <div
+      class="filter-drawer"
+      id="filterDrawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Product Filters">
       <div class="filter-drawer-header">
         <h2>Filter &amp; Sort</h2>
-        <button class="filter-close-btn" id="closeFilterBtn" onclick="closeFilter()" aria-label="Close filters">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+        <button
+          class="filter-close-btn"
+          id="closeFilterBtn"
+          onclick="closeFilter()"
+          aria-label="Close filters">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round">
+            <line x1="6" y1="6" x2="18" y2="18" />
+            <line x1="18" y1="6" x2="6" y2="18" />
+          </svg>
         </button>
       </div>
       <div class="filter-drawer-content">
         <div class="filter-group">
           <h3>Category</h3>
-          <label class="filter-checkbox"><input type="checkbox" checked /> All</label>
-          <label class="filter-checkbox"><input type="checkbox" /> Dresses</label>
+          <label class="filter-checkbox"
+            ><input type="checkbox" checked /> All</label
+          >
+          <label class="filter-checkbox"
+            ><input type="checkbox" /> Dresses</label
+          >
           <label class="filter-checkbox"><input type="checkbox" /> Sets</label>
           <label class="filter-checkbox"><input type="checkbox" /> Tops</label>
-          <label class="filter-checkbox"><input type="checkbox" /> Bottoms</label>
+          <label class="filter-checkbox"
+            ><input type="checkbox" /> Bottoms</label
+          >
           <label class="filter-checkbox"><input type="checkbox" /> Swim</label>
         </div>
         <div class="filter-group">
           <h3>Color</h3>
           <div class="filter-color-grid">
-            <button class="filter-color-btn" style="background: #efe9e5;" aria-label="Ivory"></button>
-            <button class="filter-color-btn" style="background: #d6ccbd;" aria-label="Sand"></button>
-            <button class="filter-color-btn" style="background: #8e9483;" aria-label="Sage"></button>
-            <button class="filter-color-btn" style="background: #392319;" aria-label="Cocoa"></button>
-            <button class="filter-color-btn" style="background: #111;" aria-label="Black"></button>
+            <button
+              class="filter-color-btn"
+              style="background: #efe9e5"
+              aria-label="Ivory"></button>
+            <button
+              class="filter-color-btn"
+              style="background: #d6ccbd"
+              aria-label="Sand"></button>
+            <button
+              class="filter-color-btn"
+              style="background: #8e9483"
+              aria-label="Sage"></button>
+            <button
+              class="filter-color-btn"
+              style="background: #392319"
+              aria-label="Cocoa"></button>
+            <button
+              class="filter-color-btn"
+              style="background: #111"
+              aria-label="Black"></button>
           </div>
         </div>
         <div class="filter-group">
           <h3>Availability</h3>
-          <label class="filter-checkbox"><input type="checkbox" checked /> In Stock</label>
-          <label class="filter-checkbox"><input type="checkbox" /> Pre-order</label>
+          <label class="filter-checkbox"
+            ><input type="checkbox" checked /> In Stock</label
+          >
+          <label class="filter-checkbox"
+            ><input type="checkbox" /> Pre-order</label
+          >
         </div>
       </div>
       <div class="filter-drawer-footer">
-        <button class="filter-apply-btn" onclick="closeFilter()">Apply Filters</button>
+        <button class="filter-apply-btn" onclick="closeFilter()">
+          Apply Filters
+        </button>
       </div>
     </div>
-    
+
     <script>
       // 10. Add to Bag Micro-Feedback
       function handleAddToBag(btn, event) {
@@ -3844,12 +4316,12 @@
           swatch.addEventListener("mouseenter", (e) => {
             const card = e.target.closest(".card");
             const mainImg = card.querySelector("img");
-            
+
             // Only save if not already saved during this hover session
             if (!card.dataset.origImg) {
               card.dataset.origImg = mainImg.src;
             }
-            
+
             const newSrc = e.target.getAttribute("data-img");
             if (newSrc) {
               mainImg.style.opacity = "0.5"; // simple flash effect
@@ -3857,16 +4329,18 @@
                 mainImg.src = newSrc;
                 mainImg.style.opacity = "1";
               }, 150);
-              
+
               // update pressed state visually
-              card.querySelectorAll(".sw").forEach(s => s.setAttribute("aria-pressed", "false"));
+              card
+                .querySelectorAll(".sw")
+                .forEach((s) => s.setAttribute("aria-pressed", "false"));
               e.target.setAttribute("aria-pressed", "true");
             }
           });
         });
-        
+
         // Restore original image when mouse leaves the card entirely
-        document.querySelectorAll(".card").forEach(card => {
+        document.querySelectorAll(".card").forEach((card) => {
           card.addEventListener("mouseleave", (e) => {
             if (card.dataset.origImg) {
               const mainImg = card.querySelector("img");
@@ -3884,6 +4358,63 @@
           });
         });
       });
+
+      // Newsletter Teaser & Modal Handlers
+      const newsletterModal = document.getElementById("newsletterModal");
+      const newsletterTeaser = document.getElementById("newsletterTeaser");
+      const newsletterForm = document.getElementById("newsletterForm");
+      const newsletterSuccessMsg = document.getElementById(
+        "newsletterSuccessMsg",
+      );
+
+      function openNewsletterModal() {
+        if (newsletterModal) {
+          newsletterModal.showModal();
+          document.body.style.overflow = "hidden";
+        }
+      }
+
+      function closeNewsletterModal() {
+        if (newsletterModal) {
+          newsletterModal.close();
+          document.body.style.overflow = "auto";
+        }
+      }
+
+      function dismissNewsletterTeaser(e) {
+        if (e) e.stopPropagation();
+        if (newsletterTeaser) {
+          newsletterTeaser.classList.add("hidden");
+        }
+      }
+
+      function handleNewsletterSubmit(e) {
+        e.preventDefault();
+        const emailInput = document.getElementById("newsletterEmailInput");
+        if (emailInput && emailInput.value) {
+          if (newsletterForm) newsletterForm.style.display = "none";
+          if (newsletterSuccessMsg) newsletterSuccessMsg.style.display = "flex";
+          setTimeout(() => {
+            closeNewsletterModal();
+            dismissNewsletterTeaser();
+          }, 3500);
+        }
+      }
+
+      // Close Newsletter modal on backdrop click
+      if (newsletterModal) {
+        newsletterModal.addEventListener("click", (e) => {
+          const dialogDimensions = newsletterModal.getBoundingClientRect();
+          if (
+            e.clientX < dialogDimensions.left ||
+            e.clientX > dialogDimensions.right ||
+            e.clientY < dialogDimensions.top ||
+            e.clientY > dialogDimensions.bottom
+          ) {
+            closeNewsletterModal();
+          }
+        });
+      }
     </script>
   </body>
 </html>
