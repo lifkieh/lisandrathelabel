@@ -734,7 +734,7 @@
       .gal {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 7px;
+        gap: 0;
       }
       .gal figure {
         margin: 0;
@@ -744,6 +744,17 @@
       .gal figure:first-child {
         grid-column: 1/-1;
         aspect-ratio: 4/5;
+      }
+      .info {
+        position: sticky;
+        top: 80px;
+        align-self: start;
+        max-height: calc(100vh - 95px);
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      .info::-webkit-scrollbar {
+        display: none;
       }
       .info h1 {
         font-family: var(--heading);
@@ -1831,6 +1842,12 @@
         }
         .gal {
           grid-template-columns: 1fr 1fr;
+          gap: 0;
+        }
+        .info {
+          position: static;
+          max-height: none;
+          overflow-y: visible;
         }
         .gal figure:first-child {
           aspect-ratio: 3/2;
@@ -1981,7 +1998,7 @@
         }
         .gal {
           grid-template-columns: 1fr 1fr;
-          gap: 5px;
+          gap: 0;
         }
         .gal figure:first-child {
           aspect-ratio: 4/5;
