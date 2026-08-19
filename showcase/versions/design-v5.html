@@ -925,11 +925,176 @@
         color: var(--ink60);
       }
 
-      /* ---------- footer ---------- */
+      /* ---------- footer + muse circle (integrated) ---------- */
       .foot {
         background: var(--cocoa);
         color: #eee6d9;
-        padding: clamp(26px, 4vw, 42px) clamp(14px, 2vw, 26px) 20px;
+        padding: clamp(38px, 4.5vw, 56px) clamp(16px, 3vw, 32px) 24px;
+        text-align: center;
+      }
+
+      /* Muse circle — integrated top zone with compact max-width */
+      .foot-muse {
+        max-width: 860px;
+        margin: 0 auto clamp(32px, 3.8vw, 46px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(24px, 3.5vw, 48px);
+        align-items: center;
+        text-align: left;
+      }
+      @media (max-width: 768px) {
+        .foot-muse {
+          grid-template-columns: 1fr;
+          text-align: center;
+          max-width: 480px;
+        }
+      }
+      .foot-muse-copy {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .muse-kicker {
+        font-family: var(--body);
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: #c68642;
+        display: block;
+      }
+      .foot-muse-copy h2 {
+        font-family: var(--display2);
+        font-size: clamp(20px, 2.4vw, 27px);
+        font-weight: 400;
+        font-style: italic;
+        color: #f8f8f0;
+        margin: 0;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+      }
+      .foot-muse-copy p {
+        font-family: var(--body);
+        font-size: 12px;
+        color: rgba(248, 248, 240, 0.65);
+        margin: 0;
+        line-height: 1.55;
+      }
+      .foot-muse-form-zone {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .muse-form-inline {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .muse-input {
+        width: 100%;
+        padding: 13px 16px;
+        border: 1px solid rgba(248, 248, 240, 0.28);
+        background: rgba(248, 248, 240, 0.05);
+        font-family: var(--body);
+        font-size: 11.5px;
+        letter-spacing: 0.04em;
+        color: #f8f8f0;
+        outline: none;
+        transition:
+          border-color 0.25s ease,
+          background 0.25s ease;
+        box-sizing: border-box;
+      }
+      .muse-input::placeholder {
+        color: rgba(248, 248, 240, 0.38);
+        letter-spacing: 0.05em;
+      }
+      .muse-input:focus {
+        border-color: rgba(248, 248, 240, 0.7);
+        background: rgba(248, 248, 240, 0.09);
+      }
+      .muse-submit {
+        width: 100%;
+        padding: 13px 20px;
+        background: #f8f8f0;
+        color: var(--cocoa);
+        font-family: var(--body);
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        border: 1px solid #f8f8f0;
+        cursor: pointer;
+        margin-top: 8px;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
+      .muse-submit:hover {
+        background: transparent;
+        color: #f8f8f0;
+        border-color: rgba(248, 248, 240, 0.6);
+      }
+      @media (min-width: 480px) {
+        .muse-form-inline {
+          flex-direction: row;
+        }
+        .muse-input {
+          flex: 1;
+          border-right: none;
+        }
+        .muse-submit {
+          margin-top: 0;
+          width: auto;
+          flex-shrink: 0;
+        }
+      }
+      .muse-disclaimer {
+        font-family: var(--body);
+        font-size: 10px;
+        color: rgba(248, 248, 240, 0.35);
+        letter-spacing: 0.02em;
+        line-height: 1.4;
+        margin: 0;
+      }
+      .muse-disclaimer a {
+        color: rgba(248, 248, 240, 0.5);
+        text-decoration: underline;
+      }
+      .muse-disclaimer a:hover {
+        color: rgba(248, 248, 240, 0.8);
+      }
+      /* Muse circle success state */
+      .muse-success {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px 0 2px;
+      }
+      .muse-success-check {
+        font-size: 18px;
+        color: #c68642;
+      }
+      .muse-success p {
+        font-family: var(--display2);
+        font-size: 14px;
+        font-style: italic;
+        color: #f8f8f0;
+        margin: 0;
+      }
+      .muse-success small {
+        font-family: var(--body);
+        font-size: 10.5px;
+        color: rgba(248, 248, 240, 0.5);
+        display: block;
+      }
+
+      /* Nav + bottom zone */
+      .foot-lower {
+        padding: 0;
+        text-align: center;
       }
       .foot-nav {
         display: flex;
@@ -949,7 +1114,7 @@
         text-decoration: underline;
       }
       .foot-btm {
-        border-top: 1px solid #5a4638;
+        border-top: 1px solid rgba(248, 248, 240, 0.1);
         padding-top: 14px;
         display: flex;
         flex-wrap: wrap;
@@ -1184,7 +1349,7 @@
       .editorial-text p {
         font-family: var(--display2);
         font-style: italic;
-        font-size: clamp(16px, 1.8vw, 21px);
+        font-size: clamp(16px, 1.8vw, 28px);
         line-height: 1.45;
         margin: 0;
         max-width: 34ch;
@@ -1265,27 +1430,94 @@
         color: var(--paper);
       }
 
-      /* UGC Grid (As Styled By You) */
-      .ugc-section {
-        padding: clamp(40px, 6vw, 80px) 0;
+      /* === Section Editorial Header (Minimalist & Centered) === */
+      .section-editorial-head {
         text-align: center;
-        background-color: var(--bg);
+        margin-bottom: clamp(20px, 3.5vw, 36px);
+        padding: 0 clamp(14px, 2vw, 26px);
       }
-      .ugc-section h3 {
+      .editorial-kicker {
+        font-family: var(--body);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #8a5a44;
+        display: block;
+        margin-bottom: 6px;
+      }
+      .section-editorial-head h3 {
         font-family: var(--display2);
-        font-size: clamp(28px, 4vw, 40px);
+        font-size: clamp(26px, 3.8vw, 38px);
         font-weight: 400;
-        margin-bottom: clamp(24px, 4vw, 40px);
+        font-style: italic;
         color: var(--ink);
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+
+      /* === Grid Slider Wrap & In-Grid Docked Navigation Buttons === */
+      .grid-slider-wrap {
+        position: relative;
+        width: 100%;
+      }
+      .grid-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(248, 248, 240, 0.92);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(57, 35, 25, 0.18);
+        box-shadow: 0 6px 20px rgba(30, 18, 10, 0.16);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 20;
+        color: #392319;
+        transition:
+          background 0.25s ease,
+          color 0.25s ease,
+          transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+          box-shadow 0.25s ease,
+          border-color 0.25s ease;
+        padding: 0;
+      }
+      .grid-nav-btn:hover {
+        background: #392319;
+        color: #f8f8f0;
+        border-color: #392319;
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 10px 28px rgba(30, 18, 10, 0.26);
+      }
+      .grid-nav-btn.prev {
+        left: clamp(14px, 2.5vw, 36px);
+      }
+      .grid-nav-btn.next {
+        right: clamp(14px, 2.5vw, 36px);
+      }
+      .grid-nav-btn svg {
+        width: 18px;
+        height: 18px;
+        stroke-width: 1.8;
+      }
+
+      /* === As Styled by You (UGC) === */
+      .ugc-section {
+        padding: clamp(38px, 5.5vw, 68px) 0;
+        background-color: var(--bg);
       }
       .ugc-grid {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
-        gap: 4px;
+        gap: 2px;
         padding: 0 clamp(14px, 2vw, 26px);
-        /* Hide scrollbar */
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
@@ -1293,21 +1525,66 @@
         display: none;
       }
       .ugc-grid figure {
-        flex: 0 0 75vw; /* Shows 75% of screen width on mobile, so the next image peeks */
+        flex: 0 0 75vw;
         scroll-snap-align: center;
         margin: 0;
         aspect-ratio: 4/5;
         background: var(--sand);
         overflow: hidden;
         cursor: pointer;
+        position: relative;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
       }
       .ugc-grid figure img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition:
-          transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-          opacity 0.4s ease;
+          transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+          filter 0.5s ease;
+        display: block;
+      }
+      .ugc-hover-reveal {
+        position: absolute;
+        inset: 0;
+        background: rgba(30, 18, 10, 0.52);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+      }
+      .ugc-hover-reveal .ugc-username {
+        font-family: var(--body);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(248, 248, 240, 0.75);
+        transform: translateY(8px);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+      }
+      .ugc-hover-reveal .ugc-shop-link {
+        font-family: var(--body);
+        font-size: 10.5px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #f8f8f0;
+        border-bottom: 1px solid rgba(248, 248, 240, 0.6);
+        padding-bottom: 2px;
+        transform: translateY(8px);
+        transition:
+          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s,
+          border-color 0.25s ease;
+      }
+      .ugc-hover-reveal .ugc-shop-link:hover {
+        border-color: #f8f8f0;
       }
 
       @media (min-width: 900px) {
@@ -1315,6 +1592,7 @@
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           overflow-x: visible;
+          padding: 0;
         }
         .ugc-grid figure {
           flex: none;
@@ -1322,50 +1600,136 @@
           scroll-snap-align: none;
         }
         .ugc-grid figure:hover img {
-          transform: scale(1.03);
-          opacity: 0.95;
+          transform: scale(1.04);
+          filter: brightness(0.88);
+        }
+        .ugc-grid figure:hover .ugc-hover-reveal {
+          opacity: 1;
+          pointer-events: auto;
+        }
+        .ugc-grid figure:hover .ugc-hover-reveal .ugc-username,
+        .ugc-grid figure:hover .ugc-hover-reveal .ugc-shop-link {
+          transform: translateY(0);
         }
       }
 
-      /* UGC Main Slider Navigation Buttons */
-      .ugc-slider-wrap {
-        position: relative;
-        width: 100%;
+      /* === You May Also Like (YMAL) === */
+      .ymal-section {
+        padding: clamp(38px, 5.5vw, 68px) 0;
+        background: var(--paper);
+        border-top: 1px solid var(--line);
       }
-      .ugc-slider-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.85);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      .ymal-grid {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        gap: 2px;
+        padding: 0 clamp(14px, 2vw, 26px);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .ymal-grid::-webkit-scrollbar {
+        display: none;
+      }
+      .ymal-card {
+        flex: 0 0 75vw;
+        scroll-snap-align: center;
+        position: relative;
+        overflow: hidden;
+        background: var(--sand);
+        aspect-ratio: 4/5;
         cursor: pointer;
-        z-index: 5;
-        color: var(--ink);
-        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        padding: 0;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
       }
-      .ugc-slider-btn:hover {
-        background: #ffffff;
-        transform: translateY(-50%) scale(1.08);
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      .ymal-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+          filter 0.5s ease;
       }
-      .ugc-slider-btn.prev {
-        left: clamp(20px, 2.5vw, 36px);
+      .ymal-info-panel {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(248, 248, 240, 0.96);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        padding: 14px 16px 16px;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
       }
-      .ugc-slider-btn.next {
-        right: clamp(20px, 2.5vw, 36px);
+      .ymal-info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
       }
-      .ugc-slider-btn svg {
-        width: 20px;
-        height: 20px;
-        stroke-width: 1.5;
+      .ymal-info-name {
+        font-family: var(--body);
+        font-size: 11.5px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: var(--cocoa);
+      }
+      .ymal-info-price {
+        font-family: var(--body);
+        font-size: 11px;
+        color: #7a6258;
+        letter-spacing: 0.02em;
+      }
+      .ymal-sizes {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .ymal-size-btn {
+        font-family: var(--body);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 1px solid var(--line);
+        padding: 4px 9px;
+        background: transparent;
+        color: var(--cocoa);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .ymal-size-btn:hover {
+        background: #392319;
+        color: #f8f8f0;
+        border-color: #392319;
+      }
+
+      @media (min-width: 900px) {
+        .ymal-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          overflow-x: visible;
+          padding: 0;
+        }
+        .ymal-card {
+          flex: none;
+          width: auto;
+          scroll-snap-align: none;
+        }
+        .ymal-card:hover img {
+          transform: scale(1.04);
+          filter: brightness(0.92);
+        }
+        .ymal-card:hover .ymal-info-panel {
+          transform: translateY(0);
+        }
       }
 
       /* Social Grid (Faithfull the Brand editorial style) */
@@ -3083,19 +3447,60 @@
     </section>
 
     <footer class="foot">
-      <img
-        class="foot-logo"
-        src="../assets/logo/lisandra-wordmark-white.png"
-        alt="Lisandra The Label" />
-      <nav class="foot-nav" aria-label="Footer">
-        <a href="#shop">New Arrivals</a>
-        <a href="#shop">Shop</a>
-        <a href="#shop">Sale</a>
-        <a href="#collections">Collections</a>
-        <a href="#our-story">Our Story</a>
-      </nav>
-      <div class="foot-btm">
-        <span>© 2026 Lisandra The Label · Made in Bali</span>
+      <!-- Muse Circle: Newsletter opt-in zone —— integrated as top of footer -->
+      <div class="foot-muse" id="museCircle">
+        <div class="foot-muse-copy">
+          <span class="muse-kicker">Become a Muse</span>
+          <h2>Your first piece,<br />with 10% off.</h2>
+          <p>
+            Join our inner circle for private releases, secret drops, and 10%
+            off your first artisanal piece.
+          </p>
+        </div>
+        <div class="foot-muse-form-zone">
+          <div id="museFormWrap">
+            <form
+              class="muse-form-inline"
+              id="museForm"
+              onsubmit="submitMuseForm(event)">
+              <input
+                type="email"
+                class="muse-input"
+                id="museEmail"
+                placeholder="Your email address"
+                autocomplete="email"
+                required />
+              <button type="submit" class="muse-submit">Claim 10% Off</button>
+            </form>
+          </div>
+          <div class="muse-success" id="museSuccess">
+            <span class="muse-success-check">✦</span>
+            <p>Welcome to the inner circle.</p>
+            <small>Your 10% code is on its way to your inbox.</small>
+          </div>
+          <p class="muse-disclaimer">
+            By joining, you agree to our
+            <a href="#">Privacy Policy</a>. Unsubscribe anytime.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer lower zone: logo, nav, copyright -->
+      <div class="foot-lower">
+        <img
+          class="foot-logo"
+          src="../assets/logo/lisandra-wordmark-white.png"
+          alt="Lisandra The Label" />
+        <nav class="foot-nav" aria-label="Footer">
+          <a href="#shop">New Arrivals</a>
+          <a href="#shop">Shop</a>
+          <a href="#shop">Sale</a>
+          <a href="#collections">Collections</a>
+          <a href="#our-story">Our Story</a>
+        </nav>
+        <div class="foot-btm">
+          <span>© 2026 Lisandra The Label · Made in Bali</span>
+        </div>
       </div>
     </footer>
 
@@ -3528,13 +3933,17 @@
       </div>
     </div>
 
-    <section class="ugc-section">
-      <h3>As Styled by You</h3>
-      <div class="ugc-slider-wrap">
+    <!-- As Styled by You Section -->
+    <section class="ugc-section" id="ugcSection">
+      <div class="section-editorial-head">
+        <span class="editorial-kicker">Community &amp; Styling</span>
+        <h3>As Styled by You</h3>
+      </div>
+      <div class="grid-slider-wrap">
         <button
-          class="ugc-slider-btn prev"
+          class="grid-nav-btn prev"
           onclick="slideUgcGallery(-1)"
-          aria-label="Previous image">
+          aria-label="Previous styled looks">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -3550,30 +3959,148 @@
               src="../assets/pic/CAL03331.jpg"
               alt="As styled by you 1"
               loading="lazy" />
+            <div class="ugc-hover-reveal" aria-hidden="true">
+              <span class="ugc-username">@lisandramuse</span>
+              <span class="ugc-shop-link">Shop the Look</span>
+            </div>
           </figure>
           <figure onclick="openUgcModal(this.querySelector('img').src)">
             <img
               src="../assets/pic/IMG_4174.JPG"
               alt="As styled by you 2"
               loading="lazy" />
+            <div class="ugc-hover-reveal" aria-hidden="true">
+              <span class="ugc-username">@lisandramuse</span>
+              <span class="ugc-shop-link">Shop the Look</span>
+            </div>
           </figure>
           <figure onclick="openUgcModal(this.querySelector('img').src)">
             <img
               src="../assets/pic/IMG_7653.JPG"
               alt="As styled by you 3"
               loading="lazy" />
+            <div class="ugc-hover-reveal" aria-hidden="true">
+              <span class="ugc-username">@lisandramuse</span>
+              <span class="ugc-shop-link">Shop the Look</span>
+            </div>
           </figure>
           <figure onclick="openUgcModal(this.querySelector('img').src)">
             <img
               src="../assets/pic/IMG_9902.jpg"
               alt="As styled by you 4"
               loading="lazy" />
+            <div class="ugc-hover-reveal" aria-hidden="true">
+              <span class="ugc-username">@lisandramuse</span>
+              <span class="ugc-shop-link">Shop the Look</span>
+            </div>
           </figure>
         </div>
         <button
-          class="ugc-slider-btn next"
+          class="grid-nav-btn next"
           onclick="slideUgcGallery(1)"
-          aria-label="Next image">
+          aria-label="Next styled looks">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- You May Also Like Section -->
+    <section class="ymal-section" id="ymalSection">
+      <div class="section-editorial-head">
+        <span class="editorial-kicker">Curated Recommendations</span>
+        <h3>You May Also Like</h3>
+      </div>
+      <div class="grid-slider-wrap">
+        <button
+          class="grid-nav-btn prev"
+          onclick="slideYmal(-1)"
+          aria-label="Previous recommendations">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="ymal-grid" id="ymalGrid">
+          <div class="ymal-card">
+            <img
+              src="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700"
+              alt="Zaye Knit Maxi Dress"
+              loading="lazy" />
+            <div class="ymal-info-panel">
+              <div class="ymal-info-row">
+                <span class="ymal-info-name">Zaye Knit Maxi Dress</span>
+                <span class="ymal-info-price">Rp 1.999.000</span>
+              </div>
+              <div class="ymal-sizes">
+                <button class="ymal-size-btn">XS-S</button>
+                <button class="ymal-size-btn">M-L</button>
+              </div>
+            </div>
+          </div>
+          <div class="ymal-card">
+            <img
+              src="https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700"
+              alt="Amara Knit Top"
+              loading="lazy" />
+            <div class="ymal-info-panel">
+              <div class="ymal-info-row">
+                <span class="ymal-info-name">Amara Knit Top</span>
+                <span class="ymal-info-price">Rp 899.000</span>
+              </div>
+              <div class="ymal-sizes">
+                <button class="ymal-size-btn">XS-S</button>
+                <button class="ymal-size-btn">M-L</button>
+              </div>
+            </div>
+          </div>
+          <div class="ymal-card">
+            <img
+              src="https://lisandrathelabel.com/cdn/shop/collections/Untitled_design-18.jpg?width=700"
+              alt="Mentari Knit Long Dress"
+              loading="lazy" />
+            <div class="ymal-info-panel">
+              <div class="ymal-info-row">
+                <span class="ymal-info-name">Mentari Knit Long Dress</span>
+                <span class="ymal-info-price">Rp 1.499.000</span>
+              </div>
+              <div class="ymal-sizes">
+                <button class="ymal-size-btn">XS-S</button>
+                <button class="ymal-size-btn">M-L</button>
+              </div>
+            </div>
+          </div>
+          <div class="ymal-card">
+            <img
+              src="https://lisandrathelabel.com/cdn/shop/collections/5.jpg?width=700"
+              alt="Kayu Crochet Bikini Set"
+              loading="lazy" />
+            <div class="ymal-info-panel">
+              <div class="ymal-info-row">
+                <span class="ymal-info-name">Kayu Crochet Bikini Set</span>
+                <span class="ymal-info-price">Rp 1.349.000</span>
+              </div>
+              <div class="ymal-sizes">
+                <button class="ymal-size-btn">XS-S</button>
+                <button class="ymal-size-btn">M-L</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="grid-nav-btn next"
+          onclick="slideYmal(1)"
+          aria-label="Next recommendations">
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -4081,7 +4608,7 @@
 
         document
           .querySelectorAll(
-            ".cats3, .sec, .essence, .social-section, .foot, .ugc-section, .plp-head, .editorial-row, .shop-strip",
+            ".cats3, .sec, .essence, .social-section, .foot, .ugc-section, .ymal-section, .plp-head, .editorial-row, .shop-strip",
           )
           .forEach((el) => {
             el.classList.add("reveal");
@@ -4188,13 +4715,15 @@
         }
       });
 
-      // UGC Main Gallery Slide / Looping
+      // UGC Main Gallery Slide / Looping (images rotate via JS)
       let ugcGalleryOffset = 0;
       function slideUgcGallery(direction) {
         ugcGalleryOffset =
           (ugcGalleryOffset + direction + ugcImages.length) % ugcImages.length;
-        const images = document.querySelectorAll("#ugcGrid figure img");
-        images.forEach((img, index) => {
+        const figures = document.querySelectorAll("#ugcGrid figure");
+        figures.forEach((figure, index) => {
+          const img = figure.querySelector("img");
+          if (!img) return;
           img.style.opacity = "0.3";
           img.style.transform =
             direction > 0 ? "translateX(-8px)" : "translateX(8px)";
@@ -4207,6 +4736,117 @@
             };
           }, 140);
         });
+      }
+
+      // YMAL rotation on desktop / scroll on mobile
+      const ymalProducts = [
+        {
+          src: "https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=700",
+          name: "Zaye Knit Maxi Dress",
+          price: "Rp 1.999.000",
+          sizes: ["XS-S", "M-L"],
+        },
+        {
+          src: "https://lisandrathelabel.com/cdn/shop/collections/3_4d6c0bc3-b1a3-46f9-89ff-720e38cdd2c3.jpg?width=700",
+          name: "Amara Knit Top",
+          price: "Rp 899.000",
+          sizes: ["XS-S", "M-L"],
+        },
+        {
+          src: "https://lisandrathelabel.com/cdn/shop/collections/Untitled_design-18.jpg?width=700",
+          name: "Mentari Knit Long Dress",
+          price: "Rp 1.499.000",
+          sizes: ["XS-S", "M-L"],
+        },
+        {
+          src: "https://lisandrathelabel.com/cdn/shop/collections/5.jpg?width=700",
+          name: "Kayu Crochet Bikini Set",
+          price: "Rp 1.349.000",
+          sizes: ["XS-S", "M-L"],
+        },
+        {
+          src: "https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=700",
+          name: "Baia Crochet Top",
+          price: "Rp 799.000",
+          sizes: ["XS-S", "M-L"],
+        },
+        {
+          src: "https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=700",
+          name: "Zaye Dress — Open Back",
+          price: "Rp 1.999.000",
+          sizes: ["XS-S", "M-L"],
+        },
+      ];
+      let ymalOffset = 0;
+      function slideYmal(direction) {
+        if (window.innerWidth < 900) {
+          const grid = document.getElementById("ymalGrid");
+          if (!grid) return;
+          const cardWidth = grid.querySelector(".ymal-card")?.offsetWidth || 0;
+          const gap = 2;
+          grid.scrollBy({
+            left: direction * (cardWidth + gap),
+            behavior: "smooth",
+          });
+          return;
+        }
+
+        // Desktop rotation through curated products
+        ymalOffset =
+          (ymalOffset + direction + ymalProducts.length) % ymalProducts.length;
+        const cards = document.querySelectorAll("#ymalGrid .ymal-card");
+        cards.forEach((card, index) => {
+          const img = card.querySelector("img");
+          const name = card.querySelector(".ymal-info-name");
+          const price = card.querySelector(".ymal-info-price");
+          if (!img) return;
+
+          card.style.opacity = "0.3";
+          card.style.transform =
+            direction > 0 ? "translateX(-8px)" : "translateX(8px)";
+
+          setTimeout(() => {
+            const nextIdx = (ymalOffset + index) % ymalProducts.length;
+            const p = ymalProducts[nextIdx];
+            img.src = p.src;
+            if (name) name.innerText = p.name;
+            if (price) price.innerText = p.price;
+            img.onload = () => {
+              card.style.opacity = "1";
+              card.style.transform = "translateX(0)";
+            };
+          }, 140);
+        });
+      }
+
+      // Muse Circle footer newsletter form
+      function submitMuseForm(event) {
+        event.preventDefault();
+        const email = document.getElementById("museEmail").value;
+        if (!email) return;
+
+        const formWrap = document.getElementById("museFormWrap");
+        const successEl = document.getElementById("museSuccess");
+
+        // Fade out form
+        formWrap.style.transition = "opacity 0.35s ease";
+        formWrap.style.opacity = "0";
+
+        setTimeout(() => {
+          formWrap.style.display = "none";
+          successEl.style.display = "flex";
+          // Animate in
+          successEl.style.opacity = "0";
+          successEl.style.transform = "translateY(6px)";
+          successEl.style.transition =
+            "opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              successEl.style.opacity = "1";
+              successEl.style.transform = "translateY(0)";
+            });
+          });
+        }, 350);
       }
 
       function setSizeUnit(unit) {
