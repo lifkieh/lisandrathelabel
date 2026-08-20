@@ -1,0 +1,52 @@
+/* ==========================================================================
+   LISANDRA THE LABEL - BRAND DESIGN V5 CUSTOM STYLING
+   ========================================================================== */
+
+/* 1. Import Fonts (Google Fonts as native stand-ins representing the brief) */
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Inter:wght@300;400;500;600;700&family=Lora:ital@1&display=swap');
+
+/* 2. Global Brand Variables (Derived directly from Client Brief & design-v5) */
+:root {
+  /* Main Colors */
+  --bg: #f8f8f0;                  /* Paper / Ivory */
+  --paper: #f8f8f0;
+  --sand: #e0d9b5;                /* Sand / Cream */
+  --cocoa: #392319;               /* Deep Espresso Cocoa */
+  
+  /* Additional Colors */
+  --clay: #8a5a44;                /* Warm Rust / Brown */
+  --caramel: #c68642;             /* Warm Clay / Gold tone */
+  --sale: #9a3f2b;                /* Accent Red */
+  --line: #d9cfa9;                /* Brand Line Border */
+  
+  /* Font Stacks */
+  --heading: "Bodoni Moda", Georgia, serif;                /* Stand-in for "The Seasons" */
+  --ui: "Inter", -apple-system, Helvetica, Arial, sans-serif; /* Stand-in for "Guess Sans" / "Agrandir" */
+  --accent: "Lora", Georgia, serif;                        /* Lora Italic */
+  
+  --display: var(--heading);
+  --display2: var(--heading);
+  --body: var(--ui);
+}
+
+/* 3. Global CSS Adjustments */
+body {
+  background-color: var(--bg) !important;
+  color: var(--cocoa);
+  font-family: var(--ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography styles based on brand */
+h1, h2, h3, h4, h5, h6, .brand-heading {
+  font-family: var(--heading);
+  font-weight: 400;
+  color: var(--cocoa);
+}
+
+/* Custom Utilities */
+.text-cocoa { color: var(--cocoa) !important; }
+.text-clay { color: var(--clay) !important; }
+.text-caramel { color: var(--caramel) !important; }
+.bg-paper { background-color: var(--paper) !important; }
+.bg-sand { background-color: var(--sand) !important; }

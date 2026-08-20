@@ -1,0 +1,543 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "page-content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "section_GaCkV9": {
+      "type": "section",
+      "blocks": {
+        "text_6En6Um": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h3>FAQs</h3>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_XXwWmQ": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_BXFMFK": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How to choose the right size?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_fjrtzb": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>You can view our size guide <a href=\"/pages/size-guide\" target=\"_blank\" title=\"Size Guide\"><strong>here</strong></a>. Each product description also includes Model Fit Notes, detailing the model's measurements and the size she's wearing. </p><p>If you're still unsure, feel free to email us at <a>contact@lisandrathelabel.com</a></p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_fjrtzb"
+              ]
+            },
+            "accordion_row_7BhDJU": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How should I care for my Lisandra garments?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_Ymif9F": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>To preserve the beauty and shape of your delicate knit and crochet pieces, follow these care instructions:</p><ul><li><strong>Hand Wash Only:</strong> Gently hand wash in cold water with a mild detergent. Avoid scrubbing or wringing the fabric.</li><li><strong>Do Not Machine Wash or Tumble Dry:</strong>Machine washing or tumble drying can stretch, shrink, or damage the delicate fibers.</li><li><strong>Lay Flat to Dry:</strong> After washing, reshape the garment and lay it flat to air dry. Avoid hanging, as this may cause stretching or misshaping.</li><li><strong>Store with Care:</strong> Always fold rather than hang. </li></ul><p>Each Lisandra piece is handmade with care, treat it gently to enjoy it season after season.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_Ymif9F"
+              ]
+            },
+            "accordion_row_Y7AEfQ": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What currency are Lisandra prices set to?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_zUzPxa": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>All prices on Lisandra The Label are listed in Indonesian Rupiah (Rp), regardless of the country you're shopping from. Your credit card will be charged in IDR and then converted to your local currency by your bank on your account statement.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_zUzPxa"
+              ]
+            },
+            "accordion_row_6xf4Y7": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "What are Lisandra's sustainability practices?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_J6T8mz": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We are committed to slow fashion, creating timeless, high-quality pieces that are made to last. Each garment is handcrafted in Bali by local artisans, supporting traditional craftsmanship and ethical production. By producing in small, limited batches, we minimize waste and avoid overproduction.</p><p>Our materials are carefully selected with sustainability in mind, favoring natural fibers and low-impact processes whenever possible. To reduce our environmental footprint, we use reusable tote bags and biodegradable poly mailers for our packaging.</p><p>By choosing Lisandra, you're not only embracing effortless resort elegance, you’re also supporting mindful fashion that values people, the planet, and the art of handmade design.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_J6T8mz"
+              ]
+            },
+            "accordion_row_QqHBMG": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Does Lisandra have a retail shop in Bali?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_gHGiCf": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We don’t have a physical store in Bali, but you can find us at our stockist:<a href=\"https://lisandrathelabel.com/blogs/news/stockists\" target=\"_blank\" title=\"https://lisandrathelabel.com/blogs/news/stockists\"> CLICK HERE</a></p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_gHGiCf"
+              ]
+            },
+            "accordion_row_fAXNPi": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "Where do you ship from?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_WcHVgh": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Every Lisandra piece is shipped from Bali, Indonesia, where we produce everything slowly, thoughtfully, and by hand.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_WcHVgh"
+              ]
+            },
+            "accordion_row_Qx8Pb9": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you offer free delivery within Bali?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_RiiKQH": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>We offer free delivery within Bali via local post.<br/>For online orders, just enter your Bali address at checkout to receive free shipping automatically.<br/>For same-day delivery via Gojek, please contact us on WhatsApp at +62 823 4189 2057.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_RiiKQH"
+              ]
+            },
+            "accordion_row_6yqJNQ": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Do you ship internationally?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_pxtrbM": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p><a href=\"/policies/shipping-policy\" target=\"_blank\" title=\"Shipping Policy\">Yes, we ship with Fedex Priority from Bali, Indonesia. For more details on shipping and duties, click <strong>here</strong></a>.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_pxtrbM"
+              ]
+            },
+            "accordion_row_B9KrXE": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "How long will my order take to arrive?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_3UMB69": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Your order will be shipped the next day, followed by 3–7 business days for global delivery. All international orders are shipped via Fedex Priority. Delivery times may vary slightly based on your destination.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_3UMB69"
+              ]
+            },
+            "accordion_row_UrAY6y": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_dash_row",
+              "settings": {
+                "heading": "Are tax & duties included in my order?",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text_8jMCG9": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Customs duties and import fees are not included in our product prices or shipping costs. These charges vary by country and are the responsibility of the customer. US and AUS customers will not have any extra charges or fees for orders under $800 USD.</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_8jMCG9"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_BXFMFK",
+            "accordion_row_7BhDJU",
+            "accordion_row_Y7AEfQ",
+            "accordion_row_6xf4Y7",
+            "accordion_row_QqHBMG",
+            "accordion_row_fAXNPi",
+            "accordion_row_Qx8Pb9",
+            "accordion_row_6yqJNQ",
+            "accordion_row_B9KrXE",
+            "accordion_row_UrAY6y"
+          ]
+        }
+      },
+      "block_order": [
+        "text_6En6Um",
+        "accordion_XXwWmQ"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "section_GaCkV9"
+  ]
+}
