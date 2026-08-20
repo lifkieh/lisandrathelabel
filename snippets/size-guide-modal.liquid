@@ -1,0 +1,249 @@
+<style>
+  .size-modal-inner {
+    background: var(--paper, #f8f8f0);
+    padding: 32px;
+    width: 90vw;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+  #sizeModal {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: auto;
+  }
+  #sizeModal::backdrop {
+    background: rgba(30, 18, 10, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--ink, #000);
+    transition: opacity 0.2s ease;
+  }
+  .modal-close:hover {
+    opacity: 0.6;
+  }
+  .size-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .size-toggle button {
+    padding: 4px 12px;
+    border: 1px solid var(--line, #e2e2e2);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: transparent;
+    cursor: pointer;
+    color: var(--ink, #000);
+    transition: all 0.2s ease;
+  }
+  .size-toggle button.active {
+    background: var(--cocoa, #392319);
+    color: #fff;
+    border-color: var(--cocoa, #392319);
+  }
+  .size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    font-family: var(--body, sans-serif);
+  }
+  .size-table th,
+  .size-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--line, #e2e2e2);
+  }
+  .size-table th {
+    font-weight: 600;
+    color: var(--ink60, #666);
+  }
+  .size-unit.hidden {
+    display: none;
+  }
+</style>
+
+<dialog id="sizeModal" aria-labelledby="sizeModalTitle">
+  <div class="size-modal-inner">
+    <button class="modal-close" onclick="closeSizeModal()" aria-label="Close size guide">✕</button>
+    <h2 id="sizeModalTitle" style="font-family: var(--display, serif); font-style: italic; margin-top: 0; margin-bottom: 24px; font-size: 24px; color: var(--cocoa, #392319);">
+      {{ product.title | default: 'Size Guide' }}
+    </h2>
+
+    <h3 style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink60, #666); margin-bottom: 8px;">
+      Size Conversion Chart
+    </h3>
+    <table class="size-table" style="margin-bottom: 32px">
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>XS-S</th>
+          <th>M-L</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EU</td>
+          <td>34-36</td>
+          <td>38-42</td>
+        </tr>
+        <tr>
+          <td>UK</td>
+          <td>6-8</td>
+          <td>10-14</td>
+        </tr>
+        <tr>
+          <td>USA</td>
+          <td>2-4</td>
+          <td>6-10</td>
+        </tr>
+        <tr>
+          <td>AUS</td>
+          <td>8-10</td>
+          <td>12-16</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+      <h3 style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink60, #666); margin: 0;">
+        Garment Measurements
+      </h3>
+      <div class="size-toggle">
+        <button class="active" onclick="setSizeUnit('cm')" id="btn-cm">cm</button>
+        <button onclick="setSizeUnit('inch')" id="btn-inch">inch</button>
+      </div>
+    </div>
+    <table class="size-table">
+      <thead>
+        <tr>
+          <th>Size</th>
+          <th>XS-S</th>
+          <th>M-L</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Length</td>
+          <td>
+            <span class="size-unit cm">137</span><span class="size-unit inch hidden">53.9</span>
+          </td>
+          <td>
+            <span class="size-unit cm">139</span><span class="size-unit inch hidden">54.7</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Bust</td>
+          <td>
+            <span class="size-unit cm">85</span><span class="size-unit inch hidden">33.5</span>
+          </td>
+          <td>
+            <span class="size-unit cm">95</span><span class="size-unit inch hidden">37.4</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Waist</td>
+          <td>
+            <span class="size-unit cm">70</span><span class="size-unit inch hidden">27.6</span>
+          </td>
+          <td>
+            <span class="size-unit cm">80</span><span class="size-unit inch hidden">31.5</span>
+          </td>
+        </tr>
+        <tr>
+          <td>Hips</td>
+          <td>
+            <span class="size-unit cm">95</span><span class="size-unit inch hidden">37.4</span>
+          </td>
+          <td>
+            <span class="size-unit cm">105</span><span class="size-unit inch hidden">41.3</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 24px; font-size: 11px; line-height: 1.5; color: var(--ink60, #666);">
+      {%- if product.metafields.custom.model_info != blank -%}
+        <p style="margin: 0 0 4px 0; color: var(--cocoa, #392319)">
+          <strong>{{ product.metafields.custom.model_info }}</strong>
+        </p>
+      {%- else -%}
+        <p style="margin: 0 0 4px 0; color: var(--cocoa, #392319)">
+          <strong>Model Sydney wears size XS-S</strong>
+        </p>
+        <ul style="margin: 0; padding-left: 16px">
+          <li>Height: 170cm / 5ft7</li>
+          <li>Bust: 83cm / 32.5"</li>
+          <li>Waist: 62cm / 24.5"</li>
+          <li>Hip: 89cm / 35"</li>
+        </ul>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.fit_notes != blank -%}
+        <p style="margin: 12px 0 0 0">
+          <strong>Fit Notes:</strong> {{ product.metafields.custom.fit_notes }}
+        </p>
+      {%- else -%}
+        <p style="margin: 12px 0 0 0">
+          <strong>Fit Notes:</strong> Fabric has a fluid fit that follows your body’s curves and stretches up to 15 cm.
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function openSizeModal() {
+    const modal = document.getElementById("sizeModal");
+    if (modal) {
+      modal.showModal();
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeSizeModal() {
+    const modal = document.getElementById("sizeModal");
+    if (modal) {
+      modal.close();
+      document.body.style.overflow = "";
+    }
+  }
+
+  function setSizeUnit(unit) {
+    document.querySelectorAll(".size-toggle button").forEach((b) => b.classList.remove("active"));
+    const btn = document.getElementById("btn-" + unit);
+    if(btn) btn.classList.add("active");
+
+    document.querySelectorAll(".size-unit.cm").forEach((el) => el.classList.toggle("hidden", unit !== "cm"));
+    document.querySelectorAll(".size-unit.inch").forEach((el) => el.classList.toggle("hidden", unit !== "inch"));
+  }
+
+  // Close modal when clicking on the backdrop
+  const sizeModal = document.getElementById("sizeModal");
+  if(sizeModal) {
+    sizeModal.addEventListener("click", (e) => {
+      const dialogDimensions = sizeModal.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        closeSizeModal();
+      }
+    });
+  }
+</script>

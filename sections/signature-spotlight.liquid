@@ -1,0 +1,250 @@
+<style>
+  /* ---------- signature spotlight ---------- */
+  .spotlight-{{ section.id }} {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    background: var(--paper, #f8f8f0);
+    overflow: hidden;
+  }
+  
+  /* Layout Options */
+  .spotlight-{{ section.id }}.layout-image_right {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+  .spotlight-{{ section.id }}.layout-image_right figure {
+    order: 2;
+  }
+  .spotlight-{{ section.id }}.layout-image_right .spotlight-copy {
+    order: 1;
+  }
+
+  .spotlight-{{ section.id }} figure {
+    margin: 0;
+    aspect-ratio: 4/5;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: var(--sand, #e0d9b5);
+  }
+  .spotlight-{{ section.id }} figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .spotlight-{{ section.id }} .spotlight-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(36px, 5vw, 64px);
+    gap: 16px;
+    background: var(--paper, #f8f8f0);
+  }
+  .spotlight-{{ section.id }} .lbl {
+    color: var(--clay, #8a5a44);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .spotlight-{{ section.id }} h2 {
+    font-family: var(--display2, serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, 2.6vw, 32px);
+    margin: 0;
+    line-height: 1.25;
+    color: var(--cocoa, #392319);
+  }
+  .spotlight-{{ section.id }} p {
+    margin: 0;
+    color: #4a382e;
+    max-width: 36ch;
+    line-height: 1.6;
+    font-family: var(--body, sans-serif);
+    font-size: 13px;
+  }
+  .spotlight-{{ section.id }} .btn {
+    width: fit-content;
+    margin-top: 8px;
+    display: inline-block;
+    padding: 14px 24px;
+    background: transparent;
+    color: var(--cocoa, #392319);
+    text-transform: uppercase;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-decoration: none;
+    border: 1px solid var(--cocoa, #392319);
+    transition: all 0.3s ease;
+  }
+  .spotlight-{{ section.id }} .btn:hover {
+    background: var(--cocoa, #392319);
+    color: #f8f8f0;
+  }
+
+  /* Reveal Stagger Animation */
+  .reveal-stagger .spotlight-copy > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-stagger.active .spotlight-copy > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-stagger.active .spotlight-copy > *:nth-child(1) { transition-delay: 0.1s; }
+  .reveal-stagger.active .spotlight-copy > *:nth-child(2) { transition-delay: 0.2s; }
+  .reveal-stagger.active .spotlight-copy > *:nth-child(3) { transition-delay: 0.3s; }
+  .reveal-stagger.active .spotlight-copy > *:nth-child(4) { transition-delay: 0.4s; }
+
+  /* Mobile Layout */
+  @media (max-width: 768px) {
+    .spotlight-{{ section.id }} {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .spotlight-{{ section.id }}.layout-image_right figure {
+      order: 0; /* Reset order on mobile */
+    }
+    .spotlight-{{ section.id }}.layout-image_right .spotlight-copy {
+      order: 0;
+    }
+    .spotlight-{{ section.id }} figure {
+      width: 100%;
+      aspect-ratio: 4/5;
+      max-height: none;
+    }
+    .spotlight-{{ section.id }} .spotlight-copy {
+      padding: 32px 24px 48px;
+      margin: 0;
+      align-items: center;
+      text-align: center;
+    }
+    .spotlight-{{ section.id }} p {
+      text-align: center;
+    }
+    .spotlight-{{ section.id }} .btn {
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+    }
+  }
+</style>
+
+<section class="spotlight spotlight-{{ section.id }} layout-{{ section.settings.layout }} reveal-stagger">
+  <figure>
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | img_url: '1000x' }}" alt="{{ section.settings.image.alt | escape | default: section.settings.title }}" loading="lazy" />
+    {%- else -%}
+      <img src="https://cdn.shopify.com/s/images/themes/product-1.png" alt="Signature Piece" loading="lazy" />
+    {%- endif -%}
+  </figure>
+  
+  <div class="spotlight-copy">
+    {%- if section.settings.kicker != blank -%}
+      <span class="lbl">{{ section.settings.kicker }}</span>
+    {%- endif -%}
+    
+    {%- if section.settings.title != blank -%}
+      <h2>{{ section.settings.title | newline_to_br }}</h2>
+    {%- endif -%}
+    
+    {%- if section.settings.text != blank -%}
+      <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+    
+    {%- if section.settings.btn_link != blank and section.settings.btn_label != blank -%}
+      <a class="btn" href="{{ section.settings.btn_link }}">{{ section.settings.btn_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.15,
+    };
+    
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const el = document.querySelector(".spotlight-{{ section.id }}");
+    if (el) {
+      observer.observe(el);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Signature Spotlight",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Spotlight Image",
+      "info": "Aspect ratio 4:5 recommended."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop Image Placement",
+      "options": [
+        {
+          "value": "image_left",
+          "label": "Image on Left"
+        },
+        {
+          "value": "image_right",
+          "label": "Image on Right"
+        }
+      ],
+      "default": "image_left"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "The Signature"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Headline",
+      "default": "Two days on the needles, then it skims wherever you happen to have curves."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "The Zaye Knit Maxi Dress, open back, adjustable straps, made by one artisan at a time."
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "Shop the Zaye Dress"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Signature Spotlight"
+    }
+  ]
+}
+{% endschema %}

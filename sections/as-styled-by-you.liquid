@@ -1,0 +1,581 @@
+<style>
+  /* === As Styled by You (UGC) === */
+  .ugc-section {
+    padding: clamp(38px, 5.5vw, 68px) 0;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+  .section-editorial-head {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
+  .section-editorial-head .editorial-kicker {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cocoa);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section-editorial-head h3 {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cocoa);
+    margin: 0;
+  }
+
+  .grid-slider-wrap {
+    position: relative;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  .ugc-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 2px;
+    padding: 0 clamp(14px, 2vw, 26px);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .ugc-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .ugc-grid figure {
+    flex: 0 0 75vw;
+    scroll-snap-align: center;
+    margin: 0;
+    aspect-ratio: 4/5;
+    background: var(--sand);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .ugc-grid figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
+    display: block;
+  }
+  .ugc-hover-reveal {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 18, 10, 0.52);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .ugc-hover-reveal .ugc-username {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(248, 248, 240, 0.75);
+    transform: translateY(8px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
+  }
+  .ugc-hover-reveal .ugc-shop-link {
+    font-family: var(--body);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #f8f8f0;
+    border-bottom: 1px solid rgba(248, 248, 240, 0.6);
+    padding-bottom: 2px;
+    transform: translateY(8px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, border-color 0.25s ease;
+  }
+  .ugc-hover-reveal .ugc-shop-link:hover {
+    border-color: #f8f8f0;
+  }
+
+  .grid-nav-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--paper);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    color: var(--cocoa);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .grid-nav-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+    background: #fff;
+  }
+  .grid-nav-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.5;
+  }
+  .grid-nav-btn.prev { left: 26px; }
+  .grid-nav-btn.next { right: 26px; }
+
+  @media (min-width: 900px) {
+    .grid-nav-btn { display: flex; }
+    .ugc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      overflow-x: visible;
+      padding: 0;
+    }
+    .ugc-grid figure {
+      flex: none;
+      width: auto;
+      scroll-snap-align: none;
+    }
+    .ugc-grid figure:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.88);
+    }
+    .ugc-grid figure:hover .ugc-hover-reveal {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .ugc-grid figure:hover .ugc-hover-reveal .ugc-username,
+    .ugc-grid figure:hover .ugc-hover-reveal .ugc-shop-link {
+      transform: translateY(0);
+    }
+  }
+
+  /* UGC Shop The Look Modal */
+  #ugcModal {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: auto;
+  }
+  #ugcModal::backdrop {
+    background: rgba(30, 18, 10, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .ugc-modal-inner {
+    background: var(--paper);
+    width: 95vw;
+    max-width: 900px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+  .ugc-image-wrap {
+    width: 100%;
+    background: var(--sand);
+    position: relative;
+  }
+  .ugc-image-wrap img {
+    width: 100%;
+    height: 100%;
+    max-height: 60vh;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  .ugc-image-wrap img.fading {
+    opacity: 0.5;
+  }
+  .ugc-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+    color: var(--ink);
+  }
+  .ugc-nav-btn:hover { background: #fff; }
+  .ugc-prev { left: 16px; }
+  .ugc-next { right: 16px; }
+
+  .ugc-shop-wrap {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+  }
+  .ugc-shop-title {
+    font-family: var(--display2);
+    font-size: 20px;
+    font-style: italic;
+    margin-bottom: 24px;
+    margin-top: 0;
+  }
+  .ugc-product-card {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .ugc-product-card img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+  }
+  .ugc-product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .ugc-product-info h4 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .ugc-product-info .price {
+    font-size: 13px;
+    color: var(--cocoa);
+    opacity: 0.6;
+  }
+  .ugc-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    line-height: 1;
+    z-index: 10;
+    background: var(--paper);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+  }
+  @media (min-width: 768px) {
+    .ugc-modal-inner { flex-direction: row; }
+    .ugc-image-wrap { width: 55%; }
+    .ugc-image-wrap img { max-height: 80vh; }
+    .ugc-shop-wrap { width: 45%; justify-content: center; }
+    .ugc-modal-close { background: transparent; box-shadow: none; }
+  }
+  
+  .btn-primary {
+    background-color: var(--cocoa);
+    color: #fff;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.25s ease;
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+</style>
+
+<section class="ugc-section" id="ugcSection">
+  <div class="section-editorial-head">
+    <span class="editorial-kicker">{{ section.settings.kicker }}</span>
+    <h3>{{ section.settings.title }}</h3>
+  </div>
+  
+  <div class="grid-slider-wrap">
+    <button class="grid-nav-btn prev" onclick="slideUgcGallery(-1)" aria-label="Previous styled looks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    
+    <div class="ugc-grid" id="ugcGrid-{{ section.id }}">
+      {% for block in section.blocks %}
+        {%- assign image_url = block.settings.image | img_url: '800x' -%}
+        {%- if block.settings.image == blank -%}
+          {%- assign image_url = 'https://cdn.shopify.com/s/images/themes/product-1.png' -%}
+        {%- endif -%}
+        
+        <figure onclick="openUgcModal({{ forloop.index0 }})" {{ block.shopify_attributes }}>
+          <img src="{{ image_url }}" alt="{{ block.settings.username }}" loading="lazy" />
+          <div class="ugc-hover-reveal" aria-hidden="true">
+            <span class="ugc-username">{{ block.settings.username }}</span>
+            <span class="ugc-shop-link">Shop the Look</span>
+          </div>
+        </figure>
+      {% endfor %}
+    </div>
+    
+    <button class="grid-nav-btn next" onclick="slideUgcGallery(1)" aria-label="Next styled looks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<!-- UGC Shop The Look Modal -->
+<dialog id="ugcModal" aria-labelledby="ugcModalTitle">
+  <div class="ugc-modal-inner">
+    <button class="ugc-modal-close" onclick="closeUgcModal()" aria-label="Close shop the look">✕</button>
+    <div class="ugc-image-wrap">
+      <button class="ugc-nav-btn ugc-prev" onclick="prevUgcImage()" aria-label="Previous image">❮</button>
+      <img id="ugcModalImage" src="" alt="As styled by you" />
+      <button class="ugc-nav-btn ugc-next" onclick="nextUgcImage()" aria-label="Next image">❯</button>
+    </div>
+    <div class="ugc-shop-wrap">
+      <h2 id="ugcModalTitle" class="ugc-shop-title">Featured in this look</h2>
+      
+      <div class="ugc-product-card">
+        <img id="ugcProductImage" src="" alt="Product" />
+        <div class="ugc-product-info">
+          <h4 id="ugcProductTitle">Loading...</h4>
+          <div class="price" id="ugcProductPrice"></div>
+        </div>
+      </div>
+      
+      <div class="form-row" style="margin-bottom: 16px">
+        <select id="ugcProductSelect" aria-label="Select size" style="
+            width: 100%;
+            border: 1px solid var(--line);
+            padding: 12px;
+            font-family: inherit;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: transparent;
+            cursor: pointer;
+          ">
+          <option value="">Select Option</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width: 100%" onclick="alert('Adding to bag...')">
+        Add to Bag
+      </button>
+      <a id="ugcProductUrl" href="#" style="text-align: center; font-size: 11px; margin-top: 12px; text-decoration: underline; color: var(--cocoa); text-transform: uppercase; letter-spacing: 0.1em; display: block;">View Product Details</a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  // Gather UGC Data from Liquid Blocks
+  const ugcData = [
+    {% for block in section.blocks %}
+      {
+        id: {{ block.id | json }},
+        image: {{ block.settings.image | img_url: '800x' | default: 'https://cdn.shopify.com/s/images/themes/product-1.png' | json }},
+        username: {{ block.settings.username | json }},
+        {% if block.settings.product != blank %}
+          product: {
+            title: {{ block.settings.product.title | json }},
+            price: {{ block.settings.product.price | money | json }},
+            url: {{ block.settings.product.url | json }},
+            image: {{ block.settings.product.featured_image | img_url: '600x' | json }},
+            variants: [
+              {% for variant in block.settings.product.variants %}
+                { id: {{ variant.id | json }}, title: {{ variant.title | json }}, available: {{ variant.available | json }} }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ]
+          }
+        {% else %}
+          product: null
+        {% endif %}
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
+  // Logic for Grid Sliding
+  let ugcGalleryOffset = 0;
+  function slideUgcGallery(direction) {
+    if(ugcData.length === 0) return;
+    
+    ugcGalleryOffset = (ugcGalleryOffset + direction + ugcData.length) % ugcData.length;
+    const figures = document.querySelectorAll("#ugcGrid-{{ section.id }} figure");
+    
+    figures.forEach((figure, index) => {
+      const img = figure.querySelector("img");
+      if (!img) return;
+      img.style.opacity = "0.3";
+      img.style.transform = direction > 0 ? "translateX(-8px)" : "translateX(8px)";
+      
+      setTimeout(() => {
+        const nextIdx = (ugcGalleryOffset + index) % ugcData.length;
+        img.src = ugcData[nextIdx].image;
+        figure.setAttribute("onclick", `openUgcModal(${nextIdx})`);
+        
+        const username = figure.querySelector(".ugc-username");
+        if(username) username.innerText = ugcData[nextIdx].username;
+        
+        img.onload = () => {
+          img.style.opacity = "1";
+          img.style.transform = "translateX(0)";
+        };
+      }, 140);
+    });
+  }
+
+  // UGC Modal Logic
+  const ugcModal = document.getElementById("ugcModal");
+  const ugcModalImage = document.getElementById("ugcModalImage");
+  let currentUgcIndex = 0;
+
+  function openUgcModal(index) {
+    if(ugcData.length === 0) return;
+    currentUgcIndex = index;
+    renderModalData();
+    
+    ugcModal.showModal();
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeUgcModal() {
+    ugcModal.close();
+    document.body.style.overflow = "auto";
+  }
+
+  function renderModalData() {
+    const data = ugcData[currentUgcIndex];
+    ugcModalImage.src = data.image;
+    
+    // Update Product Details if exists
+    if(data.product) {
+      document.getElementById("ugcProductTitle").innerText = data.product.title;
+      document.getElementById("ugcProductPrice").innerText = data.product.price;
+      document.getElementById("ugcProductImage").src = data.product.image;
+      document.getElementById("ugcProductUrl").href = data.product.url;
+      document.getElementById("ugcProductUrl").style.display = 'block';
+      
+      // Update variants dropdown
+      const select = document.getElementById("ugcProductSelect");
+      select.innerHTML = '<option value="">Select Option</option>';
+      data.product.variants.forEach(v => {
+        const option = document.createElement('option');
+        option.value = v.id;
+        option.innerText = v.title + (v.available ? '' : ' (Sold Out)');
+        option.disabled = !v.available;
+        select.appendChild(option);
+      });
+      document.querySelector(".ugc-product-card").style.display = "flex";
+      document.getElementById("ugcProductSelect").parentElement.style.display = "block";
+    } else {
+      document.getElementById("ugcProductTitle").innerText = "No Product Selected";
+      document.getElementById("ugcProductPrice").innerText = "";
+      document.getElementById("ugcProductImage").src = "";
+      document.getElementById("ugcProductUrl").style.display = 'none';
+      document.querySelector(".ugc-product-card").style.display = "none";
+      document.getElementById("ugcProductSelect").parentElement.style.display = "none";
+    }
+  }
+
+  function changeUgcImage(direction) {
+    if(ugcData.length === 0) return;
+    currentUgcIndex = (currentUgcIndex + direction + ugcData.length) % ugcData.length;
+    
+    // Smooth crossfade logic
+    ugcModalImage.classList.add("fading");
+    setTimeout(() => {
+      renderModalData();
+      ugcModalImage.onload = () => {
+        ugcModalImage.classList.remove("fading");
+      };
+    }, 150);
+  }
+
+  function prevUgcImage() { changeUgcImage(-1); }
+  function nextUgcImage() { changeUgcImage(1); }
+
+  // Close UGC modal when clicking backdrop
+  ugcModal.addEventListener("click", (e) => {
+    const dialogDimensions = ugcModal.getBoundingClientRect();
+    if (
+      e.clientX < dialogDimensions.left ||
+      e.clientX > dialogDimensions.right ||
+      e.clientY < dialogDimensions.top ||
+      e.clientY > dialogDimensions.bottom
+    ) {
+      closeUgcModal();
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "As Styled By You",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker Text",
+      "default": "Community & Styling"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "As Styled by You"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ugc_item",
+      "name": "UGC Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "username",
+          "label": "Instagram Username",
+          "default": "@lisandramuse"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Featured Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "As Styled By You",
+      "blocks": [
+        { "type": "ugc_item" },
+        { "type": "ugc_item" },
+        { "type": "ugc_item" },
+        { "type": "ugc_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}

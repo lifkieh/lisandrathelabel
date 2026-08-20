@@ -1,0 +1,144 @@
+<style>
+  /* ---------- sustainability strip ---------- */
+  .sustain-{{ section.id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(16px, 3vw, 40px);
+    justify-content: center;
+    padding: 20px clamp(14px, 2vw, 26px);
+    border-top: 1px solid var(--line, #e2e2e2);
+    border-bottom: 1px solid var(--line, #e2e2e2);
+    font-size: 13px;
+    font-family: var(--body, sans-serif);
+    color: var(--ink60, #666);
+    text-align: center;
+    background: var(--paper, #f8f8f0);
+  }
+  .sustain-{{ section.id }} span {
+    max-width: 26ch;
+    line-height: 1.4;
+  }
+  .sustain-{{ section.id }} b {
+    color: var(--cocoa, #392319);
+    font-weight: 600;
+  }
+
+  /* Sustain Stagger Animation */
+  .reveal-stagger.sustain-{{ section.id }} > span {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-stagger.active.sustain-{{ section.id }} > span {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Support up to 6 stagger children */
+  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(1) { transition-delay: 0.1s; }
+  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(2) { transition-delay: 0.2s; }
+  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(3) { transition-delay: 0.3s; }
+  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(4) { transition-delay: 0.4s; }
+  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(5) { transition-delay: 0.5s; }
+  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(6) { transition-delay: 0.6s; }
+
+  @media (max-width: 768px) {
+    .sustain-{{ section.id }} {
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px 16px;
+      align-items: center;
+    }
+  }
+</style>
+
+<div class="sustain-{{ section.id }} reveal-stagger">
+  {%- for block in section.blocks -%}
+    <span {{ block.shopify_attributes }}>
+      {%- if block.settings.title != blank -%}
+        <b>{{ block.settings.title }}</b> 
+      {%- endif -%}
+      {{ block.settings.text }}
+    </span>
+  {%- endfor -%}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.15,
+    };
+    
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const el = document.querySelector(".sustain-{{ section.id }}");
+    if (el) {
+      observer.observe(el);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Sustainability Strip",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Brand Value",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Bold Title",
+          "default": "Small batches."
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description text",
+          "default": "Quantities are limited, a restock may take a while, or it may not come at all."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sustainability Strip",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "Reusable tote packaging.",
+            "text": "No plastic, every order ships in a tote you can use again."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Small batches.",
+            "text": "Quantities are limited, a restock may take a while, or it may not come at all."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "All handmade.",
+            "text": "Every piece is hand-knitted or crocheted by artisans in Bali, never machine-made."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

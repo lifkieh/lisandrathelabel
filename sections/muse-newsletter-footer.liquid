@@ -1,0 +1,694 @@
+<style>
+  /* ---------- footer + muse circle (integrated) ---------- */
+  .foot {
+    background: var(--cocoa, #392319);
+    color: #eee6d9;
+    padding: clamp(38px, 4.5vw, 56px) clamp(16px, 3vw, 32px) 24px;
+    text-align: center;
+  }
+
+  /* Muse circle — integrated top zone with compact max-width */
+  .foot-muse {
+    max-width: 860px;
+    margin: 0 auto clamp(32px, 3.8vw, 46px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 3.5vw, 48px);
+    align-items: center;
+    text-align: left;
+  }
+  @media (max-width: 768px) {
+    .foot-muse {
+      grid-template-columns: 1fr;
+      text-align: center;
+      max-width: 480px;
+    }
+  }
+  .foot-muse-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .muse-kicker {
+    font-family: var(--body, sans-serif);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #c68642;
+    display: block;
+  }
+  .foot-muse-copy h2 {
+    font-family: var(--display, serif);
+    font-size: clamp(20px, 2.4vw, 27px);
+    font-weight: 400;
+    font-style: italic;
+    color: #f8f8f0;
+    margin: 0;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .foot-muse-copy p {
+    font-family: var(--body, sans-serif);
+    font-size: 12px;
+    color: rgba(248, 248, 240, 0.65);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .foot-muse-form-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .muse-form-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .muse-input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1px solid rgba(248, 248, 240, 0.28);
+    background: rgba(248, 248, 240, 0.05);
+    font-family: var(--body, sans-serif);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    color: #f8f8f0;
+    outline: none;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    box-sizing: border-box;
+  }
+  .muse-input::placeholder {
+    color: rgba(248, 248, 240, 0.38);
+    letter-spacing: 0.05em;
+  }
+  .muse-input:focus {
+    border-color: rgba(248, 248, 240, 0.7);
+    background: rgba(248, 248, 240, 0.09);
+  }
+  .muse-submit {
+    width: 100%;
+    padding: 13px 20px;
+    background: #f8f8f0;
+    color: var(--cocoa, #392319);
+    font-family: var(--body, sans-serif);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid #f8f8f0;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .muse-submit:hover {
+    background: transparent;
+    color: #f8f8f0;
+    border-color: rgba(248, 248, 240, 0.6);
+  }
+  @media (min-width: 480px) {
+    .muse-form-inline { flex-direction: row; }
+    .muse-input { flex: 1; border-right: none; }
+    .muse-submit { margin-top: 0; width: auto; flex-shrink: 0; }
+  }
+  .muse-disclaimer {
+    font-family: var(--body, sans-serif);
+    font-size: 10px;
+    color: rgba(248, 248, 240, 0.35);
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .muse-disclaimer a {
+    color: rgba(248, 248, 240, 0.5);
+    text-decoration: underline;
+  }
+  .muse-disclaimer a:hover { color: rgba(248, 248, 240, 0.8); }
+  
+  .muse-success {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 0 2px;
+  }
+  .muse-success-check {
+    font-size: 18px;
+    color: #c68642;
+  }
+  .muse-success p {
+    font-family: var(--display, serif);
+    font-size: 14px;
+    font-style: italic;
+    color: #f8f8f0;
+    margin: 0;
+  }
+  .muse-success small {
+    font-family: var(--body, sans-serif);
+    font-size: 10.5px;
+    color: rgba(248, 248, 240, 0.5);
+    display: block;
+  }
+
+  /* Nav + bottom zone */
+  .foot-lower {
+    padding: 0;
+    text-align: center;
+  }
+  .foot-logo {
+    height: 32px;
+    margin: 0 auto 32px;
+    display: block;
+    object-fit: contain;
+  }
+  .foot-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(16px, 3vw, 32px);
+    margin-bottom: 22px;
+  }
+  .foot-nav a {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #eee6d9;
+    text-decoration: none;
+  }
+  .foot-nav a:hover {
+    text-decoration: underline;
+  }
+  .foot-btm {
+    border-top: 1px solid rgba(248, 248, 240, 0.1);
+    padding-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    font-size: 10.5px;
+    color: #c9bba9;
+    text-align: center;
+  }
+
+  /* ---------- Sticky Newsletter Teaser (Bottom-Left) ---------- */
+  .newsletter-teaser {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: var(--paper, #f8f8f0);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    z-index: 40;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, box-shadow 0.3s ease;
+  }
+  @media (max-width: 768px) {
+    .newsletter-teaser {
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      justify-content: space-between;
+    }
+  }
+  .newsletter-teaser:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+  .newsletter-teaser.hidden {
+    transform: translateY(150%);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .newsletter-teaser-text {
+    font-family: var(--body, sans-serif);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+  }
+  .newsletter-teaser-close {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--ink60, #666);
+    padding: 4px;
+    line-height: 1;
+  }
+  .newsletter-teaser-close:hover { color: var(--ink, #000); }
+
+  /* ---------- Newsletter Modal (2-Column Luxury) ---------- */
+  #newsletterModal {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: auto;
+  }
+  #newsletterModal::backdrop {
+    background: rgba(30, 18, 10, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .newsletter-modal-inner {
+    background: var(--paper, #f8f8f0);
+    width: 95vw;
+    max-width: 800px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  }
+  @media (min-width: 768px) {
+    .newsletter-modal-inner { flex-direction: row; }
+  }
+  .newsletter-image-wrap {
+    width: 100%;
+    background: var(--sand, #e0d9b5);
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .newsletter-image-wrap { width: 50%; display: block; }
+  }
+  .newsletter-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .newsletter-content-wrap {
+    padding: clamp(32px, 5vw, 64px) clamp(24px, 4vw, 48px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  @media (min-width: 768px) {
+    .newsletter-content-wrap { width: 50%; }
+  }
+  .newsletter-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 24px;
+    line-height: 1;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--ink, #000);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.25s ease;
+  }
+  @media (max-width: 767px) {
+    .newsletter-modal-close {
+      background: var(--paper, #f8f8f0);
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  }
+  .newsletter-modal-close:hover { opacity: 0.6; }
+  
+  .newsletter-subtitle-kicker {
+    font-family: var(--body, sans-serif);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clay, #8a5a44);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .newsletter-modal-title {
+    font-family: var(--display, serif);
+    font-size: clamp(24px, 3vw, 32px);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--cocoa, #392319);
+    margin: 0 0 12px 0;
+    line-height: 1.15;
+  }
+  .newsletter-modal-desc {
+    font-family: var(--body, sans-serif);
+    font-size: 12.5px;
+    color: var(--ink60, #666);
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+  }
+  .newsletter-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .newsletter-input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .newsletter-modal-form input[type="email"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--line, #e2e2e2);
+    background: transparent;
+    font-family: var(--body, sans-serif);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink, #000);
+    outline: none;
+    transition: border-color 0.25s ease;
+    box-sizing: border-box;
+  }
+  .newsletter-modal-form input[type="email"]::placeholder {
+    color: var(--ink60, #666);
+    letter-spacing: 0.05em;
+  }
+  .newsletter-modal-form input[type="email"]:focus {
+    border-color: var(--cocoa, #392319);
+  }
+  .newsletter-submit-btn {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--cocoa, #392319);
+    color: #fff;
+    font-family: var(--body, sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid var(--cocoa, #392319);
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .newsletter-submit-btn:hover {
+    background: #fff;
+    color: var(--cocoa, #392319);
+  }
+  .newsletter-privacy-note {
+    font-family: var(--body, sans-serif);
+    font-size: 10px;
+    color: var(--ink60, #666);
+    margin-top: 12px;
+  }
+  .newsletter-success-msg {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    animation: fadeInMsg 0.6s ease forwards;
+  }
+  @keyframes fadeInMsg { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .newsletter-success-msg .success-icon {
+    font-size: 32px;
+    color: var(--clay, #8a5a44);
+    margin-bottom: 16px;
+  }
+  .newsletter-success-msg h4 {
+    font-family: var(--display, serif);
+    font-size: 24px;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0 0 12px 0;
+  }
+  .newsletter-success-msg p {
+    font-family: var(--body, sans-serif);
+    font-size: 13px;
+    color: var(--ink60, #666);
+    margin: 0;
+  }
+</style>
+
+<footer class="foot">
+  <!-- Muse Circle: Newsletter opt-in zone -->
+  <div class="foot-muse" id="museCircle">
+    <div class="foot-muse-copy">
+      <span class="muse-kicker">{{ section.settings.muse_kicker }}</span>
+      <h2>{{ section.settings.muse_title }}</h2>
+      <p>{{ section.settings.muse_desc }}</p>
+    </div>
+    
+    <div class="foot-muse-form-zone">
+      <div id="museFormWrap">
+        {% form 'customer', id: 'museForm', class: 'muse-form-inline' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          
+          {%- if form.posted_successfully? -%}
+            <script>document.addEventListener("DOMContentLoaded", function() { showMuseSuccess(); });</script>
+          {%- else -%}
+            <input type="email" name="contact[email]" class="muse-input" id="museEmail" placeholder="Your email address" required autocomplete="email" />
+            <button type="submit" class="muse-submit">{{ section.settings.muse_btn_label }}</button>
+          {%- endif -%}
+        {% endform %}
+      </div>
+      
+      <div class="muse-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
+        <span class="muse-success-check">✦</span>
+        <p>Welcome to the inner circle.</p>
+        <small>Your 10% code is on its way to your inbox.</small>
+      </div>
+      
+      <p class="muse-disclaimer">
+        By joining, you agree to our
+        <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>. Unsubscribe anytime.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer lower zone: logo, nav, copyright -->
+  <div class="foot-lower">
+    {%- if section.settings.logo != blank -%}
+      <img class="foot-logo" src="{{ section.settings.logo | img_url: '400x' }}" alt="{{ shop.name }}" loading="lazy" />
+    {%- else -%}
+      <h2 style="font-family: var(--display); color: #fff; margin-bottom: 24px;">{{ shop.name }}</h2>
+    {%- endif -%}
+    
+    <nav class="foot-nav" aria-label="Footer">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    
+    <div class="foot-btm">
+      <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} &middot; Made in Bali</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky Newsletter Teaser -->
+<div id="newsletterTeaser" class="newsletter-teaser">
+  <span class="newsletter-teaser-text" onclick="openNewsletterModal()">{{ section.settings.teaser_text }}</span>
+  <button class="newsletter-teaser-close" onclick="dismissNewsletterTeaser(event)" aria-label="Close teaser">✕</button>
+</div>
+
+<!-- Newsletter Modal -->
+<dialog id="newsletterModal" aria-labelledby="newsletterModalTitle">
+  <div class="newsletter-modal-inner">
+    <button class="newsletter-modal-close" onclick="closeNewsletterModal()" aria-label="Close modal">✕</button>
+    <div class="newsletter-image-wrap">
+      {%- if section.settings.modal_image != blank -%}
+        <img src="{{ section.settings.modal_image | img_url: '800x' }}" alt="Newsletter" loading="lazy" />
+      {%- else -%}
+        <img src="https://cdn.shopify.com/s/images/themes/product-1.png" alt="Newsletter" loading="lazy" />
+      {%- endif -%}
+    </div>
+    
+    <div class="newsletter-content-wrap">
+      <div id="modalFormWrap">
+        <span class="newsletter-subtitle-kicker">{{ section.settings.modal_kicker }}</span>
+        <h2 id="newsletterModalTitle" class="newsletter-modal-title">{{ section.settings.modal_title }}</h2>
+        <p class="newsletter-modal-desc">{{ section.settings.modal_desc }}</p>
+        
+        {% form 'customer', id: 'newsletterModalForm', class: 'newsletter-modal-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          
+          {%- if form.posted_successfully? -%}
+            <script>document.addEventListener("DOMContentLoaded", function() { showModalSuccess(); });</script>
+          {%- else -%}
+            <div class="newsletter-input-group">
+              <input type="email" name="contact[email]" placeholder="Your email address" required />
+            </div>
+            <button type="submit" class="newsletter-submit-btn">{{ section.settings.modal_btn_label }}</button>
+          {%- endif -%}
+        {% endform %}
+        
+        <p class="newsletter-privacy-note">
+          By joining, you agree to our <a href="{{ shop.privacy_policy.url | default: '#' }}" style="color:var(--cocoa); text-decoration:underline;">Privacy Policy</a>.
+        </p>
+      </div>
+      
+      <div class="newsletter-success-msg" id="newsletterSuccessMsg">
+        <div class="success-icon">✦</div>
+        <h4>Welcome to the circle.</h4>
+        <p>Check your inbox for your exclusive 10% code.</p>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function showMuseSuccess() {
+    document.getElementById("museFormWrap").style.display = "none";
+    document.getElementById("museSuccess").style.display = "flex";
+  }
+  
+  function showModalSuccess() {
+    document.getElementById("modalFormWrap").style.display = "none";
+    document.getElementById("newsletterSuccessMsg").style.display = "flex";
+    openNewsletterModal();
+  }
+
+  // Teaser & Modal Logic
+  const newsletterModal = document.getElementById("newsletterModal");
+  const newsletterTeaser = document.getElementById("newsletterTeaser");
+
+  function openNewsletterModal() {
+    if (newsletterModal) {
+      newsletterModal.showModal();
+      document.body.style.overflow = "hidden";
+      if (newsletterTeaser) newsletterTeaser.classList.add("hidden");
+    }
+  }
+
+  function closeNewsletterModal() {
+    if (newsletterModal) {
+      newsletterModal.close();
+      document.body.style.overflow = "";
+      localStorage.setItem("lisandra_newsletter_dismissed", "true");
+    }
+  }
+
+  function dismissNewsletterTeaser(event) {
+    event.stopPropagation();
+    if (newsletterTeaser) {
+      newsletterTeaser.classList.add("hidden");
+      localStorage.setItem("lisandra_newsletter_dismissed", "true");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Check if dismissed
+    if (localStorage.getItem("lisandra_newsletter_dismissed") === "true") {
+      if (newsletterTeaser) newsletterTeaser.classList.add("hidden");
+    } else {
+      // Show teaser after 3 seconds
+      setTimeout(() => {
+        if (newsletterTeaser) newsletterTeaser.classList.remove("hidden");
+      }, 3000);
+    }
+  });
+
+  // Close modal when clicking backdrop
+  if (newsletterModal) {
+    newsletterModal.addEventListener("click", (e) => {
+      const dialogDimensions = newsletterModal.getBoundingClientRect();
+      if (
+        e.clientX < dialogDimensions.left ||
+        e.clientX > dialogDimensions.right ||
+        e.clientY < dialogDimensions.top ||
+        e.clientY > dialogDimensions.bottom
+      ) {
+        closeNewsletterModal();
+      }
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Footer & Newsletter",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Footer Newsletter Zone"
+    },
+    {
+      "type": "text",
+      "id": "muse_kicker",
+      "label": "Kicker",
+      "default": "Become a Muse"
+    },
+    {
+      "type": "textarea",
+      "id": "muse_title",
+      "label": "Title",
+      "default": "Your first piece,<br />with 10% off."
+    },
+    {
+      "type": "textarea",
+      "id": "muse_desc",
+      "label": "Description",
+      "default": "Join our inner circle for private releases, secret drops, and 10% off your first artisanal piece."
+    },
+    {
+      "type": "text",
+      "id": "muse_btn_label",
+      "label": "Button Label",
+      "default": "Claim 10% Off"
+    },
+    {
+      "type": "header",
+      "content": "Footer Lower Zone"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo (White)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer Menu",
+      "default": "footer"
+    },
+    {
+      "type": "header",
+      "content": "Sticky Teaser & Modal"
+    },
+    {
+      "type": "text",
+      "id": "teaser_text",
+      "label": "Teaser Text",
+      "default": "✦ 10% off your first piece"
+    },
+    {
+      "type": "image_picker",
+      "id": "modal_image",
+      "label": "Modal Image"
+    },
+    {
+      "type": "text",
+      "id": "modal_kicker",
+      "label": "Modal Kicker",
+      "default": "Exclusive Welcome"
+    },
+    {
+      "type": "text",
+      "id": "modal_title",
+      "label": "Modal Title",
+      "default": "Unlock 10% Off"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_desc",
+      "label": "Modal Description",
+      "default": "Join the Lisandra inner circle to receive 10% off your first artisanal piece, plus early access to secret drops."
+    },
+    {
+      "type": "text",
+      "id": "modal_btn_label",
+      "label": "Modal Button",
+      "default": "Unlock Offer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer & Newsletter"
+    }
+  ]
+}
+{% endschema %}
