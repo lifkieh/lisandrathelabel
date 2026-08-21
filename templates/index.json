@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_editorial": {
@@ -179,27 +188,19 @@
       "blocks": {
         "post_1": {
           "type": "post",
-          "settings": {
-            "caption": "Golden hour in Canggu with the Zaye knit."
-          }
+          "settings": {}
         },
         "post_2": {
           "type": "post",
-          "settings": {
-            "caption": "Hand-knitted piece by piece in Bali."
-          }
+          "settings": {}
         },
         "post_3": {
           "type": "post",
-          "settings": {
-            "caption": "Resortwear made for sea & sun."
-          }
+          "settings": {}
         },
         "post_4": {
           "type": "post",
-          "settings": {
-            "caption": "Details of artisanal crochet."
-          }
+          "settings": {}
         }
       },
       "block_order": [
