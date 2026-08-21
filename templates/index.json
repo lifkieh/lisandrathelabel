@@ -40,8 +40,11 @@
         "cat_swim"
       ],
       "settings": {
+        "enable_ken_burns": true,
+        "overlay_opacity": 65,
         "eyebrow": "New Collection",
         "title": "Handmade Resortwear\nMade by Balinese Artisans",
+        "text": "",
         "btn1_label": "Shop the collection",
         "btn1_link": "shopify://collections/all",
         "btn2_label": "See how it's made",
@@ -50,14 +53,27 @@
     },
     "signature_spotlight": {
       "type": "signature-spotlight",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/Untitled_design-17.jpg",
+        "layout": "image_left",
+        "kicker": "The Signature",
+        "title": "Two days on the needles, then it skims wherever you happen to have curves.",
+        "text": "The Zaye Knit Maxi Dress, open back, adjustable straps, made by one artisan at a time.",
+        "btn_label": "Shop the Zaye Dress",
+        "btn_link": "shopify://products/zaye-dress"
+      }
     },
     "best_sellers": {
       "type": "best-sellers-custom",
       "settings": {
         "title": "Best sellers",
         "subtitle": "Ranked by what actually leaves first.",
-        "link_label": "View all"
+        "link_label": "View all",
+        "link_url": "",
+        "collection": "",
+        "product_limit": 4,
+        "columns_desktop": 4,
+        "show_badge": true
       }
     },
     "brand_essence": {
@@ -112,25 +128,29 @@
         "ugc_1": {
           "type": "ugc_item",
           "settings": {
-            "username": "@lisandramuse"
+            "username": "@lisandramuse",
+            "product": ""
           }
         },
         "ugc_2": {
           "type": "ugc_item",
           "settings": {
-            "username": "@canggu_vibes"
+            "username": "@canggu_vibes",
+            "product": ""
           }
         },
         "ugc_3": {
           "type": "ugc_item",
           "settings": {
-            "username": "@bali_sunset"
+            "username": "@bali_sunset",
+            "product": ""
           }
         },
         "ugc_4": {
           "type": "ugc_item",
           "settings": {
-            "username": "@resortwear_style"
+            "username": "@resortwear_style",
+            "product": ""
           }
         }
       },
@@ -140,7 +160,10 @@
         "ugc_3",
         "ugc_4"
       ],
-      "settings": {}
+      "settings": {
+        "kicker": "Community & Styling",
+        "title": "As Styled by You"
+      }
     },
     "customer_reviews": {
       "type": "customer-reviews",
@@ -180,7 +203,9 @@
       ],
       "settings": {
         "title": "What people say",
-        "link_label": "All 74 reviews"
+        "link_label": "All 74 reviews",
+        "link_url": "",
+        "columns_desktop": 3
       }
     },
     "social_feed": {
@@ -188,19 +213,27 @@
       "blocks": {
         "post_1": {
           "type": "post",
-          "settings": {}
+          "settings": {
+            "url": ""
+          }
         },
         "post_2": {
           "type": "post",
-          "settings": {}
+          "settings": {
+            "url": ""
+          }
         },
         "post_3": {
           "type": "post",
-          "settings": {}
+          "settings": {
+            "url": ""
+          }
         },
         "post_4": {
           "type": "post",
-          "settings": {}
+          "settings": {
+            "url": ""
+          }
         }
       },
       "block_order": [
@@ -209,11 +242,26 @@
         "post_3",
         "post_4"
       ],
-      "settings": {}
+      "settings": {
+        "title": "Join the Circle",
+        "handle": "@lisandramuse",
+        "url": ""
+      }
     },
     "muse_newsletter_footer": {
       "type": "muse-newsletter-footer",
-      "settings": {}
+      "settings": {
+        "muse_kicker": "Become a Muse",
+        "muse_title": "Your first piece,<br>with 10% off.",
+        "muse_desc": "Join our inner circle for private releases, secret drops, and 10% off your first artisanal piece.",
+        "muse_btn_label": "Claim 10% Off",
+        "menu": "footer",
+        "teaser_text": "✦ 10% off your first piece",
+        "modal_kicker": "Exclusive Welcome",
+        "modal_title": "Unlock 10% Off",
+        "modal_desc": "Join the Lisandra inner circle to receive 10% off your first artisanal piece, plus early access to secret drops.",
+        "modal_btn_label": "Unlock Offer"
+      }
     }
   },
   "order": [
@@ -223,7 +271,6 @@
     "brand_essence",
     "sustainability_strip",
     "editorial_rows",
-    "as_styled_by_you",
     "customer_reviews",
     "social_feed",
     "muse_newsletter_footer"
