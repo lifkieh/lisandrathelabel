@@ -173,7 +173,10 @@
         "post_1": {
           "type": "post",
           "settings": {
-            "image": "shopify://shop_images/A_softer_kind_of_summer_Aruna_set_as_seen_on_savannahmarai.jpg",
+            "image_1": "shopify://shop_images/A_softer_kind_of_summer_Aruna_set_as_seen_on_savannahmarai.jpg",
+            "caption": "A softer kind of summer 🧡\nAruna set as seen on @savannahmarai",
+            "location": "",
+            "product": "aruna-top",
             "url": "https://www.instagram.com/p/DcQsFCAvSBw/"
           }
         },
@@ -181,20 +184,35 @@
           "type": "post",
           "settings": {
             "video": "shopify://files/videos/The Alana Dress. Made to move with you, from day to night..mp4",
+            "caption": "The Alana Dress. Made to move with you, from day to night.",
+            "location": "",
+            "product": "",
             "url": "https://www.instagram.com/p/DcLlDu2PL83/"
           }
         },
         "post_3": {
           "type": "post",
           "settings": {
-            "image": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain..jpg",
+            "image_1": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain..jpg",
+            "image_2": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain._1.jpg",
+            "image_3": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain._2.jpg",
+            "caption": "The Orla Bikini, worn by @lanariel_ 🥥 Just a few pieces remain.",
+            "location": "",
+            "product": "",
             "url": "https://www.instagram.com/p/DcF6779DMCT/?img_index=1"
           }
         },
         "post_4": {
           "type": "post",
           "settings": {
-            "image": "shopify://shop_images/In_the_world_of_Lisandra..jpg",
+            "image_1": "shopify://shop_images/In_the_world_of_Lisandra..jpg",
+            "image_2": "shopify://shop_images/In_the_world_of_Lisandra._3.jpg",
+            "image_3": "shopify://shop_images/In_the_world_of_Lisandra._1.jpg",
+            "image_4": "shopify://shop_images/In_the_world_of_Lisandra._4.jpg",
+            "image_5": "shopify://shop_images/In_the_world_of_Lisandra._2.jpg",
+            "caption": "In the world of Lisandra.",
+            "location": "",
+            "product": "",
             "url": "https://www.instagram.com/p/Db-sDjElD4l/?img_index=1"
           }
         }

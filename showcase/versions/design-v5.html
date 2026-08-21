@@ -2142,18 +2142,22 @@
         color: var(--ink60);
       }
 
-      /* Tagged Product Box (Shop the Look) */
+      .social-modal-products {
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: auto;
+      }
       .social-modal-product {
         background: #ffffff;
         border: 1px solid var(--line);
-        padding: 12px;
+        padding: 10px 12px;
         display: flex;
         gap: 14px;
         align-items: center;
         text-decoration: none;
         color: inherit;
         transition: border-color 0.2s, transform 0.2s;
-        margin-top: auto;
       }
       .social-modal-product:hover {
         border-color: var(--cocoa);
@@ -3997,15 +4001,9 @@
             </p>
 
             <!-- Tagged Product Box -->
-            <a href="#" class="social-modal-product" id="socialModalProduct" style="display: none;">
-              <img src="" alt="" class="social-modal-product-img" id="socialModalProductImg" />
-              <div class="social-modal-product-details">
-                <span class="social-modal-product-tag">✦ Shop the Look</span>
-                <h4 class="social-modal-product-title" id="socialModalProductTitle">Product Title</h4>
-                <span class="social-modal-product-price" id="socialModalProductPrice">Rp 0</span>
-                <span class="social-modal-product-btn">View Piece →</span>
-              </div>
-            </a>
+            <div class="social-modal-products" id="socialModalProducts">
+              <!-- Injected via JS -->
+            </div>
           </div>
 
           <!-- Footer: View on Instagram -->
@@ -5646,12 +5644,20 @@
           caption: "Golden hour ripples and salty skin. Hand-knit in Bali for endless summers.",
           location: "Uluwatu, Bali",
           url: "https://instagram.com/lisandra.thelabel",
-          product: {
-            title: "Zaye Knit Maxi Dress",
-            price: "Rp 1.898.000",
-            image: "https://lisandrathelabel.com/cdn/shop/files/1.jpg?v=1762245035&width=200",
-            url: "#pdp"
-          }
+          products: [
+            {
+              title: "Zaye Knit Maxi Dress",
+              price: "Rp 1.898.000",
+              image: "https://lisandrathelabel.com/cdn/shop/files/1.jpg?v=1762245035&width=200",
+              url: "#pdp"
+            },
+            {
+              title: "Lisandra Straw Hat",
+              price: "Rp 450.000",
+              image: "https://lisandrathelabel.com/cdn/shop/files/1.jpg?v=1762245035&width=200",
+              url: "#pdp"
+            }
+          ]
         },
         {
           type: "image",
@@ -5659,12 +5665,14 @@
           caption: "Softly sculpted crochet silhouettes designed to move between the ocean and sunset dinner.",
           location: "Canggu, Bali",
           url: "https://instagram.com/lisandra.thelabel",
-          product: {
-            title: "Kayu Crochet Bikini Set",
-            price: "Rp 1.349.000",
-            image: "https://lisandrathelabel.com/cdn/shop/files/Untitleddesign-4_0b602b36-76da-4b9d-9ff2-5ee34dd0014d.png?v=1754144532&width=200",
-            url: "#pdp"
-          }
+          products: [
+            {
+              title: "Kayu Crochet Bikini Set",
+              price: "Rp 1.349.000",
+              image: "https://lisandrathelabel.com/cdn/shop/files/Untitleddesign-4_0b602b36-76da-4b9d-9ff2-5ee34dd0014d.png?v=1754144532&width=200",
+              url: "#pdp"
+            }
+          ]
         },
         {
           type: "image",
@@ -5672,12 +5680,14 @@
           caption: "Every loop and stitch tells the story of slow artisanal craft in small batches.",
           location: "Lisandra Studio, Bali",
           url: "https://instagram.com/lisandra.thelabel",
-          product: {
-            title: "Amara Knit Top",
-            price: "Rp 899.000",
-            image: "https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?v=1766110052&width=200",
-            url: "#pdp"
-          }
+          products: [
+            {
+              title: "Amara Knit Top",
+              price: "Rp 899.000",
+              image: "https://lisandrathelabel.com/cdn/shop/files/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg?v=1766110052&width=200",
+              url: "#pdp"
+            }
+          ]
         },
         {
           type: "image",
@@ -5685,12 +5695,14 @@
           caption: "Mentari long knit dress catching the warm coastal breeze.",
           location: "Seminyak, Bali",
           url: "https://instagram.com/lisandra.thelabel",
-          product: {
-            title: "Mentari Knit Long Dress",
-            price: "Rp 1.499.000",
-            image: "https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=200",
-            url: "#pdp"
-          }
+          products: [
+            {
+              title: "Mentari Knit Long Dress",
+              price: "Rp 1.499.000",
+              image: "https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=200",
+              url: "#pdp"
+            }
+          ]
         }
       ];
 
@@ -5701,10 +5713,7 @@
       const socialLocation = document.getElementById("socialModalLocation");
       const socialCounter = document.getElementById("socialModalCounter");
       const socialIgLink = document.getElementById("socialModalIgLink");
-      const socialProductBox = document.getElementById("socialModalProduct");
-      const socialProductImg = document.getElementById("socialModalProductImg");
-      const socialProductTitle = document.getElementById("socialModalProductTitle");
-      const socialProductPrice = document.getElementById("socialModalProductPrice");
+      const socialProductsWrap = document.getElementById("socialModalProducts");
 
       let currentInnerSlide = 0;
       let maxInnerSlide = 0;
@@ -5739,14 +5748,6 @@
             }
             html += '</div>';
 
-            // Navigation Arrows
-            html += '<button type="button" class="social-modal-inner-nav social-modal-inner-prev" onclick="event.stopPropagation(); navInnerCarousel(-1)" aria-label="Previous Image">';
-            html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
-            html += '</button>';
-            html += '<button type="button" class="social-modal-inner-nav social-modal-inner-next" onclick="event.stopPropagation(); navInnerCarousel(1)" aria-label="Next Image">';
-            html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-            html += '</button>';
-
             html += '</div>';
             socialMediaContent.innerHTML = html;
           } else {
@@ -5759,45 +5760,63 @@
           if (socialCounter) socialCounter.textContent = `Post ${currentSocialIndex + 1} of ${socialPosts.length}`;
           if (socialIgLink) socialIgLink.href = post.url || 'https://instagram.com/lisandra.thelabel';
 
-          if (post.product && socialProductBox) {
-            socialProductBox.style.display = "flex";
-            socialProductBox.href = post.product.url;
-            if (socialProductImg) {
-              socialProductImg.src = post.product.image;
-              socialProductImg.alt = post.product.title;
+          if (post.products && post.products.length > 0 && socialProductsWrap) {
+            socialProductsWrap.style.display = "flex";
+            let prodHtml = '<span class="social-modal-product-tag">✦ Shop the Look</span>';
+            for (let p = 0; p < post.products.length; p++) {
+              const prod = post.products[p];
+              prodHtml += `<a href="${prod.url}" class="social-modal-product">`;
+              prodHtml += `<img src="${prod.image}" alt="${prod.title}" class="social-modal-product-img" />`;
+              prodHtml += `<div class="social-modal-product-details">`;
+              prodHtml += `<h4 class="social-modal-product-title">${prod.title}</h4>`;
+              prodHtml += `<span class="social-modal-product-price">${prod.price}</span>`;
+              prodHtml += `<span class="social-modal-product-btn">View Piece →</span>`;
+              prodHtml += `</div></a>`;
             }
-            if (socialProductTitle) socialProductTitle.textContent = post.product.title;
-            if (socialProductPrice) socialProductPrice.textContent = post.product.price;
-          } else if (socialProductBox) {
-            socialProductBox.style.display = "none";
+            socialProductsWrap.innerHTML = prodHtml;
+          } else if (socialProductsWrap) {
+            socialProductsWrap.style.display = "none";
+            socialProductsWrap.innerHTML = "";
           }
 
           socialMediaContent.classList.remove("fading");
         }, 150);
       }
 
-      window.navInnerCarousel = function(direction) {
-        const newIndex = currentInnerSlide + direction;
-        if (newIndex < 0 || newIndex > maxInnerSlide) return;
-        currentInnerSlide = newIndex;
-        
-        const slideWrap = document.getElementById("innerSlidesWrap");
-        if (slideWrap) {
-          slideWrap.style.transform = `translateX(-${currentInnerSlide * 100}%)`;
-        }
-
-        const dotsWrap = socialMediaContent.querySelector(".social-modal-inner-dots");
-        if (dotsWrap) {
-          const dots = dotsWrap.querySelectorAll(".social-modal-inner-dot");
-          dots.forEach((dot, idx) => {
-            if (idx === currentInnerSlide) {
-              dot.classList.add("active");
-            } else {
-              dot.classList.remove("active");
+      function navigateSocialModal(direction) {
+        if (maxInnerSlide > 0) {
+          const newInner = currentInnerSlide + direction;
+          if (newInner >= 0 && newInner <= maxInnerSlide) {
+            // Navigate inner
+            currentInnerSlide = newInner;
+            const slideWrap = document.getElementById("innerSlidesWrap");
+            if (slideWrap) {
+              slideWrap.style.transform = `translateX(-${currentInnerSlide * 100}%)`;
             }
-          });
+
+            const dotsWrap = socialMediaContent.querySelector(".social-modal-inner-dots");
+            if (dotsWrap) {
+              const dots = dotsWrap.querySelectorAll(".social-modal-inner-dot");
+              dots.forEach((dot, idx) => {
+                if (idx === currentInnerSlide) {
+                  dot.classList.add("active");
+                } else {
+                  dot.classList.remove("active");
+                }
+              });
+            }
+            return; // Stop here, do not navigate post
+          }
         }
-      };
+        // Change post
+        renderSocialPost(currentSocialIndex + direction);
+      }
+
+      function handleSocialOverlayClick(e) {
+        if (e.target === socialOverlay) {
+          closeSocialModal();
+        }
+      }
 
       function openSocialModal(index) {
         if (!socialOverlay) return;
@@ -5812,16 +5831,6 @@
         document.body.style.overflow = "";
         const video = socialMediaContent ? socialMediaContent.querySelector("video") : null;
         if (video) video.pause();
-      }
-
-      function navigateSocialModal(direction) {
-        renderSocialPost(currentSocialIndex + direction);
-      }
-
-      function handleSocialOverlayClick(e) {
-        if (e.target === socialOverlay) {
-          closeSocialModal();
-        }
       }
 
       // Keyboard support

@@ -409,17 +409,22 @@
   }
 
   /* Tagged Product Box (Shop the Look) */
+  .social-modal-products-{{ section.id }} {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+  }
   .social-modal-product-{{ section.id }} {
     background: #ffffff;
     border: 1px solid var(--line, #e2e2e2);
-    padding: 12px;
+    padding: 10px 12px;
     display: flex;
     gap: 14px;
     align-items: center;
     text-decoration: none;
     color: inherit;
     transition: border-color 0.2s, transform 0.2s;
-    margin-top: auto;
   }
   .social-modal-product-{{ section.id }}:hover {
     border-color: var(--cocoa, #392319);
@@ -652,15 +657,9 @@
         </p>
 
         <!-- Tagged Product Box -->
-        <a href="#" class="social-modal-product-{{ section.id }}" id="socialModalProduct-{{ section.id }}" style="display: none;">
-          <img src="" alt="" class="social-modal-product-img-{{ section.id }}" id="socialModalProductImg-{{ section.id }}" />
-          <div class="social-modal-product-details-{{ section.id }}">
-            <span class="social-modal-product-tag-{{ section.id }}">✦ Shop the Look</span>
-            <h4 class="social-modal-product-title-{{ section.id }}" id="socialModalProductTitle-{{ section.id }}">Product Title</h4>
-            <span class="social-modal-product-price-{{ section.id }}" id="socialModalProductPrice-{{ section.id }}">Rp 0</span>
-            <span class="social-modal-product-btn-{{ section.id }}">View Piece →</span>
-          </div>
-        </a>
+        <div class="social-modal-products-{{ section.id }}" id="socialModalProducts-{{ section.id }}">
+          <!-- Injected via JS -->
+        </div>
       </div>
 
       <!-- Footer: View on Instagram -->
@@ -701,15 +700,28 @@
         "caption": {{ block.settings.caption | default: "Sun-drenched moments and artisanal knitwear handcrafted in Bali." | json }},
         "location": {{ block.settings.location | default: "Bali, Indonesia" | json }},
         "url": {{ block.settings.url | default: section.settings.url | default: "#" | json }},
-        {%- if block.settings.product != blank -%}
-          "product": {
-            "title": {{ block.settings.product.title | json }},
-            "price": {{ block.settings.product.price | money | json }},
-            "url": {{ block.settings.product.url | json }},
-            "image": {{ block.settings.product.featured_image | img_url: '200x' | json }}
-          }
+        {%- if block.settings.product_list != blank -%}
+          "products": [
+            {%- for prod in block.settings.product_list -%}
+              {
+                "title": {{ prod.title | json }},
+                "price": {{ prod.price | money | json }},
+                "url": {{ prod.url | json }},
+                "image": {{ prod.featured_image | img_url: '200x' | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        {%- elsif block.settings.product != blank -%}
+          "products": [
+            {
+              "title": {{ block.settings.product.title | json }},
+              "price": {{ block.settings.product.price | money | json }},
+              "url": {{ block.settings.product.url | json }},
+              "image": {{ block.settings.product.featured_image | img_url: '200x' | json }}
+            }
+          ]
         {%- else -%}
-          "product": null
+          "products": []
         {%- endif -%}
       }{%- unless forloop.last -%},{%- endunless -%}
     {%- endfor -%}
@@ -728,10 +740,7 @@
     var locationEl = document.getElementById("socialModalLocation-{{ section.id }}");
     var counterEl = document.getElementById("socialModalCounter-{{ section.id }}");
     var igLink = document.getElementById("socialModalIgLink-{{ section.id }}");
-    var productBox = document.getElementById("socialModalProduct-{{ section.id }}");
-    var productImg = document.getElementById("socialModalProductImg-{{ section.id }}");
-    var productTitle = document.getElementById("socialModalProductTitle-{{ section.id }}");
-    var productPrice = document.getElementById("socialModalProductPrice-{{ section.id }}");
+    var productsWrap = document.getElementById("socialModalProducts-{{ section.id }}");
 
     var currentInnerSlide = 0;
     var maxInnerSlide = 0;
@@ -773,14 +782,6 @@
           }
           html += '</div>';
 
-          // Navigation Arrows
-          html += '<button type="button" class="social-modal-inner-nav-' + sectionId + ' social-modal-inner-prev-' + sectionId + '" onclick="event.stopPropagation(); navInnerCarousel_' + sectionId + '(-1)" aria-label="Previous Image">';
-          html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
-          html += '</button>';
-          html += '<button type="button" class="social-modal-inner-nav-' + sectionId + ' social-modal-inner-next-' + sectionId + '" onclick="event.stopPropagation(); navInnerCarousel_' + sectionId + '(1)" aria-label="Next Image">';
-          html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-          html += '</button>';
-
           html += '</div>';
           mediaContent.innerHTML = html;
         } else {
@@ -795,42 +796,62 @@
         counterEl.textContent = 'Post ' + (currentIndex + 1) + ' of ' + posts.length;
         igLink.href = post.url || '#';
 
-        // Tagged Product
-        if (post.product) {
-          productBox.style.display = "flex";
-          productBox.href = post.product.url;
-          productImg.src = post.product.image;
-          productImg.alt = post.product.title;
-          productTitle.textContent = post.product.title;
-          productPrice.textContent = post.product.price;
+        // Tagged Products
+        if (post.products && post.products.length > 0) {
+          productsWrap.style.display = "flex";
+          var prodHtml = '<span class="social-modal-product-tag-' + sectionId + '">✦ Shop the Look</span>';
+          for (var p = 0; p < post.products.length; p++) {
+            var prod = post.products[p];
+            prodHtml += '<a href="' + prod.url + '" class="social-modal-product-' + sectionId + '">';
+            prodHtml += '<img src="' + prod.image + '" alt="' + prod.title + '" class="social-modal-product-img-' + sectionId + '" />';
+            prodHtml += '<div class="social-modal-product-details-' + sectionId + '">';
+            prodHtml += '<h4 class="social-modal-product-title-' + sectionId + '">' + prod.title + '</h4>';
+            prodHtml += '<span class="social-modal-product-price-' + sectionId + '">' + prod.price + '</span>';
+            prodHtml += '<span class="social-modal-product-btn-' + sectionId + '">View Piece →</span>';
+            prodHtml += '</div></a>';
+          }
+          productsWrap.innerHTML = prodHtml;
         } else {
-          productBox.style.display = "none";
+          productsWrap.style.display = "none";
+          productsWrap.innerHTML = "";
         }
 
         mediaContent.classList.remove("fading");
       }, 150);
     }
 
-    window["navInnerCarousel_" + sectionId] = function(direction) {
-      var newIndex = currentInnerSlide + direction;
-      if (newIndex < 0 || newIndex > maxInnerSlide) return;
-      currentInnerSlide = newIndex;
-      
-      var slideWrap = document.getElementById("innerSlidesWrap-" + sectionId);
-      if (slideWrap) {
-        slideWrap.style.transform = "translateX(-" + (currentInnerSlide * 100) + "%)";
-      }
-
-      var dotsWrap = mediaContent.querySelector(".social-modal-inner-dots-" + sectionId);
-      if (dotsWrap) {
-        var dots = dotsWrap.querySelectorAll(".social-modal-inner-dot-" + sectionId);
-        dots.forEach(function(dot, idx) {
-          if (idx === currentInnerSlide) {
-            dot.classList.add("active");
-          } else {
-            dot.classList.remove("active");
+    window["navigateSocialModal_" + sectionId] = function(direction) {
+      if (maxInnerSlide > 0) {
+        var newInner = currentInnerSlide + direction;
+        if (newInner >= 0 && newInner <= maxInnerSlide) {
+          // Inner navigation (change image instead of post)
+          currentInnerSlide = newInner;
+          var slideWrap = document.getElementById("innerSlidesWrap-" + sectionId);
+          if (slideWrap) {
+            slideWrap.style.transform = "translateX(-" + (currentInnerSlide * 100) + "%)";
           }
-        });
+          var dotsWrap = mediaContent.querySelector(".social-modal-inner-dots-" + sectionId);
+          if (dotsWrap) {
+            var dots = dotsWrap.querySelectorAll(".social-modal-inner-dot-" + sectionId);
+            dots.forEach(function(dot, idx) {
+              if (idx === currentInnerSlide) {
+                dot.classList.add("active");
+              } else {
+                dot.classList.remove("active");
+              }
+            });
+          }
+          return; // Stop here, do not render next post
+        }
+      }
+      
+      // If no inner slides, or reached the end of inner slides, change POST
+      renderPost(currentIndex + direction);
+    };
+
+    window["handleOverlayClick_" + sectionId] = function(e) {
+      if (e.target === overlay) {
+        window["closeSocialModal_" + sectionId]();
       }
     };
 
@@ -846,16 +867,6 @@
       // Pause any active video
       var video = mediaContent.querySelector("video");
       if (video) video.pause();
-    };
-
-    window["navigateSocialModal_" + sectionId] = function(direction) {
-      renderPost(currentIndex + direction);
-    };
-
-    window["handleOverlayClick_" + sectionId] = function(e) {
-      if (e.target === overlay) {
-        window["closeSocialModal_" + sectionId]();
-      }
     };
 
     // Keyboard support
@@ -970,9 +981,15 @@
           "default": "Bali, Indonesia"
         },
         {
+          "type": "product_list",
+          "id": "product_list",
+          "label": "Tagged Products (Shop the Look)",
+          "limit": 4
+        },
+        {
           "type": "product",
           "id": "product",
-          "label": "Tagged Product (Shop the Look)"
+          "label": "Legacy Tagged Product (Kept for backwards compatibility)"
         },
         {
           "type": "url",
