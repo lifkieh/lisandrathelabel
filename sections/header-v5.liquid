@@ -267,15 +267,13 @@
     {%- if section.settings.logo_dark != blank -%}
       <img src="{{ section.settings.logo_dark | img_url: '400x' }}" class="logo-dark" alt="Lisandra The Label" />
     {%- else -%}
-      <h1 style="font-family: var(--heading, serif); margin:0;">Lisandra</h1>
+      <img src="{{ 'logo-dark.png' | asset_url }}" class="logo-dark" alt="Lisandra The Label" />
     {%- endif -%}
     
     {%- if section.settings.logo_light != blank -%}
       <img src="{{ section.settings.logo_light | img_url: '400x' }}" class="logo-light" alt="Lisandra The Label" />
     {%- else -%}
-      {%- if section.settings.logo_dark != blank -%}
-        <img src="{{ section.settings.logo_dark | img_url: '400x' }}" class="logo-light" alt="Lisandra The Label" />
-      {%- endif -%}
+      <img src="{{ 'logo-light.png' | asset_url }}" class="logo-light" alt="Lisandra The Label" />
     {%- endif -%}
   </a>
 
