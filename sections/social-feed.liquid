@@ -35,14 +35,19 @@
     gap: 0;
     border-top: 1px solid var(--line, #e2e2e2);
   }
-  .social-grid-{{ section.id }} a {
+  .social-grid-{{ section.id }} .social-item-{{ section.id }} {
     position: relative;
     display: block;
     aspect-ratio: 1/1;
     overflow: hidden;
     background: var(--sand, #e0d9b5);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
   }
-  .social-grid-{{ section.id }} a + a {
+  .social-grid-{{ section.id }} .social-item-{{ section.id }} + .social-item-{{ section.id }} {
     border-left: 1px solid var(--line, #e2e2e2);
   }
   .social-grid-{{ section.id }} img,
@@ -85,16 +90,351 @@
     transform: translateY(6px);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.04s;
   }
-  .social-grid-{{ section.id }} a:hover img,
-  .social-grid-{{ section.id }} a:hover video {
+  .social-grid-{{ section.id }} .social-item-{{ section.id }}:hover img,
+  .social-grid-{{ section.id }} .social-item-{{ section.id }}:hover video {
     transform: scale(1.05);
   }
-  .social-grid-{{ section.id }} a:hover .social-overlay-{{ section.id }} {
+  .social-grid-{{ section.id }} .social-item-{{ section.id }}:hover .social-overlay-{{ section.id }} {
     opacity: 1;
   }
-  .social-grid-{{ section.id }} a:hover .social-icon-{{ section.id }},
-  .social-grid-{{ section.id }} a:hover .social-caption-{{ section.id }} {
+  .social-grid-{{ section.id }} .social-item-{{ section.id }}:hover .social-icon-{{ section.id }},
+  .social-grid-{{ section.id }} .social-item-{{ section.id }}:hover .social-caption-{{ section.id }} {
     transform: translateY(0);
+  }
+
+  /* Video Indicator Badge */
+  .social-video-badge-{{ section.id }} {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    backdrop-filter: blur(4px);
+  }
+  .social-video-badge-{{ section.id }} svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Instagram-Style Modal Overlay */
+  .social-modal-overlay-{{ section.id }} {
+    position: fixed;
+    inset: 0;
+    background: rgba(25, 15, 10, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 3vw, 32px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+  }
+  .social-modal-overlay-{{ section.id }}.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Modal Dialog Container */
+  .social-modal-container-{{ section.id }} {
+    background: var(--paper, #f8f8f0);
+    width: 100%;
+    max-width: 980px;
+    max-height: 88vh;
+    border-radius: 0;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.96) translateY(8px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid var(--line, #e2e2e2);
+  }
+  .social-modal-overlay-{{ section.id }}.active .social-modal-container-{{ section.id }} {
+    transform: scale(1) translateY(0);
+  }
+
+  /* Left Side: Media */
+  .social-modal-media-wrap-{{ section.id }} {
+    background: #18120e;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    max-height: 88vh;
+    overflow: hidden;
+  }
+  .social-modal-media-content-{{ section.id }} {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.25s ease;
+  }
+  .social-modal-media-content-{{ section.id }}.fading {
+    opacity: 0.3;
+  }
+  .social-modal-media-content-{{ section.id }} img,
+  .social-modal-media-content-{{ section.id }} video {
+    width: 100%;
+    height: 100%;
+    max-height: 88vh;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Navigation Arrows */
+  .social-modal-nav-btn-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(248, 248, 240, 0.85);
+    color: var(--cocoa, #392319);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.2s, transform 0.2s, color 0.2s;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+  .social-modal-nav-btn-{{ section.id }}:hover {
+    background: #ffffff;
+    transform: translateY(-50%) scale(1.08);
+    color: #000;
+  }
+  .social-modal-nav-prev-{{ section.id }} { left: 14px; }
+  .social-modal-nav-next-{{ section.id }} { right: 14px; }
+  .social-modal-nav-btn-{{ section.id }} svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Right Side: Sidebar Info */
+  .social-modal-sidebar-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 88vh;
+    background: var(--paper, #f8f8f0);
+    border-left: 1px solid var(--line, #e2e2e2);
+  }
+
+  /* Header in Sidebar */
+  .social-modal-header-{{ section.id }} {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line, #e2e2e2);
+  }
+  .social-modal-author-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .social-modal-avatar-{{ section.id }} {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--cocoa, #392319);
+    color: var(--paper, #f8f8f0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display, serif);
+    font-size: 15px;
+    font-style: italic;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .social-modal-avatar-{{ section.id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .social-modal-author-info-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .social-modal-username-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cocoa, #392319);
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .social-modal-location-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 10px;
+    color: var(--ink60, #777);
+    letter-spacing: 0.02em;
+  }
+
+  /* Close Button */
+  .social-modal-close-{{ section.id }} {
+    background: transparent;
+    border: none;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .social-modal-close-{{ section.id }}:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: rotate(90deg);
+  }
+  .social-modal-close-{{ section.id }} svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Body: Caption */
+  .social-modal-body-{{ section.id }} {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .social-modal-caption-text-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink, #1c1917);
+    margin: 0;
+  }
+  .social-modal-caption-text-{{ section.id }} strong {
+    font-weight: 600;
+    color: var(--cocoa, #392319);
+    margin-right: 6px;
+  }
+  .social-modal-counter-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink60, #888);
+  }
+
+  /* Tagged Product Box (Shop the Look) */
+  .social-modal-product-{{ section.id }} {
+    background: #ffffff;
+    border: 1px solid var(--line, #e2e2e2);
+    padding: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, transform 0.2s;
+    margin-top: auto;
+  }
+  .social-modal-product-{{ section.id }}:hover {
+    border-color: var(--cocoa, #392319);
+    transform: translateY(-2px);
+  }
+  .social-modal-product-img-{{ section.id }} {
+    width: 54px;
+    height: 68px;
+    object-fit: cover;
+    background: var(--sand, #e0d9b5);
+    flex-shrink: 0;
+  }
+  .social-modal-product-details-{{ section.id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .social-modal-product-tag-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay, #8a5a44);
+    font-weight: 600;
+  }
+  .social-modal-product-title-{{ section.id }} {
+    font-family: var(--display, serif);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0;
+    line-height: 1.2;
+  }
+  .social-modal-product-price-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--ink, #1c1917);
+  }
+  .social-modal-product-btn-{{ section.id }} {
+    font-family: var(--body, sans-serif);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    border-bottom: 1px solid var(--cocoa, #392319);
+    padding-bottom: 1px;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+
+  /* Footer Action */
+  .social-modal-footer-{{ section.id }} {
+    padding: 14px 20px;
+    border-top: 1px solid var(--line, #e2e2e2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafaf5;
+  }
+  .social-modal-ig-link-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--body, sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .social-modal-ig-link-{{ section.id }}:hover {
+    color: var(--clay, #8a5a44);
+  }
+  .social-modal-ig-link-{{ section.id }} svg {
+    width: 16px;
+    height: 16px;
   }
 
   /* Mobile Layout */
@@ -106,14 +446,36 @@
     .social-grid-{{ section.id }} {
       grid-template-columns: repeat(2, 1fr);
     }
-    .social-grid-{{ section.id }} a + a {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }} + .social-item-{{ section.id }} {
       border-left: none;
     }
-    .social-grid-{{ section.id }} a:nth-child(2n) {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(2n) {
       border-left: 1px solid var(--line, #e2e2e2);
     }
-    .social-grid-{{ section.id }} a:nth-child(n + 3) {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(n + 3) {
       border-top: 1px solid var(--line, #e2e2e2);
+    }
+
+    /* Modal Mobile Stack */
+    .social-modal-container-{{ section.id }} {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .social-modal-media-wrap-{{ section.id }} {
+      min-height: 280px;
+      max-height: 48vh;
+      aspect-ratio: 1/1;
+    }
+    .social-modal-sidebar-{{ section.id }} {
+      border-left: none;
+      border-top: 1px solid var(--line, #e2e2e2);
+      max-height: none;
+    }
+    .social-modal-nav-btn-{{ section.id }} {
+      width: 34px;
+      height: 34px;
     }
   }
 </style>
@@ -133,9 +495,18 @@
 
   <div class="social-grid-{{ section.id }}">
     {%- for block in section.blocks -%}
-      <a href="{{ block.settings.url | default: section.settings.url }}" target="_blank" rel="noopener" aria-label="View Instagram Post" {{ block.shopify_attributes }}>
+      <button 
+        type="button" 
+        class="social-item-{{ section.id }}" 
+        onclick="openSocialModal_{{ section.id | replace: '-', '_' }}({{ forloop.index0 }})"
+        aria-label="View Instagram Post {{ forloop.index }}" 
+        {{ block.shopify_attributes }}
+      >
         {%- if block.settings.video != blank -%}
           {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, image_size: '600x' }}
+          <div class="social-video-badge-{{ section.id }}">
+            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </div>
         {%- elsif block.settings.image != blank -%}
           <img src="{{ block.settings.image | img_url: '600x' }}" alt="Instagram Post {{ forloop.index }}" loading="lazy" />
         {%- else -%}
@@ -150,10 +521,243 @@
           </svg>
           <span class="social-caption-{{ section.id }}">View Post</span>
         </div>
-      </a>
+      </button>
     {%- endfor -%}
   </div>
 </section>
+
+<!-- Instagram Multi-Post Lightbox Modal -->
+<div id="socialModalOverlay-{{ section.id }}" class="social-modal-overlay-{{ section.id }}" onclick="handleOverlayClick_{{ section.id | replace: '-', '_' }}(event)">
+  <div class="social-modal-container-{{ section.id }}" role="dialog" aria-modal="true">
+    
+    <!-- Left: Media Viewport -->
+    <div class="social-modal-media-wrap-{{ section.id }}" id="socialModalMediaWrap-{{ section.id }}">
+      <button type="button" class="social-modal-nav-btn-{{ section.id }} social-modal-nav-prev-{{ section.id }}" onclick="navigateSocialModal_{{ section.id | replace: '-', '_' }}(-1)" aria-label="Previous Post">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+
+      <div class="social-modal-media-content-{{ section.id }}" id="socialModalMediaContent-{{ section.id }}">
+        <!-- Injected via JS -->
+      </div>
+
+      <button type="button" class="social-modal-nav-btn-{{ section.id }} social-modal-nav-next-{{ section.id }}" onclick="navigateSocialModal_{{ section.id | replace: '-', '_' }}(1)" aria-label="Next Post">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+    <!-- Right: Sidebar Details -->
+    <div class="social-modal-sidebar-{{ section.id }}">
+      <!-- Header -->
+      <div class="social-modal-header-{{ section.id }}">
+        <div class="social-modal-author-{{ section.id }}">
+          <div class="social-modal-avatar-{{ section.id }}">
+            {%- if section.settings.avatar != blank -%}
+              <img src="{{ section.settings.avatar | img_url: '80x80' }}" alt="{{ section.settings.handle }}" />
+            {%- else -%}
+              L
+            {%- endif -%}
+          </div>
+          <div class="social-modal-author-info-{{ section.id }}">
+            <span class="social-modal-username-{{ section.id }}">
+              {{ section.settings.handle | default: '@lisandramuse' }}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a5a44"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4" stroke="#fff" stroke-width="2" fill="none"></path></svg>
+            </span>
+            <span class="social-modal-location-{{ section.id }}" id="socialModalLocation-{{ section.id }}">Bali, Indonesia</span>
+          </div>
+        </div>
+
+        <button type="button" class="social-modal-close-{{ section.id }}" onclick="closeSocialModal_{{ section.id | replace: '-', '_' }}()" aria-label="Close Modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Body: Caption & Product Tag -->
+      <div class="social-modal-body-{{ section.id }}">
+        <div class="social-modal-counter-{{ section.id }}" id="socialModalCounter-{{ section.id }}">Post 1 of 4</div>
+        <p class="social-modal-caption-text-{{ section.id }}" id="socialModalCaption-{{ section.id }}">
+          <strong>{{ section.settings.handle | default: '@lisandramuse' }}</strong>
+          <span id="socialModalCaptionBody-{{ section.id }}"></span>
+        </p>
+
+        <!-- Tagged Product Box -->
+        <a href="#" class="social-modal-product-{{ section.id }}" id="socialModalProduct-{{ section.id }}" style="display: none;">
+          <img src="" alt="" class="social-modal-product-img-{{ section.id }}" id="socialModalProductImg-{{ section.id }}" />
+          <div class="social-modal-product-details-{{ section.id }}">
+            <span class="social-modal-product-tag-{{ section.id }}">✦ Shop the Look</span>
+            <h4 class="social-modal-product-title-{{ section.id }}" id="socialModalProductTitle-{{ section.id }}">Product Title</h4>
+            <span class="social-modal-product-price-{{ section.id }}" id="socialModalProductPrice-{{ section.id }}">Rp 0</span>
+            <span class="social-modal-product-btn-{{ section.id }}">View Piece →</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Footer: View on Instagram -->
+      <div class="social-modal-footer-{{ section.id }}">
+        <a href="{{ section.settings.url | default: '#' }}" target="_blank" rel="noopener" class="social-modal-ig-link-{{ section.id }}" id="socialModalIgLink-{{ section.id }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          View on Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Embedded JSON Data for Javascript Carousel -->
+<script type="application/json" id="socialData-{{ section.id }}">
+  [
+    {%- for block in section.blocks -%}
+      {
+        "index": {{ forloop.index0 }},
+        "type": {% if block.settings.video != blank %}"video"{% else %}"image"{% endif %},
+        {%- if block.settings.video != blank -%}
+          "video_sources": {{ block.settings.video.sources | json }},
+        {%- elsif block.settings.image != blank -%}
+          "image_url": {{ block.settings.image | img_url: '1200x' | json }},
+        {%- else -%}
+          "image_url": "https://cdn.shopify.com/s/images/themes/product-{{ forloop.index | modulo: 6 | plus: 1 }}.png",
+        {%- endif -%}
+        "caption": {{ block.settings.caption | default: "Sun-drenched moments and artisanal knitwear handcrafted in Bali." | json }},
+        "location": {{ block.settings.location | default: "Bali, Indonesia" | json }},
+        "url": {{ block.settings.url | default: section.settings.url | default: "#" | json }},
+        {%- if block.settings.product != blank -%}
+          "product": {
+            "title": {{ block.settings.product.title | json }},
+            "price": {{ block.settings.product.price | money | json }},
+            "url": {{ block.settings.product.url | json }},
+            "image": {{ block.settings.product.featured_image | img_url: '200x' | json }}
+          }
+        {%- else -%}
+          "product": null
+        {%- endif -%}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+</script>
+
+<script>
+  (function() {
+    var sectionId = "{{ section.id | replace: '-', '_' }}";
+    var dataEl = document.getElementById("socialData-{{ section.id }}");
+    var posts = dataEl ? JSON.parse(dataEl.textContent) : [];
+    var currentIndex = 0;
+    var overlay = document.getElementById("socialModalOverlay-{{ section.id }}");
+    var mediaContent = document.getElementById("socialModalMediaContent-{{ section.id }}");
+    var captionBody = document.getElementById("socialModalCaptionBody-{{ section.id }}");
+    var locationEl = document.getElementById("socialModalLocation-{{ section.id }}");
+    var counterEl = document.getElementById("socialModalCounter-{{ section.id }}");
+    var igLink = document.getElementById("socialModalIgLink-{{ section.id }}");
+    var productBox = document.getElementById("socialModalProduct-{{ section.id }}");
+    var productImg = document.getElementById("socialModalProductImg-{{ section.id }}");
+    var productTitle = document.getElementById("socialModalProductTitle-{{ section.id }}");
+    var productPrice = document.getElementById("socialModalProductPrice-{{ section.id }}");
+
+    function renderPost(index) {
+      if (!posts || posts.length === 0) return;
+      if (index < 0) index = posts.length - 1;
+      if (index >= posts.length) index = 0;
+      currentIndex = index;
+
+      var post = posts[currentIndex];
+
+      // Media Fade Transition
+      mediaContent.classList.add("fading");
+      
+      setTimeout(function() {
+        if (post.type === "video" && post.video_sources && post.video_sources.length > 0) {
+          var sourceHtml = "";
+          for (var i = 0; i < post.video_sources.length; i++) {
+            sourceHtml += '<source src="' + post.video_sources[i].url + '" type="' + post.video_sources[i].mime_type + '">';
+          }
+          mediaContent.innerHTML = '<video autoplay loop muted playsinline controls style="width:100%;height:100%;object-fit:cover;">' + sourceHtml + '</video>';
+        } else {
+          mediaContent.innerHTML = '<img src="' + (post.image_url || '') + '" alt="Instagram Post" style="width:100%;height:100%;object-fit:cover;" />';
+        }
+
+        // Details
+        captionBody.textContent = post.caption || '';
+        locationEl.textContent = post.location || 'Bali, Indonesia';
+        counterEl.textContent = 'Post ' + (currentIndex + 1) + ' of ' + posts.length;
+        igLink.href = post.url || '#';
+
+        // Tagged Product
+        if (post.product) {
+          productBox.style.display = "flex";
+          productBox.href = post.product.url;
+          productImg.src = post.product.image;
+          productImg.alt = post.product.title;
+          productTitle.textContent = post.product.title;
+          productPrice.textContent = post.product.price;
+        } else {
+          productBox.style.display = "none";
+        }
+
+        mediaContent.classList.remove("fading");
+      }, 150);
+    }
+
+    window["openSocialModal_" + sectionId] = function(index) {
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+      renderPost(index);
+    };
+
+    window["closeSocialModal_" + sectionId] = function() {
+      overlay.classList.remove("active");
+      document.body.style.overflow = "";
+      // Pause any active video
+      var video = mediaContent.querySelector("video");
+      if (video) video.pause();
+    };
+
+    window["navigateSocialModal_" + sectionId] = function(direction) {
+      renderPost(currentIndex + direction);
+    };
+
+    window["handleOverlayClick_" + sectionId] = function(e) {
+      if (e.target === overlay) {
+        window["closeSocialModal_" + sectionId]();
+      }
+    };
+
+    // Keyboard support
+    document.addEventListener("keydown", function(e) {
+      if (!overlay.classList.contains("active")) return;
+      if (e.key === "Escape") {
+        window["closeSocialModal_" + sectionId]();
+      } else if (e.key === "ArrowLeft") {
+        window["navigateSocialModal_" + sectionId](-1);
+      } else if (e.key === "ArrowRight") {
+        window["navigateSocialModal_" + sectionId](1);
+      }
+    });
+
+    // Touch Swipe support on Mobile
+    var touchStartX = 0;
+    var touchEndX = 0;
+    var mediaWrap = document.getElementById("socialModalMediaWrap-{{ section.id }}");
+    if (mediaWrap) {
+      mediaWrap.addEventListener("touchstart", function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      mediaWrap.addEventListener("touchend", function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        var diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 45) {
+          if (diff > 0) {
+            window["navigateSocialModal_" + sectionId](1); // swipe left -> next
+          } else {
+            window["navigateSocialModal_" + sectionId](-1); // swipe right -> prev
+          }
+        }
+      }, { passive: true });
+    }
+  })();
+</script>
 
 {% schema %}
 {
@@ -175,6 +779,11 @@
       "type": "url",
       "id": "url",
       "label": "Instagram Profile URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Instagram Avatar Image (Modal)"
     }
   ],
   "blocks": [
@@ -194,9 +803,26 @@
           "label": "Instagram Video (MP4)"
         },
         {
+          "type": "textarea",
+          "id": "caption",
+          "label": "Post Caption",
+          "default": "Sun-drenched moments and artisanal knitwear handcrafted in Bali."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location / Tag",
+          "default": "Bali, Indonesia"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Tagged Product (Shop the Look)"
+        },
+        {
           "type": "url",
           "id": "url",
-          "label": "Link to Post"
+          "label": "Link to Instagram Post"
         }
       ]
     }
@@ -214,3 +840,4 @@
   ]
 }
 {% endschema %}
+

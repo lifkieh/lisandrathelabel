@@ -11,36 +11,6 @@
   "type": "header",
   "name": "Header",
   "sections": {
-    "header_announcements_rWec38": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_HDBYnk": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Free shipping across Indonesia · Worldwide free over USD 200",
-            "link": "",
-            "font": "var(--font-body--family)",
-            "font_size": "0.625rem",
-            "weight": "300",
-            "letter_spacing": "normal",
-            "case": "uppercase"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_HDBYnk"
-      ],
-      "name": "t:names.announcement_bar",
-      "settings": {
-        "speed": 5,
-        "section_width": "page-width",
-        "color_scheme": "scheme-2",
-        "divider_width": 0,
-        "padding-block-start": 10,
-        "padding-block-end": 10
-      }
-    },
     "header_section": {
       "type": "header-v5",
       "settings": {
@@ -54,7 +24,6 @@
     }
   },
   "order": [
-    "header_announcements_rWec38",
     "header_section"
   ]
 }

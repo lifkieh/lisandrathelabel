@@ -173,25 +173,29 @@
         "post_1": {
           "type": "post",
           "settings": {
-            "url": ""
+            "image": "shopify://shop_images/A_softer_kind_of_summer_Aruna_set_as_seen_on_savannahmarai.jpg",
+            "url": "https://www.instagram.com/p/DcQsFCAvSBw/"
           }
         },
         "post_2": {
           "type": "post",
           "settings": {
-            "url": ""
+            "video": "shopify://files/videos/The Alana Dress. Made to move with you, from day to night..mp4",
+            "url": "https://www.instagram.com/p/DcLlDu2PL83/"
           }
         },
         "post_3": {
           "type": "post",
           "settings": {
-            "url": ""
+            "image": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain..jpg",
+            "url": "https://www.instagram.com/p/DcF6779DMCT/?img_index=1"
           }
         },
         "post_4": {
           "type": "post",
           "settings": {
-            "url": ""
+            "image": "shopify://shop_images/In_the_world_of_Lisandra..jpg",
+            "url": "https://www.instagram.com/p/Db-sDjElD4l/?img_index=1"
           }
         }
       },
@@ -202,8 +206,8 @@
         "post_4"
       ],
       "settings": {
-        "title": "Join the Circle",
-        "handle": "@lisandramuse",
+        "title": "Follow us on social",
+        "handle": "@lisandra.thelabel",
         "url": ""
       }
     },
