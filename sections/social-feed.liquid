@@ -226,6 +226,72 @@
     height: 18px;
   }
 
+  /* Inner Carousel Styles */
+  .social-modal-inner-carousel-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .social-modal-inner-slides-{{ section.id }} {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .social-modal-inner-slides-{{ section.id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .social-modal-inner-dots-{{ section.id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+  }
+  .social-modal-inner-dot-{{ section.id }} {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: background 0.3s;
+  }
+  .social-modal-inner-dot-{{ section.id }}.active {
+    background: #ffffff;
+  }
+  .social-modal-inner-nav-{{ section.id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.2s;
+    backdrop-filter: blur(4px);
+  }
+  .social-modal-inner-nav-{{ section.id }}:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  .social-modal-inner-nav-{{ section.id }} svg {
+    width: 16px;
+    height: 16px;
+  }
+  .social-modal-inner-prev-{{ section.id }} { left: 16px; }
+  .social-modal-inner-next-{{ section.id }} { right: 16px; }
+
   /* Right Side: Sidebar Info */
   .social-modal-sidebar-{{ section.id }} {
     display: flex;
@@ -507,8 +573,14 @@
           <div class="social-video-badge-{{ section.id }}">
             <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           </div>
-        {%- elsif block.settings.image != blank -%}
-          <img src="{{ block.settings.image | img_url: '600x' }}" alt="Instagram Post {{ forloop.index }}" loading="lazy" />
+        {%- elsif block.settings.image_1 != blank -%}
+          <img src="{{ block.settings.image_1 | img_url: '600x' }}" alt="Instagram Post {{ forloop.index }}" loading="lazy" />
+          {%- if block.settings.image_2 != blank -%}
+            <!-- Carousel Badge Icon for multiple images -->
+            <div class="social-video-badge-{{ section.id }}" style="background: rgba(0,0,0,0.4);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M21 8H3"></path><path d="M21 16H3"></path></svg>
+            </div>
+          {%- endif -%}
         {%- else -%}
           <img src="https://cdn.shopify.com/s/images/themes/product-{{ forloop.index | modulo: 6 | plus: 1 }}.png" alt="Instagram Placeholder" loading="lazy" />
         {%- endif -%}
@@ -615,10 +687,16 @@
         "type": {% if block.settings.video != blank %}"video"{% else %}"image"{% endif %},
         {%- if block.settings.video != blank -%}
           "video_sources": {{ block.settings.video.sources | json }},
-        {%- elsif block.settings.image != blank -%}
-          "image_url": {{ block.settings.image | img_url: '1200x' | json }},
+        {%- elsif block.settings.image_1 != blank -%}
+          "images": [
+            {{ block.settings.image_1 | img_url: '1200x' | json }}
+            {%- if block.settings.image_2 != blank -%}, {{ block.settings.image_2 | img_url: '1200x' | json }}{%- endif -%}
+            {%- if block.settings.image_3 != blank -%}, {{ block.settings.image_3 | img_url: '1200x' | json }}{%- endif -%}
+            {%- if block.settings.image_4 != blank -%}, {{ block.settings.image_4 | img_url: '1200x' | json }}{%- endif -%}
+            {%- if block.settings.image_5 != blank -%}, {{ block.settings.image_5 | img_url: '1200x' | json }}{%- endif -%}
+          ],
         {%- else -%}
-          "image_url": "https://cdn.shopify.com/s/images/themes/product-{{ forloop.index | modulo: 6 | plus: 1 }}.png",
+          "images": ["https://cdn.shopify.com/s/images/themes/product-{{ forloop.index | modulo: 6 | plus: 1 }}.png"],
         {%- endif -%}
         "caption": {{ block.settings.caption | default: "Sun-drenched moments and artisanal knitwear handcrafted in Bali." | json }},
         "location": {{ block.settings.location | default: "Bali, Indonesia" | json }},
@@ -655,6 +733,9 @@
     var productTitle = document.getElementById("socialModalProductTitle-{{ section.id }}");
     var productPrice = document.getElementById("socialModalProductPrice-{{ section.id }}");
 
+    var currentInnerSlide = 0;
+    var maxInnerSlide = 0;
+
     function renderPost(index) {
       if (!posts || posts.length === 0) return;
       if (index < 0) index = posts.length - 1;
@@ -673,8 +754,39 @@
             sourceHtml += '<source src="' + post.video_sources[i].url + '" type="' + post.video_sources[i].mime_type + '">';
           }
           mediaContent.innerHTML = '<video autoplay loop muted playsinline controls style="width:100%;height:100%;object-fit:cover;">' + sourceHtml + '</video>';
+        } else if (post.images && post.images.length > 1) {
+          // Inner Multi-Image Carousel
+          currentInnerSlide = 0;
+          maxInnerSlide = post.images.length - 1;
+          
+          var html = '<div class="social-modal-inner-carousel-' + sectionId + '">';
+          html += '<div class="social-modal-inner-slides-' + sectionId + '" id="innerSlidesWrap-' + sectionId + '">';
+          for (var j = 0; j < post.images.length; j++) {
+            html += '<img src="' + post.images[j] + '" alt="Carousel Image ' + (j+1) + '" />';
+          }
+          html += '</div>';
+          
+          // Navigation Dots
+          html += '<div class="social-modal-inner-dots-' + sectionId + '">';
+          for (var k = 0; k < post.images.length; k++) {
+            html += '<div class="social-modal-inner-dot-' + sectionId + ' ' + (k === 0 ? 'active' : '') + '"></div>';
+          }
+          html += '</div>';
+
+          // Navigation Arrows
+          html += '<button type="button" class="social-modal-inner-nav-' + sectionId + ' social-modal-inner-prev-' + sectionId + '" onclick="event.stopPropagation(); navInnerCarousel_' + sectionId + '(-1)" aria-label="Previous Image">';
+          html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+          html += '</button>';
+          html += '<button type="button" class="social-modal-inner-nav-' + sectionId + ' social-modal-inner-next-' + sectionId + '" onclick="event.stopPropagation(); navInnerCarousel_' + sectionId + '(1)" aria-label="Next Image">';
+          html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+          html += '</button>';
+
+          html += '</div>';
+          mediaContent.innerHTML = html;
         } else {
-          mediaContent.innerHTML = '<img src="' + (post.image_url || '') + '" alt="Instagram Post" style="width:100%;height:100%;object-fit:cover;" />';
+          // Single Image
+          var imgUrl = post.images ? post.images[0] : '';
+          mediaContent.innerHTML = '<img src="' + imgUrl + '" alt="Instagram Post" style="width:100%;height:100%;object-fit:cover;" />';
         }
 
         // Details
@@ -698,6 +810,29 @@
         mediaContent.classList.remove("fading");
       }, 150);
     }
+
+    window["navInnerCarousel_" + sectionId] = function(direction) {
+      var newIndex = currentInnerSlide + direction;
+      if (newIndex < 0 || newIndex > maxInnerSlide) return;
+      currentInnerSlide = newIndex;
+      
+      var slideWrap = document.getElementById("innerSlidesWrap-" + sectionId);
+      if (slideWrap) {
+        slideWrap.style.transform = "translateX(-" + (currentInnerSlide * 100) + "%)";
+      }
+
+      var dotsWrap = mediaContent.querySelector(".social-modal-inner-dots-" + sectionId);
+      if (dotsWrap) {
+        var dots = dotsWrap.querySelectorAll(".social-modal-inner-dot-" + sectionId);
+        dots.forEach(function(dot, idx) {
+          if (idx === currentInnerSlide) {
+            dot.classList.add("active");
+          } else {
+            dot.classList.remove("active");
+          }
+        });
+      }
+    };
 
     window["openSocialModal_" + sectionId] = function(index) {
       overlay.classList.add("active");
@@ -794,8 +929,28 @@
       "settings": [
         {
           "type": "image_picker",
-          "id": "image",
-          "label": "Instagram Image"
+          "id": "image_1",
+          "label": "Instagram Image 1 (Cover)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Instagram Image 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Instagram Image 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Instagram Image 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_5",
+          "label": "Instagram Image 5"
         },
         {
           "type": "video",
