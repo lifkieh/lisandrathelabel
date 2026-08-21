@@ -54,10 +54,11 @@
     "brand_essence": {
       "type": "brand-essence",
       "settings": {
-        "kicker": "Made to be lived in",
-        "quote": "Every piece starts as raw yarn on the island of Bali, shaped by hand, sun, and sea into something that feels like home.",
-        "text": "We believe in true artisanship. No shortcuts. Just timeless resortwear crafted slowly by communities we support.",
-        "btn_label": "Discover Our Process"
+        "kicker": "THE ESSENCE",
+        "quote": "Hand-knit goddess silhouettes for the sun-drenched woman.",
+        "text": "Lisandra is a Bali-born resortwear label known for softly sculpted knit and crochet silhouettes that move between the water, the sand, and the dinner table. We make fewer pieces, slowly by hand, so every woman who wears us feels radiantly, herself.",
+        "btn_label": "Read How a Piece Is Made",
+        "btn_link": "#our-story"
       }
     },
     "sustainability_strip": {
