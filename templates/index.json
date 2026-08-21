@@ -176,7 +176,10 @@
             "image_1": "shopify://shop_images/A_softer_kind_of_summer_Aruna_set_as_seen_on_savannahmarai.jpg",
             "caption": "A softer kind of summer 🧡\nAruna set as seen on @savannahmarai",
             "location": "",
-            "product": "aruna-top",
+            "product_list": [
+              "aruna-top",
+              "for-aruna-skirt"
+            ],
             "url": "https://www.instagram.com/p/DcQsFCAvSBw/"
           }
         },
@@ -186,7 +189,9 @@
             "video": "shopify://files/videos/The Alana Dress. Made to move with you, from day to night..mp4",
             "caption": "The Alana Dress. Made to move with you, from day to night.",
             "location": "",
-            "product": "",
+            "product_list": [
+              "alana-dress"
+            ],
             "url": "https://www.instagram.com/p/DcLlDu2PL83/"
           }
         },
@@ -198,7 +203,10 @@
             "image_3": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain._2.jpg",
             "caption": "The Orla Bikini, worn by @lanariel_ 🥥 Just a few pieces remain.",
             "location": "",
-            "product": "",
+            "product_list": [
+              "orla-bikini-bottom",
+              "orla-bikini-top"
+            ],
             "url": "https://www.instagram.com/p/DcF6779DMCT/?img_index=1"
           }
         },
@@ -212,7 +220,7 @@
             "image_5": "shopify://shop_images/In_the_world_of_Lisandra._2.jpg",
             "caption": "In the world of Lisandra.",
             "location": "",
-            "product": "",
+            "product_list": [],
             "url": "https://www.instagram.com/p/Db-sDjElD4l/?img_index=1"
           }
         }

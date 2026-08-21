@@ -2142,39 +2142,23 @@
         color: var(--ink60);
       }
 
+      /* Minimalist Tagged Product Tray (Concept 1) */
       .social-modal-products {
         display: none;
         flex-direction: column;
-        gap: 8px;
+        gap: 0;
         margin-top: auto;
+        border-top: 1px solid rgba(57, 35, 25, 0.08);
+        padding-top: 16px;
+        max-height: 250px;
+        overflow-y: auto;
       }
-      .social-modal-product {
-        background: #ffffff;
-        border: 1px solid var(--line);
-        padding: 10px 12px;
-        display: flex;
-        gap: 14px;
-        align-items: center;
-        text-decoration: none;
-        color: inherit;
-        transition: border-color 0.2s, transform 0.2s;
+      .social-modal-products::-webkit-scrollbar {
+        width: 3px;
       }
-      .social-modal-product:hover {
-        border-color: var(--cocoa);
-        transform: translateY(-2px);
-      }
-      .social-modal-product-img {
-        width: 54px;
-        height: 68px;
-        object-fit: cover;
-        background: var(--sand);
-        flex-shrink: 0;
-      }
-      .social-modal-product-details {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
+      .social-modal-products::-webkit-scrollbar-thumb {
+        background: rgba(57, 35, 25, 0.15);
+        border-radius: 4px;
       }
       .social-modal-product-tag {
         font-family: var(--body);
@@ -2183,14 +2167,48 @@
         text-transform: uppercase;
         color: var(--clay);
         font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .social-modal-product {
+        background: transparent;
+        padding: 8px 0;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+        transition: opacity 0.2s;
+      }
+      .social-modal-product:hover {
+        opacity: 0.7;
+      }
+      .social-modal-product-img {
+        width: 58px;
+        height: 76px;
+        min-width: 58px;
+        object-fit: cover;
+        background: var(--sand);
+        flex-shrink: 0;
+        border: 1px solid rgba(57, 35, 25, 0.08);
+        border-radius: 1px;
+      }
+      .social-modal-product-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
       }
       .social-modal-product-title {
         font-family: var(--display);
-        font-size: 14px;
+        font-size: 13.5px;
         font-style: italic;
         color: var(--cocoa);
         margin: 0;
-        line-height: 1.2;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .social-modal-product-price {
         font-family: var(--body);
@@ -2206,9 +2224,9 @@
         text-transform: uppercase;
         color: var(--cocoa);
         border-bottom: 1px solid var(--cocoa);
-        padding-bottom: 1px;
+        padding-bottom: 2px;
         align-self: flex-start;
-        margin-top: 2px;
+        margin-top: 4px;
       }
 
       /* Footer Action */
@@ -5762,7 +5780,7 @@
 
           if (post.products && post.products.length > 0 && socialProductsWrap) {
             socialProductsWrap.style.display = "flex";
-            let prodHtml = '<span class="social-modal-product-tag">✦ Shop the Look</span>';
+            let prodHtml = `<span class="social-modal-product-tag">✦ ${post.products.length} Pieces Featured</span>`;
             for (let p = 0; p < post.products.length; p++) {
               const prod = post.products[p];
               prodHtml += `<a href="${prod.url}" class="social-modal-product">`;

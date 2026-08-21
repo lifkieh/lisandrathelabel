@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header",
@@ -5,6 +14,8 @@
     "header_v5": {
       "type": "header-v5",
       "settings": {
+        "logo_dark": "shopify://shop_images/1_c32787c2-a5c5-42e8-8c03-1ce1b5c7aa89.png",
+        "logo_light": "shopify://shop_images/3_d9b9e49f-d5c6-475e-b144-fe567aa49b31.png",
         "menu": "main-menu",
         "transparent_on_home": true,
         "show_announcement": true,

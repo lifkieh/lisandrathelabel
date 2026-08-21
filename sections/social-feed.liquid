@@ -408,40 +408,23 @@
     color: var(--ink60, #888);
   }
 
-  /* Tagged Product Box (Shop the Look) */
+  /* Minimalist Tagged Product Tray (Concept 1) */
   .social-modal-products-{{ section.id }} {
     display: none;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
     margin-top: auto;
+    border-top: 1px solid rgba(57, 35, 25, 0.08);
+    padding-top: 16px;
+    max-height: 250px;
+    overflow-y: auto;
   }
-  .social-modal-product-{{ section.id }} {
-    background: #ffffff;
-    border: 1px solid var(--line, #e2e2e2);
-    padding: 10px 12px;
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.2s, transform 0.2s;
+  .social-modal-products-{{ section.id }}::-webkit-scrollbar {
+    width: 3px;
   }
-  .social-modal-product-{{ section.id }}:hover {
-    border-color: var(--cocoa, #392319);
-    transform: translateY(-2px);
-  }
-  .social-modal-product-img-{{ section.id }} {
-    width: 54px;
-    height: 68px;
-    object-fit: cover;
-    background: var(--sand, #e0d9b5);
-    flex-shrink: 0;
-  }
-  .social-modal-product-details-{{ section.id }} {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+  .social-modal-products-{{ section.id }}::-webkit-scrollbar-thumb {
+    background: rgba(57, 35, 25, 0.15);
+    border-radius: 4px;
   }
   .social-modal-product-tag-{{ section.id }} {
     font-family: var(--body, sans-serif);
@@ -450,14 +433,48 @@
     text-transform: uppercase;
     color: var(--clay, #8a5a44);
     font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .social-modal-product-{{ section.id }} {
+    background: transparent;
+    padding: 8px 0;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .social-modal-product-{{ section.id }}:hover {
+    opacity: 0.7;
+  }
+  .social-modal-product-img-{{ section.id }} {
+    width: 58px;
+    height: 76px;
+    min-width: 58px;
+    object-fit: cover;
+    background: var(--sand, #e0d9b5);
+    flex-shrink: 0;
+    border: 1px solid rgba(57, 35, 25, 0.08);
+    border-radius: 1px;
+  }
+  .social-modal-product-details-{{ section.id }} {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
   }
   .social-modal-product-title-{{ section.id }} {
     font-family: var(--display, serif);
-    font-size: 14px;
+    font-size: 13.5px;
     font-style: italic;
     color: var(--cocoa, #392319);
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .social-modal-product-price-{{ section.id }} {
     font-family: var(--body, sans-serif);
@@ -473,9 +490,9 @@
     text-transform: uppercase;
     color: var(--cocoa, #392319);
     border-bottom: 1px solid var(--cocoa, #392319);
-    padding-bottom: 1px;
+    padding-bottom: 2px;
     align-self: flex-start;
-    margin-top: 2px;
+    margin-top: 4px;
   }
 
   /* Footer Action */
@@ -790,7 +807,7 @@
         // Tagged Products
         if (post.products && post.products.length > 0) {
           productsWrap.style.display = "flex";
-          var prodHtml = '<span class="social-modal-product-tag-' + sectionId + '">✦ Shop the Look</span>';
+          var prodHtml = '<span class="social-modal-product-tag-' + sectionId + '">✦ ' + post.products.length + ' Pieces Featured</span>';
           for (var p = 0; p < post.products.length; p++) {
             var prod = post.products[p];
             prodHtml += '<a href="' + prod.url + '" class="social-modal-product-' + sectionId + '">';
@@ -975,7 +992,7 @@
           "type": "product_list",
           "id": "product_list",
           "label": "Tagged Products (Shop the Look)",
-          "limit": 4
+          "limit": 6
         },
         {
           "type": "url",
