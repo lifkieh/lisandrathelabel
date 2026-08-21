@@ -1,0 +1,248 @@
+<style>
+  .customer-reviews-{{ section.id }} {
+    padding: clamp(30px, 4.5vw, 54px) clamp(14px, 2vw, 26px);
+    background: var(--paper, #f8f8f0);
+    color: var(--cocoa, #392319);
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .sec-top-{{ section.id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .sec-top-{{ section.id }} h3 {
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-weight: 500;
+    font-size: clamp(17px, 1.8vw, 21px);
+    margin: 0;
+    letter-spacing: -0.005em;
+    color: var(--cocoa, #392319);
+  }
+  .more-{{ section.id }} {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--cocoa, #392319);
+    padding-bottom: 2px;
+    transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    text-decoration: none;
+    color: var(--cocoa, #392319);
+  }
+  .more-{{ section.id }}:hover {
+    color: var(--clay, #8a5a44);
+    border-color: var(--clay, #8a5a44);
+    transform: translateY(-1.5px);
+    opacity: 1;
+  }
+  .revs-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+    gap: clamp(14px, 2vw, 24px);
+  }
+  .rev-{{ section.id }} {
+    border: 1px solid var(--line, #e2e2e2);
+    padding: 24px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .rev-stars-{{ section.id }} {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+    color: var(--cocoa, #392319);
+  }
+  .rev-stars-{{ section.id }} svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+  .rev-{{ section.id }} q {
+    display: block;
+    font-family: var(--accent, "Lora", serif);
+    font-style: italic;
+    font-size: 14.5px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    quotes: none;
+    color: #3a2b23;
+  }
+  .rev-author-{{ section.id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--ink60, #6e5c52);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .rev-verified-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--clay, #8a5a44);
+    font-size: 9.5px;
+    background: var(--sand, #e0d9b5);
+    padding: 3px 6px;
+    border-radius: 2px;
+  }
+  
+  @media (max-width: 900px) {
+    .revs-{{ section.id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .customer-reviews-{{ section.id }} {
+      padding: clamp(24px, 4vw, 44px) clamp(14px, 2vw, 22px);
+    }
+    .revs-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+    .rev-{{ section.id }} {
+      padding: 18px;
+    }
+  }
+</style>
+
+<section class="customer-reviews-{{ section.id }}" id="reviews">
+  <div class="sec-top-{{ section.id }}">
+    <h3>{{ section.settings.title }}</h3>
+    {%- if section.settings.link_label != blank -%}
+      <a href="{{ section.settings.link_url | default: '#' }}" class="more-{{ section.id }}">{{ section.settings.link_label }}</a>
+    {%- endif -%}
+  </div>
+
+  <div class="revs-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <div class="rev-{{ section.id }}" {{ block.shopify_attributes }}>
+        <div class="rev-stars-{{ section.id }}">
+          {%- for i in (1..block.settings.stars) -%}
+            <svg viewBox="0 0 24 24">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          {%- endfor -%}
+        </div>
+        <q>{{ block.settings.quote | escape }}</q>
+        <div class="rev-author-{{ section.id }}">
+          <span class="author-name">{{ block.settings.author | escape }}</span>
+          {%- if block.settings.verified -%}
+            <span class="rev-verified-{{ section.id }}">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              Verified
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "What people say"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link Label",
+      "default": "All 74 reviews"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on Desktop",
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star Rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "The Zaye dress fits perfectly and the fabric is incredibly soft. Fast shipping to Australia too!"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show Verified Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "quote": "The Zaye dress fits perfectly and the fabric is incredibly soft. Highly recommend!",
+            "author": "Sarah M."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "Gorgeous detailing. You can really feel the handmade quality from Bali.",
+            "author": "Elena V."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "quote": "Beautiful silhouette! I wore this on my vacation and received so many compliments.",
+            "author": "Jessica R."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
