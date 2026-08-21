@@ -1,0 +1,20 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcements": {
+      "type": "header-announcements",
+      "settings": {
+        "text": "Committed to Ethical Production in Small Batches"
+      }
+    },
+    "header_v5": {
+      "type": "header-v5",
+      "settings": {}
+    }
+  },
+  "order": [
+    "announcements",
+    "header_v5"
+  ]
+}
