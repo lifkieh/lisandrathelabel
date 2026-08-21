@@ -62,6 +62,34 @@
     },
     "sustainability_strip": {
       "type": "sustainability-strip",
+      "blocks": {
+        "val_1": {
+          "type": "value",
+          "settings": {
+            "title": "Reusable tote packaging.",
+            "text": "No plastic, every order ships in a tote you can use again."
+          }
+        },
+        "val_2": {
+          "type": "value",
+          "settings": {
+            "title": "Small batches.",
+            "text": "Quantities are limited, a restock may take a while, or it may not come at all."
+          }
+        },
+        "val_3": {
+          "type": "value",
+          "settings": {
+            "title": "All handmade.",
+            "text": "Every piece is hand-knitted or crocheted by artisans in Bali, never machine-made."
+          }
+        }
+      },
+      "block_order": [
+        "val_1",
+        "val_2",
+        "val_3"
+      ],
       "settings": {}
     },
     "editorial_rows": {
@@ -70,6 +98,38 @@
     },
     "as_styled_by_you": {
       "type": "as-styled-by-you",
+      "blocks": {
+        "ugc_1": {
+          "type": "ugc_item",
+          "settings": {
+            "username": "@lisandramuse"
+          }
+        },
+        "ugc_2": {
+          "type": "ugc_item",
+          "settings": {
+            "username": "@canggu_vibes"
+          }
+        },
+        "ugc_3": {
+          "type": "ugc_item",
+          "settings": {
+            "username": "@bali_sunset"
+          }
+        },
+        "ugc_4": {
+          "type": "ugc_item",
+          "settings": {
+            "username": "@resortwear_style"
+          }
+        }
+      },
+      "block_order": [
+        "ugc_1",
+        "ugc_2",
+        "ugc_3",
+        "ugc_4"
+      ],
       "settings": {}
     },
     "customer_reviews": {
@@ -115,6 +175,38 @@
     },
     "social_feed": {
       "type": "social-feed",
+      "blocks": {
+        "post_1": {
+          "type": "post",
+          "settings": {
+            "caption": "Golden hour in Canggu with the Zaye knit."
+          }
+        },
+        "post_2": {
+          "type": "post",
+          "settings": {
+            "caption": "Hand-knitted piece by piece in Bali."
+          }
+        },
+        "post_3": {
+          "type": "post",
+          "settings": {
+            "caption": "Resortwear made for sea & sun."
+          }
+        },
+        "post_4": {
+          "type": "post",
+          "settings": {
+            "caption": "Details of artisanal crochet."
+          }
+        }
+      },
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4"
+      ],
       "settings": {}
     },
     "muse_newsletter_footer": {
