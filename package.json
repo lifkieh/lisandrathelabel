@@ -4,11 +4,11 @@
   "private": true,
   "description": "Shopify Horizon theme untuk Lisandra The Label",
   "scripts": {
-    "dev": "shopify theme dev --store lisandrathelabel.com",
-    "check": "shopify theme check",
-    "pull:live": "shopify theme pull --store lisandrathelabel.com --live",
-    "push:wip": "shopify theme push --unpublished --store lisandrathelabel.com",
-    "share": "shopify theme share --store lisandrathelabel.com"
+    "dev": "npx shopify theme dev --store r8zqsk-xj.myshopify.com",
+    "check": "npx shopify theme check",
+    "pull:live": "npx shopify theme pull --store r8zqsk-xj.myshopify.com --live",
+    "push:wip": "npx shopify theme push --unpublished --store r8zqsk-xj.myshopify.com",
+    "share": "npx shopify theme share --store r8zqsk-xj.myshopify.com"
   },
   "devDependencies": {
     "@shopify/cli": "^3"
