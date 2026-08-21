@@ -711,15 +711,6 @@
               }{%- unless forloop.last -%},{%- endunless -%}
             {%- endfor -%}
           ]
-        {%- elsif block.settings.product != blank -%}
-          "products": [
-            {
-              "title": {{ block.settings.product.title | json }},
-              "price": {{ block.settings.product.price | money | json }},
-              "url": {{ block.settings.product.url | json }},
-              "image": {{ block.settings.product.featured_image | img_url: '200x' | json }}
-            }
-          ]
         {%- else -%}
           "products": []
         {%- endif -%}
@@ -985,11 +976,6 @@
           "id": "product_list",
           "label": "Tagged Products (Shop the Look)",
           "limit": 4
-        },
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Legacy Tagged Product (Kept for backwards compatibility)"
         },
         {
           "type": "url",
