@@ -22,6 +22,7 @@
         "cat_sets": {
           "type": "category_tile",
           "settings": {
+            "image": "shopify://shop_images/5_5b15fabc-1f64-4330-95c3-5a2556cc49a1.jpg",
             "title": "Sets",
             "link": "shopify://collections/top"
           }
@@ -29,6 +30,7 @@
         "cat_swim": {
           "type": "category_tile",
           "settings": {
+            "image": "shopify://shop_images/5_8a9e70c6-b481-4d02-a2be-7ea33d20c483.jpg",
             "title": "Swim",
             "link": "shopify://collections/swim"
           }
@@ -122,49 +124,6 @@
       "type": "editorial-rows",
       "settings": {}
     },
-    "as_styled_by_you": {
-      "type": "as-styled-by-you",
-      "blocks": {
-        "ugc_1": {
-          "type": "ugc_item",
-          "settings": {
-            "username": "@lisandramuse",
-            "product": ""
-          }
-        },
-        "ugc_2": {
-          "type": "ugc_item",
-          "settings": {
-            "username": "@canggu_vibes",
-            "product": ""
-          }
-        },
-        "ugc_3": {
-          "type": "ugc_item",
-          "settings": {
-            "username": "@bali_sunset",
-            "product": ""
-          }
-        },
-        "ugc_4": {
-          "type": "ugc_item",
-          "settings": {
-            "username": "@resortwear_style",
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "ugc_1",
-        "ugc_2",
-        "ugc_3",
-        "ugc_4"
-      ],
-      "settings": {
-        "kicker": "Community & Styling",
-        "title": "As Styled by You"
-      }
-    },
     "customer_reviews": {
       "type": "customer-reviews",
       "blocks": {
@@ -250,6 +209,7 @@
     },
     "muse_newsletter_footer": {
       "type": "muse-newsletter-footer",
+      "disabled": true,
       "settings": {
         "muse_kicker": "Become a Muse",
         "muse_title": "Your first piece,<br>with 10% off.",
