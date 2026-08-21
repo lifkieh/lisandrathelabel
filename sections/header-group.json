@@ -2,19 +2,17 @@
   "type": "header",
   "name": "Header",
   "sections": {
-    "announcements": {
-      "type": "header-announcements",
-      "settings": {
-        "text": "Committed to Ethical Production in Small Batches"
-      }
-    },
     "header_v5": {
       "type": "header-v5",
-      "settings": {}
+      "settings": {
+        "menu": "main-menu",
+        "transparent_on_home": true,
+        "show_announcement": true,
+        "announcement_text": "Free shipping across Indonesia · Worldwide free over USD 200"
+      }
     }
   },
   "order": [
-    "announcements",
     "header_v5"
   ]
 }
