@@ -1,0 +1,422 @@
+<style>
+  /* ---------- hero: full-bleed center text ---------- */
+  .hero-editorial-{{ section.id }} {
+    position: relative;
+    height: calc(100vh - 31px);
+    min-height: 600px;
+    margin-top: -69px; /* Presisi sama dengan tinggi navbar v5 */
+    overflow: hidden;
+    background: var(--paper, #f8f8f0);
+  }
+
+  .hero-editorial-{{ section.id }} figure {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-editorial-{{ section.id }} figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    {% if section.settings.enable_ken_burns %}
+    animation: kenBurns-{{ section.id }} 25s ease-out forwards;
+    {% endif %}
+  }
+
+  @keyframes kenBurns-{{ section.id }} {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.08);
+    }
+  }
+
+  .hero-editorial-{{ section.id }} figure::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at center,
+      rgba(20, 12, 8, {{ section.settings.overlay_opacity | divided_by: 100.0 | times: 0.5 }}) 0%,
+      rgba(20, 12, 8, {{ section.settings.overlay_opacity | divided_by: 100.0 | times: 0.25 }}) 50%,
+      rgba(20, 12, 8, {{ section.settings.overlay_opacity | divided_by: 100.0 | times: 0.08 }}) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-editorial-{{ section.id }} .hero-in {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px);
+    color: #fff;
+  }
+
+  .hero-editorial-{{ section.id }} .hero-eyebrow {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0.9;
+    margin-bottom: 8px;
+  }
+
+  .hero-editorial-{{ section.id }} .hero-in h1 {
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.1;
+    margin: 0 0 16px 0;
+    max-width: 24ch;
+    color: #fff;
+  }
+
+  .hero-editorial-{{ section.id }} .hero-in p {
+    margin: 0 0 16px 0;
+    max-width: 40ch;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+
+  .hero-editorial-{{ section.id }} .ctas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .hero-editorial-{{ section.id }} .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid #fff;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: #fff;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+  }
+
+  .hero-editorial-{{ section.id }} .btn:hover {
+    background: transparent;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-editorial-{{ section.id }} .btn--ghost {
+    background: transparent;
+    color: #fff;
+    border-color: #fff;
+  }
+
+  .hero-editorial-{{ section.id }} .btn--ghost:hover {
+    background: #fff;
+    color: var(--cocoa, #392319);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+  }
+
+  /* 3-Tile Category Grid */
+  .cats3-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size | default: 3 }}, 1fr);
+    border-top: 1px solid var(--line, #e2e2e2);
+  }
+
+  .cat3-{{ section.id }} {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    display: block;
+    background: var(--sand, #e0d9b5);
+  }
+
+  .cat3-{{ section.id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .cat3-{{ section.id }} span {
+    position: absolute;
+    inset: auto 0 16px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 0.4s ease;
+    z-index: 2;
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+
+  .cat3-{{ section.id }}::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 12, 8, 0.08);
+    transition: background 0.4s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .cat3-{{ section.id }}:hover img {
+    transform: scale(1.04);
+  }
+
+  .cat3-{{ section.id }}:hover span {
+    transform: translateY(-6px);
+  }
+
+  .cat3-{{ section.id }}:hover::after {
+    background: rgba(20, 12, 8, 0.25);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 900px) {
+    .hero-editorial-{{ section.id }} {
+      margin-top: -59px;
+      height: clamp(340px, 70vh, 520px);
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-editorial-{{ section.id }} {
+      margin-top: -51px;
+      height: clamp(300px, 75vh, 460px);
+      min-height: auto;
+    }
+
+    .hero-editorial-{{ section.id }} .hero-in h1 {
+      font-size: clamp(22px, 6.2vw, 30px);
+    }
+
+    .hero-editorial-{{ section.id }} .ctas {
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .hero-editorial-{{ section.id }} .btn {
+      width: 100%;
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 10px;
+    }
+
+    .cats3-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .cat3-{{ section.id }} {
+      aspect-ratio: 3/2;
+    }
+  }
+</style>
+
+<section class="hero-editorial-{{ section.id }}">
+  <figure>
+    {%- if section.settings.image_desktop != blank -%}
+      <img
+        src="{{ section.settings.image_desktop | img_url: '2000x' }}"
+        alt="{{ section.settings.title | escape }}"
+        loading="eager"
+        class="desktop-only" />
+    {%- else -%}
+      <img
+        src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=1800"
+        alt="Lisandra Campaign Hero"
+        loading="eager" />
+    {%- endif -%}
+  </figure>
+
+  <div class="hero-in">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.title != blank -%}
+      <h1>{{ section.settings.title | newline_to_br }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.text != blank -%}
+      <p>{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.btn1_label != blank or section.settings.btn2_label != blank -%}
+      <div class="ctas">
+        {%- if section.settings.btn1_label != blank -%}
+          <a class="btn" href="{{ section.settings.btn1_link | default: '#shop' }}">{{ section.settings.btn1_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.btn2_label != blank -%}
+          <a class="btn btn--ghost" href="{{ section.settings.btn2_link | default: '#our-story' }}">{{ section.settings.btn2_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if section.blocks.size > 0 -%}
+  <div class="cats3-{{ section.id }}">
+    {%- for block in section.blocks -%}
+      <a class="cat3-{{ section.id }}" href="{{ block.settings.link | default: '#shop' }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ block.settings.title | escape }}" loading="lazy" />
+        {%- else -%}
+          <img src="https://lisandrathelabel.com/cdn/shop/collections/Untitled_design-18.jpg?width=700" alt="Category" loading="lazy" />
+        {%- endif -%}
+        <span>{{ block.settings.title }}</span>
+      </a>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hero (Editorial v5)",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Hero Image (Desktop & Mobile)",
+      "info": "Recommended: High resolution 2000x1200 landscape or portrait."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_ken_burns",
+      "label": "Enable Subtle Ken Burns Zoom Animation",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Radial Gradient Darkness",
+      "default": 65
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Kicker",
+      "default": "New Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Headline",
+      "default": "Handmade Resortwear\nMade by Balinese Artisans"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Subtext (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn1_label",
+      "label": "Button 1 Label",
+      "default": "Shop the collection"
+    },
+    {
+      "type": "url",
+      "id": "btn1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "btn2_label",
+      "label": "Button 2 Label",
+      "default": "See how it's made"
+    },
+    {
+      "type": "url",
+      "id": "btn2_link",
+      "label": "Button 2 Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_tile",
+      "name": "Category Tile",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Name",
+          "default": "Dresses"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero (Editorial v5)",
+      "blocks": [
+        {
+          "type": "category_tile",
+          "settings": {
+            "title": "Dresses"
+          }
+        },
+        {
+          "type": "category_tile",
+          "settings": {
+            "title": "Sets"
+          }
+        },
+        {
+          "type": "category_tile",
+          "settings": {
+            "title": "Swim"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

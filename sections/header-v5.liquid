@@ -1,0 +1,374 @@
+{%- liquid
+  assign transparent = section.settings.transparent_on_home
+  if template.name != 'index'
+    assign transparent = false
+  endif
+-%}
+
+<style>
+  .hdr-v5 {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 12px clamp(14px, 2vw, 26px);
+    border-bottom: 1px solid var(--line, #e2e2e2);
+    background: var(--paper, #f8f8f0);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    color: var(--cocoa, #392319);
+    font-family: var(--body, sans-serif);
+  }
+
+  /* Transparent Header logic */
+  .hdr-v5.is-transparent {
+    background: transparent;
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+  .hdr-v5.is-transparent:hover {
+    background: var(--paper, #f8f8f0);
+    border-bottom-color: var(--line, #e2e2e2);
+    color: var(--cocoa, #392319);
+  }
+
+  .wordmark-v5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+  }
+  .wordmark-v5 img {
+    display: block;
+    width: auto;
+    height: 130px;
+    margin: -43px 0;
+    object-fit: contain;
+  }
+
+  /* Logo switching */
+  .hdr-v5 .logo-light {
+    display: none;
+  }
+  .hdr-v5.is-transparent .logo-dark {
+    display: none;
+  }
+  .hdr-v5.is-transparent .logo-light {
+    display: block;
+  }
+  .hdr-v5.is-transparent:hover .logo-dark {
+    display: block;
+  }
+  .hdr-v5.is-transparent:hover .logo-light {
+    display: none;
+  }
+
+  .mainnav-v5 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: clamp(14px, 1.8vw, 26px);
+    flex-wrap: nowrap;
+  }
+  .nav-links-v5 {
+    display: flex;
+    align-items: center;
+    gap: clamp(14px, 1.8vw, 26px);
+  }
+
+  /* Hamburger button */
+  .nav-toggle-v5 {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 1002;
+  }
+  .nav-toggle-v5 span {
+    display: block;
+    height: 1.5px;
+    width: 100%;
+    background: currentColor;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle-v5.open span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .nav-toggle-v5.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .nav-toggle-v5.open span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  .hdr-actions-v5 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: clamp(16px, 2vw, 28px);
+  }
+  .nav-links-v5 a, .mobile-nav-v5 a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 0;
+    border-bottom: 1px solid transparent;
+    text-decoration: none;
+    color: inherit;
+    transition: border-bottom-color 0.2s ease;
+  }
+  .nav-links-v5 a:hover, .mobile-nav-v5 a:hover {
+    border-bottom-color: currentColor;
+  }
+  .hdr-actions-v5 a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    transition: opacity 0.2s;
+    padding: 4px;
+    text-decoration: none;
+  }
+  .hdr-actions-v5 a:hover {
+    opacity: 0.6;
+  }
+  .hdr-actions-v5 svg {
+    width: 19px;
+    height: 19px;
+    stroke-width: 1.35;
+  }
+
+  /* Mobile Drawer */
+  .mobile-drawer-v5 {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85vw;
+    max-width: 400px;
+    height: 100vh;
+    background: var(--paper, #f8f8f0);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 24px 32px;
+    transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--cocoa, #392319);
+  }
+  .mobile-drawer-v5.active {
+    left: 0;
+  }
+  .mobile-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 18, 10, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  .mobile-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  .mobile-nav-v5 {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+  }
+  .mobile-nav-v5 a {
+    font-size: 14px;
+    width: fit-content;
+  }
+  .drawer-footer-v5 {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid var(--line, #e2e2e2);
+    padding-top: 24px;
+  }
+  .drawer-social-v5 {
+    display: flex;
+    gap: 16px;
+  }
+  .drawer-social-v5 a {
+    color: var(--cocoa, #392319);
+  }
+  .drawer-social-v5 svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links-v5 {
+      display: none;
+    }
+    .nav-toggle-v5 {
+      display: flex;
+    }
+    .hdr-v5 {
+      padding: 10px 16px;
+    }
+    .hdr-actions-v5 {
+      gap: 16px;
+    }
+  }
+</style>
+
+<header class="hdr-v5 {% if transparent %}is-transparent{% endif %}" id="siteHeader">
+  <nav class="mainnav-v5" aria-label="Main">
+    <button class="nav-toggle-v5" id="navToggle" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links-v5">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </div>
+  </nav>
+
+  <a href="{{ routes.root_url }}" class="wordmark-v5" aria-label="Lisandra Home">
+    {%- if section.settings.logo_dark != blank -%}
+      <img src="{{ section.settings.logo_dark | img_url: '400x' }}" class="logo-dark" alt="Lisandra The Label" />
+    {%- else -%}
+      <h1 style="font-family: var(--heading, serif); margin:0;">Lisandra</h1>
+    {%- endif -%}
+    
+    {%- if section.settings.logo_light != blank -%}
+      <img src="{{ section.settings.logo_light | img_url: '400x' }}" class="logo-light" alt="Lisandra The Label" />
+    {%- else -%}
+      {%- if section.settings.logo_dark != blank -%}
+        <img src="{{ section.settings.logo_dark | img_url: '400x' }}" class="logo-light" alt="Lisandra The Label" />
+      {%- endif -%}
+    {%- endif -%}
+  </a>
+
+  <div class="hdr-actions-v5">
+    <a href="{{ routes.search_url }}" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </a>
+    <a href="#" aria-label="Currency">
+      <span style="font-size: 11px; font-weight: 500; letter-spacing: 0.1em;">IDR</span>
+    </a>
+    <a href="{{ routes.cart_url }}" aria-label="Cart">
+      <span style="display: flex; align-items: center; gap: 4px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span style="font-size: 10px;">{{ cart.item_count }}</span>
+      </span>
+    </a>
+  </div>
+</header>
+
+<div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+<div class="mobile-drawer-v5" id="mobileDrawer">
+  <nav class="mobile-nav-v5">
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- endfor -%}
+  </nav>
+  <div class="drawer-footer-v5">
+    <div class="drawer-social-v5">
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+      </a>
+      <a href="#" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('siteHeader');
+    const isTransparentConfig = {{ transparent | json }};
+    
+    // Scroll logic for transparent header
+    if (isTransparentConfig && header) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header.classList.remove('is-transparent');
+        } else {
+          header.classList.add('is-transparent');
+        }
+      });
+    }
+
+    // Mobile Drawer logic
+    const navToggle = document.getElementById('navToggle');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+
+    function toggleDrawer() {
+      const isOpen = mobileDrawer.classList.contains('active');
+      
+      if (isOpen) {
+        mobileDrawer.classList.remove('active');
+        drawerOverlay.classList.remove('active');
+        navToggle.classList.remove('open');
+        document.body.style.overflow = '';
+      } else {
+        mobileDrawer.classList.add('active');
+        drawerOverlay.classList.add('active');
+        navToggle.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    if(navToggle) navToggle.addEventListener('click', toggleDrawer);
+    if(drawerOverlay) drawerOverlay.addEventListener('click', toggleDrawer);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Header v5",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_dark",
+      "label": "Logo (Dark text)"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_light",
+      "label": "Logo (Light text)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_on_home",
+      "label": "Enable Transparent Header on Homepage",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
