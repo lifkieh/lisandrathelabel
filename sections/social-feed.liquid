@@ -227,24 +227,32 @@
   }
 
   /* Inner Carousel Styles */
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-carousel,
   .social-modal-inner-carousel-{{ section.id }} {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-slides,
   .social-modal-inner-slides-{{ section.id }} {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     width: 100%;
     height: 100%;
     transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-slides img,
   .social-modal-inner-slides-{{ section.id }} img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    flex-shrink: 0;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    flex-shrink: 0 !important;
+    display: block !important;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-dots,
   .social-modal-inner-dots-{{ section.id }} {
     position: absolute;
     bottom: 20px;
@@ -254,6 +262,7 @@
     gap: 6px;
     z-index: 10;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-dot,
   .social-modal-inner-dot-{{ section.id }} {
     width: 6px;
     height: 6px;
@@ -261,9 +270,11 @@
     background: rgba(255, 255, 255, 0.4);
     transition: background 0.3s;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-dot.active,
   .social-modal-inner-dot-{{ section.id }}.active {
     background: #ffffff;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-nav,
   .social-modal-inner-nav-{{ section.id }} {
     position: absolute;
     top: 50%;
@@ -282,9 +293,11 @@
     transition: background 0.2s;
     backdrop-filter: blur(4px);
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-nav:hover,
   .social-modal-inner-nav-{{ section.id }}:hover {
     background: rgba(0, 0, 0, 0.7);
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-inner-nav svg,
   .social-modal-inner-nav-{{ section.id }} svg {
     width: 16px;
     height: 16px;
@@ -409,6 +422,7 @@
   }
 
   /* Minimalist Tagged Product Tray (Concept 1) */
+  .social-modal-overlay-{{ section.id }} .social-modal-products,
   .social-modal-products-{{ section.id }} {
     display: none;
     flex-direction: column;
@@ -419,13 +433,16 @@
     max-height: 250px;
     overflow-y: auto;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-products::-webkit-scrollbar,
   .social-modal-products-{{ section.id }}::-webkit-scrollbar {
     width: 3px;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-products::-webkit-scrollbar-thumb,
   .social-modal-products-{{ section.id }}::-webkit-scrollbar-thumb {
     background: rgba(57, 35, 25, 0.15);
     border-radius: 4px;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product-tag,
   .social-modal-product-tag-{{ section.id }} {
     font-family: var(--body, sans-serif);
     font-size: 9px;
@@ -434,30 +451,39 @@
     color: var(--clay, #8a5a44);
     font-weight: 600;
     margin-bottom: 12px;
+    display: block;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product,
   .social-modal-product-{{ section.id }} {
     background: transparent;
     padding: 8px 0;
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     gap: 14px;
     align-items: center;
     text-decoration: none;
     color: inherit;
     transition: opacity 0.2s;
+    width: 100%;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product:hover,
   .social-modal-product-{{ section.id }}:hover {
     opacity: 0.7;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product-img,
   .social-modal-product-img-{{ section.id }} {
-    width: 58px;
-    height: 76px;
-    min-width: 58px;
-    object-fit: cover;
+    width: 58px !important;
+    height: 76px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    object-fit: cover !important;
     background: var(--sand, #e0d9b5);
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
     border: 1px solid rgba(57, 35, 25, 0.08);
     border-radius: 1px;
+    display: block !important;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product-details,
   .social-modal-product-details-{{ section.id }} {
     flex: 1;
     display: flex;
@@ -465,6 +491,7 @@
     gap: 4px;
     min-width: 0;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product-title,
   .social-modal-product-title-{{ section.id }} {
     font-family: var(--display, serif);
     font-size: 13.5px;
@@ -476,12 +503,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product-price,
   .social-modal-product-price-{{ section.id }} {
     font-family: var(--body, sans-serif);
     font-size: 11.5px;
     font-weight: 500;
     color: var(--ink, #1c1917);
   }
+  .social-modal-overlay-{{ section.id }} .social-modal-product-btn,
   .social-modal-product-btn-{{ section.id }} {
     font-family: var(--body, sans-serif);
     font-size: 9.5px;
@@ -776,17 +805,17 @@
           currentInnerSlide = 0;
           maxInnerSlide = post.images.length - 1;
           
-          var html = '<div class="social-modal-inner-carousel-' + sectionId + '">';
-          html += '<div class="social-modal-inner-slides-' + sectionId + '" id="innerSlidesWrap-' + sectionId + '">';
+          var html = '<div class="social-modal-inner-carousel social-modal-inner-carousel-' + sectionId + '">';
+          html += '<div class="social-modal-inner-slides social-modal-inner-slides-' + sectionId + '" id="innerSlidesWrap-' + sectionId + '">';
           for (var j = 0; j < post.images.length; j++) {
             html += '<img src="' + post.images[j] + '" alt="Carousel Image ' + (j+1) + '" />';
           }
           html += '</div>';
           
           // Navigation Dots
-          html += '<div class="social-modal-inner-dots-' + sectionId + '">';
+          html += '<div class="social-modal-inner-dots social-modal-inner-dots-' + sectionId + '">';
           for (var k = 0; k < post.images.length; k++) {
-            html += '<div class="social-modal-inner-dot-' + sectionId + ' ' + (k === 0 ? 'active' : '') + '"></div>';
+            html += '<div class="social-modal-inner-dot social-modal-inner-dot-' + sectionId + ' ' + (k === 0 ? 'active' : '') + '"></div>';
           }
           html += '</div>';
 
@@ -807,15 +836,15 @@
         // Tagged Products
         if (post.products && post.products.length > 0) {
           productsWrap.style.display = "flex";
-          var prodHtml = '<span class="social-modal-product-tag-' + sectionId + '">✦ ' + post.products.length + ' Pieces Featured</span>';
+          var prodHtml = '<span class="social-modal-product-tag social-modal-product-tag-' + sectionId + '">✦ ' + post.products.length + ' Pieces Featured</span>';
           for (var p = 0; p < post.products.length; p++) {
             var prod = post.products[p];
-            prodHtml += '<a href="' + prod.url + '" class="social-modal-product-' + sectionId + '">';
-            prodHtml += '<img src="' + prod.image + '" alt="' + prod.title + '" class="social-modal-product-img-' + sectionId + '" />';
-            prodHtml += '<div class="social-modal-product-details-' + sectionId + '">';
-            prodHtml += '<h4 class="social-modal-product-title-' + sectionId + '">' + prod.title + '</h4>';
-            prodHtml += '<span class="social-modal-product-price-' + sectionId + '">' + prod.price + '</span>';
-            prodHtml += '<span class="social-modal-product-btn-' + sectionId + '">View Piece →</span>';
+            prodHtml += '<a href="' + prod.url + '" class="social-modal-product social-modal-product-' + sectionId + '">';
+            prodHtml += '<img src="' + prod.image + '" alt="' + prod.title + '" class="social-modal-product-img social-modal-product-img-' + sectionId + '" />';
+            prodHtml += '<div class="social-modal-product-details social-modal-product-details-' + sectionId + '">';
+            prodHtml += '<h4 class="social-modal-product-title social-modal-product-title-' + sectionId + '">' + prod.title + '</h4>';
+            prodHtml += '<span class="social-modal-product-price social-modal-product-price-' + sectionId + '">' + prod.price + '</span>';
+            prodHtml += '<span class="social-modal-product-btn social-modal-product-btn-' + sectionId + '">View Piece →</span>';
             prodHtml += '</div></a>';
           }
           productsWrap.innerHTML = prodHtml;
