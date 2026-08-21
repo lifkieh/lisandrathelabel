@@ -44,8 +44,12 @@
     "header_section": {
       "type": "header-v5",
       "settings": {
+        "logo_dark": "shopify://shop_images/1_c32787c2-a5c5-42e8-8c03-1ce1b5c7aa89.png",
+        "logo_light": "shopify://shop_images/3_d9b9e49f-d5c6-475e-b144-fe567aa49b31.png",
+        "menu": "main-menu",
         "transparent_on_home": true,
-        "menu": "main-menu"
+        "show_announcement": true,
+        "announcement_text": "Free shipping across Indonesia · Worldwide free over USD 200"
       }
     }
   },
