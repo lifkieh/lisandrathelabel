@@ -574,26 +574,97 @@
     }
 
     /* Modal Mobile Stack */
+    .social-modal-overlay-{{ section.id }} {
+      padding: 10px 8px 16px;
+      align-items: center;
+    }
     .social-modal-container-{{ section.id }} {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      grid-template-columns: none;
+      grid-template-rows: none;
+      width: 100%;
+      max-height: 88vh;
+      max-height: 88dvh;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 2px;
     }
     .social-modal-media-wrap-{{ section.id }} {
-      min-height: 280px;
-      max-height: 48vh;
-      aspect-ratio: 1/1;
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 42vh;
+      height: 42dvh;
+      min-height: 260px;
+      max-height: 380px;
+      aspect-ratio: unset;
+      flex-shrink: 0;
+    }
+    .social-modal-media-content-{{ section.id }} {
+      width: 100%;
+      height: 100%;
+    }
+    .social-modal-overlay-{{ section.id }} .social-modal-inner-carousel,
+    .social-modal-inner-carousel-{{ section.id }} {
+      width: 100%;
+      height: 100%;
+    }
+    .social-modal-overlay-{{ section.id }} .social-modal-inner-slides,
+    .social-modal-inner-slides-{{ section.id }} {
+      width: 100%;
+      height: 100%;
+    }
+    .social-modal-overlay-{{ section.id }} .social-modal-inner-slides img,
+    .social-modal-inner-slides-{{ section.id }} img {
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      flex-shrink: 0 !important;
+      display: block !important;
     }
     .social-modal-sidebar-{{ section.id }} {
       border-left: none;
       border-top: 1px solid var(--line, #e2e2e2);
       max-height: none;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow: visible;
+    }
+    .social-modal-header-{{ section.id }} {
+      padding: 12px 16px;
+    }
+    .social-modal-body-{{ section.id }} {
+      padding: 16px;
+      overflow: visible;
+      flex: 1;
+      gap: 12px;
+    }
+    .social-modal-overlay-{{ section.id }} .social-modal-products,
+    .social-modal-products-{{ section.id }} {
+      max-height: none;
+      overflow: visible;
+      padding-top: 12px;
+    }
+    .social-modal-footer-{{ section.id }} {
+      padding: 12px 16px;
+      margin-top: auto;
+      background: #fafaf5;
+      border-top: 1px solid var(--line, #e2e2e2);
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
     }
     .social-modal-nav-btn-{{ section.id }} {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
     }
+    .social-modal-nav-prev-{{ section.id }} { left: 8px; }
+    .social-modal-nav-next-{{ section.id }} { right: 8px; }
   }
 </style>
 

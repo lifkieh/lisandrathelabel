@@ -2260,26 +2260,93 @@
       }
 
       @media (max-width: 768px) {
+        .social-modal-overlay {
+          padding: 10px 8px 16px;
+          align-items: center;
+        }
         .social-modal-container {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto 1fr;
-          max-height: 92vh;
+          display: flex;
+          flex-direction: column;
+          grid-template-columns: none;
+          grid-template-rows: none;
+          width: 100%;
+          max-height: 88vh;
+          max-height: 88dvh;
           overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          border-radius: 2px;
         }
         .social-modal-media-wrap {
-          min-height: 280px;
-          max-height: 48vh;
-          aspect-ratio: 1/1;
+          width: 100% !important;
+          min-width: 100% !important;
+          max-width: 100% !important;
+          height: 42vh;
+          height: 42dvh;
+          min-height: 260px;
+          max-height: 380px;
+          aspect-ratio: unset;
+          flex-shrink: 0;
+        }
+        .social-modal-media-content {
+          width: 100%;
+          height: 100%;
+        }
+        .social-modal-inner-carousel {
+          width: 100%;
+          height: 100%;
+        }
+        .social-modal-inner-slides {
+          width: 100%;
+          height: 100%;
+        }
+        .social-modal-inner-slides img {
+          width: 100% !important;
+          min-width: 100% !important;
+          max-width: 100% !important;
+          height: 100% !important;
+          object-fit: cover !important;
+          flex-shrink: 0 !important;
+          display: block !important;
         }
         .social-modal-sidebar {
           border-left: none;
           border-top: 1px solid var(--line);
           max-height: none;
+          height: auto;
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          overflow: visible;
+        }
+        .social-modal-header {
+          padding: 12px 16px;
+        }
+        .social-modal-body {
+          padding: 16px;
+          overflow: visible;
+          flex: 1;
+          gap: 12px;
+        }
+        .social-modal-products {
+          max-height: none;
+          overflow: visible;
+          padding-top: 12px;
+        }
+        .social-modal-footer {
+          padding: 12px 16px;
+          margin-top: auto;
+          background: #fafaf5;
+          border-top: 1px solid var(--line);
+          position: sticky;
+          bottom: 0;
+          z-index: 5;
         }
         .social-modal-nav-btn {
-          width: 34px;
-          height: 34px;
+          width: 32px;
+          height: 32px;
         }
+        .social-modal-nav-prev { left: 8px; }
+        .social-modal-nav-next { right: 8px; }
       }
 
       /* Dialogs */
