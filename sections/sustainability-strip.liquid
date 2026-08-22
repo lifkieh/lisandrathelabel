@@ -157,12 +157,6 @@
 
 <section class="sustain-section-{{ section.id }}">
   <div class="sustain-container-{{ section.id }}">
-    {%- if section.settings.section_kicker != blank -%}
-      <div class="sustain-kicker-{{ section.id }}">
-        {{ section.settings.section_kicker }}
-      </div>
-    {%- endif -%}
-
     <div class="sustain-grid-{{ section.id }} reveal-stagger">
       {%- for block in section.blocks -%}
         {%- liquid
@@ -175,19 +169,6 @@
               assign icon_choice = 'batch'
             else
               assign icon_choice = 'handmade'
-            endif
-          endif
-
-          assign kicker_text = block.settings.kicker
-          if kicker_text == blank
-            if forloop.index == 1
-              assign kicker_text = '01 · Packaging'
-            elsif forloop.index == 2
-              assign kicker_text = '02 · Production'
-            elsif forloop.index == 3
-              assign kicker_text = '03 · Artisans'
-            else
-              assign kicker_text = '0' | append: forloop.index | append: ' · Pillar'
             endif
           endif
         -%}
@@ -227,8 +208,6 @@
                 </svg>
             {%- endcase -%}
           </div>
-
-          <span class="sustain-index-{{ section.id }}">{{ kicker_text }}</span>
 
           {%- if block.settings.title != blank -%}
             <h3 class="sustain-title-{{ section.id }}">{{ block.settings.title }}</h3>
