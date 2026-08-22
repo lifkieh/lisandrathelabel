@@ -573,9 +573,9 @@
       border-top: 1px solid var(--line, #e2e2e2);
     }
 
-    /* Modal Mobile Stack */
+    /* Modal Mobile Stack: Native Instagram Feed Style */
     .social-modal-overlay-{{ section.id }} {
-      padding: 10px 8px 16px;
+      padding: 12px 10px 20px;
       align-items: center;
     }
     .social-modal-container-{{ section.id }} {
@@ -584,26 +584,37 @@
       grid-template-columns: none;
       grid-template-rows: none;
       width: 100%;
-      max-height: 88vh;
-      max-height: 88dvh;
+      max-width: 460px;
+      max-height: 90vh;
+      max-height: 90dvh;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      border-radius: 2px;
+      border-radius: 4px;
     }
     .social-modal-media-wrap-{{ section.id }} {
       width: 100% !important;
       min-width: 100% !important;
       max-width: 100% !important;
-      height: 42vh;
-      height: 42dvh;
-      min-height: 260px;
-      max-height: 380px;
-      aspect-ratio: unset;
+      aspect-ratio: 1 / 1 !important;
+      height: auto !important;
+      min-height: unset !important;
+      max-height: none !important;
+      position: relative;
+      overflow: hidden;
       flex-shrink: 0;
+      background: #18120e;
     }
     .social-modal-media-content-{{ section.id }} {
       width: 100%;
       height: 100%;
+      position: relative;
+    }
+    .social-modal-media-content-{{ section.id }} > img,
+    .social-modal-media-content-{{ section.id }} > video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
     }
     .social-modal-overlay-{{ section.id }} .social-modal-inner-carousel,
     .social-modal-inner-carousel-{{ section.id }} {
@@ -636,22 +647,22 @@
       overflow: visible;
     }
     .social-modal-header-{{ section.id }} {
-      padding: 12px 16px;
+      padding: 14px 16px;
     }
     .social-modal-body-{{ section.id }} {
       padding: 16px;
       overflow: visible;
       flex: 1;
-      gap: 12px;
+      gap: 14px;
     }
     .social-modal-overlay-{{ section.id }} .social-modal-products,
     .social-modal-products-{{ section.id }} {
       max-height: none;
       overflow: visible;
-      padding-top: 12px;
+      padding-top: 14px;
     }
     .social-modal-footer-{{ section.id }} {
-      padding: 12px 16px;
+      padding: 14px 16px;
       margin-top: auto;
       background: #fafaf5;
       border-top: 1px solid var(--line, #e2e2e2);
