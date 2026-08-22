@@ -94,22 +94,28 @@
         "val_1": {
           "type": "value",
           "settings": {
-            "title": "Reusable tote packaging.",
-            "text": "No plastic, every order ships in a tote you can use again."
+            "icon": "tote",
+            "kicker": "01 · Packaging",
+            "title": "Reusable Tote Packaging",
+            "text": "No plastic. Every order ships in a signature custom tote you can keep and reuse for life."
           }
         },
         "val_2": {
           "type": "value",
           "settings": {
-            "title": "Small batches.",
-            "text": "Quantities are limited, a restock may take a while, or it may not come at all."
+            "icon": "batch",
+            "kicker": "02 · Production",
+            "title": "Small Batch Drops",
+            "text": "Quantities are limited to small runs to eliminate excess stock and fashion waste."
           }
         },
         "val_3": {
           "type": "value",
           "settings": {
-            "title": "All handmade.",
-            "text": "Every piece is hand-knitted or crocheted by artisans in Bali, never machine-made."
+            "icon": "handmade",
+            "kicker": "03 · Artisans",
+            "title": "All Handmade in Bali",
+            "text": "Every piece is softly sculpted by Balinese women artisans, never machine-made."
           }
         }
       },
@@ -118,7 +124,9 @@
         "val_2",
         "val_3"
       ],
-      "settings": {}
+      "settings": {
+        "section_kicker": "Our Commitment to Slow Fashion"
+      }
     },
     "editorial_rows": {
       "type": "editorial-rows",

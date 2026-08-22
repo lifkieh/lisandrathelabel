@@ -1,78 +1,258 @@
 <style>
-  /* ---------- sustainability strip ---------- */
-  .sustain-{{ section.id }} {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(16px, 3vw, 40px);
-    justify-content: center;
-    padding: 20px clamp(14px, 2vw, 26px);
+  /* ---------- Concept 1: Atelier Emblem Pillars ---------- */
+  .sustain-section-{{ section.id }} {
+    background: var(--paper, #f8f8f0);
     border-top: 1px solid var(--line, #e2e2e2);
     border-bottom: 1px solid var(--line, #e2e2e2);
-    font-size: 13px;
-    font-family: var(--body, sans-serif);
-    color: var(--ink60, #666);
-    text-align: center;
-    background: var(--paper, #f8f8f0);
-  }
-  .sustain-{{ section.id }} span {
-    max-width: 26ch;
-    line-height: 1.4;
-  }
-  .sustain-{{ section.id }} b {
-    color: var(--cocoa, #392319);
-    font-weight: 600;
+    padding: clamp(48px, 6vw, 76px) clamp(16px, 3vw, 40px);
+    position: relative;
+    overflow: hidden;
   }
 
-  /* Sustain Stagger Animation */
-  .reveal-stagger.sustain-{{ section.id }} > span {
+  .sustain-container-{{ section.id }} {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sustain-kicker-{{ section.id }} {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--clay, #8a5a44);
+    margin-bottom: 36px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sustain-kicker-{{ section.id }}::before,
+  .sustain-kicker-{{ section.id }}::after {
+    content: "✦";
+    font-size: 8px;
+    opacity: 0.7;
+  }
+
+  .sustain-grid-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    position: relative;
+  }
+
+  .sustain-pillar-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 clamp(16px, 2.5vw, 36px);
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sustain-pillar-{{ section.id }} + .sustain-pillar-{{ section.id }} {
+    border-left: 1px solid rgba(57, 35, 25, 0.12);
+  }
+
+  .sustain-emblem-wrap-{{ section.id }} {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(214, 204, 189, 0.28);
+    border: 1px solid rgba(57, 35, 25, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cocoa, #392319);
+    margin-bottom: 16px;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .sustain-pillar-{{ section.id }}:hover .sustain-emblem-wrap-{{ section.id }} {
+    transform: translateY(-3px) scale(1.06);
+    background: rgba(214, 204, 189, 0.5);
+    border-color: rgba(57, 35, 25, 0.25);
+    box-shadow: 0 6px 18px rgba(45, 28, 20, 0.08);
+  }
+
+  .sustain-emblem-wrap-{{ section.id }} svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 1.35;
+  }
+
+  .sustain-index-{{ section.id }} {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--clay, #8a5a44);
+    margin-bottom: 6px;
+  }
+
+  .sustain-title-{{ section.id }} {
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-size: clamp(16px, 1.4vw, 19px);
+    font-weight: 500;
+    color: var(--cocoa, #392319);
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+  }
+
+  .sustain-desc-{{ section.id }} {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--ink60, #666);
+    max-width: 30ch;
+    margin: 0;
+  }
+
+  /* Reveal Stagger Animation */
+  .reveal-stagger.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }} {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .reveal-stagger.active.sustain-{{ section.id }} > span {
+  .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }} {
     opacity: 1;
     transform: translateY(0);
   }
-  
-  /* Support up to 6 stagger children */
-  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(1) { transition-delay: 0.1s; }
-  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(2) { transition-delay: 0.2s; }
-  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(3) { transition-delay: 0.3s; }
-  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(4) { transition-delay: 0.4s; }
-  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(5) { transition-delay: 0.5s; }
-  .reveal-stagger.active.sustain-{{ section.id }} > span:nth-child(6) { transition-delay: 0.6s; }
+  .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }}:nth-child(1) { transition-delay: 0.1s; }
+  .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }}:nth-child(2) { transition-delay: 0.25s; }
+  .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }}:nth-child(3) { transition-delay: 0.4s; }
+  .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }}:nth-child(4) { transition-delay: 0.55s; }
 
+  /* Mobile / Tablet View */
   @media (max-width: 768px) {
-    .sustain-{{ section.id }} {
-      flex-direction: column;
-      gap: 12px;
-      padding: 20px 16px;
-      align-items: center;
+    .sustain-section-{{ section.id }} {
+      padding: 42px 20px;
+    }
+    .sustain-kicker-{{ section.id }} {
+      margin-bottom: 28px;
+    }
+    .sustain-grid-{{ section.id }} {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .sustain-pillar-{{ section.id }} {
+      padding: 0 0 28px 0;
+      border-left: none !important;
+      border-bottom: 1px solid rgba(57, 35, 25, 0.1);
+    }
+    .sustain-pillar-{{ section.id }}:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .sustain-desc-{{ section.id }} {
+      max-width: 36ch;
     }
   }
 </style>
 
-<div class="sustain-{{ section.id }} reveal-stagger">
-  {%- for block in section.blocks -%}
-    <span {{ block.shopify_attributes }}>
-      {%- if block.settings.title != blank -%}
-        <b>{{ block.settings.title }}</b> 
-      {%- endif -%}
-      {{ block.settings.text }}
-    </span>
-  {%- endfor -%}
-</div>
+<section class="sustain-section-{{ section.id }}">
+  <div class="sustain-container-{{ section.id }}">
+    {%- if section.settings.section_kicker != blank -%}
+      <div class="sustain-kicker-{{ section.id }}">
+        {{ section.settings.section_kicker }}
+      </div>
+    {%- endif -%}
+
+    <div class="sustain-grid-{{ section.id }} reveal-stagger">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign icon_choice = block.settings.icon | default: 'auto'
+          if icon_choice == 'auto'
+            assign mod = forloop.index | modulo: 3
+            if mod == 1
+              assign icon_choice = 'tote'
+            elsif mod == 2
+              assign icon_choice = 'batch'
+            else
+              assign icon_choice = 'handmade'
+            endif
+          endif
+
+          assign kicker_text = block.settings.kicker
+          if kicker_text == blank
+            if forloop.index == 1
+              assign kicker_text = '01 · Packaging'
+            elsif forloop.index == 2
+              assign kicker_text = '02 · Production'
+            elsif forloop.index == 3
+              assign kicker_text = '03 · Artisans'
+            else
+              assign kicker_text = '0' | append: forloop.index | append: ' · Pillar'
+            endif
+          endif
+        -%}
+
+        <div class="sustain-pillar-{{ section.id }}" {{ block.shopify_attributes }}>
+          <div class="sustain-emblem-wrap-{{ section.id }}">
+            {%- case icon_choice -%}
+              {%- when 'tote' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 8h12l-1 12H7L6 8z"></path>
+                  <path d="M9 8V6a3 3 0 0 1 6 0v2"></path>
+                  <path d="M12 11v6"></path>
+                  <path d="M10 14c1 1 3 1 4 0"></path>
+                </svg>
+              {%- when 'batch' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"></path>
+                  <circle cx="12" cy="12" r="1.5" fill="currentColor"></circle>
+                </svg>
+              {%- when 'handmade' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v18"></path>
+                  <path d="M5 8c3 2 4 4 4 7s-1 5-4 5"></path>
+                  <path d="M19 8c-3 2-4 4-4 7s1 5 4 5"></path>
+                  <circle cx="12" cy="3" r="1.5" fill="currentColor"></circle>
+                </svg>
+              {%- when 'leaf' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              {%- else -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+            {%- endcase -%}
+          </div>
+
+          <span class="sustain-index-{{ section.id }}">{{ kicker_text }}</span>
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="sustain-title-{{ section.id }}">{{ block.settings.title }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.text != blank -%}
+            <p class="sustain-desc-{{ section.id }}">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const observerOptions = {
+  document.addEventListener("DOMContentLoaded", function() {
+    var observerOptions = {
       root: null,
       rootMargin: "0px",
-      threshold: 0.15,
+      threshold: 0.15
     };
     
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add("active");
           obs.unobserve(entry.target);
@@ -80,9 +260,9 @@
       });
     }, observerOptions);
 
-    const el = document.querySelector(".sustain-{{ section.id }}");
-    if (el) {
-      observer.observe(el);
+    var grid = document.querySelector(".sustain-grid-{{ section.id }}");
+    if (grid) {
+      observer.observe(grid);
     }
   });
 </script>
@@ -90,24 +270,50 @@
 {% schema %}
 {
   "name": "Sustainability Strip",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_kicker",
+      "label": "Section Header Kicker",
+      "default": "Our Commitment to Slow Fashion"
+    }
+  ],
   "blocks": [
     {
       "type": "value",
-      "name": "Brand Value",
+      "name": "Brand Pillar",
       "limit": 6,
       "settings": [
         {
+          "type": "select",
+          "id": "icon",
+          "label": "Emblem Icon",
+          "options": [
+            { "value": "auto", "label": "Auto-Assign by Order" },
+            { "value": "tote", "label": "Reusable Tote Bag" },
+            { "value": "batch", "label": "Diamond / Small Batch" },
+            { "value": "handmade", "label": "Hand-Knit / Artisan" },
+            { "value": "leaf", "label": "Eco Leaf" }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "text",
+          "id": "kicker",
+          "label": "Kicker / Category",
+          "placeholder": "e.g. 01 · PACKAGING"
+        },
+        {
           "type": "text",
           "id": "title",
-          "label": "Bold Title",
-          "default": "Small batches."
+          "label": "Pillar Title",
+          "default": "Reusable Tote Packaging"
         },
         {
           "type": "textarea",
           "id": "text",
-          "label": "Description text",
-          "default": "Quantities are limited, a restock may take a while, or it may not come at all."
+          "label": "Pillar Description",
+          "default": "No plastic. Every order ships in our signature reusable tote you can use again and again."
         }
       ]
     }
@@ -119,22 +325,28 @@
         {
           "type": "value",
           "settings": {
-            "title": "Reusable tote packaging.",
-            "text": "No plastic, every order ships in a tote you can use again."
+            "icon": "tote",
+            "kicker": "01 · Packaging",
+            "title": "Reusable Tote Packaging",
+            "text": "No plastic. Every order ships in a signature custom tote you can keep and reuse for life."
           }
         },
         {
           "type": "value",
           "settings": {
-            "title": "Small batches.",
-            "text": "Quantities are limited, a restock may take a while, or it may not come at all."
+            "icon": "batch",
+            "kicker": "02 · Production",
+            "title": "Small Batch Drops",
+            "text": "Quantities are limited to small runs to eliminate excess stock and fashion waste."
           }
         },
         {
           "type": "value",
           "settings": {
-            "title": "All handmade.",
-            "text": "Every piece is hand-knitted or crocheted by artisans in Bali, never machine-made."
+            "icon": "handmade",
+            "kicker": "03 · Artisans",
+            "title": "All Handmade in Bali",
+            "text": "Every piece is softly sculpted by Balinese women artisans, never machine-made."
           }
         }
       ]
