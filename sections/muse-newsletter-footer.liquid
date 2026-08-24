@@ -1,29 +1,40 @@
 <style>
-  /* ---------- footer + muse circle (integrated) ---------- */
+  /* ---------- footer + muse circle (integrated single row) ---------- */
   .foot {
     background: var(--cocoa, #392319);
     color: #eee6d9;
-    padding: clamp(38px, 4.5vw, 56px) clamp(16px, 3vw, 32px) 24px;
-    text-align: center;
-  }
-
-  /* Muse circle — integrated top zone with compact max-width */
-  .foot-muse {
-    max-width: 860px;
-    margin: 0 auto clamp(32px, 3.8vw, 46px);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(24px, 3.5vw, 48px);
-    align-items: center;
+    padding: clamp(48px, 6vw, 72px) clamp(20px, 4vw, 40px) 24px;
     text-align: left;
   }
-  @media (max-width: 768px) {
-    .foot-muse {
+
+  .foot-inner {
+    max-width: 1200px;
+    margin: 0 auto clamp(36px, 5vw, 64px);
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .foot-inner {
       grid-template-columns: 1fr;
-      text-align: center;
-      max-width: 480px;
+      gap: 48px;
     }
   }
+
+  /* Left: Logo & Newsletter */
+  .foot-brand-newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .foot-logo {
+    height: 60px; /* Adjusted height for better balance */
+    width: auto;
+    object-fit: contain;
+    margin-left: -8px; /* Offset potential internal padding of image */
+  }
+  
   .foot-muse-copy {
     display: flex;
     flex-direction: column;
@@ -40,12 +51,12 @@
   }
   .foot-muse-copy h2 {
     font-family: var(--display, serif);
-    font-size: clamp(20px, 2.4vw, 27px);
+    font-size: clamp(20px, 2.4vw, 24px);
     font-weight: 400;
     font-style: italic;
     color: #f8f8f0;
     margin: 0;
-    line-height: 1.25;
+    line-height: 1.3;
     letter-spacing: -0.01em;
   }
   .foot-muse-copy p {
@@ -54,16 +65,24 @@
     color: rgba(248, 248, 240, 0.65);
     margin: 0;
     line-height: 1.55;
+    max-width: 38ch;
   }
   .foot-muse-form-zone {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 4px;
   }
   .muse-form-inline {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 8px;
+  }
+  @media (min-width: 480px) {
+    .muse-form-inline {
+      flex-direction: row;
+      gap: 0;
+    }
   }
   .muse-input {
     width: 100%;
@@ -98,18 +117,16 @@
     text-transform: uppercase;
     border: 1px solid #f8f8f0;
     cursor: pointer;
-    margin-top: 8px;
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  @media (min-width: 480px) {
+    .muse-input { border-right: none; }
+    .muse-submit { width: auto; flex-shrink: 0; }
   }
   .muse-submit:hover {
     background: transparent;
     color: #f8f8f0;
     border-color: rgba(248, 248, 240, 0.6);
-  }
-  @media (min-width: 480px) {
-    .muse-form-inline { flex-direction: row; }
-    .muse-input { flex: 1; border-right: none; }
-    .muse-submit { margin-top: 0; width: auto; flex-shrink: 0; }
   }
   .muse-disclaimer {
     font-family: var(--body, sans-serif);
@@ -149,33 +166,17 @@
     display: block;
   }
 
-  /* Nav + bottom zone */
-  .foot-lower {
-    padding: 0;
-    text-align: center;
-  }
-  .foot-logo {
-    height: 75px;
-    width: auto;
-    margin: -15px auto -5px;
-    display: block;
-    object-fit: contain;
-  }
+  /* Right: Navigation Columns */
   .foot-cols {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    max-width: 860px;
-    margin: 16px auto 36px;
-    text-align: left;
     gap: clamp(24px, 4vw, 48px);
+    width: 100%;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .foot-cols {
       grid-template-columns: 1fr;
-      text-align: left;
-      gap: 26px;
-      max-width: 480px;
-      margin: 14px auto 30px;
+      gap: 32px;
     }
   }
   .foot-col h5, .foot-col h4 {
@@ -183,7 +184,7 @@
     font-size: 13.5px;
     font-weight: 500;
     color: #f8f8f0;
-    margin: 0 0 14px 0;
+    margin: 0 0 16px 0;
     letter-spacing: 0.02em;
   }
   .foot-col ul {
@@ -192,29 +193,39 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 12px;
   }
   .foot-col ul li a {
     font-family: var(--body, sans-serif);
-    font-size: 12.5px;
-    color: rgba(238, 230, 217, 0.75);
+    font-size: 12px;
+    color: rgba(238, 230, 217, 0.7);
     text-decoration: none;
     transition: color 0.2s ease;
   }
   .foot-col ul li a:hover {
     color: #ffffff;
     text-decoration: underline;
+    text-underline-offset: 3px;
   }
+  
   .foot-btm {
     border-top: 1px solid rgba(248, 248, 240, 0.1);
-    padding-top: 18px;
+    padding-top: 24px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--body, sans-serif);
     font-size: 10.5px;
-    color: #c9bba9;
-    text-align: center;
+    color: rgba(238, 230, 217, 0.5);
+  }
+  @media (max-width: 600px) {
+    .foot-btm {
+      flex-direction: column;
+      text-align: center;
+      justify-content: center;
+    }
   }
 
   /* ---------- Sticky Newsletter Teaser (Bottom-Left) ---------- */
@@ -451,49 +462,49 @@
 </style>
 
 <footer class="foot">
-  <!-- Muse Circle: Newsletter opt-in zone -->
-  <div class="foot-muse" id="museCircle">
-    <div class="foot-muse-copy">
-      <span class="muse-kicker">{{ section.settings.muse_kicker }}</span>
-      <h2>{{ section.settings.muse_title }}</h2>
-      <p>{{ section.settings.muse_desc }}</p>
-    </div>
-    
-    <div class="foot-muse-form-zone">
-      <div id="museFormWrap">
-        {% form 'customer', id: 'museForm', class: 'muse-form-inline' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          
-          {%- if form.posted_successfully? -%}
-            <script>document.addEventListener("DOMContentLoaded", function() { showMuseSuccess(); });</script>
-          {%- else -%}
-            <input type="email" name="contact[email]" class="muse-input" id="museEmail" placeholder="Your email address" required autocomplete="email" />
-            <button type="submit" class="muse-submit">{{ section.settings.muse_btn_label }}</button>
-          {%- endif -%}
-        {% endform %}
-      </div>
-      
-      <div class="muse-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
-        <span class="muse-success-check">✦</span>
-        <p>Welcome to the inner circle.</p>
-        <small>Your 10% code is on its way to your inbox.</small>
-      </div>
-      
-      <p class="muse-disclaimer">
-        By joining, you agree to our
-        <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>. Unsubscribe anytime.
-      </p>
-    </div>
-  </div>
+  <div class="foot-inner">
+    <!-- Left: Brand & Newsletter -->
+    <div class="foot-brand-newsletter">
+      {%- if section.settings.logo != blank -%}
+        <img class="foot-logo" src="{{ section.settings.logo | img_url: '400x' }}" alt="{{ shop.name }}" loading="lazy" />
+      {%- else -%}
+        <h2 style="font-family: var(--display); color: #fff; margin: 0;">{{ shop.name }}</h2>
+      {%- endif -%}
 
-  <!-- Footer lower zone: logo, nav columns, copyright -->
-  <div class="foot-lower">
-    {%- if section.settings.logo != blank -%}
-      <img class="foot-logo" src="{{ section.settings.logo | img_url: '400x' }}" alt="{{ shop.name }}" loading="lazy" />
-    {%- else -%}
-      <h2 style="font-family: var(--display); color: #fff; margin-bottom: 24px;">{{ shop.name }}</h2>
-    {%- endif -%}
-    
+      <div class="foot-muse-copy">
+        <span class="muse-kicker">{{ section.settings.muse_kicker }}</span>
+        <h2>{{ section.settings.muse_title }}</h2>
+        <p>{{ section.settings.muse_desc }}</p>
+      </div>
+      
+      <div class="foot-muse-form-zone">
+        <div id="museFormWrap">
+          {% form 'customer', id: 'museForm', class: 'muse-form-inline' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            
+            {%- if form.posted_successfully? -%}
+              <script>document.addEventListener("DOMContentLoaded", function() { showMuseSuccess(); });</script>
+            {%- else -%}
+              <input type="email" name="contact[email]" class="muse-input" id="museEmail" placeholder="Your email address" required autocomplete="email" />
+              <button type="submit" class="muse-submit">{{ section.settings.muse_btn_label }}</button>
+            {%- endif -%}
+          {% endform %}
+        </div>
+        
+        <div class="muse-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
+          <span class="muse-success-check">✦</span>
+          <p>Welcome to the inner circle.</p>
+          <small>Your 10% code is on its way to your inbox.</small>
+        </div>
+        
+        <p class="muse-disclaimer">
+          By joining, you agree to our
+          <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>. Unsubscribe anytime.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right: Navigation Columns -->
     <div class="foot-cols">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
@@ -511,7 +522,7 @@
           </div>
         {%- endfor -%}
       {%- else -%}
-        <!-- Default 3 columns from Ref 2 -->
+        <!-- Default 3 columns -->
         <div class="foot-col">
           <h5>Lisandra World</h5>
           <ul>
@@ -541,10 +552,12 @@
         </div>
       {%- endif -%}
     </div>
-    
-    <div class="foot-btm">
-      <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} &middot; Made in Bali</span>
-    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="foot-btm">
+    <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} &middot; All Rights Reserved</span>
+    <span>Made in Bali</span>
   </div>
 </footer>
 

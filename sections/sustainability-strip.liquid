@@ -17,25 +17,6 @@
     align-items: center;
   }
 
-  .sustain-kicker-{{ section.id }} {
-    font-family: var(--ui, "Inter", sans-serif);
-    font-size: 9.5px;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--clay, #8a5a44);
-    margin-bottom: 36px;
-    text-align: center;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .sustain-kicker-{{ section.id }}::before,
-  .sustain-kicker-{{ section.id }}::after {
-    content: "✦";
-    font-size: 8px;
-    opacity: 0.7;
-  }
 
   .sustain-grid-{{ section.id }} {
     display: grid;
@@ -85,15 +66,6 @@
     stroke-width: 1.35;
   }
 
-  .sustain-index-{{ section.id }} {
-    font-family: var(--ui, "Inter", sans-serif);
-    font-size: 9.5px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--clay, #8a5a44);
-    margin-bottom: 6px;
-  }
 
   .sustain-title-{{ section.id }} {
     font-family: var(--heading, "Bodoni Moda", serif);
@@ -128,13 +100,9 @@
   .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }}:nth-child(3) { transition-delay: 0.4s; }
   .reveal-stagger.active.sustain-grid-{{ section.id }} > .sustain-pillar-{{ section.id }}:nth-child(4) { transition-delay: 0.55s; }
 
-  /* Mobile / Tablet View */
   @media (max-width: 768px) {
     .sustain-section-{{ section.id }} {
       padding: 42px 20px;
-    }
-    .sustain-kicker-{{ section.id }} {
-      margin-bottom: 28px;
     }
     .sustain-grid-{{ section.id }} {
       grid-template-columns: 1fr;
@@ -249,14 +217,7 @@
 {% schema %}
 {
   "name": "Sustainability Strip",
-  "settings": [
-    {
-      "type": "text",
-      "id": "section_kicker",
-      "label": "Section Header Kicker",
-      "default": "Our Commitment to Slow Fashion"
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "value",
@@ -276,12 +237,7 @@
           ],
           "default": "auto"
         },
-        {
-          "type": "text",
-          "id": "kicker",
-          "label": "Kicker / Category",
-          "placeholder": "e.g. 01 · PACKAGING"
-        },
+
         {
           "type": "text",
           "id": "title",
@@ -305,7 +261,6 @@
           "type": "value",
           "settings": {
             "icon": "tote",
-            "kicker": "01 · Packaging",
             "title": "Reusable Tote Packaging",
             "text": "No plastic. Every order ships in a signature custom tote you can keep and reuse for life."
           }
@@ -314,7 +269,6 @@
           "type": "value",
           "settings": {
             "icon": "batch",
-            "kicker": "02 · Production",
             "title": "Small Batch Drops",
             "text": "Quantities are limited to small runs to eliminate excess stock and fashion waste."
           }
@@ -323,7 +277,6 @@
           "type": "value",
           "settings": {
             "icon": "handmade",
-            "kicker": "03 · Artisans",
             "title": "All Handmade in Bali",
             "text": "Every piece is softly sculpted by Balinese women artisans, never machine-made."
           }

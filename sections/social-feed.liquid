@@ -191,7 +191,7 @@
     width: 100%;
     height: 100%;
     max-height: 88vh;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 
@@ -248,7 +248,7 @@
     min-width: 100% !important;
     max-width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
     flex-shrink: 0 !important;
     display: block !important;
   }
@@ -561,15 +561,16 @@
       gap: 16px;
     }
     .social-grid-{{ section.id }} {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
     .social-grid-{{ section.id }} .social-item-{{ section.id }} + .social-item-{{ section.id }} {
       border-left: none;
     }
-    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(2n) {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(3n+2),
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(3n+3) {
       border-left: 1px solid var(--line, #e2e2e2);
     }
-    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(n + 3) {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(n + 4) {
       border-top: 1px solid var(--line, #e2e2e2);
     }
 
@@ -595,10 +596,10 @@
       width: 100% !important;
       min-width: 100% !important;
       max-width: 100% !important;
-      aspect-ratio: 1 / 1 !important;
+      aspect-ratio: 4 / 5 !important;
       height: auto !important;
       min-height: unset !important;
-      max-height: none !important;
+      max-height: 70vh !important;
       position: relative;
       overflow: hidden;
       flex-shrink: 0;
@@ -613,7 +614,7 @@
     .social-modal-media-content-{{ section.id }} > video {
       width: 100% !important;
       height: 100% !important;
-      object-fit: cover !important;
+      object-fit: contain !important;
       display: block !important;
     }
     .social-modal-overlay-{{ section.id }} .social-modal-inner-carousel,
@@ -632,7 +633,7 @@
       min-width: 100% !important;
       max-width: 100% !important;
       height: 100% !important;
-      object-fit: cover !important;
+      object-fit: contain !important;
       flex-shrink: 0 !important;
       display: block !important;
     }
