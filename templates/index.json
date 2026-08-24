@@ -97,7 +97,7 @@
             "icon": "tote",
             "kicker": "01 · Packaging",
             "title": "Reusable Tote Packaging",
-            "text": "No plastic. Every order ships in a signature custom tote you can keep and reuse for life."
+            "text": "No plastic. Every order ships in a custom tote you can keep and reuse."
           }
         },
         "val_2": {
@@ -105,8 +105,8 @@
           "settings": {
             "icon": "batch",
             "kicker": "02 · Production",
-            "title": "Small Batch Drops",
-            "text": "Quantities are limited to small runs to eliminate excess stock and fashion waste."
+            "title": "Limited Quantities",
+            "text": "We produce in small batches, keeping each collection considered and avoiding unnecessary excess."
           }
         },
         "val_3": {
@@ -115,7 +115,7 @@
             "icon": "handmade",
             "kicker": "03 · Artisans",
             "title": "All Handmade in Bali",
-            "text": "Every piece is softly sculpted by Balinese women artisans, never machine-made."
+            "text": "Every piece is handmade by Balinese artisans in their own homes, slowly and with care."
           }
         }
       },
@@ -148,7 +148,7 @@
           "type": "review",
           "settings": {
             "stars": 5,
-            "quote": "Gorgeous detailing. You can really feel the handmade quality from Bali.",
+            "quote": "Gorgeous detailing. You can really feel the handmade quality.",
             "author": "Elena V.",
             "verified": true
           }

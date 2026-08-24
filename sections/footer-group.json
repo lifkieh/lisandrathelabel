@@ -16,7 +16,7 @@
       "name": "Footer & Newsletter",
       "settings": {
         "muse_kicker": "Become a Muse",
-        "muse_title": "Your first piece,<br>with 10% off.",
+        "muse_title": "Your first order,<br>with 10% off.",
         "muse_desc": "Join our inner circle for private releases, secret drops, and 10% off your first artisanal piece.",
         "muse_btn_label": "Claim 10% Off",
         "menu": "footer",
@@ -52,36 +52,10 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "text_pEVdHa": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Sign up for 10% off your first order, exclusive offers, and early access to new drops.</p>",
-            "width": "fit-content",
-            "max_width": "none",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 3,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
         }
       },
       "block_order": [
-        "email_signup_bPG4HW",
-        "text_pEVdHa"
+        "email_signup_bPG4HW"
       ],
       "disabled": true,
       "settings": {
