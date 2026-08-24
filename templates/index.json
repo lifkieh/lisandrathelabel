@@ -15,6 +15,7 @@
         "cat_dresses": {
           "type": "category_tile",
           "settings": {
+            "image": "shopify://shop_images/Untitled_design-21.jpg",
             "title": "Dresses",
             "link": "shopify://collections/dresses"
           }
@@ -42,6 +43,7 @@
         "cat_swim"
       ],
       "settings": {
+        "image_desktop": "shopify://shop_images/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg",
         "enable_ken_burns": true,
         "overlay_opacity": 65,
         "eyebrow": "New Collection",
