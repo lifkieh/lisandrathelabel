@@ -561,16 +561,15 @@
       gap: 16px;
     }
     .social-grid-{{ section.id }} {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
     .social-grid-{{ section.id }} .social-item-{{ section.id }} + .social-item-{{ section.id }} {
       border-left: none;
     }
-    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(3n+2),
-    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(3n+3) {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(2n+2) {
       border-left: 1px solid var(--line, #e2e2e2);
     }
-    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(n + 4) {
+    .social-grid-{{ section.id }} .social-item-{{ section.id }}:nth-child(n + 3) {
       border-top: 1px solid var(--line, #e2e2e2);
     }
 
@@ -814,7 +813,7 @@
         "index": {{ forloop.index0 }},
         "type": {% if block.settings.video != blank %}"video"{% else %}"image"{% endif %},
         {%- if block.settings.video != blank -%}
-          "video_sources": {{ block.settings.video.sources | json }},
+          "video_html": {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: true, playsinline: true, image_size: '1200x' | json }},
         {%- elsif block.settings.image_1 != blank -%}
           "images": [
             {{ block.settings.image_1 | img_url: '1200x' | json }}
@@ -877,12 +876,27 @@
       mediaContent.classList.add("fading");
       
       setTimeout(function() {
-        if (post.type === "video" && post.video_sources && post.video_sources.length > 0) {
-          var sourceHtml = "";
-          for (var i = 0; i < post.video_sources.length; i++) {
-            sourceHtml += '<source src="' + post.video_sources[i].url + '" type="' + post.video_sources[i].mime_type + '">';
+        if (post.type === "video") {
+          if (post.video_html) {
+            mediaContent.innerHTML = post.video_html;
           }
-          mediaContent.innerHTML = '<video autoplay loop muted playsinline controls style="width:100%;height:100%;object-fit:cover;">' + sourceHtml + '</video>';
+          
+          setTimeout(function() {
+            var vEl = mediaContent.querySelector("video");
+            if (vEl) {
+              vEl.muted = true;
+              vEl.setAttribute("playsinline", "");
+              vEl.style.width = "100%";
+              vEl.style.height = "100%";
+              vEl.style.objectFit = "cover";
+              var playPromise = vEl.play();
+              if (playPromise !== undefined) {
+                playPromise.catch(function(err) {
+                  console.log("Autoplay deferred by browser:", err);
+                });
+              }
+            }
+          }, 50);
         } else if (post.images && post.images.length > 1) {
           // Inner Multi-Image Carousel
           currentInnerSlide = 0;

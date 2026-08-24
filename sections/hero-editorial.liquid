@@ -93,45 +93,56 @@
 
   .hero-editorial-{{ section.id }} .ctas {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 8px;
+    margin-top: 14px;
   }
 
   .hero-editorial-{{ section.id }} .btn {
-    display: inline-block;
-    padding: 12px 24px;
-    border: 1px solid #fff;
-    font-size: 10.5px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 28px;
+    border: 1px solid var(--paper, #f8f8f0);
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    background: #fff;
+    background: var(--paper, #f8f8f0);
     color: var(--cocoa, #392319);
     cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   }
 
   .hero-editorial-{{ section.id }} .btn:hover {
     background: transparent;
-    color: #fff;
+    color: #f8f8f0;
+    border-color: rgba(248, 248, 240, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   }
 
   .hero-editorial-{{ section.id }} .btn--ghost {
-    background: transparent;
-    color: #fff;
-    border-color: #fff;
+    background: rgba(35, 20, 14, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f8f8f0;
+    border: 1px solid rgba(248, 248, 240, 0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
 
   .hero-editorial-{{ section.id }} .btn--ghost:hover {
-    background: #fff;
+    background: var(--paper, #f8f8f0);
     color: var(--cocoa, #392319);
+    border-color: var(--paper, #f8f8f0);
     transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   }
 
   /* 3-Tile Category Grid */
@@ -215,16 +226,17 @@
 
     .hero-editorial-{{ section.id }} .ctas {
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       width: 100%;
-      max-width: 260px;
+      max-width: 270px;
     }
 
     .hero-editorial-{{ section.id }} .btn {
       width: 100%;
       text-align: center;
-      padding: 10px 16px;
+      padding: 12px 20px;
       font-size: 10px;
+      box-sizing: border-box;
     }
 
     .cats3-{{ section.id }} {

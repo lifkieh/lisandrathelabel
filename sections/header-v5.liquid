@@ -346,23 +346,6 @@
       padding: 6px 12px;
     }
   }
-
-  {%- if transparent -%}
-  /* Pull the main content up so it sits behind the transparent header */
-  #MainContent {
-    margin-top: -69px; 
-  }
-  @media (max-width: 900px) {
-    #MainContent {
-      margin-top: -59px;
-    }
-  }
-  @media (max-width: 600px) {
-    #MainContent {
-      margin-top: -51px;
-    }
-  }
-  {%- endif -%}
 </style>
 
 {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}

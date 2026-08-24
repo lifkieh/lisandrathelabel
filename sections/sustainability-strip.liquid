@@ -132,11 +132,11 @@
           if icon_choice == 'auto'
             assign mod = forloop.index | modulo: 3
             if mod == 1
-              assign icon_choice = 'tote'
-            elsif mod == 2
               assign icon_choice = 'batch'
-            else
+            elsif mod == 2
               assign icon_choice = 'handmade'
+            else
+              assign icon_choice = 'tote'
             endif
           endif
         -%}
@@ -228,7 +228,7 @@
           "type": "select",
           "id": "icon",
           "label": "Emblem Icon",
-          "options": [
+          "options": [              
             { "value": "auto", "label": "Auto-Assign by Order" },
             { "value": "tote", "label": "Reusable Tote Bag" },
             { "value": "batch", "label": "Diamond / Small Batch" },
@@ -260,14 +260,6 @@
         {
           "type": "value",
           "settings": {
-            "icon": "tote",
-            "title": "Reusable Tote Packaging",
-            "text": "No plastic. Every order ships in a signature custom tote you can keep and reuse for life."
-          }
-        },
-        {
-          "type": "value",
-          "settings": {
             "icon": "batch",
             "title": "Small Batch Drops",
             "text": "Quantities are limited to small runs to eliminate excess stock and fashion waste."
@@ -279,6 +271,14 @@
             "icon": "handmade",
             "title": "All Handmade in Bali",
             "text": "Every piece is softly sculpted by Balinese women artisans, never machine-made."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon": "tote",
+            "title": "Reusable Tote Packaging",
+            "text": "No plastic. Every order ships in a signature custom tote you can keep and reuse for life."
           }
         }
       ]

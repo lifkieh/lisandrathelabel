@@ -70,7 +70,7 @@
     "best_sellers": {
       "type": "best-sellers-custom",
       "settings": {
-        "title": "Best sellers",
+        "title": "BEST SELLERS",
         "subtitle": "Ranked by what actually leaves first.",
         "link_label": "View all",
         "link_url": "",
@@ -87,7 +87,7 @@
         "quote": "Hand-knit goddess silhouettes for the sun-drenched woman.",
         "text": "Lisandra is a Bali-born resortwear label known for softly sculpted knit and crochet silhouettes that move between the water, the sand, and the dinner table. We make fewer pieces, slowly by hand, so every woman who wears us feels radiantly, herself.",
         "btn_label": "Read How a Piece Is Made",
-        "btn_link": "#our-story"
+        "btn_link": "/pages/our-story"
       }
     },
     "sustainability_strip": {
@@ -122,9 +122,9 @@
         }
       },
       "block_order": [
-        "val_1",
         "val_2",
-        "val_3"
+        "val_3",
+        "val_1"
       ],
       "settings": {
         "section_kicker": "Our Commitment to Slow Fashion"
@@ -172,7 +172,7 @@
       ],
       "settings": {
         "title": "What people say",
-        "link_label": "All 74 reviews",
+        "link_label": "",
         "link_url": "",
         "columns_desktop": 3
       }

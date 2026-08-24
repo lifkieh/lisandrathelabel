@@ -1,229 +1,289 @@
 <style>
-  /* ---------- footer + muse circle (integrated single row) ---------- */
-  .foot {
+  /* ==========================================================================
+     LISANDRA MINIMALIST FOOTER (Concept 2 - Faithfull the Brand Luxury Style)
+     ========================================================================== */
+  
+  .foot-section {
     background: var(--cocoa, #392319);
     color: #eee6d9;
-    padding: clamp(48px, 6vw, 72px) clamp(20px, 4vw, 40px) 24px;
-    text-align: left;
+    width: 100%;
+    position: relative;
+    border-top: 1px solid rgba(248, 248, 240, 0.12);
   }
 
-  .foot-inner {
-    max-width: 1200px;
-    margin: 0 auto clamp(36px, 5vw, 64px);
+
+
+  /* ---------- 2. Main Footer Grid ---------- */
+  .foot-main-wrap {
+    padding: clamp(56px, 7vw, 90px) clamp(20px, 4vw, 60px) clamp(40px, 5vw, 60px);
+    display: flex;
+    justify-content: center;
+  }
+  .foot-grid {
+    max-width: 1340px;
+    width: 100%;
     display: grid;
-    grid-template-columns: 1.2fr 2fr;
-    gap: clamp(40px, 6vw, 80px);
+    grid-template-columns: 1.15fr 1.85fr;
+    gap: clamp(48px, 6vw, 100px);
     align-items: start;
   }
-  @media (max-width: 900px) {
-    .foot-inner {
-      grid-template-columns: 1fr;
-      gap: 48px;
-    }
-  }
 
-  /* Left: Logo & Newsletter */
-  .foot-brand-newsletter {
+  /* Left: Minimal Newsletter */
+  .foot-news-col {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 14px;
+    max-width: 440px;
   }
-  .foot-logo {
-    height: 60px; /* Adjusted height for better balance */
-    width: auto;
-    object-fit: contain;
-    margin-left: -8px; /* Offset potential internal padding of image */
-  }
-  
-  .foot-muse-copy {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .muse-kicker {
-    font-family: var(--body, sans-serif);
-    font-size: 9.5px;
+  .foot-news-heading {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #c68642;
-    display: block;
-  }
-  .foot-muse-copy h2 {
-    font-family: var(--display, serif);
-    font-size: clamp(20px, 2.4vw, 24px);
-    font-weight: 400;
-    font-style: italic;
-    color: #f8f8f0;
-    margin: 0;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-  }
-  .foot-muse-copy p {
-    font-family: var(--body, sans-serif);
-    font-size: 12px;
-    color: rgba(248, 248, 240, 0.65);
-    margin: 0;
-    line-height: 1.55;
-    max-width: 38ch;
-  }
-  .foot-muse-form-zone {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 4px;
-  }
-  .muse-form-inline {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  @media (min-width: 480px) {
-    .muse-form-inline {
-      flex-direction: row;
-      gap: 0;
-    }
-  }
-  .muse-input {
-    width: 100%;
-    padding: 13px 16px;
-    border: 1px solid rgba(248, 248, 240, 0.28);
-    background: rgba(248, 248, 240, 0.05);
-    font-family: var(--body, sans-serif);
-    font-size: 11.5px;
-    letter-spacing: 0.04em;
-    color: #f8f8f0;
-    outline: none;
-    transition: border-color 0.25s ease, background 0.25s ease;
-    box-sizing: border-box;
-  }
-  .muse-input::placeholder {
-    color: rgba(248, 248, 240, 0.38);
-    letter-spacing: 0.05em;
-  }
-  .muse-input:focus {
-    border-color: rgba(248, 248, 240, 0.7);
-    background: rgba(248, 248, 240, 0.09);
-  }
-  .muse-submit {
-    width: 100%;
-    padding: 13px 20px;
-    background: #f8f8f0;
-    color: var(--cocoa, #392319);
-    font-family: var(--body, sans-serif);
-    font-size: 10.5px;
-    font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    border: 1px solid #f8f8f0;
-    cursor: pointer;
-    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-  }
-  @media (min-width: 480px) {
-    .muse-input { border-right: none; }
-    .muse-submit { width: auto; flex-shrink: 0; }
-  }
-  .muse-submit:hover {
-    background: transparent;
     color: #f8f8f0;
-    border-color: rgba(248, 248, 240, 0.6);
-  }
-  .muse-disclaimer {
-    font-family: var(--body, sans-serif);
-    font-size: 10px;
-    color: rgba(248, 248, 240, 0.35);
-    letter-spacing: 0.02em;
+    margin: 0;
     line-height: 1.4;
+  }
+  .foot-news-desc {
+    font-family: var(--body, "Inter", sans-serif);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: rgba(248, 248, 240, 0.65);
     margin: 0;
   }
-  .muse-disclaimer a {
-    color: rgba(248, 248, 240, 0.5);
-    text-decoration: underline;
-  }
-  .muse-disclaimer a:hover { color: rgba(248, 248, 240, 0.8); }
   
-  .muse-success {
+  /* Underline Form with Arrow Button */
+  .foot-form-wrap {
+    margin-top: 6px;
+  }
+  .foot-form-underline {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid rgba(248, 248, 240, 0.35);
+    transition: border-color 0.3s ease;
+  }
+  .foot-form-underline:focus-within {
+    border-color: rgba(248, 248, 240, 0.95);
+  }
+  .foot-input-email {
+    width: 100%;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 14px 36px 14px 0;
+    font-family: var(--body, "Inter", sans-serif);
+    font-size: 12.5px;
+    color: #f8f8f0 !important;
+    letter-spacing: 0.04em;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+  }
+  .foot-input-email:focus,
+  .foot-input-email:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #f8f8f0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  /* Prevent browser / Chrome autofill from making the input white */
+  .foot-input-email:-webkit-autofill,
+  .foot-input-email:-webkit-autofill:hover, 
+  .foot-input-email:-webkit-autofill:focus, 
+  .foot-input-email:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #392319 inset !important;
+    -webkit-text-fill-color: #f8f8f0 !important;
+    caret-color: #f8f8f0 !important;
+    transition: background-color 5000s ease-in-out 0s;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+  }
+  .foot-input-email::placeholder {
+    color: rgba(248, 248, 240, 0.4);
+    letter-spacing: 0.04em;
+  }
+  .foot-btn-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #f8f8f0;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, color 0.25s ease;
+  }
+  .foot-btn-arrow svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+  .foot-btn-arrow:hover svg {
+    transform: translateX(4px);
+    color: #e5a975;
+  }
+  .foot-privacy-note {
+    font-family: var(--body, "Inter", sans-serif);
+    font-size: 10px;
+    color: rgba(248, 248, 240, 0.4);
+    line-height: 1.45;
+    margin: 8px 0 0 0;
+  }
+  .foot-privacy-note a {
+    color: rgba(248, 248, 240, 0.6);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .foot-privacy-note a:hover {
+    color: #f8f8f0;
+  }
+
+  /* Success Message */
+  .foot-news-success {
     display: none;
     flex-direction: column;
     gap: 6px;
-    padding: 12px 0 2px;
+    padding: 12px 0 4px;
+    animation: fadeInNews 0.5s ease forwards;
   }
-  .muse-success-check {
+  @keyframes fadeInNews {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .foot-news-success span {
+    font-family: var(--display, "Bodoni Moda", serif);
     font-size: 18px;
-    color: #c68642;
-  }
-  .muse-success p {
-    font-family: var(--display, serif);
-    font-size: 14px;
     font-style: italic;
     color: #f8f8f0;
-    margin: 0;
   }
-  .muse-success small {
-    font-family: var(--body, sans-serif);
-    font-size: 10.5px;
-    color: rgba(248, 248, 240, 0.5);
-    display: block;
+  .foot-news-success small {
+    font-family: var(--body, "Inter", sans-serif);
+    font-size: 11.5px;
+    color: rgba(248, 248, 240, 0.6);
   }
 
-  /* Right: Navigation Columns */
-  .foot-cols {
+  /* Right: 3 Column Nav */
+  .foot-nav-cols {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(24px, 4vw, 48px);
+    gap: clamp(32px, 4.5vw, 64px);
     width: 100%;
   }
-  @media (max-width: 600px) {
-    .foot-cols {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
+  .foot-nav-col h4, .foot-nav-col h5 {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(248, 248, 240, 0.95);
+    margin: 0 0 20px 0;
   }
-  .foot-col h5, .foot-col h4 {
-    font-family: var(--body, sans-serif);
-    font-size: 13.5px;
-    font-weight: 500;
-    color: #f8f8f0;
-    margin: 0 0 16px 0;
-    letter-spacing: 0.02em;
-  }
-  .foot-col ul {
+  .foot-nav-col ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 13px;
   }
-  .foot-col ul li a {
-    font-family: var(--body, sans-serif);
-    font-size: 12px;
-    color: rgba(238, 230, 217, 0.7);
+  .foot-nav-col ul li a {
+    font-family: var(--body, "Inter", sans-serif);
+    font-size: 12.5px;
+    color: rgba(248, 248, 240, 0.65);
     text-decoration: none;
-    transition: color 0.2s ease;
+    line-height: 1.4;
+    transition: color 0.25s ease;
   }
-  .foot-col ul li a:hover {
+  .foot-nav-col ul li a:hover {
     color: #ffffff;
-    text-decoration: underline;
-    text-underline-offset: 3px;
   }
-  
-  .foot-btm {
+
+  /* ---------- 3. Bottom Row: Copyright & Social Links ---------- */
+  .foot-bottom-wrap {
     border-top: 1px solid rgba(248, 248, 240, 0.1);
-    padding-top: 24px;
+    padding: 24px clamp(20px, 4vw, 60px);
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+    justify-content: center;
+  }
+  .foot-bottom-inner {
+    max-width: 1340px;
+    width: 100%;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: var(--body, sans-serif);
-    font-size: 10.5px;
-    color: rgba(238, 230, 217, 0.5);
+    flex-wrap: wrap;
+    gap: 20px;
   }
-  @media (max-width: 600px) {
-    .foot-btm {
+  .foot-copy-zone {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(248, 248, 240, 0.45);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .foot-social-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(16px, 2.5vw, 28px);
+  }
+  .foot-social-link {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(248, 248, 240, 0.65);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+  .foot-social-link:hover {
+    color: #ffffff;
+  }
+
+  /* ---------- Breakpoints: Tablet & Mobile ---------- */
+  @media (max-width: 990px) {
+    .foot-grid {
+      grid-template-columns: 1fr;
+      gap: 56px;
+    }
+    .foot-news-col {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .foot-main-wrap {
+      padding: 44px 20px 36px;
+    }
+    .foot-nav-cols {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 36px 24px;
+    }
+    .foot-nav-cols .foot-nav-col:last-child {
+      grid-column: 1 / -1;
+    }
+    .foot-bottom-inner {
       flex-direction: column;
+      align-items: center;
       text-align: center;
+      gap: 16px;
+    }
+    .foot-social-links {
       justify-content: center;
     }
   }
@@ -461,103 +521,129 @@
   }
 </style>
 
-<footer class="foot">
-  <div class="foot-inner">
-    <!-- Left: Brand & Newsletter -->
-    <div class="foot-brand-newsletter">
-      {%- if section.settings.logo != blank -%}
-        <img class="foot-logo" src="{{ section.settings.logo | img_url: '400x' }}" alt="{{ shop.name }}" loading="lazy" />
-      {%- else -%}
-        <h2 style="font-family: var(--display); color: #fff; margin: 0;">{{ shop.name }}</h2>
-      {%- endif -%}
+<footer class="foot-section">
 
-      <div class="foot-muse-copy">
-        <span class="muse-kicker">{{ section.settings.muse_kicker }}</span>
-        <h2>{{ section.settings.muse_title }}</h2>
-        <p>{{ section.settings.muse_desc }}</p>
-      </div>
-      
-      <div class="foot-muse-form-zone">
-        <div id="museFormWrap">
-          {% form 'customer', id: 'museForm', class: 'muse-form-inline' %}
-            <input type="hidden" name="contact[tags]" value="newsletter">
-            
-            {%- if form.posted_successfully? -%}
-              <script>document.addEventListener("DOMContentLoaded", function() { showMuseSuccess(); });</script>
-            {%- else -%}
-              <input type="email" name="contact[email]" class="muse-input" id="museEmail" placeholder="Your email address" required autocomplete="email" />
-              <button type="submit" class="muse-submit">{{ section.settings.muse_btn_label }}</button>
-            {%- endif -%}
-          {% endform %}
-        </div>
-        
-        <div class="muse-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
-          <span class="muse-success-check">✦</span>
-          <p>Welcome to the inner circle.</p>
-          <small>Your 10% code is on its way to your inbox.</small>
-        </div>
-        
-        <p class="muse-disclaimer">
-          By joining, you agree to our
-          <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>. Unsubscribe anytime.
-        </p>
-      </div>
-    </div>
 
-    <!-- Right: Navigation Columns -->
-    <div class="foot-cols">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          <div class="foot-col" {{ block.shopify_attributes }}>
-            {%- if block.settings.title != blank -%}
-              <h5>{{ block.settings.title }}</h5>
-            {%- endif -%}
-            {%- if block.settings.menu != blank -%}
-              <ul>
-                {%- for link in linklists[block.settings.menu].links -%}
-                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
+  <!-- 2. Main Footer Grid -->
+  <div class="foot-main-wrap">
+    <div class="foot-grid">
+      <!-- Left: Minimalist Newsletter -->
+      <div class="foot-news-col">
+        <h3 class="foot-news-heading">{{ section.settings.muse_kicker | default: 'Sign Up to Get 10% Off Your First Order' }}</h3>
+        <p class="foot-news-desc">{{ section.settings.muse_desc | default: 'Join our inner circle for private releases, secret artisan drops, and invitations.' }}</p>
+        
+        <div class="foot-form-wrap">
+          <div id="museFormWrap">
+            {% form 'customer', id: 'museForm', class: 'foot-form-underline' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              
+              {%- if form.posted_successfully? -%}
+                <script>document.addEventListener("DOMContentLoaded", function() { showMuseSuccess(); });</script>
+              {%- else -%}
+                <input 
+                  type="email" 
+                  name="contact[email]" 
+                  class="foot-input-email" 
+                  id="museEmail" 
+                  placeholder="Enter your email address" 
+                  required 
+                  autocomplete="email"
+                  autocapitalize="off"
+                  autocorrect="off"
+                  spellcheck="false"
+                  aria-label="Email address"
+                />
+                <button type="submit" class="foot-btn-arrow" aria-label="Submit newsletter">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              {%- endif -%}
+            {% endform %}
           </div>
-        {%- endfor -%}
-      {%- else -%}
-        <!-- Default 3 columns -->
-        <div class="foot-col">
-          <h5>Lisandra World</h5>
-          <ul>
-            <li><a href="#our-story">Our Story</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-            <li><a href="#stockists">Stockists</a></li>
-          </ul>
+          
+          <div class="foot-news-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
+            <span>✦ Welcome to the inner circle.</span>
+            <small>Your 10% code is on its way to your inbox.</small>
+          </div>
+          
+          <p class="foot-privacy-note">
+            By joining, you agree to our
+            <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>. Unsubscribe anytime.
+          </p>
         </div>
-        
-        <div class="foot-col">
-          <h5>Customer Care</h5>
-          <ul>
-            <li><a href="#faqs">FAQs</a></li>
-            <li><a href="javascript:void(0)" onclick="openSizeModal()">Size Guide</a></li>
-            <li><a href="#shipping">Shipping &amp; Duties</a></li>
-            <li><a href="#returns">Returns</a></li>
-          </ul>
-        </div>
-        
-        <div class="foot-col">
-          <h5>Follow Us</h5>
-          <ul>
-            <li><a href="https://instagram.com/lisandra.thelabel" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://tiktok.com/@lisandra.thelabel" target="_blank" rel="noopener">Tiktok</a></li>
-            <li><a href="https://pinterest.com/lisandrathelabel" target="_blank" rel="noopener">Pinterest</a></li>
-          </ul>
-        </div>
-      {%- endif -%}
+      </div>
+
+      <!-- Right: Navigation Columns -->
+      <div class="foot-nav-cols">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <div class="foot-nav-col" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h5>{{ block.settings.title }}</h5>
+              {%- endif -%}
+              {%- if block.settings.menu != blank -%}
+                <ul>
+                  {%- for link in linklists[block.settings.menu].links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <!-- Default 3 Clean Columns -->
+          <div class="foot-nav-col">
+            <h5>Lisandra World</h5>
+            <ul>
+              <li><a href="#our-story">Our Story</a></li>
+              <li><a href="#artisans">Artisans &amp; Craft</a></li>
+              <li><a href="#contact">Contact Us</a></li>
+              <li><a href="#stockists">Stockists</a></li>
+            </ul>
+          </div>
+          
+          <div class="foot-nav-col">
+            <h5>Customer Care</h5>
+            <ul>
+              <li><a href="#faqs">FAQs</a></li>
+              <li><a href="javascript:void(0)" onclick="openSizeModal()">Size Guide</a></li>
+              <li><a href="#shipping">Shipping &amp; Duties</a></li>
+              <li><a href="#returns">Returns &amp; Exchanges</a></li>
+            </ul>
+          </div>
+          
+          <div class="foot-nav-col">
+            <h5>Policies</h5>
+            <ul>
+              <li><a href="{{ shop.privacy_policy.url | default: '#privacy' }}">Privacy Policy</a></li>
+              <li><a href="{{ shop.terms_of_service.url | default: '#terms' }}">Terms of Service</a></li>
+              <li><a href="{{ shop.refund_policy.url | default: '#refund' }}">Refund Policy</a></li>
+              <li><a href="#care">Garment Care</a></li>
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 
-  <!-- Footer Bottom -->
-  <div class="foot-btm">
-    <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} &middot; All Rights Reserved</span>
-    <span>Made in Bali</span>
+  <!-- 3. Bottom Row: Copyright & Horizontal Social Links -->
+  <div class="foot-bottom-wrap">
+    <div class="foot-bottom-inner">
+      <div class="foot-copy-zone">
+        <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} &middot; All Rights Reserved</span>
+        <span>&middot;</span>
+        <span>Made in Bali</span>
+      </div>
+
+      <div class="foot-social-links">
+        <a href="https://instagram.com/lisandra.thelabel" target="_blank" rel="noopener" class="foot-social-link">Instagram</a>
+        <a href="https://tiktok.com/@lisandra.thelabel" target="_blank" rel="noopener" class="foot-social-link">TikTok</a>
+        <a href="https://pinterest.com/lisandrathelabel" target="_blank" rel="noopener" class="foot-social-link">Pinterest</a>
+        <a href="mailto:care@lisandrathelabel.com" class="foot-social-link">Email Us</a>
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -614,19 +700,23 @@
 
 <script>
   function showMuseSuccess() {
-    document.getElementById("museFormWrap").style.display = "none";
-    document.getElementById("museSuccess").style.display = "flex";
+    var formWrap = document.getElementById("museFormWrap");
+    var successMsg = document.getElementById("museSuccess");
+    if (formWrap) formWrap.style.display = "none";
+    if (successMsg) successMsg.style.display = "flex";
   }
   
   function showModalSuccess() {
-    document.getElementById("modalFormWrap").style.display = "none";
-    document.getElementById("newsletterSuccessMsg").style.display = "flex";
+    var modalWrap = document.getElementById("modalFormWrap");
+    var modalSuccess = document.getElementById("newsletterSuccessMsg");
+    if (modalWrap) modalWrap.style.display = "none";
+    if (modalSuccess) modalSuccess.style.display = "flex";
     openNewsletterModal();
   }
 
   // Teaser & Modal Logic
-  const newsletterModal = document.getElementById("newsletterModal");
-  const newsletterTeaser = document.getElementById("newsletterTeaser");
+  var newsletterModal = document.getElementById("newsletterModal");
+  var newsletterTeaser = document.getElementById("newsletterTeaser");
 
   function openNewsletterModal() {
     if (newsletterModal) {
@@ -652,22 +742,19 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Check if dismissed
+  document.addEventListener("DOMContentLoaded", function() {
     if (localStorage.getItem("lisandra_newsletter_dismissed") === "true") {
       if (newsletterTeaser) newsletterTeaser.classList.add("hidden");
     } else {
-      // Show teaser after 3 seconds
-      setTimeout(() => {
+      setTimeout(function() {
         if (newsletterTeaser) newsletterTeaser.classList.remove("hidden");
       }, 3000);
     }
   });
 
-  // Close modal when clicking backdrop
   if (newsletterModal) {
-    newsletterModal.addEventListener("click", (e) => {
-      const dialogDimensions = newsletterModal.getBoundingClientRect();
+    newsletterModal.addEventListener("click", function(e) {
+      var dialogDimensions = newsletterModal.getBoundingClientRect();
       if (
         e.clientX < dialogDimensions.left ||
         e.clientX > dialogDimensions.right ||
@@ -684,6 +771,7 @@
 {
   "name": "Footer & Newsletter",
   "settings": [
+
     {
       "type": "header",
       "content": "Footer Newsletter Zone"
@@ -691,41 +779,14 @@
     {
       "type": "text",
       "id": "muse_kicker",
-      "label": "Kicker",
-      "default": "Become a Muse"
-    },
-    {
-      "type": "textarea",
-      "id": "muse_title",
-      "label": "Title",
-      "default": "Your first piece,<br />with 10% off."
+      "label": "Newsletter Heading",
+      "default": "Sign Up to Get 10% Off Your First Order"
     },
     {
       "type": "textarea",
       "id": "muse_desc",
       "label": "Description",
-      "default": "Join our inner circle for private releases, secret drops, and 10% off your first artisanal piece."
-    },
-    {
-      "type": "text",
-      "id": "muse_btn_label",
-      "label": "Button Label",
-      "default": "Claim 10% Off"
-    },
-    {
-      "type": "header",
-      "content": "Footer Lower Zone"
-    },
-    {
-      "type": "image_picker",
-      "id": "logo",
-      "label": "Footer Logo (White)"
-    },
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Footer Menu",
-      "default": "footer"
+      "default": "Join our inner circle for private releases, secret artisan drops, and invitations."
     },
     {
       "type": "header",
