@@ -155,33 +155,59 @@
     text-align: center;
   }
   .foot-logo {
-    height: 90px;
+    height: 75px;
     width: auto;
-    margin: -25px auto 16px;
+    margin: -15px auto -5px;
     display: block;
     object-fit: contain;
   }
-  .foot-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: clamp(16px, 3vw, 32px);
-    margin-bottom: 22px;
+  .foot-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 860px;
+    margin: 16px auto 36px;
+    text-align: left;
+    gap: clamp(24px, 4vw, 48px);
   }
-  .foot-nav a {
-    font-size: 10.5px;
+  @media (max-width: 768px) {
+    .foot-cols {
+      grid-template-columns: 1fr;
+      text-align: left;
+      gap: 26px;
+      max-width: 480px;
+      margin: 14px auto 30px;
+    }
+  }
+  .foot-col h5, .foot-col h4 {
+    font-family: var(--body, sans-serif);
+    font-size: 13.5px;
     font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #eee6d9;
-    text-decoration: none;
+    color: #f8f8f0;
+    margin: 0 0 14px 0;
+    letter-spacing: 0.02em;
   }
-  .foot-nav a:hover {
+  .foot-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .foot-col ul li a {
+    font-family: var(--body, sans-serif);
+    font-size: 12.5px;
+    color: rgba(238, 230, 217, 0.75);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .foot-col ul li a:hover {
+    color: #ffffff;
     text-decoration: underline;
   }
   .foot-btm {
     border-top: 1px solid rgba(248, 248, 240, 0.1);
-    padding-top: 14px;
+    padding-top: 18px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -460,7 +486,7 @@
     </div>
   </div>
 
-  <!-- Footer lower zone: logo, nav, copyright -->
+  <!-- Footer lower zone: logo, nav columns, copyright -->
   <div class="foot-lower">
     {%- if section.settings.logo != blank -%}
       <img class="foot-logo" src="{{ section.settings.logo | img_url: '400x' }}" alt="{{ shop.name }}" loading="lazy" />
@@ -468,11 +494,53 @@
       <h2 style="font-family: var(--display); color: #fff; margin-bottom: 24px;">{{ shop.name }}</h2>
     {%- endif -%}
     
-    <nav class="foot-nav" aria-label="Footer">
-      {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {%- endfor -%}
-    </nav>
+    <div class="foot-cols">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="foot-col" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <h5>{{ block.settings.title }}</h5>
+            {%- endif -%}
+            {%- if block.settings.menu != blank -%}
+              <ul>
+                {%- for link in linklists[block.settings.menu].links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <!-- Default 3 columns from Ref 2 -->
+        <div class="foot-col">
+          <h5>Lisandra World</h5>
+          <ul>
+            <li><a href="#our-story">Our Story</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#stockists">Stockists</a></li>
+          </ul>
+        </div>
+        
+        <div class="foot-col">
+          <h5>Customer Care</h5>
+          <ul>
+            <li><a href="#faqs">FAQs</a></li>
+            <li><a href="javascript:void(0)" onclick="openSizeModal()">Size Guide</a></li>
+            <li><a href="#shipping">Shipping &amp; Duties</a></li>
+            <li><a href="#returns">Returns</a></li>
+          </ul>
+        </div>
+        
+        <div class="foot-col">
+          <h5>Follow Us</h5>
+          <ul>
+            <li><a href="https://instagram.com/lisandra.thelabel" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://tiktok.com/@lisandra.thelabel" target="_blank" rel="noopener">Tiktok</a></li>
+            <li><a href="https://pinterest.com/lisandrathelabel" target="_blank" rel="noopener">Pinterest</a></li>
+          </ul>
+        </div>
+      {%- endif -%}
+    </div>
     
     <div class="foot-btm">
       <span>&copy; {{ 'now' | date: "%Y" }} {{ shop.name }} &middot; Made in Bali</span>
@@ -684,6 +752,25 @@
       "id": "modal_btn_label",
       "label": "Modal Button",
       "default": "Unlock Offer"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column Heading",
+          "default": "Lisandra World"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
     }
   ],
   "presets": [
