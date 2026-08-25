@@ -367,6 +367,7 @@
             {%- assign link_url = '/pages/collections' -%}
           {%- endif -%}
           {%- if link.title == 'Our Story' or link.title == 'OUR STORY' -%}
+            {%- assign link_url = '/pages/our-story' -%}
             <a href="/pages/collections">Collections</a>
           {%- endif -%}
           <a href="{{ link_url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>
@@ -436,6 +437,7 @@
           {%- assign link_url = '/pages/collections' -%}
         {%- endif -%}
         {%- if link.title == 'Our Story' or link.title == 'OUR STORY' -%}
+          {%- assign link_url = '/pages/our-story' -%}
           <a href="/pages/collections">Collections</a>
         {%- endif -%}
         <a href="{{ link_url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>

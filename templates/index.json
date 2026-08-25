@@ -52,7 +52,7 @@
         "btn1_label": "Shop the collection",
         "btn1_link": "/pages/collections",
         "btn2_label": "See how it's made",
-        "btn2_link": "#brand-essence"
+        "btn2_link": "/pages/our-story"
       }
     },
     "signature_spotlight": {
