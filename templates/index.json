@@ -71,7 +71,7 @@
       "type": "best-sellers-custom",
       "settings": {
         "title": "BEST SELLERS",
-        "subtitle": "Ranked by what actually leaves first.",
+        "subtitle": "",
         "link_label": "View all",
         "link_url": "",
         "collection": "best-sellers",

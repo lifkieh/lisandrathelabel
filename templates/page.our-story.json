@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "story_manifesto": {
+      "type": "story-manifesto",
+      "settings": {
+        "kicker": "About Us",
+        "headline": "Lisandra The Label was born in Bali, an island where the sea, the craft, and the slow pulse of the day shape everything we make.",
+        "paragraph_1": "Every piece is hand-knitted or crocheted in small batches by local artisans in Bali. We design for the woman who treats getting dressed as a quiet ritual, one that is thoughtful, sensual, and intentional. Each piece is made to be cherished well beyond a single season.",
+        "paragraph_2": "Lisandra is what you wear when you want to feel feminine, effortless, magnetic. Not just clothing, but something you step into. Silhouettes that sculpt softly, move with you, and let you glow.",
+        "paragraph_3": "Every order ships in a reusable tote, no plastic. We work in small batches by design: quantities are limited, and a restock may take a while, or it may not come at all. That's the trade-off for pieces made by hand, one artisan at a time.",
+        "footer_tag": "Handcrafted in Bali with intention"
+      }
+    }
+  },
+  "order": [
+    "story_manifesto"
+  ]
+}

@@ -1,0 +1,171 @@
+<style>
+  .story-manifesto-{{ section.id }} {
+    background: var(--paper, #f8f8f0);
+    padding: clamp(60px, 10vw, 120px) clamp(20px, 4vw, 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .story-manifesto-inner-{{ section.id }} {
+    max-width: 62ch;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .story-manifesto-{{ section.id }} .story-eyebrow {
+    color: var(--clay, #8a5a44);
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .story-manifesto-{{ section.id }} h1,
+  .story-manifesto-{{ section.id }} h2 {
+    font-family: var(--display2, "Bodoni Moda", serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 3.4vw, 38px);
+    margin: 0 0 36px;
+    line-height: 1.35;
+    color: var(--cocoa, #392319);
+    letter-spacing: -0.01em;
+  }
+  .story-manifesto-{{ section.id }} .story-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--line, #d9cfa9);
+    margin: 0 auto 36px;
+  }
+  .story-manifesto-{{ section.id }} .story-body {
+    text-align: left;
+  }
+  .story-manifesto-{{ section.id }} .story-body p {
+    margin: 0 0 22px;
+    color: #4a382e;
+    font-size: clamp(14px, 1.35vw, 16px);
+    line-height: 1.85;
+    font-family: var(--ui, "Inter", sans-serif);
+    letter-spacing: 0.01em;
+  }
+  .story-manifesto-{{ section.id }} .story-body p:last-child {
+    margin-bottom: 0;
+  }
+  .story-manifesto-{{ section.id }} .story-footer-tag {
+    margin-top: 48px;
+    text-align: center;
+    font-family: var(--display2, "Bodoni Moda", serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--clay, #8a5a44);
+    letter-spacing: 0.04em;
+  }
+
+  /* Scroll Reveal Animation */
+  .story-manifesto-{{ section.id }}.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .story-manifesto-{{ section.id }}.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<section class="story-manifesto-{{ section.id }} reveal">
+  <div class="story-manifesto-inner-{{ section.id }}">
+    {%- if section.settings.kicker != blank -%}
+      <span class="story-eyebrow">{{ section.settings.kicker }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.headline != blank -%}
+      <h2>{{ section.settings.headline }}</h2>
+    {%- endif -%}
+
+    <div class="story-divider"></div>
+
+    <div class="story-body">
+      {%- if section.settings.paragraph_1 != blank -%}
+        <p>{{ section.settings.paragraph_1 }}</p>
+      {%- endif -%}
+      {%- if section.settings.paragraph_2 != blank -%}
+        <p>{{ section.settings.paragraph_2 }}</p>
+      {%- endif -%}
+      {%- if section.settings.paragraph_3 != blank -%}
+        <p>{{ section.settings.paragraph_3 }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.footer_tag != blank -%}
+      <div class="story-footer-tag">— {{ section.settings.footer_tag }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -20px 0px" });
+
+    const el = document.querySelector('.story-manifesto-{{ section.id }}');
+    if (el) observer.observe(el);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Story Manifesto",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker / Eyebrow",
+      "default": "About Us"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Headline Statement",
+      "default": "Lisandra The Label was born in Bali, an island where the sea, the craft, and the slow pulse of the day shape everything we make."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1",
+      "default": "Every piece is hand-knitted or crocheted in small batches by local artisans in Bali. We design for the woman who treats getting dressed as a quiet ritual, one that is thoughtful, sensual, and intentional. Each piece is made to be cherished well beyond a single season."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2",
+      "default": "Lisandra is what you wear when you want to feel feminine, effortless, magnetic. Not just clothing, but something you step into. Silhouettes that sculpt softly, move with you, and let you glow."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_3",
+      "label": "Paragraph 3",
+      "default": "Every order ships in a reusable tote, no plastic. We work in small batches by design: quantities are limited, and a restock may take a while, or it may not come at all. That's the trade-off for pieces made by hand, one artisan at a time."
+    },
+    {
+      "type": "text",
+      "id": "footer_tag",
+      "label": "Footer Sign-off",
+      "default": "Made in Bali with intention"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story Manifesto"
+    }
+  ]
+}
+{% endschema %}
