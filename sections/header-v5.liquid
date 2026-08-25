@@ -1,6 +1,6 @@
 {%- liquid
   assign transparent = section.settings.transparent_on_home
-  if template.name != 'index'
+  if template.name != 'index' and template.suffix != 'collections'
     assign transparent = false
   endif
   assign nav_menu = section.settings.menu | default: linklists['main-menu']
@@ -362,13 +362,20 @@
     <div class="nav-links-v5">
       {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
         {%- for link in nav_menu.links -%}
-          <a href="{{ link.url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>
+          {%- assign link_url = link.url -%}
+          {%- if link.title == 'Collections' or link.title == 'COLLECTIONS' -%}
+            {%- assign link_url = '/pages/collections' -%}
+          {%- endif -%}
+          {%- if link.title == 'Our Story' or link.title == 'OUR STORY' -%}
+            <a href="/pages/collections">Collections</a>
+          {%- endif -%}
+          <a href="{{ link_url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>
         {%- endfor -%}
       {%- else -%}
         <a href="{{ routes.all_products_collection_url }}">New Arrivals</a>
         <a href="{{ routes.all_products_collection_url }}">Shop</a>
         <a href="{{ routes.all_products_collection_url }}" class="sale">Sale</a>
-        <a href="{{ routes.collections_url }}">Collections</a>
+        <a href="/pages/collections">Collections</a>
         <a href="/pages/our-story">Our Story</a>
       {%- endif -%}
     </div>
@@ -424,13 +431,20 @@
   <nav class="mobile-nav-v5">
     {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
       {%- for link in nav_menu.links -%}
-        <a href="{{ link.url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>
+        {%- assign link_url = link.url -%}
+        {%- if link.title == 'Collections' or link.title == 'COLLECTIONS' -%}
+          {%- assign link_url = '/pages/collections' -%}
+        {%- endif -%}
+        {%- if link.title == 'Our Story' or link.title == 'OUR STORY' -%}
+          <a href="/pages/collections">Collections</a>
+        {%- endif -%}
+        <a href="{{ link_url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>
       {%- endfor -%}
     {%- else -%}
       <a href="{{ routes.all_products_collection_url }}">New Arrivals</a>
       <a href="{{ routes.all_products_collection_url }}">Shop</a>
       <a href="{{ routes.all_products_collection_url }}" class="sale">Sale</a>
-      <a href="{{ routes.collections_url }}">Collections</a>
+      <a href="/pages/collections">Collections</a>
       <a href="/pages/our-story">Our Story</a>
     {%- endif -%}
   </nav>

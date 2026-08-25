@@ -1,11 +1,20 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "campaign-hero": {
       "type": "campaign-hero",
       "settings": {
         "kicker": "New Collection",
-        "heading": "New Collection / Resort '26",
-        "height": "ratio"
+        "heading": "???",
+        "height": "full"
       }
     },
     "editorial-rows": {
@@ -14,6 +23,7 @@
         "row_1": {
           "type": "row",
           "settings": {
+            "image": "shopify://shop_images/2_34953080-8e76-4225-b7d0-3a776f32c85e.jpg",
             "text": "\"Made for the woman who moves between the water, the sand, and the dinner table without ever changing who she is.\"",
             "layout": "image_left"
           }
@@ -21,6 +31,7 @@
         "row_2": {
           "type": "row",
           "settings": {
+            "image": "shopify://shop_images/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg",
             "text": "\"Twelve pieces at a time, hand-knit by artisans we know by name. When it's gone, the next batch takes its own time.\"",
             "layout": "image_right"
           }
@@ -29,22 +40,35 @@
       "block_order": [
         "row_1",
         "row_2"
-      ]
+      ],
+      "settings": {}
     },
     "collection-shop-strip": {
       "type": "collection-shop-strip",
       "blocks": {
         "prod_1": {
-          "type": "product"
+          "type": "product",
+          "settings": {
+            "product": "zaye-dress"
+          }
         },
         "prod_2": {
-          "type": "product"
+          "type": "product",
+          "settings": {
+            "product": "tala-top"
+          }
         },
         "prod_3": {
-          "type": "product"
+          "type": "product",
+          "settings": {
+            "product": "amara-top"
+          }
         },
         "prod_4": {
-          "type": "product"
+          "type": "product",
+          "settings": {
+            "product": "kayu-bikini-set"
+          }
         }
       },
       "block_order": [
@@ -52,7 +76,8 @@
         "prod_2",
         "prod_3",
         "prod_4"
-      ]
+      ],
+      "settings": {}
     }
   },
   "order": [

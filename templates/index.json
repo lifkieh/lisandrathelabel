@@ -50,7 +50,7 @@
         "title": "Handmade Resortwear\nMade by Balinese Artisans",
         "text": "",
         "btn1_label": "Shop the collection",
-        "btn1_link": "shopify://collections/all",
+        "btn1_link": "/pages/collections",
         "btn2_label": "See how it's made",
         "btn2_link": "#brand-essence"
       }

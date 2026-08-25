@@ -2,7 +2,7 @@
   /* ---------- collection / campaign page (ref: Faithfull "Costa Brava") ---------- */
   .campaign-hero-{{ section.id }} {
     {% if section.settings.height == 'full' %}
-      height: 100vh;
+      height: calc(100vh - 31px);
       min-height: 600px;
     {% else %}
       aspect-ratio: 16/9;
@@ -17,52 +17,61 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    animation: kenBurnsHero 25s ease-out forwards;
+  }
+  @keyframes kenBurnsHero {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
   }
   .campaign-hero-{{ section.id }}::after {
     content: "";
     position: absolute;
     inset: 0;
-    /* Soft gradient overlay to make text readable */
+    /* Radial + linear gradient overlay to guarantee text readability & seamless top header transition */
     background: linear-gradient(
-      to top,
-      rgba(20, 12, 8, 0.4) 0%,
-      rgba(20, 12, 8, 0.1) 30%,
-      transparent 100%
+      to bottom,
+      rgba(20, 12, 8, 0.3) 0%,
+      transparent 25%,
+      transparent 60%,
+      rgba(20, 12, 8, 0.5) 100%
     );
   }
   .campaign-hero-{{ section.id }} .cap {
     position: absolute;
-    left: clamp(14px, 3vw, 40px);
-    bottom: clamp(14px, 3vw, 40px);
+    left: clamp(16px, 4vw, 48px);
+    bottom: clamp(20px, 4vw, 48px);
     color: #fff;
-    max-width: 40ch;
+    max-width: 44ch;
     z-index: 2;
   }
   .campaign-hero-{{ section.id }} .cap .lbl {
+    font-family: var(--ui, "Inter", sans-serif);
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    opacity: 0.85;
+    color: rgba(255, 255, 255, 0.9);
     display: block;
     margin-bottom: 8px;
   }
   .campaign-hero-{{ section.id }} .cap h2 {
-    font-family: var(--display2, serif);
+    font-family: var(--heading, "Bodoni Moda", serif);
     font-style: italic;
     font-weight: 400;
-    font-size: clamp(28px, 4vw, 44px);
+    font-size: clamp(30px, 4.5vw, 52px);
     margin: 0;
-    line-height: 1.1;
+    line-height: 1.08;
     color: #fff;
   }
   
   @media (max-width: 768px) {
     .campaign-hero-{{ section.id }} {
       {% if section.settings.height == 'full' %}
-        height: 100vh;
+        height: 85vh;
+        min-height: 520px;
       {% else %}
         aspect-ratio: 3/4;
       {% endif %}
+      margin-top: -69px;
     }
   }
 </style>
@@ -85,7 +94,7 @@
   {%- endif -%}
   <div class="cap">
     {%- if section.settings.kicker != blank -%}
-      <span class="lbl" style="color: #fff">{{ section.settings.kicker }}</span>
+      <span class="lbl">{{ section.settings.kicker }}</span>
     {%- endif -%}
     {%- if section.settings.heading != blank -%}
       <h2>{{ section.settings.heading }}</h2>
@@ -94,55 +103,19 @@
 </div>
 
 <script>
-  // Script untuk mengatur header menjadi transparan saat menggunakan hero image full-bleed
+  // Script untuk mengatur header v5 menjadi transparan saat berada di posisi paling atas hero full-bleed
   document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector('header');
-    const hdrIn = document.querySelector('.hdr-in');
-    if (header && hdrIn) {
-      // Force transparent header styles on load
-      header.classList.add('transparent-on-top');
-      hdrIn.style.background = 'transparent';
-      hdrIn.style.borderBottomColor = 'transparent';
-      
-      const elements = hdrIn.querySelectorAll('.mainnav a, .hdr-actions svg, .hdr-actions a, .logo-text');
-      elements.forEach(el => {
-        el.style.color = '#fff';
-        if(el.tagName === 'svg') el.style.stroke = '#fff';
-      });
-
-      // Handle logo swap if SVG/image logo is used
-      const logoImg = hdrIn.querySelector('.logo-img');
-      if (logoImg) {
-        logoImg.style.filter = 'invert(1) brightness(2)';
-      }
-      
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          header.classList.remove('transparent-on-top');
-          hdrIn.style.background = 'rgba(248, 248, 240, 0.9)';
-          hdrIn.style.borderBottomColor = 'rgba(57, 35, 25, 0.08)';
-          
-          elements.forEach(el => {
-            el.style.color = '';
-            if(el.tagName === 'svg') el.style.stroke = '';
-          });
-          if (logoImg) {
-            logoImg.style.filter = '';
-          }
+    const siteHeader = document.getElementById('siteHeader') || document.querySelector('.hdr-v5');
+    if (siteHeader) {
+      function checkHeaderTransparency() {
+        if (window.scrollY < 50) {
+          siteHeader.classList.add('is-transparent');
         } else {
-          header.classList.add('transparent-on-top');
-          hdrIn.style.background = 'transparent';
-          hdrIn.style.borderBottomColor = 'transparent';
-          
-          elements.forEach(el => {
-            el.style.color = '#fff';
-            if(el.tagName === 'svg') el.style.stroke = '#fff';
-          });
-          if (logoImg) {
-            logoImg.style.filter = 'invert(1) brightness(2)';
-          }
+          siteHeader.classList.remove('is-transparent');
         }
-      });
+      }
+      checkHeaderTransparency();
+      window.addEventListener('scroll', checkHeaderTransparency);
     }
   });
 </script>
@@ -182,12 +155,15 @@
           "label": "Widescreen (16:9)"
         }
       ],
-      "default": "ratio"
+      "default": "full"
     }
   ],
   "presets": [
     {
-      "name": "Campaign Hero"
+      "name": "Campaign Hero",
+      "settings": {
+        "height": "full"
+      }
     }
   ]
 }
