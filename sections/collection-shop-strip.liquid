@@ -1,0 +1,184 @@
+<style>
+  .shop-strip-{{ section.id }} {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(8px, 1.2vw, 16px);
+    padding: clamp(24px, 4vw, 44px) clamp(14px, 2vw, 26px);
+    background: var(--paper, #f8f8f0);
+  }
+  
+  @media (max-width: 900px) {
+    .shop-strip-{{ section.id }} {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .shop-strip-{{ section.id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 24px 14px;
+    }
+  }
+
+  /* Kartu Produk untuk Shop Strip (Sesuai dengan styling kartu V5 terbaru) */
+  .shop-strip-{{ section.id }} .card {
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .shop-strip-{{ section.id }} .card figure {
+    position: relative;
+    margin: 0 0 12px;
+    aspect-ratio: 3/4;
+    background: var(--sand, #e0d9b5);
+    overflow: hidden;
+  }
+  .shop-strip-{{ section.id }} .card figure img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.35s ease;
+  }
+  .shop-strip-{{ section.id }} .card figure img.hover-img {
+    opacity: 0;
+  }
+  .shop-strip-{{ section.id }} .card:hover figure img.hover-img {
+    opacity: 1;
+  }
+  .shop-strip-{{ section.id }} .card-info {
+    display: flex;
+    flex-direction: column;
+    padding: 0 4px;
+  }
+  .shop-strip-{{ section.id }} .card h4 {
+    margin: 0 0 3px 0;
+    font-family: var(--body, sans-serif);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--cocoa, #392319);
+  }
+  .shop-strip-{{ section.id }} .price {
+    margin: 0;
+    font-family: var(--body, sans-serif);
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(57, 35, 25, 0.65); /* Muted price */
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* Quick Add Button overlay */
+  .shop-strip-{{ section.id }} .quick-add-btn {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background: rgba(248, 248, 240, 0.95);
+    color: var(--cocoa, #392319);
+    border: 1px solid rgba(57, 35, 25, 0.1);
+    padding: 10px;
+    text-align: center;
+    font-family: var(--body, sans-serif);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .shop-strip-{{ section.id }} .card:hover .quick-add-btn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .shop-strip-{{ section.id }} .quick-add-btn:hover {
+    background: var(--cocoa, #392319);
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .shop-strip-{{ section.id }} .quick-add-btn {
+      display: none; /* Hide on mobile for simpler UI or replace with tap logic */
+    }
+  }
+</style>
+
+<div class="shop-strip-{{ section.id }}">
+  {%- for block in section.blocks -%}
+    {%- assign product = block.settings.product -%}
+    <article class="card" {{ block.shopify_attributes }}>
+      <a href="{{ product.url | default: '#' }}" class="card-link" style="text-decoration: none; color: inherit;">
+        <figure>
+          {%- if product != blank and product.featured_media -%}
+            <img 
+              src="{{ product.featured_media | img_url: '600x' }}" 
+              alt="{{ product.featured_media.alt | escape }}" 
+              class="main-img"
+              loading="lazy"
+            />
+            {%- if product.media[1] != blank -%}
+              <img 
+                src="{{ product.media[1] | img_url: '600x' }}" 
+                alt="{{ product.media[1].alt | escape }}" 
+                class="hover-img"
+                loading="lazy"
+              />
+            {%- endif -%}
+          {%- else -%}
+            <img src="https://cdn.shopify.com/s/images/themes/product-{{ forloop.index | modulo: 6 | plus: 1 }}.png" alt="Placeholder" class="main-img" loading="lazy" />
+          {%- endif -%}
+          
+          <button class="quick-add-btn">Quick Add</button>
+        </figure>
+        
+        <div class="card-info">
+          <h4>{{ product.title | default: 'Campaign Featured Piece' }}</h4>
+          <p class="price">
+            {%- if product != blank -%}
+              {{ product.price | money }}
+            {%- else -%}
+              Rp 1.499.000
+            {%- endif -%}
+          </p>
+        </div>
+      </a>
+    </article>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Shop Strip",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Shop Strip",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}
