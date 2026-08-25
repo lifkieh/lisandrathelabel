@@ -61,8 +61,8 @@
         "image": "shopify://shop_images/Untitled_design-17.jpg",
         "layout": "image_left",
         "kicker": "The Signature",
-        "title": "Two days on the needles, then it skims wherever you happen to have curves.",
-        "text": "The Zaye Knit Maxi Dress, open back, adjustable straps, made by one artisan at a time.",
+        "title": "Two days on the needles. Made slowly, worn effortlessly.",
+        "text": "The Zaye Knit Maxi Dress. Hand-knitted in Bali over two days, with an open back, adjustable straps and natural bead detailing.",
         "btn_label": "Shop the Zaye Dress",
         "btn_link": "shopify://products/zaye-dress"
       }
@@ -93,20 +93,10 @@
     "sustainability_strip": {
       "type": "sustainability-strip",
       "blocks": {
-        "val_1": {
-          "type": "value",
-          "settings": {
-            "icon": "tote",
-            "kicker": "01 · Packaging",
-            "title": "Reusable Tote Packaging",
-            "text": "No plastic. Every order ships in a custom tote you can keep and reuse."
-          }
-        },
         "val_2": {
           "type": "value",
           "settings": {
             "icon": "batch",
-            "kicker": "02 · Production",
             "title": "Limited Quantities",
             "text": "We produce in small batches, keeping each collection considered and avoiding unnecessary excess."
           }
@@ -115,9 +105,16 @@
           "type": "value",
           "settings": {
             "icon": "handmade",
-            "kicker": "03 · Artisans",
             "title": "All Handmade in Bali",
             "text": "Every piece is handmade by Balinese artisans in their own homes, slowly and with care."
+          }
+        },
+        "val_1": {
+          "type": "value",
+          "settings": {
+            "icon": "tote",
+            "title": "Reusable Tote Packaging",
+            "text": "No plastic. Every order ships in a custom tote you can keep and reuse."
           }
         }
       },
@@ -126,9 +123,7 @@
         "val_3",
         "val_1"
       ],
-      "settings": {
-        "section_kicker": "Our Commitment to Slow Fashion"
-      }
+      "settings": {}
     },
     "editorial_rows": {
       "type": "editorial-rows",
@@ -252,10 +247,7 @@
       "disabled": true,
       "settings": {
         "muse_kicker": "Become a Muse",
-        "muse_title": "Your first piece,<br>with 10% off.",
         "muse_desc": "Join our inner circle for private releases, secret drops, and 10% off your first artisanal piece.",
-        "muse_btn_label": "Claim 10% Off",
-        "menu": "footer",
         "teaser_text": "✦ 10% off your first piece",
         "modal_kicker": "Exclusive Welcome",
         "modal_title": "Unlock 10% Off",

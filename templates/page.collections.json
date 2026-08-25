@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "campaign-hero": {
+      "type": "campaign-hero",
+      "settings": {
+        "kicker": "New Collection",
+        "heading": "New Collection / Resort '26",
+        "height": "ratio"
+      }
+    },
+    "editorial-rows": {
+      "type": "editorial-rows",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "text": "\"Made for the woman who moves between the water, the sand, and the dinner table without ever changing who she is.\"",
+            "layout": "image_left"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "text": "\"Twelve pieces at a time, hand-knit by artisans we know by name. When it's gone, the next batch takes its own time.\"",
+            "layout": "image_right"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2"
+      ]
+    },
+    "collection-shop-strip": {
+      "type": "collection-shop-strip",
+      "blocks": {
+        "prod_1": {
+          "type": "product"
+        },
+        "prod_2": {
+          "type": "product"
+        },
+        "prod_3": {
+          "type": "product"
+        },
+        "prod_4": {
+          "type": "product"
+        }
+      },
+      "block_order": [
+        "prod_1",
+        "prod_2",
+        "prod_3",
+        "prod_4"
+      ]
+    }
+  },
+  "order": [
+    "campaign-hero",
+    "editorial-rows",
+    "collection-shop-strip"
+  ]
+}
