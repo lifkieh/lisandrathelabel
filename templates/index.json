@@ -174,85 +174,10 @@
     },
     "social_feed": {
       "type": "social-feed",
-      "blocks": {
-        "post_1": {
-          "type": "post",
-          "settings": {
-            "image_1": "shopify://shop_images/A_softer_kind_of_summer_Aruna_set_as_seen_on_savannahmarai.jpg",
-            "caption": "A softer kind of summer 🧡\nAruna set as seen on @savannahmarai",
-            "location": "",
-            "product_list": [
-              "aruna-top",
-              "for-aruna-skirt"
-            ],
-            "url": "https://www.instagram.com/p/DcQsFCAvSBw/"
-          }
-        },
-        "post_2": {
-          "type": "post",
-          "settings": {
-            "video": "shopify://files/videos/The Alana Dress. Made to move with you, from day to night..mp4",
-            "caption": "The Alana Dress. Made to move with you, from day to night.",
-            "location": "",
-            "product_list": [
-              "alana-dress"
-            ],
-            "url": "https://www.instagram.com/p/DcLlDu2PL83/"
-          }
-        },
-        "post_3": {
-          "type": "post",
-          "settings": {
-            "image_1": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain..jpg",
-            "image_2": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain._1.jpg",
-            "image_3": "shopify://shop_images/The_Orla_Bikini_worn_by_lanariel__Just_a_few_pieces_remain._2.jpg",
-            "caption": "The Orla Bikini, worn by @lanariel_ 🥥 Just a few pieces remain.",
-            "location": "",
-            "product_list": [
-              "orla-bikini-bottom",
-              "orla-bikini-top"
-            ],
-            "url": "https://www.instagram.com/p/DcF6779DMCT/?img_index=1"
-          }
-        },
-        "post_4": {
-          "type": "post",
-          "settings": {
-            "image_1": "shopify://shop_images/In_the_world_of_Lisandra..jpg",
-            "image_2": "shopify://shop_images/In_the_world_of_Lisandra._3.jpg",
-            "image_3": "shopify://shop_images/In_the_world_of_Lisandra._1.jpg",
-            "image_4": "shopify://shop_images/In_the_world_of_Lisandra._4.jpg",
-            "image_5": "shopify://shop_images/In_the_world_of_Lisandra._2.jpg",
-            "caption": "In the world of Lisandra.",
-            "location": "",
-            "product_list": [],
-            "url": "https://www.instagram.com/p/Db-sDjElD4l/?img_index=1"
-          }
-        }
-      },
-      "block_order": [
-        "post_1",
-        "post_2",
-        "post_3",
-        "post_4"
-      ],
       "settings": {
         "title": "Follow us on social",
         "handle": "@lisandra.thelabel",
         "url": ""
-      }
-    },
-    "muse_newsletter_footer": {
-      "type": "muse-newsletter-footer",
-      "disabled": true,
-      "settings": {
-        "muse_kicker": "Become a Muse",
-        "muse_desc": "Join our inner circle for private releases, secret drops, and 10% off your first artisanal piece.",
-        "teaser_text": "✦ 10% off your first piece",
-        "modal_kicker": "Exclusive Welcome",
-        "modal_title": "Unlock 10% Off",
-        "modal_desc": "Join the Lisandra inner circle to receive 10% off your first artisanal piece, plus early access to secret drops.",
-        "modal_btn_label": "Unlock Offer"
       }
     }
   },
@@ -264,7 +189,6 @@
     "sustainability_strip",
     "editorial_rows",
     "customer_reviews",
-    "social_feed",
-    "muse_newsletter_footer"
+    "social_feed"
   ]
 }
