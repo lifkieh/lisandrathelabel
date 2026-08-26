@@ -35,17 +35,23 @@
         "shipping_returns_text": "<p>Free shipping across Indonesia. Worldwide free over USD 200. Ships in 1–2 business days in a reusable tote, no plastic. 14-day returns on unworn pieces.</p>"
       }
     },
-    "recommendations": {
-      "type": "product-recommendations-custom",
+    "ugc": {
+      "type": "ugc-shoppable-v5",
       "settings": {
-        "kicker": "Curated Recommendations",
-        "title": "You May Also Like",
-        "product_list": []
+        "heading": "As Styled By You"
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations-v5",
+      "settings": {
+        "heading": "You May Also Like",
+        "limit": 4
       }
     }
   },
   "order": [
     "main",
+    "ugc",
     "recommendations"
   ]
 }

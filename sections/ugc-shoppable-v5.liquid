@@ -1,0 +1,433 @@
+{%- comment -%}
+  UGC Shoppable V5 (As Styled By You)
+  Reads from product.metafields.custom.as_styled_by_you.value (List of Metaobjects)
+  Metaobject expected fields:
+    - image (file_reference)
+    - tagged_product (product_reference)
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign ugc_looks = product.metafields.custom.as_styled_by_you.value
+  assign has_ugc = false
+  if ugc_looks != blank and ugc_looks.count > 0
+    assign has_ugc = true
+  endif
+-%}
+
+{%- if has_ugc -%}
+<style>
+  .v5-ugc-{{ sid }} {
+    padding: 60px 0 60px 16px; /* Right padding handled by scroll area */
+    border-top: 1px solid rgba(57, 35, 25, 0.12);
+    overflow: hidden;
+  }
+  .v5-ugc-heading-{{ sid }} {
+    font-family: var(--font-heading--family, 'Bodoni Moda', serif);
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 400;
+    font-style: italic;
+    color: #392319;
+    margin: 0 0 30px;
+    letter-spacing: 0.02em;
+    padding-right: 16px;
+  }
+  .v5-ugc-carousel-{{ sid }} {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    padding-right: 16px;
+  }
+  .v5-ugc-carousel-{{ sid }}::-webkit-scrollbar {
+    display: none;
+  }
+  .v5-ugc-item-{{ sid }} {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    position: relative;
+    aspect-ratio: 4/5;
+    cursor: pointer;
+    overflow: hidden;
+    background: #f4f0eb;
+  }
+  .v5-ugc-item-{{ sid }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .v5-ugc-item-{{ sid }}:hover img {
+    transform: scale(1.03);
+  }
+  .v5-ugc-overlay-{{ sid }} {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 12, 8, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .v5-ugc-item-{{ sid }}:hover .v5-ugc-overlay-{{ sid }} {
+    opacity: 1;
+  }
+  .v5-ugc-btn-{{ sid }} {
+    background: #fff;
+    color: #392319;
+    padding: 10px 16px;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: none;
+    pointer-events: none; /* Let click pass to item */
+  }
+
+  /* ========== MODAL STYLES ========== */
+  .v5-ugc-modal-overlay-{{ sid }} {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 12, 8, 0.6);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+  .v5-ugc-modal-overlay-{{ sid }}.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .v5-ugc-modal-{{ sid }} {
+    background: #f8f8f0;
+    width: 900px;
+    max-width: 95%;
+    max-height: 90vh;
+    display: flex;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  }
+  .v5-ugc-modal-overlay-{{ sid }}.is-open .v5-ugc-modal-{{ sid }} {
+    transform: translateY(0);
+  }
+  .v5-ugc-modal-close-{{ sid }} {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #392319;
+    cursor: pointer;
+    z-index: 10;
+    padding: 5px;
+  }
+  .v5-ugc-modal-left-{{ sid }} {
+    flex: 1;
+    background: #f4f0eb;
+    display: flex;
+  }
+  .v5-ugc-modal-left-{{ sid }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 90vh;
+  }
+  .v5-ugc-modal-right-{{ sid }} {
+    flex: 0 0 380px;
+    padding: 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .v5-ugc-modal-subtitle-{{ sid }} {
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(57,35,25,0.6);
+    margin: 0 0 10px;
+  }
+  .v5-ugc-modal-title-{{ sid }} {
+    font-family: var(--font-heading--family, 'Bodoni Moda', serif);
+    font-size: 24px;
+    font-weight: 400;
+    color: #392319;
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+  .v5-ugc-modal-price-{{ sid }} {
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: #392319;
+    margin: 0 0 30px;
+  }
+  
+  /* Variant Picker inside Modal */
+  .v5-ugc-variants-{{ sid }} {
+    margin-bottom: 24px;
+  }
+  .v5-ugc-option-name-{{ sid }} {
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #392319;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .v5-ugc-swatches-{{ sid }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .v5-ugc-swatch-label-{{ sid }} {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border: 1px solid rgba(57,35,25,0.2);
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 12px;
+    color: #392319;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .v5-ugc-swatch-input-{{ sid }} {
+    display: none;
+  }
+  .v5-ugc-swatch-input-{{ sid }}:checked + .v5-ugc-swatch-label-{{ sid }} {
+    border-color: #392319;
+    background: #392319;
+    color: #fff;
+  }
+
+  /* ATC Form inside Modal */
+  .v5-ugc-atc-btn-{{ sid }} {
+    width: 100%;
+    background: #392319;
+    color: #fff;
+    border: none;
+    padding: 16px;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .v5-ugc-atc-btn-{{ sid }}:hover {
+    background: #140c08;
+  }
+
+  @media (max-width: 749px) {
+    .v5-ugc-item-{{ sid }} {
+      flex: 0 0 220px;
+    }
+    .v5-ugc-modal-{{ sid }} {
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      max-width: 100%;
+      border-radius: 0;
+    }
+    .v5-ugc-modal-left-{{ sid }} {
+      flex: 0 0 50vh;
+    }
+    .v5-ugc-modal-right-{{ sid }} {
+      flex: 1;
+      padding: 24px;
+    }
+    .v5-ugc-modal-close-{{ sid }} {
+      background: #fff;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="v5-ugc-{{ sid }}">
+  <h2 class="v5-ugc-heading-{{ sid }}">{{ section.settings.heading }}</h2>
+  
+  <div class="v5-ugc-carousel-{{ sid }}">
+    {%- for look in ugc_looks -%}
+      <div class="v5-ugc-item-{{ sid }}" onclick="v5OpenUgcModal('{{ sid }}-{{ forloop.index }}')">
+        {%- if look.image != blank -%}
+          <img src="{{ look.image | image_url: width: 600 }}" alt="As Styled By You" loading="lazy" />
+        {%- endif -%}
+        <div class="v5-ugc-overlay-{{ sid }}">
+          <span class="v5-ugc-btn-{{ sid }}">Shop The Look</span>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- comment -%} MODALS {%- endcomment -%}
+{%- for look in ugc_looks -%}
+  {%- assign t_product = look.tagged_product.value -%}
+  {%- if t_product != blank -%}
+    <div class="v5-ugc-modal-overlay-{{ sid }}" id="v5-ugc-modal-{{ sid }}-{{ forloop.index }}">
+      <div class="v5-ugc-modal-{{ sid }}">
+        <button class="v5-ugc-modal-close-{{ sid }}" onclick="v5CloseUgcModal('{{ sid }}-{{ forloop.index }}')" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        
+        <div class="v5-ugc-modal-left-{{ sid }}">
+          {%- if look.image != blank -%}
+            <img src="{{ look.image | image_url: width: 800 }}" alt="As Styled By You" loading="lazy" />
+          {%- endif -%}
+        </div>
+        
+        <div class="v5-ugc-modal-right-{{ sid }}">
+          <p class="v5-ugc-modal-subtitle-{{ sid }}">Featured In This Look</p>
+          <a href="{{ t_product.url }}" style="text-decoration:none;">
+            <h3 class="v5-ugc-modal-title-{{ sid }}">{{ t_product.title }}</h3>
+            <p class="v5-ugc-modal-price-{{ sid }}" id="v5-ugc-price-{{ sid }}-{{ forloop.index }}">
+              {{ t_product.price | money_without_trailing_zeros }}
+            </p>
+          </a>
+          
+          <form method="post" action="/cart/add" class="v5-ugc-form-{{ sid }}" id="v5-ugc-form-{{ sid }}-{{ forloop.index }}">
+            <input type="hidden" name="id" id="v5-ugc-variant-{{ sid }}-{{ forloop.index }}" value="{{ t_product.variants.first.id }}" />
+            
+            {%- unless t_product.has_only_default_variant -%}
+              <div class="v5-ugc-variants-{{ sid }}">
+                {%- for option in t_product.options_with_values -%}
+                  <div style="margin-bottom: 16px;">
+                    <span class="v5-ugc-option-name-{{ sid }}">{{ option.name }}</span>
+                    <div class="v5-ugc-swatches-{{ sid }}">
+                      {%- for value in option.values -%}
+                        <label>
+                          <input 
+                            type="radio" 
+                            name="option{{ option.position }}" 
+                            value="{{ value | escape }}"
+                            class="v5-ugc-swatch-input-{{ sid }}"
+                            onchange="v5UpdateUgcVariant('{{ sid }}-{{ forloop.parentloop.parentloop.index }}')"
+                            {% if option.selected_value == value %}checked{% endif %} />
+                          <span class="v5-ugc-swatch-label-{{ sid }}">{{ value }}</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+              
+              <script type="application/json" id="v5-ugc-json-{{ sid }}-{{ forloop.index }}">
+                {{ t_product.variants | json }}
+              </script>
+            {%- endunless -%}
+            
+            <button type="submit" class="v5-ugc-atc-btn-{{ sid }}" {% if t_product.available == false %}disabled{% endif %}>
+              {% if t_product.available %}Add To Bag{% else %}Sold Out{% endif %}
+            </button>
+          </form>
+          <a href="{{ t_product.url }}" style="font-family:var(--font-body--family);font-size:11px;text-align:center;color:#392319;margin-top:20px;text-decoration:underline;">View full product details</a>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+{%- endfor -%}
+
+<script>
+  function v5OpenUgcModal(modalId) {
+    document.getElementById('v5-ugc-modal-' + modalId).classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function v5CloseUgcModal(modalId) {
+    document.getElementById('v5-ugc-modal-' + modalId).classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+  
+  // Close modal when clicking outside
+  document.querySelectorAll('.v5-ugc-modal-overlay-{{ sid }}').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if(e.target === this) {
+        this.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+
+  // Handle Variant Changes in UGC Modal
+  function v5UpdateUgcVariant(modalId) {
+    const form = document.getElementById('v5-ugc-form-' + modalId);
+    const jsonEl = document.getElementById('v5-ugc-json-' + modalId);
+    if(!jsonEl) return;
+    
+    const variants = JSON.parse(jsonEl.innerHTML);
+    const radios = form.querySelectorAll('input[type="radio"]:checked');
+    let selectedOptions = Array.from(radios).map(r => r.value);
+    
+    const matchedVariant = variants.find(v => {
+      return v.options.every((val, index) => val === selectedOptions[index]);
+    });
+    
+    const btn = form.querySelector('.v5-ugc-atc-btn-{{ sid }}');
+    const input = document.getElementById('v5-ugc-variant-' + modalId);
+    const priceEl = document.getElementById('v5-ugc-price-' + modalId);
+    
+    if(matchedVariant) {
+      input.value = matchedVariant.id;
+      if(matchedVariant.available) {
+        btn.textContent = 'Add To Bag';
+        btn.disabled = false;
+      } else {
+        btn.textContent = 'Sold Out';
+        btn.disabled = true;
+      }
+      
+      // Update price format (basic formatting, assume currency symbol)
+      let priceStr = (matchedVariant.price / 100).toFixed(0);
+      priceEl.textContent = 'IDR ' + priceStr.replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+    } else {
+      btn.textContent = 'Unavailable';
+      btn.disabled = true;
+    }
+  }
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "V5 UGC Shoppable",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "As Styled By You"
+    }
+  ],
+  "presets": [
+    {
+      "name": "V5 UGC Shoppable"
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}

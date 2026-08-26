@@ -1,0 +1,50 @@
+{%- comment -%}
+  Product Card Editorial V5
+  Renders a single editorial lookbook card (4/5 aspect ratio with glassmorphism slide-up info panel).
+  Used in Recommendations & Editorial carousels.
+{%- endcomment -%}
+
+{%- liquid
+  assign card_sid = sid | default: 'editorial'
+  assign is_on_sale = false
+  if product.compare_at_price > product.price
+    assign is_on_sale = true
+  endif
+-%}
+
+<div class="v5-ymal-card-{{ card_sid }}" onclick="window.location.href='{{ product.url }}'">
+  {%- if product.featured_media -%}
+    <img
+      src="{{ product.featured_media | image_url: width: 700 }}"
+      alt="{{ product.featured_media.alt | default: product.title | escape }}"
+      width="700"
+      height="875"
+      loading="lazy" />
+  {%- else -%}
+    {{ 'product-1' | placeholder_svg_tag }}
+  {%- endif -%}
+
+  <div class="v5-ymal-panel-{{ card_sid }}">
+    <div class="v5-ymal-row-{{ card_sid }}">
+      <h4 class="v5-ymal-title-{{ card_sid }}">{{ product.title }}</h4>
+      <span class="v5-ymal-price-{{ card_sid }}">
+        {%- if is_on_sale -%}
+          <s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>
+        {%- endif -%}
+        {{ product.price | money_without_trailing_zeros }}
+      </span>
+    </div>
+
+    {%- comment -%} Quick Size Selector Buttons {%- endcomment -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign opt_name = option.name | downcase -%}
+      {%- if opt_name == 'size' or opt_name == 'ukuran' -%}
+        <div class="v5-ymal-sizes-{{ card_sid }}">
+          {%- for value in option.values -%}
+            <button class="v5-ymal-size-btn-{{ card_sid }}" onclick="event.stopPropagation(); window.location.href='{{ product.url }}?variant={{ product.variants[forloop.index0].id }}'">{{ value }}</button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>

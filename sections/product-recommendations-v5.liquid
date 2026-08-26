@@ -1,0 +1,334 @@
+{%- comment -%}
+  Product Recommendations V5 (Editorial Lookbook Style)
+  Combines the high-fashion editorial UI (Gambar 1) with Shopify's Recommendations API
+  and Manual Metafield Fallback (custom.related_products).
+  Fully responsive for Mobile, Tablet, and Desktop.
+{%- endcomment -%}
+
+{%- liquid
+  assign sid = section.id
+  assign kicker = section.settings.kicker | default: 'CURATED RECOMMENDATIONS'
+  assign title = section.settings.title | default: 'You May Also Like'
+  assign limit = section.settings.limit | default: 8
+  assign manual_recommendations = product.metafields.custom.related_products.value
+  assign has_manual = false
+  if manual_recommendations != blank and manual_recommendations.count > 0
+    assign has_manual = true
+  endif
+-%}
+
+<style>
+  /* === EDITORIAL RECOMMENDATIONS SECTION === */
+  .v5-ymal-section-{{ sid }} {
+    padding: clamp(38px, 5.5vw, 68px) 0;
+    background: var(--paper, #f8f8f0);
+    border-top: 1px solid var(--line, #e2e2e2);
+    overflow: hidden;
+    width: 100%;
+  }
+  .v5-ymal-head-{{ sid }} {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 0 16px;
+  }
+  .v5-ymal-kicker-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .v5-ymal-head-{{ sid }} h3 {
+    font-family: var(--display, 'Bodoni Moda', Georgia, serif);
+    font-size: 32px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0;
+  }
+
+  /* === SLIDER & GRID WRAPPER === */
+  .v5-ymal-wrap-{{ sid }} {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .v5-ymal-grid-{{ sid }} {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: 2px;
+    padding: 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .v5-ymal-grid-{{ sid }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* === EDITORIAL CARD (4/5 Aspect Ratio) === */
+  .v5-ymal-card-{{ sid }} {
+    flex: 0 0 75vw;
+    scroll-snap-align: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--sand, #e0d9b5);
+    aspect-ratio: 4/5;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+  .v5-ymal-card-{{ sid }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1), filter 0.5s ease;
+  }
+
+  /* === GLASSMORPHISM INFO PANEL === */
+  .v5-ymal-panel-{{ sid }} {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(248, 248, 240, 0.96);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 14px 16px 16px;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+    z-index: 2;
+  }
+  .v5-ymal-row-{{ sid }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .v5-ymal-title-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--cocoa, #392319);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .v5-ymal-price-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11px;
+    color: #7a6258;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .v5-ymal-price-{{ sid }} s {
+    color: rgba(57, 35, 25, 0.5);
+    margin-right: 4px;
+    font-weight: 400;
+  }
+  .v5-ymal-sizes-{{ sid }} {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .v5-ymal-size-btn-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--line, #e2e2e2);
+    padding: 4px 9px;
+    background: transparent;
+    color: var(--cocoa, #392319);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .v5-ymal-size-btn-{{ sid }}:hover {
+    background: var(--cocoa, #392319);
+    color: #f8f8f0;
+    border-color: var(--cocoa, #392319);
+  }
+
+  /* === FLOATING CAROUSEL ARROWS === */
+  .v5-ymal-nav-{{ sid }} {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--paper, #f8f8f0);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    color: var(--cocoa, #392319);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .v5-ymal-nav-{{ sid }}:hover {
+    transform: translateY(-50%) scale(1.05);
+    background: #ffffff;
+  }
+  .v5-ymal-nav-{{ sid }} svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.5;
+  }
+  .v5-ymal-nav-{{ sid }}.prev { left: 26px; }
+  .v5-ymal-nav-{{ sid }}.next { right: 26px; }
+
+  /* === RESPONSIVE BREAKPOINTS (Dynamic Auto-Fit Grid for 3 or 4 items) === */
+  @media (min-width: 900px) {
+    .v5-ymal-nav-{{ sid }} {
+      display: flex;
+    }
+    .v5-ymal-grid-{{ sid }} {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      overflow-x: visible;
+      padding: 0;
+    }
+    .v5-ymal-card-{{ sid }} {
+      flex: none;
+      width: auto;
+      scroll-snap-align: none;
+    }
+    .v5-ymal-card-{{ sid }}:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.92);
+    }
+    .v5-ymal-card-{{ sid }}:hover .v5-ymal-panel-{{ sid }} {
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .v5-ymal-panel-{{ sid }} {
+      transform: translateY(0);
+      background: rgba(248, 248, 240, 0.96);
+      padding: 10px 12px;
+    }
+  }
+</style>
+
+<section class="v5-ymal-section-{{ sid }}" id="v5-ymal-section-{{ sid }}" {% if has_manual == false and recommendations.performed == false %}style="display:none;"{% endif %}>
+  <div class="v5-ymal-head-{{ sid }}">
+    <span class="v5-ymal-kicker-{{ sid }}">{{ kicker }}</span>
+    <h3>{{ title }}</h3>
+  </div>
+
+  <div class="v5-ymal-wrap-{{ sid }}">
+    <button class="v5-ymal-nav-{{ sid }} prev" onclick="v5ScrollYmal_{{ sid | replace: '-', '_' }}(-1)" aria-label="Previous recommendations">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="v5-ymal-grid-{{ sid }}" id="v5-ymal-grid-{{ sid }}">
+      {%- if has_manual -%}
+        {%- for rec_product in manual_recommendations limit: limit -%}
+          {%- render 'product-card-editorial-v5', product: rec_product, sid: sid -%}
+        {%- endfor -%}
+      {%- elsif recommendations.performed and recommendations.products_count > 0 -%}
+        {%- for rec_product in recommendations.products limit: limit -%}
+          {%- render 'product-card-editorial-v5', product: rec_product, sid: sid -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <button class="v5-ymal-nav-{{ sid }} next" onclick="v5ScrollYmal_{{ sid | replace: '-', '_' }}(1)" aria-label="Next recommendations">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+</section>
+
+{%- if has_manual == false and recommendations.performed == false -%}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const url = `{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ limit }}`;
+
+    fetch(url)
+      .then(response => response.text())
+      .then(text => {
+        const html = document.createElement('div');
+        html.innerHTML = text;
+        const newGrid = html.querySelector('#v5-ymal-grid-{{ sid }}');
+
+        if (newGrid && newGrid.innerHTML.trim().length > 0) {
+          document.getElementById('v5-ymal-grid-{{ sid }}').innerHTML = newGrid.innerHTML;
+          document.getElementById('v5-ymal-section-{{ sid }}').style.display = 'block';
+        }
+      })
+      .catch(e => console.error("Error fetching product recommendations:", e));
+  });
+</script>
+{%- endif -%}
+
+<script>
+  function v5ScrollYmal_{{ sid | replace: '-', '_' }}(direction) {
+    const grid = document.getElementById("v5-ymal-grid-{{ sid }}");
+    if (!grid) return;
+    const card = grid.querySelector(".v5-ymal-card-{{ sid }}");
+    if (!card) return;
+    
+    const scrollAmount = (card.offsetWidth + 2) * direction;
+    grid.scrollBy({
+      left: scrollAmount,
+      behavior: "smooth"
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "V5 Recommendations (Lux)",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Sub-heading / Kicker",
+      "default": "CURATED RECOMMENDATIONS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Maximum products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "V5 Recommendations (Lux)"
+    }
+  ],
+  "templates": ["product"]
+}
+{% endschema %}
