@@ -747,7 +747,7 @@
           <summary>{{ section.settings.heading_fit_sizing | default: 'Fit & sizing' }}</summary>
           <div>
             {%- if mf_fit_sizing != blank -%}
-              {{ mf_fit_sizing }}
+              {{ mf_fit_sizing | metafield_tag }}
             {%- elsif section.settings.default_fit_sizing != blank -%}
               {{ section.settings.default_fit_sizing }}
             {%- else -%}
@@ -762,7 +762,7 @@
           <summary>{{ section.settings.heading_materials | default: 'Craft & materials' }}</summary>
           <div>
             {%- if mf_materials != blank -%}
-              {{ mf_materials }}
+              {{ mf_materials | metafield_tag }}
             {%- elsif section.settings.default_materials != blank -%}
               {{ section.settings.default_materials }}
             {%- else -%}
@@ -777,7 +777,7 @@
           <summary>{{ section.settings.heading_care | default: 'Care' }}</summary>
           <div>
             {%- if mf_care != blank -%}
-              {{ mf_care }}
+              {{ mf_care | metafield_tag }}
             {%- elsif section.settings.default_care != blank -%}
               {{ section.settings.default_care }}
             {%- else -%}
@@ -811,7 +811,7 @@
     <h2 class="pdp-v5-modal-title">{{ product.title }} Size Guide</h2>
 
     {%- if mf_size_guide != blank -%}
-      {{ mf_size_guide }}
+      {{ mf_size_guide | metafield_tag }}
     {%- else -%}
       <h3 class="pdp-v5-modal-section-title">Size Conversion Chart</h3>
       <table class="pdp-v5-size-table">
