@@ -19,7 +19,16 @@
         "menu": "main-menu",
         "transparent_on_home": true,
         "show_announcement": true,
-        "announcement_text": "Free shipping across Indonesia · Worldwide free over USD 200"
+        "announcement_text": "Free shipping across Indonesia · Worldwide free over USD 200",
+        "mega_card1_image": "shopify://shop_images/In_the_world_of_Lisandra._2.jpg",
+        "mega_card1_label": "New Arrivals",
+        "mega_card1_url": "",
+        "mega_card2_image": "shopify://shop_images/2_1044f32f-d221-4278-a46b-053597603c32.jpg",
+        "mega_card2_label": "Best Sellers",
+        "mega_card2_url": "",
+        "mega_card3_image": "shopify://shop_images/Untitleddesign-5_99b88187-44af-46c4-a388-f5ee89e674bc.png",
+        "mega_card3_label": "Sale",
+        "mega_card3_url": ""
       }
     }
   },

@@ -39,9 +39,40 @@
   }
 </style>
 
+{%- if collection.handle == 'sale' -%}
+<style>
+  .plp-head-{{ section.id }} h1 {
+    color: var(--clay, #8a5a44) !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase;
+  }
+  .plp-head-{{ section.id }} .plp-count {
+    color: var(--clay, #8a5a44) !important;
+    font-weight: 600 !important;
+  }
+  .plp-head-{{ section.id }} .plp-desc {
+    color: var(--clay, #8a5a44) !important;
+    font-style: italic;
+    opacity: 0.85;
+  }
+</style>
+{%- endif -%}
+
 <div class="plp-head-{{ section.id }}">
   {%- if collection -%}
-    <span class="plp-count">{{ collection.products_count }} {{ section.settings.count_label | default: 'pieces' }}</span>
+    {%- assign count_display = collection.products_count -%}
+    {%- if collection.handle == 'sale' -%}
+      {%- assign sale_actual_count = 0 -%}
+      {%- for prod in collection.products -%}
+        {%- if prod.compare_at_price > prod.price -%}
+          {%- assign sale_actual_count = sale_actual_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign count_display = sale_actual_count -%}
+    {%- endif -%}
+    <span class="plp-count">{{ count_display }} {{ section.settings.count_label | default: 'pieces' }}</span>
     <h1>{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
       <p class="plp-desc">{{ collection.description | strip_html }}</p>

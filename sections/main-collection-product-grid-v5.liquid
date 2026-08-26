@@ -785,6 +785,9 @@
   {%- paginate collection.products by products_per_page -%}
     {%- if collection.products.size > 0 -%}
       {%- for product in collection.products -%}
+        {%- if collection.handle == 'sale' and product.compare_at_price <= product.price -%}
+          {%- continue -%}
+        {%- endif -%}
         {%- render 'product-card-v5', product: product, lazy: true -%}
       {%- endfor -%}
     {%- else -%}
