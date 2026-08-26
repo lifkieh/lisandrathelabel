@@ -300,7 +300,164 @@
     font-family: var(--ui, "Inter", sans-serif);
   }
 
-  /* Responsive Rules */
+  /* ===== MEGA MENU ===== */
+  .nav-item-v5 {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+  }
+  .nav-item-v5 > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-item-v5 > a .mega-caret {
+    display: inline-block;
+    width: 8px;
+    height: 5px;
+    position: relative;
+    margin-top: 1px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .nav-item-v5 > a .mega-caret::after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: rotate(45deg);
+    position: absolute;
+    top: -2px;
+    left: 1px;
+  }
+  .nav-item-v5:hover > a .mega-caret,
+  .nav-item-v5.mega-open > a .mega-caret {
+    opacity: 1;
+    transform: rotate(180deg);
+    margin-top: -3px;
+  }
+
+  .mega-menu {
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    background: var(--paper, #f8f8f0);
+    border-top: 1px solid rgba(57, 35, 25, 0.1);
+    border-bottom: 1px solid rgba(57, 35, 25, 0.1);
+    box-shadow: 0 16px 40px rgba(20, 12, 8, 0.1);
+    z-index: 999;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .mega-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Left Column: Category Links */
+  .mega-links {
+    padding: 28px 24px 28px 32px;
+    border-right: 1px solid rgba(57, 35, 25, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mega-links-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(57, 35, 25, 0.4);
+    margin-bottom: 12px;
+    margin-top: 0;
+  }
+  .mega-links a {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    text-decoration: none;
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 0.2s ease, padding-left 0.2s ease;
+  }
+  .mega-links a:hover {
+    border-bottom-color: var(--cocoa, #392319);
+    padding-left: 4px;
+  }
+  .mega-links a.mega-sale {
+    color: var(--clay, #8a5a44);
+    font-style: italic;
+  }
+  .mega-links-divider {
+    height: 1px;
+    background: rgba(57, 35, 25, 0.08);
+    margin: 8px 0;
+  }
+
+  /* Right Side: Editorial Cards */
+  .mega-cards {
+    padding: 24px 32px 24px 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+  .mega-card {
+    display: block;
+    text-decoration: none;
+    color: var(--cocoa, #392319);
+    overflow: hidden;
+  }
+  .mega-card__img {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #f0ede8;
+  }
+  .mega-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mega-card:hover .mega-card__img img {
+    transform: scale(1.04);
+  }
+  .mega-card__label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 9px;
+    display: block;
+    transition: opacity 0.2s;
+  }
+  .mega-card:hover .mega-card__label {
+    opacity: 0.65;
+  }
+
+  /* Mobile: hide mega cards, show links in drawer instead */
+  @media (max-width: 900px) {
+    .mega-menu { display: none !important; }
+  }
+
+  /* ===== Responsive Rules ===== */
   @media (max-width: 900px) {
     .nav-links-v5 {
       display: none;
@@ -362,23 +519,89 @@
     <div class="nav-links-v5">
       {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
         {%- for link in nav_menu.links -%}
+          {%- assign link_title_lower = link.title | downcase -%}
           {%- assign link_url = link.url -%}
-          {%- if link.title == 'Collections' or link.title == 'COLLECTIONS' -%}
+          {%- if link_title_lower == 'collections' -%}
             {%- assign link_url = '/pages/collections' -%}
           {%- endif -%}
-          {%- if link.title == 'Our Story' or link.title == 'OUR STORY' -%}
+          {%- if link_title_lower == 'our story' -%}
             {%- assign link_url = '/pages/our-story' -%}
             <a href="/pages/collections">Collections</a>
           {%- endif -%}
-          <a href="{{ link_url }}" class="{% if link.title == 'Sale' or link.title == 'SALE' %}sale{% endif %}">{{ link.title }}</a>
+
+          {%- if link_title_lower == 'shop' -%}
+            <div class="nav-item-v5" id="megaNavItem">
+              <a href="{{ link_url }}">
+                {{ link.title }}
+                <span class="mega-caret" aria-hidden="true"></span>
+              </a>
+            </div>
+          {%- else -%}
+            <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' %}sale{% endif %}">{{ link.title }}</a>
+          {%- endif -%}
         {%- endfor -%}
       {%- else -%}
         <a href="{{ routes.all_products_collection_url }}">New Arrivals</a>
-        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <div class="nav-item-v5" id="megaNavItem">
+          <a href="/collections/all">Shop<span class="mega-caret" aria-hidden="true"></span></a>
+        </div>
         <a href="{{ routes.all_products_collection_url }}" class="sale">Sale</a>
         <a href="/pages/collections">Collections</a>
         <a href="/pages/our-story">Our Story</a>
       {%- endif -%}
+    </div>
+
+    {%- comment -%} ===== MEGA MENU PANEL ===== {%- endcomment -%}
+    <div class="mega-menu" id="megaMenu" role="region" aria-label="Shop categories">
+      <div class="mega-links">
+        <p class="mega-links-label">Browse by</p>
+        <a href="/collections/all">Shop All</a>
+        <a href="/collections/all?sort_by=created-descending">New Arrivals</a>
+        <div class="mega-links-divider"></div>
+        <a href="/collections/all?filter.v.option.product_type=Dress">Dresses</a>
+        <a href="/collections/all?filter.v.option.product_type=Top">Tops</a>
+        <a href="/collections/all?filter.v.option.product_type=Skirt">Skirts</a>
+        <a href="/collections/all?filter.v.option.product_type=Set">Sets</a>
+        <a href="/collections/all?filter.v.option.product_type=Bikini">Swim & Bikini</a>
+        <div class="mega-links-divider"></div>
+        <a href="/collections/best-sellers">Best Sellers</a>
+        <a href="/collections/sale" class="mega-sale">Sale</a>
+      </div>
+      <div class="mega-cards">
+        {%- comment -%} Card 1 {%- endcomment -%}
+        <a href="{{ section.settings.mega_card1_url | default: '/collections/all?sort_by=created-descending' }}" class="mega-card">
+          <div class="mega-card__img">
+            {%- if section.settings.mega_card1_image != blank -%}
+              <img src="{{ section.settings.mega_card1_image | img_url: '600x' }}" alt="{{ section.settings.mega_card1_label | default: 'New Arrivals' }}" loading="lazy" />
+            {%- else -%}
+              <img src="https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=600" alt="New Arrivals" loading="lazy" />
+            {%- endif -%}
+          </div>
+          <span class="mega-card__label">{{ section.settings.mega_card1_label | default: 'New Arrivals' }}</span>
+        </a>
+        {%- comment -%} Card 2 {%- endcomment -%}
+        <a href="{{ section.settings.mega_card2_url | default: '/collections/best-sellers' }}" class="mega-card">
+          <div class="mega-card__img">
+            {%- if section.settings.mega_card2_image != blank -%}
+              <img src="{{ section.settings.mega_card2_image | img_url: '600x' }}" alt="{{ section.settings.mega_card2_label | default: 'Best Sellers' }}" loading="lazy" />
+            {%- else -%}
+              <img src="https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=600" alt="Best Sellers" loading="lazy" />
+            {%- endif -%}
+          </div>
+          <span class="mega-card__label">{{ section.settings.mega_card2_label | default: 'Best Sellers' }}</span>
+        </a>
+        {%- comment -%} Card 3 {%- endcomment -%}
+        <a href="{{ section.settings.mega_card3_url | default: '/collections/all' }}" class="mega-card">
+          <div class="mega-card__img">
+            {%- if section.settings.mega_card3_image != blank -%}
+              <img src="{{ section.settings.mega_card3_image | img_url: '600x' }}" alt="{{ section.settings.mega_card3_label | default: 'The Artisanal Edit' }}" loading="lazy" />
+            {%- else -%}
+              <img src="https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=600" alt="The Artisanal Edit" loading="lazy" />
+            {%- endif -%}
+          </div>
+          <span class="mega-card__label">{{ section.settings.mega_card3_label | default: 'The Artisanal Edit' }}</span>
+        </a>
+      </div>
     </div>
   </nav>
 
@@ -472,6 +695,59 @@
 </div>
 
 <script>
+  /* ===== Mega Menu: Hover Intent ===== */
+  (function() {
+    var navItem = document.getElementById('megaNavItem');
+    var menu = document.getElementById('megaMenu');
+    if (!navItem || !menu) return;
+
+    var openTimer, closeTimer;
+    var DELAY = 120;
+
+    function openMenu() {
+      clearTimeout(closeTimer);
+      openTimer = setTimeout(function() {
+        menu.classList.add('open');
+        navItem.classList.add('mega-open');
+        positionMenu();
+      }, DELAY);
+    }
+
+    function closeMenu() {
+      clearTimeout(openTimer);
+      closeTimer = setTimeout(function() {
+        menu.classList.remove('open');
+        navItem.classList.remove('mega-open');
+      }, 180);
+    }
+
+    function positionMenu() {
+      var header = document.getElementById('siteHeader');
+      if (header) {
+        var rect = header.getBoundingClientRect();
+        menu.style.top = rect.bottom + 'px';
+      }
+    }
+
+    navItem.addEventListener('mouseenter', openMenu);
+    navItem.addEventListener('mouseleave', closeMenu);
+    menu.addEventListener('mouseenter', function() { clearTimeout(closeTimer); });
+    menu.addEventListener('mouseleave', closeMenu);
+
+    /* Close on Escape */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        menu.classList.remove('open');
+        navItem.classList.remove('mega-open');
+      }
+    });
+
+    /* Reposition on scroll / resize */
+    window.addEventListener('resize', function() {
+      if (menu.classList.contains('open')) positionMenu();
+    });
+  })();
+
   function toggleHeaderDrawer() {
     const mobileDrawer = document.getElementById('mobileDrawer');
     const drawerOverlay = document.getElementById('drawerOverlay');
@@ -549,6 +825,66 @@
       "id": "announcement_text",
       "label": "Announcement Text",
       "default": "Free shipping across Indonesia · Worldwide free over USD 200"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu — Card 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "mega_card1_image",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "mega_card1_label",
+      "label": "Card 1 Label",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "url",
+      "id": "mega_card1_url",
+      "label": "Card 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu — Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "mega_card2_image",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "mega_card2_label",
+      "label": "Card 2 Label",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "mega_card2_url",
+      "label": "Card 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu — Card 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "mega_card3_image",
+      "label": "Card 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "mega_card3_label",
+      "label": "Card 3 Label",
+      "default": "The Artisanal Edit"
+    },
+    {
+      "type": "url",
+      "id": "mega_card3_url",
+      "label": "Card 3 Link"
     }
   ]
 }

@@ -1,0 +1,81 @@
+{%- comment -%}
+  Main Collection Banner V5
+  Renders the collection header with product count, title, and description.
+{%- endcomment -%}
+
+<style>
+  .plp-head-{{ section.id }} {
+    padding: 28px clamp(14px, 2vw, 26px) 0;
+  }
+  .plp-head-{{ section.id }} .plp-count {
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(57, 35, 25, 0.55);
+    margin: 0;
+  }
+  .plp-head-{{ section.id }} h1 {
+    font-family: 'Bodoni Moda', 'Didot', serif;
+    font-weight: 500;
+    font-size: clamp(20px, 2.4vw, 26px);
+    margin: 6px 0 8px;
+    color: #392319;
+    font-style: italic;
+  }
+  .plp-head-{{ section.id }} .plp-desc {
+    margin: 0;
+    color: rgba(57, 35, 25, 0.55);
+    font-size: 12.5px;
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 749px) {
+    .plp-head-{{ section.id }} {
+      padding: 20px 16px 0;
+    }
+  }
+</style>
+
+<div class="plp-head-{{ section.id }}">
+  {%- if collection -%}
+    <span class="plp-count">{{ collection.products_count }} {{ section.settings.count_label | default: 'pieces' }}</span>
+    <h1>{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="plp-desc">{{ collection.description | strip_html }}</p>
+    {%- elsif section.settings.default_description != blank -%}
+      <p class="plp-desc">{{ section.settings.default_description }}</p>
+    {%- endif -%}
+  {%- else -%}
+    <span class="plp-count">0 {{ section.settings.count_label | default: 'pieces' }}</span>
+    <h1>{{ section.settings.fallback_title | default: 'Shop All' }}</h1>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Banner V5",
+  "settings": [
+    {
+      "type": "text",
+      "id": "count_label",
+      "label": "Product count label",
+      "default": "pieces"
+    },
+    {
+      "type": "text",
+      "id": "fallback_title",
+      "label": "Fallback title (if no collection)",
+      "default": "Shop All"
+    },
+    {
+      "type": "textarea",
+      "id": "default_description",
+      "label": "Default description (if collection has none)",
+      "default": "Hand-knit and crocheted in small batches by Balinese artisans."
+    }
+  ]
+}
+{% endschema %}
