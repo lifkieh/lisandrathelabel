@@ -21,6 +21,7 @@
         "muse_btn_label": "Claim 10% Off",
         "logo": "shopify://shop_images/3_f6fe1dce-b7f5-4ef0-b290-d1d8e1bd3a58.png",
         "menu": "footer",
+        "enable_teaser": false,
         "teaser_text": "✦ 10% off your first piece",
         "modal_kicker": "Exclusive Welcome",
         "modal_title": "Unlock 10% Off",

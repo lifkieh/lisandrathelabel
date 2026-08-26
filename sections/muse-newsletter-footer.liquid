@@ -647,6 +647,7 @@
   </div>
 </footer>
 
+{%- if section.settings.enable_teaser -%}
 <!-- Sticky Newsletter Teaser -->
 <div id="newsletterTeaser" class="newsletter-teaser">
   <span class="newsletter-teaser-text" onclick="openNewsletterModal()">{{ section.settings.teaser_text }}</span>
@@ -699,13 +700,6 @@
 </dialog>
 
 <script>
-  function showMuseSuccess() {
-    var formWrap = document.getElementById("museFormWrap");
-    var successMsg = document.getElementById("museSuccess");
-    if (formWrap) formWrap.style.display = "none";
-    if (successMsg) successMsg.style.display = "flex";
-  }
-  
   function showModalSuccess() {
     var modalWrap = document.getElementById("modalFormWrap");
     var modalSuccess = document.getElementById("newsletterSuccessMsg");
@@ -766,12 +760,28 @@
     });
   }
 </script>
+{%- endif -%}
+
+<script>
+  function showMuseSuccess() {
+    var formWrap = document.getElementById("museFormWrap");
+    var successMsg = document.getElementById("museSuccess");
+    if (formWrap) formWrap.style.display = "none";
+    if (successMsg) successMsg.style.display = "flex";
+  }
+</script>
 
 {% schema %}
 {
   "name": "Footer & Newsletter",
   "settings": [
-
+    {
+      "type": "checkbox",
+      "id": "enable_teaser",
+      "label": "Enable Sticky Teaser & Popup Modal",
+      "default": false,
+      "info": "Turn off if using third-party email apps like Klaviyo."
+    },
     {
       "type": "header",
       "content": "Footer Newsletter Zone"
