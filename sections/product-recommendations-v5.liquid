@@ -1,8 +1,9 @@
 {%- comment -%}
   Product Recommendations V5 (Editorial Lookbook Style)
-  Combines the high-fashion editorial UI (Gambar 1) with Shopify's Recommendations API
-  and Manual Metafield Fallback (custom.related_products).
-  Fully responsive for Mobile, Tablet, and Desktop.
+  Combines:
+  1. Manual Metafield Fallback (custom.related_products)
+  2. Shopify Recommendations API (Algorithm)
+  3. Automatic Collection Fallback (Guarantees recommendations on ALL products even if Shopify API returns 0 items)
 {%- endcomment -%}
 
 {%- liquid
@@ -10,11 +11,14 @@
   assign kicker = section.settings.kicker | default: 'CURATED RECOMMENDATIONS'
   assign title = section.settings.title | default: 'You May Also Like'
   assign limit = section.settings.limit | default: 8
+  
   assign manual_recommendations = product.metafields.custom.related_products.value
   assign has_manual = false
   if manual_recommendations != blank and manual_recommendations.count > 0
     assign has_manual = true
   endif
+
+  assign fallback_collection = product.collections.first | default: collections.all
 -%}
 
 <style>
@@ -28,26 +32,27 @@
   }
   .v5-ymal-head-{{ sid }} {
     text-align: center;
-    margin-bottom: 24px;
-    padding: 0 16px;
+    margin-bottom: clamp(20px, 3.5vw, 36px);
+    padding: 0 clamp(14px, 2vw, 26px);
   }
   .v5-ymal-kicker-{{ sid }} {
     font-family: var(--body, 'Inter', sans-serif);
-    font-size: 10.5px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--cocoa, #392319);
+    color: #8a5a44;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .v5-ymal-head-{{ sid }} h3 {
     font-family: var(--display, 'Bodoni Moda', Georgia, serif);
-    font-size: 32px;
+    font-size: clamp(26px, 3.8vw, 38px);
     font-weight: 400;
     font-style: italic;
     color: var(--cocoa, #392319);
     margin: 0;
+    letter-spacing: -0.01em;
   }
 
   /* === SLIDER & GRID WRAPPER === */
@@ -164,40 +169,49 @@
 
   /* === FLOATING CAROUSEL ARROWS === */
   .v5-ymal-nav-{{ sid }} {
-    display: none;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--paper, #f8f8f0);
-    border: none;
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
+    background: rgba(248, 248, 240, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(57, 35, 25, 0.18);
+    box-shadow: 0 6px 20px rgba(30, 18, 10, 0.16);
+    display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    z-index: 10;
     color: var(--cocoa, #392319);
-    transition: transform 0.25s ease, background 0.25s ease;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, box-shadow 0.25s ease;
+    padding: 0;
   }
   .v5-ymal-nav-{{ sid }}:hover {
-    transform: translateY(-50%) scale(1.05);
-    background: #ffffff;
+    background: var(--cocoa, #392319);
+    color: #f8f8f0;
+    border-color: var(--cocoa, #392319);
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 10px 28px rgba(30, 18, 10, 0.26);
   }
   .v5-ymal-nav-{{ sid }} svg {
-    width: 20px;
-    height: 20px;
-    stroke-width: 1.5;
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
   }
-  .v5-ymal-nav-{{ sid }}.prev { left: 26px; }
-  .v5-ymal-nav-{{ sid }}.next { right: 26px; }
+  .v5-ymal-nav-{{ sid }}.prev { left: clamp(14px, 2.5vw, 36px); }
+  .v5-ymal-nav-{{ sid }}.next { right: clamp(14px, 2.5vw, 36px); }
 
-  /* === RESPONSIVE BREAKPOINTS (Dynamic Auto-Fit Grid for 3 or 4 items) === */
+  .v5-ymal-nav-{{ sid }}.is-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden;
+  }
+
+  /* === RESPONSIVE BREAKPOINTS === */
   @media (min-width: 900px) {
-    .v5-ymal-nav-{{ sid }} {
-      display: flex;
-    }
     .v5-ymal-grid-{{ sid }} {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -235,7 +249,7 @@
   </div>
 
   <div class="v5-ymal-wrap-{{ sid }}">
-    <button class="v5-ymal-nav-{{ sid }} prev" onclick="v5ScrollYmal_{{ sid | replace: '-', '_' }}(-1)" aria-label="Previous recommendations">
+    <button class="v5-ymal-nav-{{ sid }} prev" id="v5-ymal-prev-{{ sid }}" onclick="v5ScrollYmal_{{ sid | replace: '-', '_' }}(-1)" aria-label="Previous recommendations">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="15 18 9 12 15 6"></polyline>
       </svg>
@@ -253,13 +267,26 @@
       {%- endif -%}
     </div>
 
-    <button class="v5-ymal-nav-{{ sid }} next" onclick="v5ScrollYmal_{{ sid | replace: '-', '_' }}(1)" aria-label="Next recommendations">
+    <button class="v5-ymal-nav-{{ sid }} next" id="v5-ymal-next-{{ sid }}" onclick="v5ScrollYmal_{{ sid | replace: '-', '_' }}(1)" aria-label="Next recommendations">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="9 18 15 12 9 6"></polyline>
       </svg>
     </button>
   </div>
 </section>
+
+{%- comment -%} Hidden pre-rendered fallback items in case Shopify Recommendations API returns 0 products {%- endcomment -%}
+{%- if has_manual == false -%}
+<div id="v5-ymal-fallback-data-{{ sid }}" style="display:none;">
+  {%- assign count = 0 -%}
+  {%- for fall_prod in fallback_collection.products -%}
+    {%- if fall_prod.id != product.id and count < limit -%}
+      {%- render 'product-card-editorial-v5', product: fall_prod, sid: sid -%}
+      {%- assign count = count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+{%- endif -%}
 
 {%- if has_manual == false and recommendations.performed == false -%}
 <script>
@@ -273,26 +300,81 @@
         html.innerHTML = text;
         const newGrid = html.querySelector('#v5-ymal-grid-{{ sid }}');
 
-        if (newGrid && newGrid.innerHTML.trim().length > 0) {
-          document.getElementById('v5-ymal-grid-{{ sid }}').innerHTML = newGrid.innerHTML;
-          document.getElementById('v5-ymal-section-{{ sid }}').style.display = 'block';
+        const gridEl = document.getElementById('v5-ymal-grid-{{ sid }}');
+        const sectionEl = document.getElementById('v5-ymal-section-{{ sid }}');
+
+        if (newGrid && newGrid.children.length > 0) {
+          gridEl.innerHTML = newGrid.innerHTML;
+          sectionEl.style.display = 'block';
+        } else {
+          // FALLBACK: Use collection fallback if Shopify API returned 0 recommendations
+          const fallbackData = document.getElementById('v5-ymal-fallback-data-{{ sid }}');
+          if (fallbackData && fallbackData.children.length > 0 && gridEl && sectionEl) {
+            gridEl.innerHTML = fallbackData.innerHTML;
+            sectionEl.style.display = 'block';
+          }
         }
+        updateV5YmalArrows_{{ sid | replace: '-', '_' }}();
       })
-      .catch(e => console.error("Error fetching product recommendations:", e));
+      .catch(e => {
+        console.error("Error fetching product recommendations:", e);
+        const fallbackData = document.getElementById('v5-ymal-fallback-data-{{ sid }}');
+        const gridEl = document.getElementById('v5-ymal-grid-{{ sid }}');
+        const sectionEl = document.getElementById('v5-ymal-section-{{ sid }}');
+        if (fallbackData && fallbackData.children.length > 0 && gridEl && sectionEl) {
+          gridEl.innerHTML = fallbackData.innerHTML;
+          sectionEl.style.display = 'block';
+          updateV5YmalArrows_{{ sid | replace: '-', '_' }}();
+        }
+      });
   });
 </script>
 {%- endif -%}
 
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const grid = document.getElementById("v5-ymal-grid-{{ sid }}");
+    if(grid) {
+      updateV5YmalArrows_{{ sid | replace: '-', '_' }}();
+      grid.addEventListener('scroll', updateV5YmalArrows_{{ sid | replace: '-', '_' }});
+      window.addEventListener('resize', updateV5YmalArrows_{{ sid | replace: '-', '_' }});
+    }
+  });
+
+  function updateV5YmalArrows_{{ sid | replace: '-', '_' }}() {
+    const grid = document.getElementById("v5-ymal-grid-{{ sid }}");
+    const prevBtn = document.getElementById("v5-ymal-prev-{{ sid }}");
+    const nextBtn = document.getElementById("v5-ymal-next-{{ sid }}");
+    if(!grid || !prevBtn || !nextBtn) return;
+
+    const maxScrollLeft = grid.scrollWidth - grid.clientWidth;
+
+    if (maxScrollLeft <= 4) {
+      prevBtn.classList.add('is-hidden');
+      nextBtn.classList.add('is-hidden');
+      return;
+    }
+
+    if (grid.scrollLeft <= 4) {
+      prevBtn.classList.add('is-hidden');
+    } else {
+      prevBtn.classList.remove('is-hidden');
+    }
+
+    if (grid.scrollLeft >= maxScrollLeft - 4) {
+      nextBtn.classList.add('is-hidden');
+    } else {
+      nextBtn.classList.remove('is-hidden');
+    }
+  }
+
   function v5ScrollYmal_{{ sid | replace: '-', '_' }}(direction) {
     const grid = document.getElementById("v5-ymal-grid-{{ sid }}");
     if (!grid) return;
     const card = grid.querySelector(".v5-ymal-card-{{ sid }}");
-    if (!card) return;
-    
-    const scrollAmount = (card.offsetWidth + 2) * direction;
+    const scrollAmount = card ? (card.offsetWidth + 2) : 320;
     grid.scrollBy({
-      left: scrollAmount,
+      left: scrollAmount * direction,
       behavior: "smooth"
     });
   }
