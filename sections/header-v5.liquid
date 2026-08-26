@@ -28,7 +28,8 @@
     border-bottom-color: rgba(255, 255, 255, 0.15);
     color: #fff;
   }
-  .hdr-v5.is-transparent:hover {
+  .hdr-v5.is-transparent:hover,
+  .hdr-v5.is-transparent.search-active {
     background: var(--paper, #f8f8f0);
     border-bottom-color: var(--line, #e2e2e2);
     color: var(--cocoa, #392319);
@@ -67,10 +68,12 @@
   .hdr-v5.is-transparent .logo-light {
     display: block;
   }
-  .hdr-v5.is-transparent:hover .logo-dark {
+  .hdr-v5.is-transparent:hover .logo-dark,
+  .hdr-v5.is-transparent.search-active .logo-dark {
     display: block;
   }
-  .hdr-v5.is-transparent:hover .logo-light {
+  .hdr-v5.is-transparent:hover .logo-light,
+  .hdr-v5.is-transparent.search-active .logo-light {
     display: none;
   }
 
@@ -111,7 +114,8 @@
   .hdr-v5.is-transparent .nav-toggle-v5 span {
     background: #fff;
   }
-  .hdr-v5.is-transparent:hover .nav-toggle-v5 span {
+  .hdr-v5.is-transparent:hover .nav-toggle-v5 span,
+  .hdr-v5.is-transparent.search-active .nav-toggle-v5 span {
     background: var(--cocoa, #392319);
   }
   .nav-toggle-v5.open span:nth-child(1) {
@@ -129,7 +133,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: clamp(16px, 2vw, 28px);
+    gap: clamp(10px, 1.5vw, 20px);
   }
   .nav-links-v5 a, .mobile-nav-v5 a {
     font-size: 11px;
@@ -166,6 +170,128 @@
     width: 19px;
     height: 19px;
     stroke-width: 1.35;
+  }
+
+  /* ===== SEARCH PILL TRIGGER ===== */
+  .search-pill-trigger-v5 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 14px 0 12px;
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    cursor: pointer;
+    color: inherit;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    opacity: 0.6;
+    white-space: nowrap;
+    transition: opacity 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    min-width: 160px;
+  }
+  .search-pill-trigger-v5:hover {
+    opacity: 1;
+  }
+  .search-pill-trigger-v5 svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    stroke-width: 1.75;
+  }
+  .hdr-v5.is-transparent .search-pill-trigger-v5 {
+    border-color: rgba(255,255,255,0.5);
+    color: #fff;
+  }
+  .hdr-v5.is-transparent:hover .search-pill-trigger-v5,
+  .hdr-v5.is-transparent.search-active .search-pill-trigger-v5 {
+    border-color: rgba(57,35,25,0.25);
+    color: #392319;
+  }
+  @media (max-width: 900px) {
+    .search-pill-trigger-v5 {
+      min-width: 110px;
+      font-size: 10px;
+      padding: 0 10px 0 9px;
+    }
+  }
+  @media (max-width: 600px) {
+    .search-pill-trigger-v5 {
+      min-width: unset;
+      width: 34px;
+      padding: 0;
+      justify-content: center;
+    }
+    .search-pill-trigger-v5 .search-pill-label {
+      display: none;
+    }
+  }
+
+  /* ===== ACCOUNT ICON ===== */
+  .hdr-account-btn-v5 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    transition: opacity 0.2s;
+    padding: 4px;
+    text-decoration: none;
+  }
+  .hdr-account-btn-v5:hover {
+    opacity: 0.6;
+  }
+  .hdr-account-btn-v5 svg {
+    width: 19px;
+    height: 19px;
+    stroke-width: 1.35;
+  }
+  /* Account badge — when logged in show initials */
+  .hdr-account-initials-v5 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  /* ===== MOBILE DRAWER — ACCOUNT SECTION ===== */
+  .drawer-account-v5 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0 4px;
+    border-top: 1px solid var(--line, #e2e2e2);
+    margin-top: 8px;
+  }
+  .drawer-account-v5 a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body--family, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .drawer-account-v5 a:hover { opacity: 0.65; }
+  .drawer-account-v5 svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 1.5;
+    flex-shrink: 0;
   }
 
   /* Mobile Drawer */
@@ -503,6 +629,183 @@
       padding: 6px 12px;
     }
   }
+  /* Search Drawer Styles */
+  .hdr-search-trigger-v5 {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search-drawer-v5 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    background: var(--paper, #f8f8f0);
+    z-index: 999;
+    padding: 28px clamp(14px, 2.5vw, 32px) 36px clamp(14px, 2.5vw, 32px);
+    border-bottom: 1px solid var(--line, #e2e2e2);
+    box-shadow: 0 16px 40px rgba(20, 12, 8, 0.12);
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .search-drawer-v5.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .search-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    top: 0;
+    background: rgba(30, 18, 10, 0.45);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .search-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .search-drawer-inner-v5 {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .search-drawer-form-v5 {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--cocoa, #392319);
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+  }
+  .search-icon-input {
+    width: 22px;
+    height: 22px;
+    margin-right: 14px;
+    color: var(--cocoa, #392319);
+    flex-shrink: 0;
+  }
+  .search-input-v5 {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    font-family: var(--heading, "Bodoni Moda", serif);
+    color: var(--cocoa, #392319);
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .search-input-v5::placeholder {
+    color: rgba(57, 35, 25, 0.4);
+  }
+  .search-input-v5::-webkit-search-cancel-button {
+    display: none;
+  }
+  .search-drawer-close-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--cocoa, #392319);
+    padding: 0 0 0 10px;
+    line-height: 1;
+  }
+  .search-drawer-results-v5, .search-drawer-empty-state-v5 {
+    width: 100%;
+  }
+  .search-recommendation-title-v5 {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--cocoa, #392319);
+  }
+  .search-predictive-grid-v5 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .search-predictive-item-v5 {
+    text-decoration: none;
+    color: var(--cocoa, #392319);
+    display: block;
+  }
+  .search-item-img-wrap-v5 {
+    position: relative;
+    padding-bottom: 133%; /* 3:4 aspect ratio */
+    overflow: hidden;
+    margin-bottom: 10px;
+    background: #eaeaea;
+  }
+  .search-item-img-wrap-v5 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .search-predictive-item-v5:hover img {
+    transform: scale(1.04);
+  }
+  .search-item-info-v5 {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .search-item-title-v5 {
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .search-item-price-v5 {
+    font-size: 12px;
+    color: var(--clay, #8a5a44);
+  }
+  @media (max-width: 768px) {
+    .search-predictive-grid-v5 {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .search-input-v5 {
+      font-size: 15px;
+    }
+    .search-drawer-v5 {
+      padding: 16px 14px 24px 14px;
+      max-height: calc(100vh - 60px);
+    }
+    .search-drawer-form-v5 {
+      margin-bottom: 18px;
+    }
+    .search-item-title-v5 {
+      font-size: 11.5px;
+    }
+    .search-item-price-v5 {
+      font-size: 11.5px;
+    }
+  }
 </style>
 
 {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
@@ -673,12 +976,28 @@
   </a>
 
   <div class="hdr-actions-v5">
-    <a href="{{ routes.search_url }}" aria-label="Search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    {%- comment -%} Search Pill Trigger {%- endcomment -%}
+    <button type="button" class="search-pill-trigger-v5" onclick="toggleSearchDrawer()" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="7"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
-    </a>
+      <span class="search-pill-label">Search our store</span>
+    </button>
+    {%- comment -%} Account Icon {%- endcomment -%}
+    {%- if customer -%}
+      <a href="{{ routes.account_url }}" class="hdr-account-btn-v5" aria-label="My Account">
+        <span class="hdr-account-initials-v5">{{ customer.first_name | slice: 0 }}{{ customer.last_name | slice: 0 }}</span>
+      </a>
+    {%- else -%}
+      <a href="{{ routes.account_login_url }}" class="hdr-account-btn-v5" aria-label="Sign In">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </a>
+    {%- endif -%}
+    {%- comment -%} Cart {%- endcomment -%}
     <a href="{{ routes.cart_url }}" aria-label="Cart">
       <span style="display: flex; align-items: center; gap: 4px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -730,10 +1049,31 @@
   </nav>
 
   <div class="drawer-footer-v5">
+    {%- comment -%} Account CTA in mobile drawer {%- endcomment -%}
+    <div class="drawer-account-v5">
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          My Account ({{ customer.first_name }})
+        </a>
+        <a href="{{ routes.account_logout_url }}" style="margin-left: auto; opacity: 0.5; font-size: 10px;">Sign Out</a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Sign In
+        </a>
+        <a href="{{ routes.account_register_url }}" style="margin-left: auto;">Create Account</a>
+      {%- endif -%}
+    </div>
     <div class="drawer-secondary-v5">
-      <a href="{{ routes.search_url }}">Search</a>
-      <a href="{{ routes.account_url }}">Account</a>
-      <a href="#wishlist">Wishlist</a>
+      <a href="#" onclick="event.preventDefault(); toggleHeaderDrawer(); toggleSearchDrawer();">Search</a>
+      <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
     </div>
     <div class="drawer-social-v5">
       <a href="https://instagram.com/lisandra.thelabel" target="_blank" rel="noopener" aria-label="Instagram">
@@ -748,6 +1088,57 @@
           <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
         </svg>
       </a>
+    </div>
+  </div>
+</div>
+
+<!-- Search Drawer (Dropdown) -->
+<div class="search-drawer-overlay" id="searchOverlay" onclick="toggleSearchDrawer()"></div>
+<div class="search-drawer-v5" id="searchDrawer">
+  <div class="search-drawer-inner-v5">
+    <form action="{{ routes.search_url }}" method="get" class="search-drawer-form-v5">
+      <input type="hidden" name="type" value="product">
+      <input type="hidden" name="options[prefix]" value="last">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="search-icon-input">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="search" name="q" id="searchDrawerInput" placeholder="What are you looking for?" autocomplete="off" class="search-input-v5">
+      <button type="button" class="search-drawer-close-btn" onclick="toggleSearchDrawer()" aria-label="Close search">✕</button>
+    </form>
+    
+    <div class="search-drawer-results-v5" id="searchResultsContainer" style="display: none;">
+      <span class="search-recommendation-title-v5">Search Results</span>
+      <div class="search-predictive-grid-v5" id="predictiveResultsGrid">
+        <!-- Results injected via JS -->
+      </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="#" id="viewAllResultsBtn" class="search-recommendation-title-v5" style="border-bottom: 1px solid currentColor; display: inline-block;">View All Results</a>
+      </div>
+    </div>
+
+    <div class="search-drawer-empty-state-v5" id="searchEmptyState">
+      <span class="search-recommendation-title-v5" id="emptyStateMessage">Top Suggestions</span>
+      <div class="search-predictive-grid-v5">
+        {% assign best_sellers = collections['best-sellers'].products | default: collections['frontpage'].products %}
+        {% for product in best_sellers limit: 4 %}
+          <a href="{{ product.url }}" class="search-predictive-item-v5">
+            <div class="search-item-img-wrap-v5">
+              <img 
+                src="{{ product.featured_image | img_url: '400x' }}" 
+                alt="{{ product.featured_image.alt | default: product.title | escape }}" 
+                width="{{ product.featured_image.width | default: 400 }}" 
+                height="{{ product.featured_image.height | default: 533 }}" 
+                loading="lazy"
+              >
+            </div>
+            <div class="search-item-info-v5">
+              <span class="search-item-title-v5">{{ product.title }}</span>
+              <span class="search-item-price-v5">{{ product.price | money }}</span>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
@@ -840,6 +1231,140 @@
         }
       });
     }
+  });
+  /* ===== Search Drawer & Predictive Search ===== */
+  function positionSearchDrawer() {
+    const header = document.getElementById('siteHeader');
+    const searchDrawer = document.getElementById('searchDrawer');
+    const searchOverlay = document.getElementById('searchOverlay');
+    if (header && searchDrawer) {
+      const rect = header.getBoundingClientRect();
+      const headerBottom = Math.max(0, rect.bottom);
+      searchDrawer.style.top = headerBottom + 'px';
+      if (searchOverlay) {
+        searchOverlay.style.top = headerBottom + 'px';
+      }
+    }
+  }
+
+  function toggleSearchDrawer() {
+    const searchDrawer = document.getElementById('searchDrawer');
+    const searchOverlay = document.getElementById('searchOverlay');
+    const header = document.getElementById('siteHeader');
+    if (!searchDrawer || !searchOverlay) return;
+
+    const isOpen = searchDrawer.classList.contains('active');
+    if (isOpen) {
+      searchDrawer.classList.remove('active');
+      searchOverlay.classList.remove('active');
+      if (header) header.classList.remove('search-active');
+      document.body.style.overflow = '';
+    } else {
+      positionSearchDrawer();
+      searchDrawer.classList.add('active');
+      searchOverlay.classList.add('active');
+      if (header) header.classList.add('search-active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const input = document.getElementById('searchDrawerInput');
+        if (input) input.focus();
+      }, 100);
+    }
+  }
+
+  // Close search on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const searchDrawer = document.getElementById('searchDrawer');
+      if (searchDrawer && searchDrawer.classList.contains('active')) {
+        toggleSearchDrawer();
+      }
+    }
+  });
+
+  // Reposition on resize and scroll
+  window.addEventListener('resize', function() {
+    const searchDrawer = document.getElementById('searchDrawer');
+    if (searchDrawer && searchDrawer.classList.contains('active')) {
+      positionSearchDrawer();
+    }
+  });
+  window.addEventListener('scroll', function() {
+    const searchDrawer = document.getElementById('searchDrawer');
+    if (searchDrawer && searchDrawer.classList.contains('active')) {
+      positionSearchDrawer();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchDrawerInput');
+    const resultsContainer = document.getElementById('searchResultsContainer');
+    const predictiveGrid = document.getElementById('predictiveResultsGrid');
+    const emptyState = document.getElementById('searchEmptyState');
+    const emptyStateMessage = document.getElementById('emptyStateMessage');
+    const viewAllBtn = document.getElementById('viewAllResultsBtn');
+
+    if (!searchInput) return;
+
+    let debounceTimer;
+
+    searchInput.addEventListener('input', function() {
+      clearTimeout(debounceTimer);
+      const query = this.value.trim();
+
+      if (query.length === 0) {
+        resultsContainer.style.display = 'none';
+        emptyState.style.display = 'block';
+        emptyStateMessage.innerText = 'Top Suggestions';
+        return;
+      }
+
+      debounceTimer = setTimeout(() => {
+        fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=4`)
+          .then(response => response.json())
+          .then(data => {
+            const products = data.resources.results.products;
+            if (products && products.length > 0) {
+              emptyState.style.display = 'none';
+              resultsContainer.style.display = 'block';
+              
+              let html = '';
+              products.forEach(product => {
+                const imageUrl = product.featured_image ? product.featured_image.url : (product.image || '');
+                let formattedPrice = '';
+                if (product.price) {
+                  const rawNum = parseFloat(product.price);
+                  if (!isNaN(rawNum)) {
+                    formattedPrice = 'Rp ' + Math.round(rawNum).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.');
+                  } else {
+                    formattedPrice = product.price;
+                  }
+                }
+                html += `
+                  <a href="${product.url}" class="search-predictive-item-v5">
+                    <div class="search-item-img-wrap-v5">
+                      <img src="${imageUrl}" alt="${product.title}" loading="lazy">
+                    </div>
+                    <div class="search-item-info-v5">
+                      <span class="search-item-title-v5">${product.title}</span>
+                      <span class="search-item-price-v5">${formattedPrice}</span>
+                    </div>
+                  </a>
+                `;
+              });
+              predictiveGrid.innerHTML = html;
+              viewAllBtn.href = `/search?q=${encodeURIComponent(query)}&type=product&options[prefix]=last`;
+            } else {
+              resultsContainer.style.display = 'none';
+              emptyState.style.display = 'block';
+              emptyStateMessage.innerText = `We couldn't find anything for "${query}". Check out our best sellers below:`;
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching search results:', error);
+          });
+      }, 300);
+    });
   });
 </script>
 

@@ -1,0 +1,1214 @@
+{%- comment -%}
+  Main Product V5 — Lisandra The Label
+  Dynamic PDP section matching the official design-v5 design system.
+  All static/fallback elements can now be customized directly from Shopify Theme Editor.
+{%- endcomment -%}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_image = current_variant.featured_media | default: product.featured_media
+
+  assign spec_label = ''
+  if product.tags contains 'Hand-knit' or product.tags contains 'hand-knit'
+    assign spec_label = 'Hand-knit'
+  elsif product.tags contains 'Crochet' or product.tags contains 'crochet'
+    assign spec_label = 'Crochet'
+  elsif product.type != blank
+    assign spec_label = product.type
+  endif
+
+  assign origin_label = 'Made in Bali'
+  if product.tags contains 'Made in Jakarta'
+    assign origin_label = 'Made in Jakarta'
+  elsif product.tags contains 'Made in Bandung'
+    assign origin_label = 'Made in Bandung'
+  endif
+
+  assign is_on_sale = false
+  if product.compare_at_price > product.price
+    assign is_on_sale = true
+  endif
+
+  assign mf_fit_sizing = product.metafields.custom.fit_sizing
+  assign mf_materials = product.metafields.custom.materials
+  assign mf_care = product.metafields.custom.care
+  assign mf_size_guide = product.metafields.custom.size_guide
+-%}
+
+<style>
+  .pdp-v5-wrap {
+    background: var(--paper, #f8f8f0);
+    color: var(--cocoa, #392319);
+    font-family: var(--ui, "Inter", -apple-system, sans-serif);
+    padding-bottom: 40px;
+  }
+  .pdp-v5-crumbs {
+    padding: 14px clamp(14px, 2vw, 26px) 0;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink60, #6e5c52);
+    margin: 0;
+  }
+  .pdp-v5-crumbs a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .pdp-v5-crumbs a:hover {
+    text-decoration: underline;
+  }
+
+  .pdp-v5 {
+    display: grid;
+    align-items: start;
+    grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.95fr);
+    gap: clamp(18px, 3vw, 40px);
+    padding: 16px clamp(14px, 2vw, 26px) clamp(24px, 4vw, 48px);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* Gallery */
+  .pdp-v5-gal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+  }
+  .pdp-v5-gal figure {
+    margin: 0;
+    aspect-ratio: 3/4;
+    background: var(--sand, #e0d9b5);
+    overflow: hidden;
+  }
+  .pdp-v5-gal figure:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 4/5;
+  }
+  .pdp-v5-gal figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .pdp-v5-gal figure:hover img {
+    transform: scale(1.03);
+  }
+
+  /* Mobile Gallery Carousel */
+  .pdp-v5-mobile-gal {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    margin: 0 -14px 16px;
+  }
+  .pdp-v5-mobile-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .pdp-v5-mobile-track figure {
+    margin: 0;
+    width: 100%;
+    flex-shrink: 0;
+    aspect-ratio: 4/5;
+    background: var(--sand, #e0d9b5);
+  }
+  .pdp-v5-mobile-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .pdp-v5-mobile-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 0 4px;
+  }
+  .pdp-v5-mobile-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--cocoa, #392319);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .pdp-v5-mobile-dot.active {
+    background: var(--cocoa, #392319);
+    transform: scale(1.2);
+  }
+
+  /* Info Column */
+  .pdp-v5-info {
+    position: sticky;
+    top: 80px;
+    align-self: start;
+    max-height: calc(100vh - 95px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-right: 4px;
+  }
+  .pdp-v5-info::-webkit-scrollbar {
+    display: none;
+  }
+  .pdp-v5-spec {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink60, #6e5c52);
+    margin: 0 0 6px;
+  }
+  .pdp-v5-title {
+    font-family: var(--heading, "Bodoni Moda", Georgia, serif);
+    font-weight: 500;
+    font-style: normal;
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.2;
+    margin: 0 0 8px;
+    color: var(--cocoa, #392319);
+  }
+  .pdp-v5-price {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 8px 0 16px;
+    font-variant-numeric: tabular-nums;
+  }
+  .pdp-v5-price s {
+    color: var(--ink60, #6e5c52);
+    margin-right: 8px;
+    text-decoration: line-through;
+  }
+  .pdp-v5-price .sale-price {
+    color: var(--sale, #9a3f2b);
+  }
+
+  .pdp-v5-hook {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0 0 14px;
+    color: var(--cocoa, #392319);
+  }
+  .pdp-v5-hook ul {
+    padding-left: 16px;
+    margin: 10px 0;
+  }
+  .pdp-v5-hook li {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  /* Option Headers & Selectors */
+  .pdp-v5-opt-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .pdp-v5-opt-head .lbl {
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .pdp-v5-opt-head button {
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--cocoa, #392319);
+    padding-bottom: 1px;
+    background: none;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    cursor: pointer;
+    color: var(--cocoa, #392319);
+    transition: opacity 0.2s;
+  }
+  .pdp-v5-opt-head button:hover {
+    opacity: 0.7;
+  }
+
+  /* Color Swatches */
+  .pdp-v5-sw-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .pdp-v5-sw {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.12);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease, outline 0.2s ease;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  .pdp-v5-sw:hover {
+    transform: scale(1.15);
+  }
+  .pdp-v5-sw.active {
+    outline-color: var(--cocoa, #392319);
+  }
+
+  /* Size buttons */
+  .pdp-v5-sizes {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 8px;
+  }
+  .pdp-v5-size {
+    flex: 1;
+    padding: 12px 4px;
+    border: 1px solid var(--line, #d9cfa9);
+    background: transparent;
+    font-size: 12px;
+    text-align: center;
+    font-family: inherit;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .pdp-v5-size:hover {
+    border-color: var(--cocoa, #392319);
+    transform: translateY(-1px);
+  }
+  .pdp-v5-size.active {
+    border-color: var(--cocoa, #392319);
+    box-shadow: 0 0 0 1px var(--cocoa, #392319) inset;
+    font-weight: 500;
+  }
+  .pdp-v5-size.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .pdp-v5-stock {
+    font-size: 11.5px;
+    color: var(--sale, #9a3f2b);
+    font-weight: 600;
+    margin: 0 0 14px;
+    min-height: 17px;
+  }
+
+  /* ATC & Wishlist */
+  .pdp-v5-row-atc {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pdp-v5-btn-atc {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--cocoa, #392319);
+    color: var(--paper, #f8f8f0);
+    border: 0;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.25s ease, transform 0.15s ease;
+  }
+  .pdp-v5-btn-atc:hover {
+    opacity: 0.88;
+  }
+  .pdp-v5-btn-atc:active {
+    transform: scale(0.98);
+  }
+  .pdp-v5-btn-atc:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .pdp-v5-wish {
+    width: 48px;
+    border: 1px solid var(--line, #d9cfa9);
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    background: transparent;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .pdp-v5-wish:hover {
+    border-color: var(--sale, #9a3f2b);
+    color: var(--sale, #9a3f2b);
+    transform: translateY(-1px);
+  }
+
+  /* Trust lines */
+  .pdp-v5-assure-wrap {
+    margin: 0 0 14px;
+  }
+  .pdp-v5-assure {
+    font-size: 11.5px;
+    color: var(--ink60, #6e5c52);
+    margin: 0 0 4px;
+    line-height: 1.5;
+  }
+  .pdp-v5-pays {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0 16px;
+  }
+  .pdp-v5-pay {
+    padding: 4px 9px;
+    border: 1px solid var(--line, #d9cfa9);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    font-weight: 500;
+  }
+
+  .pdp-v5-specbar {
+    border-top: 1px solid var(--line, #d9cfa9);
+    border-bottom: 1px solid var(--line, #d9cfa9);
+    padding: 10px 0;
+    margin: 16px 0;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+  }
+
+  /* Details / Accordions */
+  .pdp-v5-info details {
+    border-bottom: 1px solid var(--line, #d9cfa9);
+  }
+  .pdp-v5-info summary {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 14px 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--cocoa, #392319);
+  }
+  .pdp-v5-info summary::-webkit-details-marker {
+    display: none;
+  }
+  .pdp-v5-info summary::after {
+    content: "+";
+    font-size: 15px;
+    font-weight: 300;
+    transition: transform 0.25s ease;
+  }
+  .pdp-v5-info details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .pdp-v5-info details div {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink60, #6e5c52);
+    padding-bottom: 14px;
+  }
+  .pdp-v5-info details ul {
+    padding-left: 16px;
+    margin: 6px 0;
+  }
+  .pdp-v5-info details li {
+    margin-bottom: 4px;
+  }
+
+  /* Size Modal */
+  .pdp-v5-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(57, 35, 25, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    place-items: center;
+    padding: 16px;
+  }
+  .pdp-v5-modal-overlay.open {
+    display: grid;
+  }
+  .pdp-v5-modal-card {
+    background: var(--paper, #f8f8f0);
+    border: 1px solid var(--line, #d9cfa9);
+    padding: clamp(20px, 3.5vw, 36px);
+    max-width: 580px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 16px 40px rgba(57, 35, 25, 0.2);
+    animation: pdpModalFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes pdpModalFade {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .pdp-v5-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 18px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: var(--cocoa, #392319);
+    padding: 4px;
+    line-height: 1;
+  }
+  .pdp-v5-modal-title {
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-style: italic;
+    font-size: 22px;
+    margin: 0 0 20px;
+    color: var(--cocoa, #392319);
+  }
+  .pdp-v5-modal-section-title {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink60, #6e5c52);
+    margin: 18px 0 8px;
+  }
+  .pdp-v5-size-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  .pdp-v5-size-table th, .pdp-v5-size-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line, #d9cfa9);
+    text-align: left;
+  }
+  .pdp-v5-size-table th {
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink60, #6e5c52);
+  }
+  .pdp-v5-size-toggle {
+    display: flex;
+    border: 1px solid var(--line, #d9cfa9);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .pdp-v5-size-toggle button {
+    padding: 4px 10px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: var(--cocoa, #392319);
+  }
+  .pdp-v5-size-toggle button.active {
+    background: var(--cocoa, #392319);
+    color: var(--paper, #f8f8f0);
+  }
+
+  @media (max-width: 900px) {
+    .pdp-v5 {
+      grid-template-columns: 1fr;
+      padding: 10px 14px 24px;
+    }
+    .pdp-v5-gal {
+      display: none;
+    }
+    .pdp-v5-mobile-gal {
+      display: block;
+    }
+    .pdp-v5-info {
+      position: static;
+      max-height: none;
+      overflow-y: visible;
+      padding-right: 0;
+    }
+  }
+</style>
+
+<div class="pdp-v5-wrap">
+  <p class="pdp-v5-crumbs">
+    <a href="/">Home</a> / 
+    {%- if product.collections.size > 0 -%}
+      <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a> / 
+    {%- endif -%}
+    {{ product.title }}
+  </p>
+
+  <section class="pdp-v5" data-product-id="{{ product.id }}">
+    
+    <!-- DESKTOP GALLERY -->
+    <div class="pdp-v5-gal">
+      {%- for media in product.media -%}
+        {%- if media.media_type == 'image' -%}
+          <figure>
+            <img
+              src="{{ media | image_url: width: 1100 }}"
+              alt="{{ media.alt | default: product.title | escape }}"
+              width="1100"
+              height="{{ 1100 | divided_by: media.aspect_ratio | round }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            />
+          </figure>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <!-- MOBILE GALLERY CAROUSEL -->
+    <div class="pdp-v5-mobile-gal" id="pdpMobileGal">
+      <div class="pdp-v5-mobile-track" id="pdpMobileTrack">
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+            <figure>
+              <img
+                src="{{ media | image_url: width: 800 }}"
+                alt="{{ media.alt | default: product.title | escape }}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              />
+            </figure>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="pdp-v5-mobile-dots" id="pdpMobileDots">
+        {%- assign dot_idx = 0 -%}
+        {%- for media in product.media -%}
+          {%- if media.media_type == 'image' -%}
+            <button class="pdp-v5-mobile-dot{% if dot_idx == 0 %} active{% endif %}" data-idx="{{ dot_idx }}" aria-label="Image {{ dot_idx | plus: 1 }}"></button>
+            {%- assign dot_idx = dot_idx | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- RIGHT: PRODUCT INFO -->
+    <div class="pdp-v5-info">
+      <p class="pdp-v5-spec">
+        {%- if spec_label != blank -%}{{ spec_label }} · {%- endif -%}{{ origin_label }}
+      </p>
+
+      <h1 class="pdp-v5-title">{{ product.title }}</h1>
+
+      <p class="pdp-v5-price" id="pdpPriceV5">
+        {%- if is_on_sale -%}
+          <s>{{ current_variant.compare_at_price | money }}</s>
+          <span class="sale-price">{{ current_variant.price | money }}</span>
+        {%- else -%}
+          {{ current_variant.price | money }}
+        {%- endif -%}
+      </p>
+
+      {%- comment -%} Short description hook & bullet points {%- endcomment -%}
+      <div class="pdp-v5-hook">
+        {{ product.description }}
+      </div>
+
+      <!-- FORM & VARIANT PICKERS -->
+      <form method="post" action="/cart/add" id="pdpFormV5">
+        <input type="hidden" name="id" value="{{ current_variant.id }}" id="pdpVariantIdV5">
+
+        {%- for option in product.options_with_values -%}
+          {%- assign opt_lower = option.name | downcase -%}
+
+          {%- if opt_lower == 'color' or opt_lower == 'colour' -%}
+            <div class="pdp-v5-opt-head">
+              <span class="lbl">{{ option.name }}, <span id="pdpColorLabel">{{ option.selected_value }}</span></span>
+            </div>
+            <div class="pdp-v5-sw-row" data-option-index="{{ forloop.index0 }}">
+              {%- for value in option.values -%}
+                {%- assign cl = value | downcase -%}
+                {%- case cl -%}
+                  {%- when 'cocoa' -%}{%- assign sw_hex = '#4a352a' -%}
+                  {%- when 'beige' -%}{%- assign sw_hex = '#efe3d2' -%}
+                  {%- when 'sage' -%}{%- assign sw_hex = '#8b9d88' -%}
+                  {%- when 'ivory' -%}{%- assign sw_hex = '#f5f0e6' -%}
+                  {%- when 'black' -%}{%- assign sw_hex = '#111111' -%}
+                  {%- when 'sand' -%}{%- assign sw_hex = '#d6ccbd' -%}
+                  {%- when 'caramel' -%}{%- assign sw_hex = '#8a5a44' -%}
+                  {%- when 'white' -%}{%- assign sw_hex = '#ffffff' -%}
+                  {%- when 'cream' -%}{%- assign sw_hex = '#f5f0e8' -%}
+                  {%- when 'olive' -%}{%- assign sw_hex = '#6b7a4f' -%}
+                  {%- when 'rust' -%}{%- assign sw_hex = '#a04520' -%}
+                  {%- when 'terracotta' -%}{%- assign sw_hex = '#c45d3e' -%}
+                  {%- when 'taupe' -%}{%- assign sw_hex = '#a89888' -%}
+                  {%- else -%}{%- assign sw_hex = '#cccccc' -%}
+                {%- endcase -%}
+                <button
+                  type="button"
+                  class="pdp-v5-sw{% if option.selected_value == value %} active{% endif %}"
+                  style="background: {{ sw_hex }}"
+                  data-value="{{ value }}"
+                  aria-label="{{ value }}"
+                  title="{{ value }}"
+                ></button>
+              {%- endfor -%}
+            </div>
+
+          {%- elsif opt_lower == 'size' or opt_lower == 'ukuran' -%}
+            <div class="pdp-v5-opt-head">
+              <span class="lbl">{{ option.name }}</span>
+              <button type="button" onclick="document.getElementById('pdpSizeModal').classList.add('open')">Size guide</button>
+            </div>
+            <div class="pdp-v5-sizes" data-option-index="{{ forloop.index0 }}">
+              {%- for value in option.values -%}
+                <button
+                  type="button"
+                  class="pdp-v5-size{% if option.selected_value == value %} active{% endif %}"
+                  data-value="{{ value }}"
+                >{{ value }}</button>
+              {%- endfor -%}
+            </div>
+
+          {%- else -%}
+            <div class="pdp-v5-opt-head">
+              <span class="lbl">{{ option.name }}</span>
+            </div>
+            <div class="pdp-v5-sizes" data-option-index="{{ forloop.index0 }}">
+              {%- for value in option.values -%}
+                <button
+                  type="button"
+                  class="pdp-v5-size{% if option.selected_value == value %} active{% endif %}"
+                  data-value="{{ value }}"
+                >{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <!-- Inventory Stock Notification -->
+        <p class="pdp-v5-stock" id="pdpStockV5">
+          {%- assign thresh = section.settings.low_stock_threshold | default: 10 -%}
+          {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= thresh -%}
+            Only {{ current_variant.inventory_quantity }} pieces left
+          {%- endif -%}
+        </p>
+
+        <!-- ADD TO CART ROW -->
+        <div class="pdp-v5-row-atc">
+          <button type="submit" class="pdp-v5-btn-atc" id="pdpAtcBtnV5"{% unless current_variant.available %} disabled{% endunless %}>
+            {%- if current_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+          </button>
+          <button type="button" class="pdp-v5-wish" aria-label="Save to wishlist">♡</button>
+        </div>
+      </form>
+
+      <!-- Trust Assurances (Customizable in Theme Editor) -->
+      {%- if section.settings.show_trust_badges -%}
+        <div class="pdp-v5-assure-wrap">
+          {%- if section.settings.shipping_note_1 != blank -%}
+            <p class="pdp-v5-assure">{{ section.settings.shipping_note_1 }}</p>
+          {%- endif -%}
+          {%- if section.settings.shipping_note_2 != blank -%}
+            <p class="pdp-v5-assure">{{ section.settings.shipping_note_2 }}</p>
+          {%- endif -%}
+          {%- if section.settings.shipping_note_3 != blank -%}
+            <p class="pdp-v5-assure">{{ section.settings.shipping_note_3 }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Payment Icons (Customizable in Theme Editor) -->
+      {%- if section.settings.show_payment_badges -%}
+        {%- assign badges_arr = section.settings.payment_badges | split: ',' -%}
+        <div class="pdp-v5-pays">
+          {%- for badge in badges_arr -%}
+            {%- assign b_clean = badge | strip -%}
+            {%- if b_clean != blank -%}
+              <span class="pdp-v5-pay">{{ b_clean }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Spec Bar (Customizable in Theme Editor) -->
+      {%- if section.settings.show_specbar -%}
+        <p class="pdp-v5-specbar">
+          {%- if spec_label != blank -%}{{ spec_label | upcase }} · {%- endif -%}
+          {%- if section.settings.specbar_custom_text != blank -%}{{ section.settings.specbar_custom_text | upcase }} · {%- endif -%}
+          {{ origin_label | upcase }}
+        </p>
+      {%- endif -%}
+
+      <!-- ACCORDIONS (Dynamic via Metafield with Theme Editor Fallbacks) -->
+      {%- if section.settings.show_fit_sizing -%}
+        <details open>
+          <summary>{{ section.settings.heading_fit_sizing | default: 'Fit & sizing' }}</summary>
+          <div>
+            {%- if mf_fit_sizing != blank -%}
+              {{ mf_fit_sizing }}
+            {%- elsif section.settings.default_fit_sizing != blank -%}
+              {{ section.settings.default_fit_sizing }}
+            {%- else -%}
+              <p>True to size with generous stretch, the knit adapts to your shape.</p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+      {%- if section.settings.show_materials -%}
+        <details>
+          <summary>{{ section.settings.heading_materials | default: 'Craft & materials' }}</summary>
+          <div>
+            {%- if mf_materials != blank -%}
+              {{ mf_materials }}
+            {%- elsif section.settings.default_materials != blank -%}
+              {{ section.settings.default_materials }}
+            {%- else -%}
+              <p>100% rayon yarn, ethically handmade in Bali by one artisan.</p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+      {%- if section.settings.show_care -%}
+        <details>
+          <summary>{{ section.settings.heading_care | default: 'Care' }}</summary>
+          <div>
+            {%- if mf_care != blank -%}
+              {{ mf_care }}
+            {%- elsif section.settings.default_care != blank -%}
+              {{ section.settings.default_care }}
+            {%- else -%}
+              <p>Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+      {%- if section.settings.show_shipping_returns -%}
+        <details>
+          <summary>{{ section.settings.heading_shipping_returns | default: 'Shipping & returns' }}</summary>
+          <div>
+            {%- if section.settings.shipping_returns_text != blank -%}
+              {{ section.settings.shipping_returns_text }}
+            {%- else -%}
+              <p>Free shipping across Indonesia. Worldwide free over USD 200. Ships in 1–2 business days in a reusable tote, no plastic. 14-day returns on unworn pieces.</p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+    </div>
+  </section>
+</div>
+
+<!-- SIZE GUIDE MODAL -->
+<div class="pdp-v5-modal-overlay" id="pdpSizeModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="pdp-v5-modal-card">
+    <button type="button" class="pdp-v5-modal-close" onclick="document.getElementById('pdpSizeModal').classList.remove('open')" aria-label="Close">✕</button>
+    <h2 class="pdp-v5-modal-title">{{ product.title }} Size Guide</h2>
+
+    {%- if mf_size_guide != blank -%}
+      {{ mf_size_guide }}
+    {%- else -%}
+      <h3 class="pdp-v5-modal-section-title">Size Conversion Chart</h3>
+      <table class="pdp-v5-size-table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>XS-S</th>
+            <th>M-L</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>EU</td><td>34-36</td><td>38-42</td></tr>
+          <tr><td>UK</td><td>6-8</td><td>10-14</td></tr>
+          <tr><td>USA</td><td>2-4</td><td>6-10</td></tr>
+          <tr><td>AUS</td><td>8-10</td><td>12-16</td></tr>
+        </tbody>
+      </table>
+
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+        <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Garment Measurements</h3>
+        <div class="pdp-v5-size-toggle">
+          <button type="button" class="active" id="btn-cm-v5" onclick="pdpSetUnit('cm')">cm</button>
+          <button type="button" id="btn-inch-v5" onclick="pdpSetUnit('inch')">inch</button>
+        </div>
+      </div>
+      <table class="pdp-v5-size-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>XS-S</th>
+            <th>M-L</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dress Length</td>
+            <td><span class="unit-cm">137</span><span class="unit-inch" style="display:none">53.9</span></td>
+            <td><span class="unit-cm">139</span><span class="unit-inch" style="display:none">54.7</span></td>
+          </tr>
+          <tr>
+            <td>Bust</td>
+            <td><span class="unit-cm">85</span><span class="unit-inch" style="display:none">33.5</span></td>
+            <td><span class="unit-cm">95</span><span class="unit-inch" style="display:none">37.4</span></td>
+          </tr>
+          <tr>
+            <td>Waist</td>
+            <td><span class="unit-cm">70</span><span class="unit-inch" style="display:none">27.6</span></td>
+            <td><span class="unit-cm">80</span><span class="unit-inch" style="display:none">31.5</span></td>
+          </tr>
+          <tr>
+            <td>Hips</td>
+            <td><span class="unit-cm">95</span><span class="unit-inch" style="display:none">37.4</span></td>
+            <td><span class="unit-cm">105</span><span class="unit-inch" style="display:none">41.3</span></td>
+          </tr>
+        </tbody>
+      </table>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+(function(){
+  var productData = {{ product | json }};
+  var variants = productData.variants;
+  var options = productData.options;
+  var selectedOptions = {};
+  var lowStockThreshold = {{ section.settings.low_stock_threshold | default: 10 }};
+
+  {%- for option in product.options_with_values -%}
+    selectedOptions['{{ option.name }}'] = '{{ option.selected_value | escape }}';
+  {%- endfor -%}
+
+  var variantInput = document.getElementById('pdpVariantIdV5');
+  var priceEl = document.getElementById('pdpPriceV5');
+  var stockEl = document.getElementById('pdpStockV5');
+  var atcBtn = document.getElementById('pdpAtcBtnV5');
+
+  // Swatches
+  document.querySelectorAll('.pdp-v5-sw-row .pdp-v5-sw').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var idx = parseInt(this.closest('[data-option-index]').dataset.optionIndex);
+      var optName = options[idx];
+      selectedOptions[optName] = this.dataset.value;
+
+      this.closest('.pdp-v5-sw-row').querySelectorAll('.pdp-v5-sw').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+
+      var label = document.getElementById('pdpColorLabel');
+      if (label) label.textContent = this.dataset.value;
+
+      updateVariant();
+    });
+  });
+
+  // Sizes
+  document.querySelectorAll('.pdp-v5-sizes .pdp-v5-size').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (this.classList.contains('disabled')) return;
+      var idx = parseInt(this.closest('[data-option-index]').dataset.optionIndex);
+      var optName = options[idx];
+      selectedOptions[optName] = this.dataset.value;
+
+      this.closest('.pdp-v5-sizes').querySelectorAll('.pdp-v5-size').forEach(function(b){ b.classList.remove('active'); });
+      this.classList.add('active');
+
+      updateVariant();
+    });
+  });
+
+  function updateVariant() {
+    var match = variants.find(function(v){
+      return options.every(function(optName, i){
+        return v.options[i] === selectedOptions[optName];
+      });
+    });
+
+    if (!match) return;
+    if (variantInput) variantInput.value = match.id;
+
+    var url = new URL(window.location);
+    url.searchParams.set('variant', match.id);
+    window.history.replaceState({}, '', url);
+
+    var formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+    if (priceEl) {
+      if (match.compare_at_price && match.compare_at_price > match.price) {
+        priceEl.innerHTML = '<s>' + formatter.format(match.compare_at_price / 100) + '</s> <span class="sale-price">' + formatter.format(match.price / 100) + '</span>';
+      } else {
+        priceEl.textContent = formatter.format(match.price / 100);
+      }
+    }
+
+    if (stockEl) {
+      if (match.inventory_management === 'shopify' and match.inventory_quantity > 0 and match.inventory_quantity <= lowStockThreshold) {
+        stockEl.textContent = 'Only ' + match.inventory_quantity + ' pieces left';
+      } else {
+        stockEl.textContent = '';
+      }
+    }
+
+    if (atcBtn) {
+      if (match.available) {
+        atcBtn.disabled = false;
+        atcBtn.textContent = 'Add to cart';
+      } else {
+        atcBtn.disabled = true;
+        atcBtn.textContent = 'Sold out';
+      }
+    }
+  }
+
+  // Mobile Carousel
+  var track = document.getElementById('pdpMobileTrack');
+  var dots = document.querySelectorAll('#pdpMobileDots .pdp-v5-mobile-dot');
+  var currentSlide = 0;
+  var totalSlides = dots.length;
+
+  function setSlide(i) {
+    currentSlide = i;
+    if (track) track.style.transform = 'translateX(-' + (i * 100) + '%)';
+    dots.forEach(function(d, idx){ d.classList.toggle('active', idx === i); });
+  }
+
+  dots.forEach(function(dot){
+    dot.addEventListener('click', function(){ setSlide(parseInt(this.dataset.idx)); });
+  });
+
+  var touchStartX = 0;
+  var mobileGal = document.getElementById('pdpMobileGal');
+  if (mobileGal) {
+    mobileGal.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive: true});
+    mobileGal.addEventListener('touchend', function(e){
+      var diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        if (diff > 0 && currentSlide < totalSlides - 1) setSlide(currentSlide + 1);
+        else if (diff < 0 && currentSlide > 0) setSlide(currentSlide - 1);
+      }
+    }, {passive: true});
+  }
+
+  // AJAX ATC
+  var form = document.getElementById('pdpFormV5');
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      atcBtn.textContent = 'Adding...';
+      atcBtn.disabled = true;
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        body: new FormData(form)
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(){
+        atcBtn.textContent = 'Added ✓';
+        setTimeout(function(){
+          atcBtn.textContent = 'Add to cart';
+          atcBtn.disabled = false;
+        }, 1800);
+        fetch('/cart.js').then(function(r){ return r.json(); }).then(function(cart){
+          document.querySelectorAll('.hdr-actions-v5 a[aria-label="Cart"] span span').forEach(function(el){
+            el.textContent = cart.item_count;
+          });
+        });
+      })
+      .catch(function(){
+        atcBtn.textContent = 'Add to cart';
+        atcBtn.disabled = false;
+      });
+    });
+  }
+
+  window.pdpSetUnit = function(unit) {
+    document.getElementById('btn-cm-v5')?.classList.toggle('active', unit === 'cm');
+    document.getElementById('btn-inch-v5')?.classList.toggle('active', unit === 'inch');
+    document.querySelectorAll('.unit-cm').forEach(function(el){ el.style.display = unit === 'cm' ? '' : 'none'; });
+    document.querySelectorAll('.unit-inch').forEach(function(el){ el.style.display = unit === 'inch' ? '' : 'none'; });
+  };
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Page V5",
+  "tag": "section",
+  "class": "section-pdp-v5",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Inventory Alert"
+    },
+    {
+      "type": "range",
+      "id": "low_stock_threshold",
+      "label": "Low stock alert threshold (pieces)",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10,
+      "info": "Menampilkan 'Only X pieces left' jika stok berada di bawah angka ini."
+    },
+    {
+      "type": "header",
+      "content": "Trust Assurances & Shipping Notes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges",
+      "label": "Show Trust Assurances",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_note_1",
+      "label": "Shipping Note 1",
+      "default": "Ships next day · Free shipping across Indonesia"
+    },
+    {
+      "type": "text",
+      "id": "shipping_note_2",
+      "label": "Shipping Note 2",
+      "default": "14-day returns on unworn pieces"
+    },
+    {
+      "type": "text",
+      "id": "shipping_note_3",
+      "label": "Shipping Note 3",
+      "default": "Ships in a reusable tote bag and biodegradable polymailer"
+    },
+    {
+      "type": "header",
+      "content": "Payment Badges"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_badges",
+      "label": "Show Payment Badges",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "payment_badges",
+      "label": "Payment Badges List (dipisahkan koma)",
+      "default": "QRIS, VA, GoPay, Visa, Mastercard"
+    },
+    {
+      "type": "header",
+      "content": "Craft Spec Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_specbar",
+      "label": "Show Craft Spec Bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "specbar_custom_text",
+      "label": "Middle details in Spec Bar",
+      "default": "2 DAYS PER PIECE · 100% RAYON"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 1: Fit & Sizing"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fit_sizing",
+      "label": "Show Fit & Sizing Accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading_fit_sizing",
+      "label": "Heading",
+      "default": "Fit & sizing"
+    },
+    {
+      "type": "richtext",
+      "id": "default_fit_sizing",
+      "label": "Default Content (Dipakai jika metafield produk kosong)",
+      "default": "<p>True to size with generous stretch, the knit adapts to your shape.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 2: Craft & Materials"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_materials",
+      "label": "Show Craft & Materials Accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading_materials",
+      "label": "Heading",
+      "default": "Craft & materials"
+    },
+    {
+      "type": "richtext",
+      "id": "default_materials",
+      "label": "Default Content (Dipakai jika metafield produk kosong)",
+      "default": "<p>100% rayon yarn, ethically handmade in Bali by one artisan.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 3: Care"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_care",
+      "label": "Show Care Accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading_care",
+      "label": "Heading",
+      "default": "Care"
+    },
+    {
+      "type": "richtext",
+      "id": "default_care",
+      "label": "Default Content (Dipakai jika metafield produk kosong)",
+      "default": "<p>Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 4: Shipping & Returns"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_shipping_returns",
+      "label": "Show Shipping & Returns Accordion",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading_shipping_returns",
+      "label": "Heading",
+      "default": "Shipping & returns"
+    },
+    {
+      "type": "richtext",
+      "id": "shipping_returns_text",
+      "label": "Shipping & Returns Policy Content",
+      "default": "<p>Free shipping across Indonesia. Worldwide free over USD 200. Ships in 1–2 business days in a reusable tote, no plastic. 14-day returns on unworn pieces.</p>"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "presets": [
+    {
+      "name": "Product Page V5"
+    }
+  ]
+}
+{% endschema %}

@@ -781,8 +781,8 @@
 </form>
 
 {%- comment -%} ===== PRODUCT GRID ===== {%- endcomment -%}
-<div class="v5-grid-{{ sid }}" id="plpGrid-{{ sid }}">
-  {%- paginate collection.products by products_per_page -%}
+{%- paginate collection.products by products_per_page -%}
+  <div class="v5-grid-{{ sid }}" id="plpGrid-{{ sid }}">
     {%- if collection.products.size > 0 -%}
       {%- for product in collection.products -%}
         {%- if collection.handle == 'sale' and product.compare_at_price <= product.price -%}
@@ -796,33 +796,31 @@
         <a href="{{ collection.url }}" style="color:#392319;text-decoration:underline;font-size:12px;">Clear all filters</a>
       </div>
     {%- endif -%}
+  </div>
 
-    {%- comment -%} ===== PAGINATION ===== {%- endcomment -%}
-    {%- if paginate.pages > 1 -%}
-      </div>
-      <nav class="v5-pagination-{{ sid }}" aria-label="Pagination">
-        {%- if paginate.previous -%}
-          <a href="{{ paginate.previous.url }}" aria-label="Previous page">&laquo;</a>
-        {%- endif -%}
-        {%- for part in paginate.parts -%}
-          {%- if part.is_link -%}
-            <a href="{{ part.url }}">{{ part.title }}</a>
+  {%- comment -%} ===== PAGINATION ===== {%- endcomment -%}
+  {%- if paginate.pages > 1 -%}
+    <nav class="v5-pagination-{{ sid }}" aria-label="Pagination">
+      {%- if paginate.previous -%}
+        <a href="{{ paginate.previous.url }}" aria-label="Previous page">&laquo;</a>
+      {%- endif -%}
+      {%- for part in paginate.parts -%}
+        {%- if part.is_link -%}
+          <a href="{{ part.url }}">{{ part.title }}</a>
+        {%- else -%}
+          {%- if part.title == paginate.current_page -%}
+            <span class="current" aria-current="page">{{ part.title }}</span>
           {%- else -%}
-            {%- if part.title == paginate.current_page -%}
-              <span class="current" aria-current="page">{{ part.title }}</span>
-            {%- else -%}
-              <span>{{ part.title }}</span>
-            {%- endif -%}
+            <span>{{ part.title }}</span>
           {%- endif -%}
-        {%- endfor -%}
-        {%- if paginate.next -%}
-          <a href="{{ paginate.next.url }}" aria-label="Next page">&raquo;</a>
         {%- endif -%}
-      </nav>
-    {%- else -%}
-      </div>
-    {%- endif -%}
-  {%- endpaginate -%}
+      {%- endfor -%}
+      {%- if paginate.next -%}
+        <a href="{{ paginate.next.url }}" aria-label="Next page">&raquo;</a>
+      {%- endif -%}
+    </nav>
+  {%- endif -%}
+{%- endpaginate -%}
 
 <script>
 (function() {
