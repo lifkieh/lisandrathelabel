@@ -809,6 +809,77 @@
       font-size: 11.5px;
     }
   }
+
+  /* Recent Searches Chips & Recently Viewed */
+  .search-recent-wrap-v5 {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(57, 35, 25, 0.08);
+  }
+  .search-recent-header-v5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .search-recent-clear-btn {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay, #8a5a44);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 0;
+    transition: opacity 0.2s;
+    border-bottom: 1px solid transparent;
+  }
+  .search-recent-clear-btn:hover {
+    opacity: 0.7;
+    border-bottom-color: currentColor;
+  }
+  .search-recent-chips-v5 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .search-chip-v5 {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid var(--line, #d9cfa9);
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: var(--ui, "Inter", sans-serif);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .search-chip-v5:hover {
+    background: rgba(57, 35, 25, 0.05);
+    border-color: var(--cocoa, #392319);
+    transform: translateY(-1px);
+  }
+  .search-chip-v5 .chip-text {
+    pointer-events: none;
+  }
+  .search-chip-v5 .chip-remove {
+    font-size: 11px;
+    opacity: 0.5;
+    padding: 2px;
+    margin-left: 2px;
+    line-height: 1;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .search-chip-v5 .chip-remove:hover {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 </style>
 
 <div class="v5-header-sticky-wrapper">
@@ -1141,8 +1212,21 @@
     </div>
 
     <div class="search-drawer-empty-state-v5" id="searchEmptyState">
-      <span class="search-recommendation-title-v5" id="emptyStateMessage">Top Suggestions</span>
-      <div class="search-predictive-grid-v5">
+      <!-- Recent Keyword Searches -->
+      <div id="recentSearchesWrap" class="search-recent-wrap-v5" style="display: none;">
+        <div class="search-recent-header-v5">
+          <span class="search-recommendation-title-v5" style="margin: 0;">Recent Searches</span>
+          <button type="button" class="search-recent-clear-btn" id="clearRecentSearchesBtn">Clear All</button>
+        </div>
+        <div class="search-recent-chips-v5" id="recentSearchesChips"></div>
+      </div>
+
+      <!-- Recently Viewed / Top Suggestions Grid -->
+      <div class="search-recent-header-v5" style="margin-bottom: 14px;">
+        <span class="search-recommendation-title-v5" id="emptyStateMessage" style="margin: 0;">Top Suggestions</span>
+        <button type="button" class="search-recent-clear-btn" id="clearRecentlyViewedBtn" style="display: none;">Clear All</button>
+      </div>
+      <div class="search-predictive-grid-v5" id="emptyStateGrid">
         {% assign best_sellers = collections['best-sellers'].products | default: collections['frontpage'].products %}
         {% for product in best_sellers limit: 4 %}
           <a href="{{ product.url }}" class="search-predictive-item-v5">
@@ -1284,6 +1368,7 @@
       document.body.style.overflow = '';
     } else {
       positionSearchDrawer();
+      if (window.refreshSearchHistory) window.refreshSearchHistory();
       searchDrawer.classList.add('active');
       searchOverlay.classList.add('active');
       if (header) header.classList.add('search-active');
@@ -1321,13 +1406,165 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchDrawerInput');
+    const searchForm = document.querySelector('.search-drawer-form-v5');
     const resultsContainer = document.getElementById('searchResultsContainer');
     const predictiveGrid = document.getElementById('predictiveResultsGrid');
     const emptyState = document.getElementById('searchEmptyState');
     const emptyStateMessage = document.getElementById('emptyStateMessage');
+    const emptyStateGrid = document.getElementById('emptyStateGrid');
     const viewAllBtn = document.getElementById('viewAllResultsBtn');
+    const recentSearchesWrap = document.getElementById('recentSearchesWrap');
+    const recentSearchesChips = document.getElementById('recentSearchesChips');
+    const clearRecentSearchesBtn = document.getElementById('clearRecentSearchesBtn');
+    const clearRecentlyViewedBtn = document.getElementById('clearRecentlyViewedBtn');
 
     if (!searchInput) return;
+
+    // Cache initial default HTML for Top Suggestions
+    const defaultSuggestionsHTML = emptyStateGrid ? emptyStateGrid.innerHTML : '';
+
+    // Storage Helpers
+    function getRecentSearches() {
+      try {
+        return JSON.parse(localStorage.getItem('lisandra_recent_searches') || '[]');
+      } catch(e) { return []; }
+    }
+
+    function saveRecentSearch(query) {
+      const q = query.trim();
+      if (!q) return;
+      try {
+        let list = getRecentSearches();
+        list = list.filter(item => item.toLowerCase() !== q.toLowerCase());
+        list.unshift(q);
+        if (list.length > 6) list = list.slice(0, 6);
+        localStorage.setItem('lisandra_recent_searches', JSON.stringify(list));
+        renderRecentSearches();
+      } catch(e) {}
+    }
+
+    function deleteRecentSearch(query) {
+      try {
+        let list = getRecentSearches();
+        list = list.filter(item => item.toLowerCase() !== query.toLowerCase());
+        localStorage.setItem('lisandra_recent_searches', JSON.stringify(list));
+        renderRecentSearches();
+      } catch(e) {}
+    }
+
+    function clearAllRecentSearches() {
+      try {
+        localStorage.removeItem('lisandra_recent_searches');
+        renderRecentSearches();
+      } catch(e) {}
+    }
+
+    function getRecentlyViewed() {
+      try {
+        return JSON.parse(localStorage.getItem('lisandra_recently_viewed') || '[]');
+      } catch(e) { return []; }
+    }
+
+    function clearAllRecentlyViewed() {
+      try {
+        localStorage.removeItem('lisandra_recently_viewed');
+        renderRecentlyViewed();
+      } catch(e) {}
+    }
+
+    // Render Recent Search Chips
+    function renderRecentSearches() {
+      if (!recentSearchesWrap || !recentSearchesChips) return;
+      const list = getRecentSearches();
+      if (!list || list.length === 0) {
+        recentSearchesWrap.style.display = 'none';
+        recentSearchesChips.innerHTML = '';
+        return;
+      }
+      recentSearchesWrap.style.display = 'block';
+      let html = '';
+      list.forEach(query => {
+        const safeQuery = query.replace(/"/g, '&quot;');
+        html += `
+          <button type="button" class="search-chip-v5" data-query="${safeQuery}">
+            <span class="chip-text">${query}</span>
+            <span class="chip-remove" data-remove="${safeQuery}" aria-label="Remove search">✕</span>
+          </button>
+        `;
+      });
+      recentSearchesChips.innerHTML = html;
+
+      // Add listeners
+      recentSearchesChips.querySelectorAll('.search-chip-v5').forEach(chip => {
+        chip.addEventListener('click', function(e) {
+          if (e.target.classList.contains('chip-remove')) {
+            e.stopPropagation();
+            deleteRecentSearch(e.target.dataset.remove);
+            return;
+          }
+          const q = this.dataset.query;
+          searchInput.value = q;
+          searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+          saveRecentSearch(q);
+        });
+      });
+    }
+
+    // Render Recently Viewed Products or Top Suggestions fallback
+    function renderRecentlyViewed() {
+      if (!emptyStateGrid || !emptyStateMessage) return;
+      const list = getRecentlyViewed();
+      if (list && list.length > 0) {
+        emptyStateMessage.innerText = 'Recently Viewed';
+        if (clearRecentlyViewedBtn) clearRecentlyViewedBtn.style.display = 'inline-block';
+
+        let html = '';
+        list.slice(0, 4).forEach(prod => {
+          html += `
+            <a href="${prod.url}" class="search-predictive-item-v5">
+              <div class="search-item-img-wrap-v5">
+                <img src="${prod.image}" alt="${prod.title}" loading="lazy">
+              </div>
+              <div class="search-item-info-v5">
+                <span class="search-item-title-v5">${prod.title}</span>
+                <span class="search-item-price-v5">${prod.price}</span>
+              </div>
+            </a>
+          `;
+        });
+        emptyStateGrid.innerHTML = html;
+      } else {
+        emptyStateMessage.innerText = 'Top Suggestions';
+        if (clearRecentlyViewedBtn) clearRecentlyViewedBtn.style.display = 'none';
+        emptyStateGrid.innerHTML = defaultSuggestionsHTML;
+      }
+    }
+
+    // Button event listeners
+    if (clearRecentSearchesBtn) {
+      clearRecentSearchesBtn.addEventListener('click', clearAllRecentSearches);
+    }
+    if (clearRecentlyViewedBtn) {
+      clearRecentlyViewedBtn.addEventListener('click', clearAllRecentlyViewed);
+    }
+
+    // Save search query on form submission
+    if (searchForm) {
+      searchForm.addEventListener('submit', function() {
+        const query = searchInput.value.trim();
+        if (query) saveRecentSearch(query);
+      });
+    }
+
+    // Initial render
+    renderRecentSearches();
+    renderRecentlyViewed();
+
+    // Hook into search drawer opening
+    window.refreshSearchHistory = function() {
+      renderRecentSearches();
+      renderRecentlyViewed();
+    };
 
     let debounceTimer;
 
@@ -1338,7 +1575,8 @@
       if (query.length === 0) {
         resultsContainer.style.display = 'none';
         emptyState.style.display = 'block';
-        emptyStateMessage.innerText = 'Top Suggestions';
+        renderRecentSearches();
+        renderRecentlyViewed();
         return;
       }
 
@@ -1377,10 +1615,18 @@
               });
               predictiveGrid.innerHTML = html;
               viewAllBtn.href = `/search?q=${encodeURIComponent(query)}&type=product&options[prefix]=last`;
+
+              // Save query when user clicks a search result
+              predictiveGrid.querySelectorAll('.search-predictive-item-v5').forEach(item => {
+                item.addEventListener('click', function() {
+                  saveRecentSearch(query);
+                });
+              });
             } else {
               resultsContainer.style.display = 'none';
               emptyState.style.display = 'block';
-              emptyStateMessage.innerText = `We couldn't find anything for "${query}". Check out our best sellers below:`;
+              if (recentSearchesWrap) recentSearchesWrap.style.display = 'none';
+              emptyStateMessage.innerText = `We couldn't find anything for "${query}". Check out our suggestions below:`;
             }
           })
           .catch(error => {

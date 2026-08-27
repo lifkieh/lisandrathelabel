@@ -731,9 +731,15 @@
           <summary>{{ section.settings.heading_fit_sizing | default: 'Fit & sizing' }}</summary>
           <div>
             {%- if mf_fit_sizing != blank -%}
-              {{ mf_fit_sizing | metafield_tag }}
+              {%- if mf_fit_sizing.type == 'rich_text_field' -%}
+                {{ mf_fit_sizing | metafield_tag }}
+              {%- elsif mf_fit_sizing.type == 'multi_line_text_field' -%}
+                <p>{{ mf_fit_sizing.value | newline_to_br }}</p>
+              {%- else -%}
+                {{ mf_fit_sizing | metafield_tag }}
+              {%- endif -%}
             {%- elsif mf_size_guide != blank and mf_size_guide.fit_notes != blank -%}
-              <p>{{ mf_size_guide.fit_notes }}</p>
+              <p>{{ mf_size_guide.fit_notes | newline_to_br }}</p>
             {%- elsif section.settings.default_fit_sizing != blank -%}
               {{ section.settings.default_fit_sizing }}
             {%- else -%}
@@ -1123,6 +1129,31 @@ function pdpSetUnit(unit) {
     });
   }
 }
+
+// Automatically record current product to Recently Viewed in localStorage
+(function(){
+  try {
+    var pId = {{ product.id | json }};
+    var pTitle = {{ product.title | json }};
+    var pUrl = {{ product.url | json }};
+    var pImg = {{ featured_image | image_url: width: 400 | json }};
+    var pPrice = {{ current_variant.price | money | json }};
+
+    if (pId && pTitle) {
+      var list = JSON.parse(localStorage.getItem('lisandra_recently_viewed') || '[]');
+      list = list.filter(function(item){ return item.id !== pId; });
+      list.unshift({
+        id: pId,
+        title: pTitle,
+        url: pUrl,
+        image: pImg,
+        price: pPrice
+      });
+      if (list.length > 8) list = list.slice(0, 8);
+      localStorage.setItem('lisandra_recently_viewed', JSON.stringify(list));
+    }
+  } catch(e) {}
+})();
 </script>
 
 {% schema %}
