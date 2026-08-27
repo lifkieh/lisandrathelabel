@@ -32,7 +32,7 @@
   assign mf_fit_sizing = product.metafields.custom.fit_sizing
   assign mf_materials = product.metafields.custom.materials
   assign mf_care = product.metafields.custom.care
-  assign mf_size_guide = product.metafields.custom.size_guide
+  assign mf_size_guide = product.metafields.custom.size_guide.value
 -%}
 
 <style>
@@ -213,8 +213,11 @@
     text-transform: uppercase;
   }
   .pdp-v5-opt-head button {
+    font-family: var(--ui, "Inter", -apple-system, sans-serif);
     font-size: 10.5px;
-    letter-spacing: 0.05em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     border-bottom: 1px solid var(--cocoa, #392319);
     padding-bottom: 1px;
     background: none;
@@ -657,7 +660,7 @@
           {%- elsif opt_lower == 'size' or opt_lower == 'ukuran' -%}
             <div class="pdp-v5-opt-head">
               <span class="lbl">{{ option.name }}</span>
-              <button type="button" onclick="document.getElementById('pdpSizeModal').classList.add('open')">Size guide</button>
+              <button type="button" onclick="document.getElementById('pdpSizeModal').classList.add('open')">SIZE GUIDE</button>
             </div>
             <div class="pdp-v5-sizes" data-option-index="{{ forloop.index0 }}">
               {%- for value in option.values -%}
@@ -746,6 +749,8 @@
           <div>
             {%- if mf_fit_sizing != blank -%}
               {{ mf_fit_sizing | metafield_tag }}
+            {%- elsif mf_size_guide != blank and mf_size_guide.fit_notes != blank -%}
+              <p>{{ mf_size_guide.fit_notes }}</p>
             {%- elsif section.settings.default_fit_sizing != blank -%}
               {{ section.settings.default_fit_sizing }}
             {%- else -%}
@@ -806,11 +811,80 @@
 <div class="pdp-v5-modal-overlay" id="pdpSizeModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="pdp-v5-modal-card">
     <button type="button" class="pdp-v5-modal-close" onclick="document.getElementById('pdpSizeModal').classList.remove('open')" aria-label="Close">✕</button>
-    <h2 class="pdp-v5-modal-title">{{ product.title }} Size Guide</h2>
-
+    
     {%- if mf_size_guide != blank -%}
-      {{ mf_size_guide | metafield_tag }}
+      <h2 class="pdp-v5-modal-title">{{ mf_size_guide.name | default: product.title | append: " Size Guide" }}</h2>
+      
+      {%- if mf_size_guide.conversion_json != blank -%}
+      <h3 class="pdp-v5-modal-section-title">Size Conversion Chart</h3>
+      <table class="pdp-v5-size-table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            {%- assign sizes_array = mf_size_guide.sizes | split: "," -%}
+            {%- for s in sizes_array -%}
+              <th>{{ s | strip }}</th>
+            {%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- assign conv_rows = mf_size_guide.conversion_json.value -%}
+          {%- for row in conv_rows -%}
+            <tr>
+              <td>{{ row.region }}</td>
+              {%- for val in row.values -%}
+                <td>{{ val }}</td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+      {%- endif -%}
+
+      {%- if mf_size_guide.measurements_json != blank -%}
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
+        <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Garment Measurements</h3>
+        <div class="pdp-v5-size-toggle">
+          <button type="button" class="active" id="btn-cm-v5" onclick="pdpSetUnit('cm')">cm</button>
+          <button type="button" id="btn-inch-v5" onclick="pdpSetUnit('inch')">inch</button>
+        </div>
+      </div>
+      <table class="pdp-v5-size-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            {%- assign sizes_array = mf_size_guide.sizes | split: "," -%}
+            {%- for s in sizes_array -%}
+              <th>{{ s | strip }}</th>
+            {%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- assign meas_rows = mf_size_guide.measurements_json.value -%}
+          {%- for row in meas_rows -%}
+            <tr>
+              <td>{{ row.label }}</td>
+              {%- for cm_val in row.cm -%}
+                <td>
+                  <span class="unit-cm">{{ cm_val }}</span>
+                  <span class="unit-inch" style="display:none"></span>
+                </td>
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+      {%- endif -%}
+
+      {%- if mf_size_guide.fit_notes != blank -%}
+      <div style="margin-top: 24px;">
+        <h3 class="pdp-v5-modal-section-title" style="margin-bottom: 4px;">Fit Notes:</h3>
+        <p style="font-size: 12.5px; line-height: 1.6; color: var(--cocoa, #392319); margin: 0;">{{ mf_size_guide.fit_notes }}</p>
+      </div>
+      {%- endif -%}
+
     {%- else -%}
+      <h2 class="pdp-v5-modal-title">{{ product.title }} Size Guide</h2>
       <h3 class="pdp-v5-modal-section-title">Size Conversion Chart</h3>
       <table class="pdp-v5-size-table">
         <thead>
@@ -846,23 +920,23 @@
         <tbody>
           <tr>
             <td>Dress Length</td>
-            <td><span class="unit-cm">137</span><span class="unit-inch" style="display:none">53.9</span></td>
-            <td><span class="unit-cm">139</span><span class="unit-inch" style="display:none">54.7</span></td>
+            <td><span class="unit-cm">137</span><span class="unit-inch" style="display:none"></span></td>
+            <td><span class="unit-cm">139</span><span class="unit-inch" style="display:none"></span></td>
           </tr>
           <tr>
             <td>Bust</td>
-            <td><span class="unit-cm">85</span><span class="unit-inch" style="display:none">33.5</span></td>
-            <td><span class="unit-cm">95</span><span class="unit-inch" style="display:none">37.4</span></td>
+            <td><span class="unit-cm">85</span><span class="unit-inch" style="display:none"></span></td>
+            <td><span class="unit-cm">95</span><span class="unit-inch" style="display:none"></span></td>
           </tr>
           <tr>
             <td>Waist</td>
-            <td><span class="unit-cm">70</span><span class="unit-inch" style="display:none">27.6</span></td>
-            <td><span class="unit-cm">80</span><span class="unit-inch" style="display:none">31.5</span></td>
+            <td><span class="unit-cm">70</span><span class="unit-inch" style="display:none"></span></td>
+            <td><span class="unit-cm">80</span><span class="unit-inch" style="display:none"></span></td>
           </tr>
           <tr>
             <td>Hips</td>
-            <td><span class="unit-cm">95</span><span class="unit-inch" style="display:none">37.4</span></td>
-            <td><span class="unit-cm">105</span><span class="unit-inch" style="display:none">41.3</span></td>
+            <td><span class="unit-cm">95</span><span class="unit-inch" style="display:none"></span></td>
+            <td><span class="unit-cm">105</span><span class="unit-inch" style="display:none"></span></td>
           </tr>
         </tbody>
       </table>
@@ -943,7 +1017,7 @@
     }
 
     if (stockEl) {
-      if (match.inventory_management === 'shopify' and match.inventory_quantity > 0 and match.inventory_quantity <= lowStockThreshold) {
+      if (match.inventory_management === 'shopify' && match.inventory_quantity > 0 && match.inventory_quantity <= lowStockThreshold) {
         stockEl.textContent = 'Only ' + match.inventory_quantity + ' pieces left';
       } else {
         stockEl.textContent = '';
@@ -1021,14 +1095,39 @@
       });
     });
   }
-
-  window.pdpSetUnit = function(unit) {
-    document.getElementById('btn-cm-v5')?.classList.toggle('active', unit === 'cm');
-    document.getElementById('btn-inch-v5')?.classList.toggle('active', unit === 'inch');
-    document.querySelectorAll('.unit-cm').forEach(function(el){ el.style.display = unit === 'cm' ? '' : 'none'; });
-    document.querySelectorAll('.unit-inch').forEach(function(el){ el.style.display = unit === 'inch' ? '' : 'none'; });
-  };
 })();
+
+// Standalone Global Size Guide Unit Switcher (CM / INCH)
+function pdpSetUnit(unit) {
+  var cmBtn = document.getElementById('btn-cm-v5');
+  var inBtn = document.getElementById('btn-inch-v5');
+  var cmSpans = document.querySelectorAll('.unit-cm');
+  var inSpans = document.querySelectorAll('.unit-inch');
+
+  if (unit === 'cm') {
+    if (cmBtn) cmBtn.classList.add('active');
+    if (inBtn) inBtn.classList.remove('active');
+    cmSpans.forEach(function(s){ s.style.display = 'inline'; });
+    inSpans.forEach(function(s){ s.style.display = 'none'; });
+  } else {
+    if (inBtn) inBtn.classList.add('active');
+    if (cmBtn) cmBtn.classList.remove('active');
+    
+    cmSpans.forEach(function(s, idx){
+      var inchSpan = inSpans[idx];
+      if (inchSpan) {
+        if (!inchSpan.textContent.trim()) {
+          var cmVal = parseFloat(s.textContent);
+          if (!isNaN(cmVal)) {
+            inchSpan.textContent = (cmVal / 2.54).toFixed(1);
+          }
+        }
+        inchSpan.style.display = 'inline';
+      }
+      s.style.display = 'none';
+    });
+  }
+}
 </script>
 
 {% schema %}
