@@ -50,3 +50,13 @@ h1, h2, h3, h4, h5, h6, .brand-heading {
 .text-caramel { color: var(--caramel) !important; }
 .bg-paper { background-color: var(--paper) !important; }
 .bg-sand { background-color: var(--sand) !important; }
+
+/* 4. Global Sticky Header Group */
+#header-group,
+.shopify-section-group-header-group,
+.v5-header-sticky-wrapper {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1000 !important;
+  width: 100% !important;
+}

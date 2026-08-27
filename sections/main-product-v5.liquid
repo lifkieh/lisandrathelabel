@@ -139,9 +139,9 @@
   /* Info Column */
   .pdp-v5-info {
     position: sticky;
-    top: 80px;
+    top: 96px;
     align-self: start;
-    max-height: calc(100vh - 95px);
+    max-height: calc(100vh - 110px);
     overflow-y: auto;
     scrollbar-width: none;
     padding-right: 4px;
@@ -798,7 +798,8 @@
     {%- if mf_size_guide != blank -%}
       <h2 class="pdp-v5-modal-title">{{ mf_size_guide.name | default: product.title | append: " Size Guide" }}</h2>
       
-      {%- if mf_size_guide.conversion_json != blank -%}
+      {%- assign conv_rows = mf_size_guide.conversion_json.value -%}
+      {%- if conv_rows != blank and conv_rows.size > 0 -%}
       <h3 class="pdp-v5-modal-section-title">Size Conversion Chart</h3>
       <table class="pdp-v5-size-table">
         <thead>
@@ -811,7 +812,6 @@
           </tr>
         </thead>
         <tbody>
-          {%- assign conv_rows = mf_size_guide.conversion_json.value -%}
           {%- for row in conv_rows -%}
             <tr>
               <td>{{ row.region }}</td>
@@ -824,7 +824,8 @@
       </table>
       {%- endif -%}
 
-      {%- if mf_size_guide.measurements_json != blank -%}
+      {%- assign meas_rows = mf_size_guide.measurements_json.value -%}
+      {%- if meas_rows != blank and meas_rows.size > 0 -%}
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
         <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Garment Measurements</h3>
         <div class="pdp-v5-size-toggle">
@@ -843,7 +844,6 @@
           </tr>
         </thead>
         <tbody>
-          {%- assign meas_rows = mf_size_guide.measurements_json.value -%}
           {%- for row in meas_rows -%}
             <tr>
               <td>{{ row.label }}</td>

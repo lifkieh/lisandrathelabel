@@ -7,6 +7,12 @@
 -%}
 
 <style>
+  .v5-header-sticky-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+  }
   .hdr-v5 {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -14,9 +20,6 @@
     padding: 12px clamp(14px, 2vw, 26px);
     border-bottom: 1px solid var(--line, #e2e2e2);
     background: var(--paper, #f8f8f0);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
     transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     color: var(--cocoa, #392319);
     font-family: var(--body, sans-serif);
@@ -808,208 +811,228 @@
   }
 </style>
 
-{%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
-  <div class="util-v5">
-    <span>{{ section.settings.announcement_text }}</span>
-  </div>
-{%- endif -%}
+<div class="v5-header-sticky-wrapper">
+  {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+    <div class="util-v5">
+      <span>{{ section.settings.announcement_text }}</span>
+    </div>
+  {%- endif -%}
 
-<header class="hdr-v5 {% if transparent %}is-transparent{% endif %}" id="siteHeader">
-  <nav class="mainnav-v5" aria-label="Main">
-    <button class="nav-toggle-v5" id="navToggle" aria-label="Toggle Menu" onclick="toggleHeaderDrawer()">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="nav-links-v5">
-      {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
-        {%- for link in nav_menu.links -%}
-          {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
-          {%- assign link_url = link.url -%}
-          {%- if link_title_lower == 'collections' -%}
-            {%- assign link_url = '/pages/collections' -%}
-          {%- endif -%}
-          {%- if link_title_lower == 'our story' -%}
-            {%- assign link_url = '/pages/our-story' -%}
-          {%- endif -%}
+  <header class="hdr-v5 {% if transparent %}is-transparent{% endif %}" id="siteHeader">
+    <nav class="mainnav-v5" aria-label="Main">
+      <button class="nav-toggle-v5" id="navToggle" aria-label="Toggle Menu" onclick="toggleHeaderDrawer()">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links-v5">
+        {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
+          {%- for link in nav_menu.links -%}
+            {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
+            {%- assign link_url = link.url -%}
+            {%- if link_title_lower == 'collections' -%}
+              {%- assign link_url = '/pages/collections' -%}
+            {%- endif -%}
+            {%- if link_title_lower == 'our story' -%}
+              {%- assign link_url = '/pages/our-story' -%}
+            {%- endif -%}
 
-          {%- if link_title_lower == 'shop' -%}
-            <div class="nav-item-v5" id="megaNavItem">
-              <a href="{{ link_url }}">
-                {{ link.title }}
-                <span class="mega-caret" aria-hidden="true"></span>
-              </a>
-            </div>
-          {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
-            <a href="/collections/sale" class="sale">SALE</a>
-          {%- else -%}
-            <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' %}sale{% endif %}">{{ link.title }}</a>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- else -%}
-        <div class="nav-item-v5" id="megaNavItem">
-          <a href="/collections/all">Shop<span class="mega-caret" aria-hidden="true"></span></a>
+            {%- if link_title_lower == 'shop' -%}
+              <div class="nav-item-v5" id="megaNavItem">
+                <a href="{{ link_url }}">
+                  {{ link.title }}
+                  <span class="mega-caret" aria-hidden="true"></span>
+                </a>
+              </div>
+            {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
+              <a href="/collections/sale" class="sale">SALE</a>
+            {%- else -%}
+              <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' %}sale{% endif %}">{{ link.title }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <div class="nav-item-v5" id="megaNavItem">
+            <a href="/collections/all">Shop<span class="mega-caret" aria-hidden="true"></span></a>
+          </div>
+          <a href="/collections/sale" class="sale">SALE</a>
+          <a href="/pages/collections">Collections</a>
+          <a href="/pages/our-story">Our Story</a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ===== MEGA MENU PANEL ===== {%- endcomment -%}
+      <div class="mega-menu" id="megaMenu" role="region" aria-label="Shop categories">
+        <div class="mega-links">
+          <p class="mega-links-label">Browse by</p>
+          <a href="/collections/all">Shop All</a>
+          <a href="/collections/all?sort_by=created-descending">New Arrivals</a>
+          <div class="mega-links-divider"></div>
+          <a href="/collections/all?filter.v.option.product_type=Dress">Dresses</a>
+          <a href="/collections/all?filter.v.option.product_type=Top">Tops</a>
+          <a href="/collections/all?filter.v.option.product_type=Skirt">Skirts</a>
+          <a href="/collections/all?filter.v.option.product_type=Set">Sets</a>
+          <a href="/collections/all?filter.v.option.product_type=Bikini">Swim & Bikini</a>
+          <div class="mega-links-divider"></div>
+          <a href="/collections/best-sellers">Best Sellers</a>
         </div>
-        <a href="/collections/sale" class="sale">SALE</a>
-        <a href="/pages/collections">Collections</a>
-        <a href="/pages/our-story">Our Story</a>
+        {%- comment -%} ===== SMART DYNAMIC PRODUCT RESOLUTION ===== {%- endcomment -%}
+        {%- liquid
+          # Card 1: New Arrivals (Newest Product)
+          assign auto_new_prod = collections['new-arrivals'].products.first | default: collections['all'].products.first
+          assign card1_label = section.settings.mega_card1_label | default: 'New Arrivals'
+          assign card1_url = section.settings.mega_card1_url
+          if card1_url == blank or card1_url contains 'new-arrivals'
+            assign card1_url = '/collections/all?sort_by=created-descending'
+          endif
+          assign card1_img_src = ''
+          if section.settings.mega_card1_image != blank
+            assign card1_img_src = section.settings.mega_card1_image | img_url: '600x'
+          elsif auto_new_prod.featured_image != blank
+            assign card1_img_src = auto_new_prod.featured_image | img_url: '600x'
+          else
+            assign card1_img_src = 'https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=600'
+          endif
+
+          # Card 2: Best Sellers (Top Seller Product)
+          assign auto_best_prod = collections['best-sellers'].products.first | default: collections['all'].products[1]
+          assign card2_label = section.settings.mega_card2_label | default: 'Best Sellers'
+          assign card2_url = section.settings.mega_card2_url
+          if card2_url == blank
+            assign card2_url = '/collections/best-sellers'
+          endif
+          assign card2_img_src = ''
+          if section.settings.mega_card2_image != blank
+            assign card2_img_src = section.settings.mega_card2_image | img_url: '600x'
+          elsif auto_best_prod.featured_image != blank
+            assign card2_img_src = auto_best_prod.featured_image | img_url: '600x'
+          else
+            assign card2_img_src = 'https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=600'
+          endif
+
+          # Card 3: Sale (First discounted product or from sale collection)
+          assign auto_sale_prod = collections['sale'].products.first
+          if auto_sale_prod == blank
+            for prod in collections['all'].products
+              if prod.compare_at_price > prod.price
+                assign auto_sale_prod = prod
+                break
+              endif
+            endfor
+          endif
+          if auto_sale_prod == blank
+            assign auto_sale_prod = collections['all'].products[2]
+          endif
+
+          assign card3_label = section.settings.mega_card3_label
+          if card3_label == blank or card3_label == 'The Artisanal Edit'
+            assign card3_label = 'Sale'
+          endif
+          assign card3_url = section.settings.mega_card3_url
+          if card3_url == blank or card3_url contains 'Hand-knit' or card3_url contains 'hand-knit' or card3_url contains 'all'
+            assign card3_url = '/collections/sale'
+          endif
+          assign card3_img_src = ''
+          if section.settings.mega_card3_image != blank
+            assign card3_img_src = section.settings.mega_card3_image | img_url: '600x'
+          elsif auto_sale_prod.featured_image != blank
+            assign card3_img_src = auto_sale_prod.featured_image | img_url: '600x'
+          else
+            assign card3_img_src = 'https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=600'
+          endif
+        -%}
+
+        <div class="mega-cards">
+          {%- comment -%} Card 1: New Arrivals {%- endcomment -%}
+          <a href="{{ card1_url }}" class="mega-card">
+            <div class="mega-card__img">
+              <img src="{{ card1_img_src }}" alt="{{ card1_label }}" loading="lazy" />
+            </div>
+            <span class="mega-card__label">{{ card1_label }}</span>
+          </a>
+
+          {%- comment -%} Card 2: Best Sellers {%- endcomment -%}
+          <a href="{{ card2_url }}" class="mega-card">
+            <div class="mega-card__img">
+              <img src="{{ card2_img_src }}" alt="{{ card2_label }}" loading="lazy" />
+            </div>
+            <span class="mega-card__label">{{ card2_label }}</span>
+          </a>
+
+          {%- comment -%} Card 3: Sale {%- endcomment -%}
+          <a href="{{ card3_url }}" class="mega-card">
+            <div class="mega-card__img">
+              <img src="{{ card3_img_src }}" alt="{{ card3_label }}" loading="lazy" />
+            </div>
+            <span class="mega-card__label">{{ card3_label }}</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Center Wordmark -->
+    <a href="/" class="wordmark-v5" aria-label="Lisandra The Label Home">
+      {%- if section.settings.logo_dark != blank -%}
+        <img
+          src="{{ section.settings.logo_dark | image_url: width: 400 }}"
+          alt="Lisandra The Label"
+          class="logo-dark"
+          width="400"
+          height="130"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="wordmark-v5-text logo-dark">Lisandra</span>
       {%- endif -%}
-    </div>
 
-    {%- comment -%} ===== MEGA MENU PANEL ===== {%- endcomment -%}
-    <div class="mega-menu" id="megaMenu" role="region" aria-label="Shop categories">
-      <div class="mega-links">
-        <p class="mega-links-label">Browse by</p>
-        <a href="/collections/all">Shop All</a>
-        <a href="/collections/all?sort_by=created-descending">New Arrivals</a>
-        <div class="mega-links-divider"></div>
-        <a href="/collections/all?filter.v.option.product_type=Dress">Dresses</a>
-        <a href="/collections/all?filter.v.option.product_type=Top">Tops</a>
-        <a href="/collections/all?filter.v.option.product_type=Skirt">Skirts</a>
-        <a href="/collections/all?filter.v.option.product_type=Set">Sets</a>
-        <a href="/collections/all?filter.v.option.product_type=Bikini">Swim & Bikini</a>
-        <div class="mega-links-divider"></div>
-        <a href="/collections/best-sellers">Best Sellers</a>
-      </div>
-      {%- comment -%} ===== SMART DYNAMIC PRODUCT RESOLUTION ===== {%- endcomment -%}
-      {%- liquid
-        # Card 1: New Arrivals (Newest Product)
-        assign auto_new_prod = collections['new-arrivals'].products.first | default: collections['all'].products.first
-        assign card1_label = section.settings.mega_card1_label | default: 'New Arrivals'
-        assign card1_url = section.settings.mega_card1_url
-        if card1_url == blank or card1_url contains 'new-arrivals'
-          assign card1_url = '/collections/all?sort_by=created-descending'
-        endif
-        assign card1_img_src = ''
-        if section.settings.mega_card1_image != blank
-          assign card1_img_src = section.settings.mega_card1_image | img_url: '600x'
-        elsif auto_new_prod.featured_image != blank
-          assign card1_img_src = auto_new_prod.featured_image | img_url: '600x'
-        else
-          assign card1_img_src = 'https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=600'
-        endif
-
-        # Card 2: Best Sellers (Top Seller Product)
-        assign auto_best_prod = collections['best-sellers'].products.first | default: collections['all'].products[1]
-        assign card2_label = section.settings.mega_card2_label | default: 'Best Sellers'
-        assign card2_url = section.settings.mega_card2_url
-        if card2_url == blank
-          assign card2_url = '/collections/best-sellers'
-        endif
-        assign card2_img_src = ''
-        if section.settings.mega_card2_image != blank
-          assign card2_img_src = section.settings.mega_card2_image | img_url: '600x'
-        elsif auto_best_prod.featured_image != blank
-          assign card2_img_src = auto_best_prod.featured_image | img_url: '600x'
-        else
-          assign card2_img_src = 'https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=600'
-        endif
-
-        # Card 3: Sale (First discounted product or from sale collection)
-        assign auto_sale_prod = collections['sale'].products.first
-        if auto_sale_prod == blank
-          for prod in collections['all'].products
-            if prod.compare_at_price > prod.price
-              assign auto_sale_prod = prod
-              break
-            endif
-          endfor
-        endif
-        if auto_sale_prod == blank
-          assign auto_sale_prod = collections['all'].products[2]
-        endif
-
-        assign card3_label = section.settings.mega_card3_label
-        if card3_label == blank or card3_label == 'The Artisanal Edit'
-          assign card3_label = 'Sale'
-        endif
-        assign card3_url = section.settings.mega_card3_url
-        if card3_url == blank or card3_url contains 'Hand-knit' or card3_url contains 'hand-knit' or card3_url contains 'all'
-          assign card3_url = '/collections/sale'
-        endif
-        assign card3_img_src = ''
-        if section.settings.mega_card3_image != blank
-          assign card3_img_src = section.settings.mega_card3_image | img_url: '600x'
-        elsif auto_sale_prod.featured_image != blank
-          assign card3_img_src = auto_sale_prod.featured_image | img_url: '600x'
-        else
-          assign card3_img_src = 'https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=600'
-        endif
-      -%}
-
-      <div class="mega-cards">
-        {%- comment -%} Card 1: New Arrivals {%- endcomment -%}
-        <a href="{{ card1_url }}" class="mega-card">
-          <div class="mega-card__img">
-            <img src="{{ card1_img_src }}" alt="{{ card1_label }}" loading="lazy" />
-          </div>
-          <span class="mega-card__label">{{ card1_label }}</span>
-        </a>
-
-        {%- comment -%} Card 2: Best Sellers {%- endcomment -%}
-        <a href="{{ card2_url }}" class="mega-card">
-          <div class="mega-card__img">
-            <img src="{{ card2_img_src }}" alt="{{ card2_label }}" loading="lazy" />
-          </div>
-          <span class="mega-card__label">{{ card2_label }}</span>
-        </a>
-
-        {%- comment -%} Card 3: Sale {%- endcomment -%}
-        <a href="{{ card3_url }}" class="mega-card">
-          <div class="mega-card__img">
-            <img src="{{ card3_img_src }}" alt="{{ card3_label }}" loading="lazy" />
-          </div>
-          <span class="mega-card__label">{{ card3_label }}</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-
-  <a href="{{ routes.root_url }}" class="wordmark-v5" aria-label="Lisandra Home">
-    {%- if section.settings.logo_dark != blank -%}
-      <img src="{{ section.settings.logo_dark | img_url: '400x' }}" class="logo-dark" alt="Lisandra The Label" />
-    {%- elsif section.settings.logo_light == blank -%}
-      <span class="wordmark-v5-text">Lisandra</span>
-    {%- endif -%}
-    
-    {%- if section.settings.logo_light != blank -%}
-      <img src="{{ section.settings.logo_light | img_url: '400x' }}" class="logo-light" alt="Lisandra The Label" />
-    {%- endif -%}
-  </a>
-
-  <div class="hdr-actions-v5">
-    {%- comment -%} Search Pill Trigger {%- endcomment -%}
-    <button type="button" class="search-pill-trigger-v5" onclick="toggleSearchDrawer()" aria-label="Search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="7"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <span class="search-pill-label">Search our store</span>
-    </button>
-    {%- comment -%} Account Icon {%- endcomment -%}
-    {%- if customer -%}
-      <a href="{{ routes.account_url }}" class="hdr-account-btn-v5" aria-label="My Account">
-        <span class="hdr-account-initials-v5">{{ customer.first_name | slice: 0 }}{{ customer.last_name | slice: 0 }}</span>
-      </a>
-    {%- else -%}
-      <a href="{{ routes.account_login_url }}" class="hdr-account-btn-v5" aria-label="Sign In">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-      </a>
-    {%- endif -%}
-    {%- comment -%} Cart {%- endcomment -%}
-    <a href="{{ routes.cart_url }}" aria-label="Cart">
-      <span style="display: flex; align-items: center; gap: 4px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
-        </svg>
-        <span style="font-size: 10px;">{{ cart.item_count }}</span>
-      </span>
+      {%- if section.settings.logo_light != blank -%}
+        <img
+          src="{{ section.settings.logo_light | image_url: width: 400 }}"
+          alt="Lisandra The Label"
+          class="logo-light"
+          width="400"
+          height="130"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="wordmark-v5-text logo-light">Lisandra</span>
+      {%- endif -%}
     </a>
-  </div>
-</header>
+
+    <!-- Right Actions -->
+    <div class="hdr-actions-v5">
+      {%- comment -%} ===== SEARCH PILL TRIGGER (Image 2 style) ===== {%- endcomment -%}
+      <button type="button" class="search-pill-trigger-v5" onclick="toggleSearchDrawer()" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span class="search-pill-label">Search our store</span>
+      </button>
+      {%- comment -%} Account Icon {%- endcomment -%}
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}" class="hdr-account-btn-v5" aria-label="My Account">
+          <span class="hdr-account-initials-v5">{{ customer.first_name | slice: 0 }}{{ customer.last_name | slice: 0 }}</span>
+        </a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}" class="hdr-account-btn-v5" aria-label="Sign In">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      {%- endif -%}
+      {%- comment -%} Cart {%- endcomment -%}
+      <a href="{{ routes.cart_url }}" aria-label="Cart">
+        <span style="display: flex; align-items: center; gap: 4px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span style="font-size: 10px;">{{ cart.item_count }}</span>
+        </span>
+      </a>
+    </div>
+  </header>
+</div>
 
 <!-- Mobile Navigation Drawer -->
 <div class="mobile-drawer-overlay" id="drawerOverlay" onclick="toggleHeaderDrawer()"></div>
