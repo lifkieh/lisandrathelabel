@@ -60,7 +60,27 @@
                 <div class="cd-cs-info-v5">
                   <h5>{{ prod.title }}</h5>
                   <p>{{ prod.price | money_without_trailing_zeros }}</p>
-                  <a href="{{ prod.url }}">VIEW</a>
+                  {%- capture variants_json -%}
+                    [
+                      {%- for variant in prod.variants -%}
+                        {
+                          "id": {{ variant.id }},
+                          "title": {{ variant.title | json }},
+                          "price": {{ variant.price | money_without_trailing_zeros | json }},
+                          "available": {{ variant.available | json }}
+                        }{%- unless forloop.last -%},{%- endunless -%}
+                      {%- endfor -%}
+                    ]
+                  {%- endcapture -%}
+                  <a href="#" 
+                    onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, 'cart_drawer_cs');"
+                    data-title="{{ prod.title | escape }}"
+                    data-url="{{ prod.url }}"
+                    data-img="{{ prod.featured_media | img_url: '400x' }}"
+                    data-price="{{ prod.price | money_without_trailing_zeros }}"
+                    data-variants='{{ variants_json | strip_newlines }}'
+                    class="cd-cs-add-btn"
+                  >+ QUICK ADD</a>
                 </div>
               </div>
               {% assign shown_count = shown_count | plus: 1 %}
@@ -79,7 +99,7 @@
     <p class="cd-tax-note-v5">Taxes and shipping calculated at checkout</p>
     <form action="{{ routes.cart_url }}" method="post" id="cartDrawerFormV5">
       <button type="submit" name="checkout" class="cd-btn-primary-v5"{% if cart.item_count == 0 %} disabled{% endif %}>
-        <span class="lock-icon">🔒</span> CONTINUE TO CHECKOUT
+        <span class="lock-icon"></span> CONTINUE TO CHECKOUT
       </button>
     </form>
   </div>
@@ -350,10 +370,16 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
-    transition: background 0.2s, opacity 0.2s;
+    transition: background 0.2s, opacity 0.2s, transform 0.1s ease;
     text-decoration: none;
   }
-  .cd-btn-primary-v5:hover:not(:disabled) { background: #23140e; }
+  .cd-btn-primary-v5:hover:not(:disabled) { 
+    background: #23140e;
+    transform: scale(1.01);
+  }
+  .cd-btn-primary-v5:active:not(:disabled) { 
+    transform: scale(0.98);
+  }
   .cd-btn-primary-v5:disabled { opacity: 0.5; cursor: not-allowed; }
   .lock-icon { font-size: 12px; }
 </style>
@@ -429,6 +455,18 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       closeCartDrawerV5();
+    }
+  });
+
+  // Auto-open if redirected from /cart
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.search.includes('cart_drawer=1')) {
+      // Remove query param without refreshing
+      const url = new URL(window.location);
+      url.searchParams.delete('cart_drawer');
+      window.history.replaceState({}, document.title, url);
+      
+      openCartDrawerV5();
     }
   });
 </script>

@@ -16,7 +16,7 @@
     background: rgba(18, 11, 7, 0.45);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
-    z-index: 9999;
+    z-index: 2147483647;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -342,7 +342,14 @@
     })
     .then(data => {
       closeQuickAddModal(sectionId);
-      showQuickAddToast(sectionId);
+      
+      if (typeof openCartDrawerV5 === 'function' && typeof refreshCartDrawerV5 === 'function') {
+        refreshCartDrawerV5();
+        openCartDrawerV5();
+      } else {
+        showQuickAddToast(sectionId);
+      }
+
       if (typeof updateHeaderCartCountV5 === 'function') {
         // If Cart Drawer logic is present, trigger it and update badge
         fetch('/cart.js').then(res => res.json()).then(cart => updateHeaderCartCountV5(cart.item_count));
