@@ -1,0 +1,440 @@
+<div class="cd-overlay-v5" id="cartDrawerOverlayV5" onclick="if(event.target === this) closeCartDrawerV5()"></div>
+<div class="cd-drawer-v5" id="cartDrawerV5">
+  <div class="cd-header-v5">
+    <h3>YOUR BAG (<span class="cart-count-v5">{{ cart.item_count }}</span>)</h3>
+    <button type="button" class="cd-close-btn-v5" onclick="closeCartDrawerV5()" aria-label="Close">✕</button>
+  </div>
+
+
+  <div class="cd-body-v5" id="cdBodyV5">
+    {% if cart.item_count == 0 %}
+      <div class="cd-empty-v5">
+        <p>Your bag is currently empty.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="cd-btn-primary-v5" onclick="closeCartDrawerV5()">CONTINUE SHOPPING</a>
+      </div>
+    {% else %}
+      <div class="cd-items-list-v5">
+        {% for item in cart.items %}
+          <div class="cd-item-v5" data-key="{{ item.key }}">
+            <a href="{{ item.url }}" class="cd-item-img-wrapper-v5">
+              <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}" loading="lazy">
+            </a>
+            <div class="cd-item-info-v5">
+              <div class="cd-item-title-row-v5">
+                <a href="{{ item.url }}"><h4>{{ item.product.title }}</h4></a>
+                <button type="button" class="cd-remove-btn-v5" onclick="removeCartItemV5('{{ item.key }}')">
+                  <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3.5h12M4.5 3.5v-2c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v2M2.5 3.5l.5 9c.05.55.5 1 1.05 1h5.9c.55 0 1-.45 1.05-1l.5-9"/></svg>
+                </button>
+              </div>
+              {% unless item.product.has_only_default_variant %}
+                <p class="cd-item-variant-v5">Size: {{ item.variant.title }}</p>
+              {% endunless %}
+              <div class="cd-item-bottom-row-v5">
+                <div class="cd-qty-wrapper-v5">
+                  <button type="button" onclick="changeCartItemQtyV5('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
+                  <input type="text" value="{{ item.quantity }}" readonly>
+                  <button type="button" onclick="changeCartItemQtyV5('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                </div>
+                <p class="cd-item-price-v5">{{ item.final_line_price | money_without_trailing_zeros }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    {% comment %} Cross-sell section {% endcomment %}
+    {% if cart.item_count > 0 %}
+      <div class="cd-cross-sell-v5">
+        <p class="cd-cs-title-v5">YOU MAY ALSO LIKE</p>
+        <div class="cd-cs-list-v5">
+          {% assign cs_collection = collections['best-sellers'] %}
+          {% if cs_collection != blank %}
+            {% for prod in cs_collection.products limit: 2 %}
+              <div class="cd-cs-item-v5">
+                <a href="{{ prod.url }}"><img src="{{ prod.featured_media | img_url: '150x' }}" alt="{{ prod.title | escape }}"></a>
+                <div class="cd-cs-info-v5">
+                  <h5>{{ prod.title }}</h5>
+                  <p>{{ prod.price | money_without_trailing_zeros }}</p>
+                  <a href="{{ prod.url }}">VIEW</a>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="cd-footer-v5">
+    <div class="cd-subtotal-row-v5">
+      <span>SUBTOTAL</span>
+      <strong>{{ cart.total_price | money_without_trailing_zeros }}</strong>
+    </div>
+    <p class="cd-tax-note-v5">Taxes and shipping calculated at checkout</p>
+    <form action="{{ routes.cart_url }}" method="post" id="cartDrawerFormV5">
+      <button type="submit" name="checkout" class="cd-btn-primary-v5"{% if cart.item_count == 0 %} disabled{% endif %}>
+        <span class="lock-icon">🔒</span> CONTINUE TO CHECKOUT
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+  /* Cart Drawer Overlays and Positioning */
+  .cd-overlay-v5 {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 12, 8, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 2147483646;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+  }
+  .cd-overlay-v5.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .cd-drawer-v5 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 420px;
+    background: var(--paper, #fcfbf7);
+    z-index: 2147483647;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+    color: var(--cocoa, #392319);
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .cd-drawer-v5.is-open {
+    transform: translateX(0);
+  }
+
+  /* Header */
+  .cd-header-v5 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--line, #e5dfd3);
+  }
+  .cd-header-v5 h3 {
+    margin: 0;
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cd-close-btn-v5 {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--cocoa, #392319);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .cd-close-btn-v5:hover { opacity: 1; }
+
+
+
+  /* Body */
+  .cd-body-v5 {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .cd-empty-v5 {
+    text-align: center;
+    margin-top: 40px;
+  }
+  .cd-empty-v5 p { margin-bottom: 24px; color: var(--ink60, #6e5c52); }
+
+  /* Items */
+  .cd-items-list-v5 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .cd-item-v5 {
+    display: flex;
+    gap: 16px;
+  }
+  .cd-item-img-wrapper-v5 {
+    width: 80px;
+    flex-shrink: 0;
+    background: var(--sand, #f4efe6);
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  .cd-item-img-wrapper-v5 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cd-item-info-v5 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cd-item-title-row-v5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .cd-item-title-row-v5 h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cocoa, #392319);
+    line-height: 1.3;
+  }
+  .cd-item-title-row-v5 a { text-decoration: none; color: inherit; }
+  .cd-remove-btn-v5 {
+    background: transparent;
+    border: none;
+    color: var(--ink60, #6e5c52);
+    cursor: pointer;
+    padding: 2px;
+    transition: color 0.2s;
+  }
+  .cd-remove-btn-v5:hover { color: var(--cocoa, #392319); }
+  .cd-item-variant-v5 {
+    margin: 4px 0 0 0;
+    font-size: 11px;
+    color: var(--ink60, #6e5c52);
+  }
+  .cd-item-bottom-row-v5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+  }
+  .cd-item-price-v5 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  /* Qty */
+  .cd-qty-wrapper-v5 {
+    display: inline-flex;
+    border: 1px solid var(--line, #e5dfd3);
+    border-radius: 2px;
+    background: #fff;
+  }
+  .cd-qty-wrapper-v5 button {
+    background: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--cocoa, #392319);
+  }
+  .cd-qty-wrapper-v5 input {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-size: 11px;
+    padding: 0;
+    color: var(--cocoa, #392319);
+  }
+
+  /* Cross Sell */
+  .cd-cross-sell-v5 {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid var(--line, #e5dfd3);
+  }
+  .cd-cs-title-v5 {
+    margin: 0 0 16px 0;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .cd-cs-list-v5 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cd-cs-item-v5 {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--line, #e5dfd3);
+  }
+  .cd-cs-item-v5 img {
+    width: 48px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+  .cd-cs-info-v5 { flex: 1; }
+  .cd-cs-info-v5 h5 { margin: 0 0 4px 0; font-size: 11px; font-weight: 500; }
+  .cd-cs-info-v5 p { margin: 0 0 8px 0; font-size: 11px; color: var(--clay, #8a5a44); }
+  .cd-cs-info-v5 a {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    border: 1px solid var(--cocoa, #392319);
+    padding: 4px 10px;
+    text-decoration: none;
+    color: var(--cocoa, #392319);
+    border-radius: 2px;
+    text-transform: uppercase;
+  }
+  
+  /* Footer */
+  .cd-footer-v5 {
+    padding: 24px;
+    background: var(--paper, #fcfbf7);
+    border-top: 1px solid var(--line, #e5dfd3);
+    box-shadow: 0 -10px 20px rgba(252, 251, 247, 0.9);
+  }
+  .cd-subtotal-row-v5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .cd-subtotal-row-v5 span { font-weight: 500; letter-spacing: 0.05em; }
+  .cd-subtotal-row-v5 strong { font-weight: 600; font-size: 15px; }
+  .cd-tax-note-v5 {
+    margin: 0 0 16px 0;
+    font-size: 11px;
+    color: var(--ink60, #6e5c52);
+  }
+  .cd-btn-primary-v5 {
+    width: 100%;
+    background: var(--cocoa, #392319);
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s, opacity 0.2s;
+    text-decoration: none;
+  }
+  .cd-btn-primary-v5:hover:not(:disabled) { background: #23140e; }
+  .cd-btn-primary-v5:disabled { opacity: 0.5; cursor: not-allowed; }
+  .lock-icon { font-size: 12px; }
+</style>
+
+<script>
+  function openCartDrawerV5() {
+    refreshCartDrawerV5();
+    document.getElementById('cartDrawerOverlayV5').classList.add('is-open');
+    document.getElementById('cartDrawerV5').classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCartDrawerV5() {
+    document.getElementById('cartDrawerOverlayV5').classList.remove('is-open');
+    document.getElementById('cartDrawerV5').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function changeCartItemQtyV5(key, qty) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    })
+    .then(res => res.json())
+    .then(cart => {
+      refreshCartDrawerV5();
+      updateHeaderCartCountV5(cart.item_count);
+    })
+    .catch(err => console.error(err));
+  }
+
+  function removeCartItemV5(key) {
+    changeCartItemQtyV5(key, 0);
+  }
+
+  function refreshCartDrawerV5() {
+    fetch('/?section_id=cart-drawer-v5')
+      .then(res => res.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Update header
+        const newHeader = doc.querySelector('.cd-header-v5');
+        if (newHeader) document.querySelector('.cd-header-v5').innerHTML = newHeader.innerHTML;
+        
+
+        
+        // Update body
+        const newBody = doc.querySelector('#cdBodyV5');
+        if (newBody) document.getElementById('cdBodyV5').innerHTML = newBody.innerHTML;
+        
+        // Update footer
+        const newFooter = doc.querySelector('.cd-footer-v5');
+        if (newFooter) document.querySelector('.cd-footer-v5').innerHTML = newFooter.innerHTML;
+      })
+      .catch(err => console.error('Failed to fetch cart drawer:', err));
+  }
+
+  function updateHeaderCartCountV5(count) {
+    document.querySelectorAll('.cart-count-v5').forEach(el => {
+      el.textContent = count;
+    });
+  }
+
+  // Hook into Quick Add submit success from other sections
+  const originalFetch = window.fetch;
+  window.fetch = async (...args) => {
+    let response = await originalFetch(...args);
+    if (args[0] && typeof args[0] === 'string' && args[0].includes('/cart/add.js')) {
+      const clonedRes = response.clone();
+      clonedRes.json().then(data => {
+        setTimeout(() => {
+          updateHeaderCartCount(); // this is from best-sellers-custom.liquid
+          openCartDrawerV5();
+        }, 500);
+      }).catch(e => console.error(e));
+    }
+    return response;
+  };
+</script>
+
+{% schema %}
+{
+  "name": "Cart Drawer V5",
+  "settings": []
+}
+{% endschema %}

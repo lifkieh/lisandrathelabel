@@ -119,21 +119,22 @@
     transition: bottom 0.3s ease;
     z-index: 3;
   }
-  .card-{{ section.id }} figure:hover .card-actions-{{ section.id }} {
+  .card-{{ section.id }}:hover .card-actions-{{ section.id }} {
     bottom: 0;
   }
   .quick-add-btn-{{ section.id }} {
     background: #fff;
     color: var(--cocoa, #392319);
     border: none;
-    padding: 8px 16px;
-    font-size: 10px;
+    padding: 9px 16px;
+    font-size: 10.5px;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     cursor: pointer;
     text-transform: uppercase;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, transform 0.15s ease;
     width: 100%;
+    border-radius: 2px;
   }
   .quick-add-btn-{{ section.id }}:hover {
     background: var(--cocoa, #392319);
@@ -193,6 +194,214 @@
     box-shadow: 0 0 0 1px #fff inset, 0 0 0 2px var(--cocoa, #392319);
   }
 
+  /* Quick Add Drawer / Modal Component */
+  .qa-overlay-v5 {
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 11, 7, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  .qa-overlay-v5.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .qa-card-v5 {
+    background: var(--paper, #fcfbf7);
+    border: 1px solid var(--line, #e5dfd3);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 50px rgba(35, 20, 12, 0.25);
+    padding: 22px 20px 20px 20px;
+    position: relative;
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    color: var(--cocoa, #392319);
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .qa-overlay-v5.is-open .qa-card-v5 {
+    transform: translateY(0) scale(1);
+  }
+  .qa-close-btn-v5 {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    padding: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .qa-close-btn-v5:hover {
+    opacity: 1;
+  }
+  .qa-product-header-v5 {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line, #e5dfd3);
+    margin-bottom: 16px;
+  }
+  .qa-product-img-v5 {
+    width: 64px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: var(--sand, #f4efe6);
+    flex-shrink: 0;
+  }
+  .qa-product-info-v5 {
+    flex: 1;
+    min-width: 0;
+  }
+  .qa-product-title-v5 {
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+    line-height: 1.25;
+    color: var(--cocoa, #392319);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .qa-product-price-v5 {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--clay, #8a5a44);
+    margin: 0;
+  }
+  .qa-label-v5 {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .qa-variants-list-v5 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .qa-size-pill-v5 {
+    background: #ffffff;
+    border: 1px solid var(--line, #e5dfd3);
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 44px;
+    text-align: center;
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .qa-size-pill-v5:hover:not(:disabled) {
+    border-color: var(--cocoa, #392319);
+    background: var(--paper, #fcfbf7);
+  }
+  .qa-size-pill-v5.is-selected {
+    background: var(--cocoa, #392319) !important;
+    color: #ffffff !important;
+    border-color: var(--cocoa, #392319) !important;
+  }
+  .qa-size-pill-v5:disabled {
+    opacity: 0.35;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
+  .qa-submit-btn-v5 {
+    width: 100%;
+    background: var(--cocoa, #392319);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 13px 16px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .qa-submit-btn-v5:hover:not(:disabled) {
+    background: #23140e;
+    transform: translateY(-1px);
+  }
+  .qa-submit-btn-v5:disabled {
+    background: #c5beba;
+    cursor: not-allowed;
+  }
+  .qa-view-link-v5 {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--clay, #8a5a44);
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .qa-view-link-v5:hover {
+    color: var(--cocoa, #392319);
+  }
+
+  /* Toast Notification (Positioned under navbar header) */
+  .qa-toast-v5 {
+    position: fixed;
+    top: 130px;
+    right: 24px;
+    background: var(--cocoa, #392319);
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 990;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    font-family: var(--ui, "Inter", sans-serif);
+  }
+  .qa-toast-v5.is-show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .qa-toast-link-v5 {
+    color: #ffffff;
+    text-decoration: underline;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
   /* Responsive */
   @media (max-width: 900px) {
     .grid-{{ section.id }} {
@@ -208,7 +417,15 @@
       gap: 2px;
     }
     .card-actions-{{ section.id }} {
-      display: none; /* Hide quick add hover on mobile */
+      position: static;
+      padding: 6px 0 0 0;
+      background: transparent;
+    }
+    .quick-add-btn-{{ section.id }} {
+      border: 1px solid var(--cocoa, #392319);
+      background: transparent;
+      padding: 6px 10px;
+      font-size: 9.5px;
     }
   }
 </style>
@@ -230,24 +447,53 @@
     {%- assign collection = section.settings.collection -%}
     {%- if collection != blank -%}
       {%- for product in collection.products limit: section.settings.product_limit -%}
-        <a href="{{ product.url }}" class="card-{{ section.id }}" data-product-handle="{{ product.handle }}">
+        {%- capture variants_json -%}
+          [
+            {%- for variant in product.variants -%}
+              {
+                "id": {{ variant.id }},
+                "title": {{ variant.title | json }},
+                "price": {{ variant.price | money_without_trailing_zeros | json }},
+                "available": {{ variant.available | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        {%- endcapture -%}
+
+        <div class="card-{{ section.id }}" data-product-handle="{{ product.handle }}">
           <figure>
             {%- if section.settings.show_badge -%}
               <span class="badge-{{ section.id }}">Best Seller</span>
             {%- endif -%}
             
-            <img class="main-img" src="{{ product.featured_media | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy" />
-            {%- if product.media.size > 1 -%}
-              <img class="hover-img" src="{{ product.media[1] | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy" />
-            {%- endif -%}
+            <a href="{{ product.url }}">
+              <img class="main-img" src="{{ product.featured_media | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy" />
+              {%- if product.media.size > 1 -%}
+                <img class="hover-img" src="{{ product.media[1] | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy" />
+              {%- endif -%}
+            </a>
             
             <div class="card-actions-{{ section.id }}">
-              <button class="quick-add-btn-{{ section.id }}" type="button" aria-haspopup="dialog" onclick="event.preventDefault(); alert('Quick Add Drawer opening for {{ product.title | escape }}...');">Quick Add</button>
+              <button 
+                class="quick-add-btn-{{ section.id }}" 
+                type="button" 
+                aria-haspopup="dialog"
+                data-title="{{ product.title | escape }}"
+                data-url="{{ product.url }}"
+                data-img="{{ product.featured_media | img_url: '400x' }}"
+                data-price="{{ product.price | money_without_trailing_zeros }}"
+                data-variants='{{ variants_json | strip_newlines }}'
+                onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, '{{ section.id }}');"
+              >
+                Quick Add
+              </button>
             </div>
           </figure>
           
           <div class="card-meta-{{ section.id }}">
-            <h4>{{ product.title }}</h4>
+            <a href="{{ product.url }}" style="text-decoration:none; color:inherit;">
+              <h4>{{ product.title }}</h4>
+            </a>
             <p class="price">
               {%- if product.compare_at_price > product.price -%}
                 <s>{{ product.compare_at_price | money_without_trailing_zeros }}</s>
@@ -277,13 +523,13 @@
                     aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" 
                     aria-label="{{ value | escape }}"
                     data-variant-img="{{ variant_image }}"
-                    onclick="event.preventDefault(); swapSwatchImage(this);"
+                    onclick="event.preventDefault(); swapSwatchImage(this, '{{ section.id }}');"
                   ></button>
                 {%- endfor -%}
               </div>
             {%- endif -%}
           {%- endfor -%}
-        </a>
+        </div>
       {%- endfor -%}
     {%- else -%}
       {%- comment -%} Placeholder State {%- endcomment -%}
@@ -310,13 +556,45 @@
   </div>
 </section>
 
+<!-- Quick Add Modal Component -->
+<div class="qa-overlay-v5" id="qaModalOverlay-{{ section.id }}" onclick="if(event.target === this) closeQuickAddModal('{{ section.id }}');">
+  <div class="qa-card-v5" id="qaModalCard-{{ section.id }}">
+    <button type="button" class="qa-close-btn-v5" onclick="closeQuickAddModal('{{ section.id }}')" aria-label="Close">✕</button>
+
+    <div class="qa-product-header-v5">
+      <img id="qaImg-{{ section.id }}" class="qa-product-img-v5" src="" alt="" />
+      <div class="qa-product-info-v5">
+        <h4 id="qaTitle-{{ section.id }}" class="qa-product-title-v5"></h4>
+        <p id="qaPrice-{{ section.id }}" class="qa-product-price-v5"></p>
+      </div>
+    </div>
+
+    <span class="qa-label-v5">Select Size / Option</span>
+    <div id="qaVariants-{{ section.id }}" class="qa-variants-list-v5"></div>
+
+    <button type="button" id="qaSubmitBtn-{{ section.id }}" class="qa-submit-btn-v5" disabled onclick="submitQuickAddToCart('{{ section.id }}')">
+      Select a size
+    </button>
+
+    <a id="qaViewLink-{{ section.id }}" href="#" class="qa-view-link-v5">View full product details →</a>
+  </div>
+</div>
+
+<!-- Floating Toast Notification -->
+<div class="qa-toast-v5" id="qaToast-{{ section.id }}">
+  <span id="qaToastMsg-{{ section.id }}">✓ Item added to bag</span>
+  <a href="/cart" class="qa-toast-link-v5">View Bag</a>
+</div>
+
 <script>
-  function swapSwatchImage(swatchBtn) {
-    const card = swatchBtn.closest('.card-{{ section.id }}');
+  let currentQaVariantId_{{ section.id | replace: '-', '_' }} = null;
+
+  function swapSwatchImage(swatchBtn, sectionId) {
+    const card = swatchBtn.closest('.card-' + sectionId);
     if (!card) return;
     
     // Update active swatch state
-    card.querySelectorAll('.sw-{{ section.id }}').forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+    card.querySelectorAll('.sw-' + sectionId).forEach(btn => btn.setAttribute('aria-pressed', 'false'));
     swatchBtn.setAttribute('aria-pressed', 'true');
     
     // Swap image if variant image exists
@@ -325,8 +603,131 @@
       const mainImg = card.querySelector('figure .main-img');
       const hoverImg = card.querySelector('figure .hover-img');
       if (mainImg) mainImg.src = newImgUrl;
-      if (hoverImg) hoverImg.src = newImgUrl; // Optional: change hover img or hide it
+      if (hoverImg) hoverImg.src = newImgUrl;
     }
+  }
+
+  function openQuickAddModal(btn, sectionId) {
+    const title = btn.getAttribute('data-title');
+    const price = btn.getAttribute('data-price');
+    const img = btn.getAttribute('data-img');
+    const url = btn.getAttribute('data-url');
+    const variantsRaw = btn.getAttribute('data-variants');
+
+    document.getElementById('qaTitle-' + sectionId).textContent = title;
+    document.getElementById('qaPrice-' + sectionId).innerHTML = price;
+    document.getElementById('qaImg-' + sectionId).src = img;
+    document.getElementById('qaViewLink-' + sectionId).href = url;
+
+    const variantsList = document.getElementById('qaVariants-' + sectionId);
+    variantsList.innerHTML = '';
+    currentQaVariantId_{{ section.id | replace: '-', '_' }} = null;
+
+    const submitBtn = document.getElementById('qaSubmitBtn-' + sectionId);
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Select a size';
+
+    try {
+      const variants = JSON.parse(variantsRaw);
+      if (variants && variants.length > 0) {
+        if (variants.length === 1 && variants[0].title === 'Default Title') {
+          currentQaVariantId_{{ section.id | replace: '-', '_' }} = variants[0].id;
+          submitBtn.disabled = !variants[0].available;
+          submitBtn.textContent = variants[0].available ? 'ADD TO BAG' : 'SOLD OUT';
+          variantsList.style.display = 'none';
+        } else {
+          variantsList.style.display = 'flex';
+          variants.forEach(v => {
+            const pill = document.createElement('button');
+            pill.type = 'button';
+            pill.className = 'qa-size-pill-v5';
+            pill.textContent = v.title;
+            if (!v.available) {
+              pill.disabled = true;
+              pill.title = 'Sold Out';
+            } else {
+              pill.onclick = function() {
+                variantsList.querySelectorAll('.qa-size-pill-v5').forEach(p => p.classList.remove('is-selected'));
+                pill.classList.add('is-selected');
+                currentQaVariantId_{{ section.id | replace: '-', '_' }} = v.id;
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'ADD TO BAG';
+              };
+            }
+            variantsList.appendChild(pill);
+          });
+        }
+      }
+    } catch(e) {
+      console.error('Error parsing variants:', e);
+    }
+
+    document.getElementById('qaModalOverlay-' + sectionId).classList.add('is-open');
+  }
+
+  function closeQuickAddModal(sectionId) {
+    document.getElementById('qaModalOverlay-' + sectionId).classList.remove('is-open');
+  }
+
+  function submitQuickAddToCart(sectionId) {
+    const variantId = currentQaVariantId_{{ section.id | replace: '-', '_' }};
+    if (!variantId) return;
+
+    const submitBtn = document.getElementById('qaSubmitBtn-' + sectionId);
+    const originalText = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'ADDING...';
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        items: [{
+          id: variantId,
+          quantity: 1
+        }]
+      })
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Add to cart failed');
+      return response.json();
+    })
+    .then(data => {
+      closeQuickAddModal(sectionId);
+      showQuickAddToast(sectionId);
+      updateHeaderCartCount();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Could not add item to bag. Please try again.');
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    });
+  }
+
+  function showQuickAddToast(sectionId) {
+    const toast = document.getElementById('qaToast-' + sectionId);
+    if (!toast) return;
+    toast.classList.add('is-show');
+    setTimeout(() => {
+      toast.classList.remove('is-show');
+    }, 4000);
+  }
+
+  function updateHeaderCartCount() {
+    fetch('/cart.js')
+      .then(res => res.json())
+      .then(cart => {
+        document.querySelectorAll('.cart-count-v5').forEach(el => {
+          el.textContent = cart.item_count;
+        });
+      })
+      .catch(e => console.error(e));
   }
 </script>
 
