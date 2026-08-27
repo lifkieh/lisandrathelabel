@@ -9,7 +9,7 @@
 {%- liquid
   assign sid = section.id
   assign kicker = section.settings.kicker | default: 'CURATED RECOMMENDATIONS'
-  assign title = section.settings.title | default: 'You May Also Like'
+  assign title = section.settings.title | default: section.settings.heading | default: 'You May Also Like'
   assign limit = section.settings.limit | default: 8
   
   assign manual_recommendations = product.metafields.custom.related_products.value

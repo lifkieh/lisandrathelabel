@@ -297,14 +297,12 @@
     min-height: 17px;
   }
 
-  /* ATC & Wishlist */
+  /* ATC */
   .pdp-v5-row-atc {
-    display: flex;
-    gap: 8px;
     margin-bottom: 12px;
   }
   .pdp-v5-btn-atc {
-    flex: 1;
+    width: 100%;
     padding: 14px 20px;
     background: var(--cocoa, #392319);
     color: var(--paper, #f8f8f0);
@@ -316,6 +314,9 @@
     cursor: pointer;
     font-family: inherit;
     transition: opacity 0.25s ease, transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .pdp-v5-btn-atc:hover {
     opacity: 0.88;
@@ -326,23 +327,6 @@
   .pdp-v5-btn-atc:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-  }
-
-  .pdp-v5-wish {
-    width: 48px;
-    border: 1px solid var(--line, #d9cfa9);
-    display: grid;
-    place-items: center;
-    font-size: 17px;
-    background: transparent;
-    color: var(--cocoa, #392319);
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s, transform 0.2s;
-  }
-  .pdp-v5-wish:hover {
-    border-color: var(--sale, #9a3f2b);
-    color: var(--sale, #9a3f2b);
-    transform: translateY(-1px);
   }
 
   /* Trust lines */
@@ -692,7 +676,7 @@
         <p class="pdp-v5-stock" id="pdpStockV5">
           {%- assign thresh = section.settings.low_stock_threshold | default: 10 -%}
           {%- if current_variant.inventory_management == 'shopify' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= thresh -%}
-            Only {{ current_variant.inventory_quantity }} pieces left
+            Only {{ current_variant.inventory_quantity }} {% if current_variant.inventory_quantity == 1 %}piece{% else %}pieces{% endif %} left
           {%- endif -%}
         </p>
 
@@ -701,7 +685,6 @@
           <button type="submit" class="pdp-v5-btn-atc" id="pdpAtcBtnV5"{% unless current_variant.available %} disabled{% endunless %}>
             {%- if current_variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
           </button>
-          <button type="button" class="pdp-v5-wish" aria-label="Save to wishlist">♡</button>
         </div>
       </form>
 
@@ -952,6 +935,16 @@
   var selectedOptions = {};
   var lowStockThreshold = {{ section.settings.low_stock_threshold | default: 10 }};
 
+  var variantInventoryMap = {
+    {%- for variant in product.variants -%}
+      "{{ variant.id }}": {
+        "inventory_management": {{ variant.inventory_management | json }},
+        "inventory_quantity": {{ variant.inventory_quantity | default: 0 | json }},
+        "available": {{ variant.available | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  };
+
   {%- for option in product.options_with_values -%}
     selectedOptions['{{ option.name }}'] = '{{ option.selected_value | escape }}';
   {%- endfor -%}
@@ -1017,8 +1010,10 @@
     }
 
     if (stockEl) {
-      if (match.inventory_management === 'shopify' && match.inventory_quantity > 0 && match.inventory_quantity <= lowStockThreshold) {
-        stockEl.textContent = 'Only ' + match.inventory_quantity + ' pieces left';
+      var inv = variantInventoryMap[match.id];
+      if (inv && inv.inventory_management === 'shopify' && inv.inventory_quantity > 0 && inv.inventory_quantity <= lowStockThreshold) {
+        var unitWord = inv.inventory_quantity === 1 ? 'piece' : 'pieces';
+        stockEl.textContent = 'Only ' + inv.inventory_quantity + ' ' + unitWord + ' left';
       } else {
         stockEl.textContent = '';
       }
