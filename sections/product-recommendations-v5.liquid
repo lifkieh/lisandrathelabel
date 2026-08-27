@@ -143,28 +143,24 @@
     margin-right: 4px;
     font-weight: 400;
   }
-  .v5-ymal-sizes-{{ sid }} {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .v5-ymal-size-btn-{{ sid }} {
-    font-family: var(--body, 'Inter', sans-serif);
+  .v5-ymal-quick-add-btn {
+    width: 100%;
+    background: var(--cocoa, #392319);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    border: 1px solid var(--line, #e2e2e2);
-    padding: 4px 9px;
-    background: transparent;
-    color: var(--cocoa, #392319);
-    text-decoration: none;
-    transition: all 0.2s ease;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    margin-top: 6px;
+    border-radius: 2px;
   }
-  .v5-ymal-size-btn-{{ sid }}:hover {
-    background: var(--cocoa, #392319);
-    color: #f8f8f0;
-    border-color: var(--cocoa, #392319);
+  .v5-ymal-quick-add-btn:hover {
+    background: #23140e;
+    transform: translateY(-1px);
   }
 
   /* === FLOATING CAROUSEL ARROWS === */
@@ -416,3 +412,5 @@
   }
 }
 {% endschema %}
+
+{% render 'quick-add-modal-v5', section_id: sid %}

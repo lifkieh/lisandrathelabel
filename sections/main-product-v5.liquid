@@ -301,8 +301,10 @@
   .pdp-v5-row-atc {
     margin-bottom: 12px;
   }
+  /* ATC Button & Micro-Animations */
   .pdp-v5-btn-atc {
     width: 100%;
+    min-height: 48px;
     padding: 14px 20px;
     background: var(--cocoa, #392319);
     color: var(--paper, #f8f8f0);
@@ -313,20 +315,50 @@
     text-transform: uppercase;
     cursor: pointer;
     font-family: inherit;
-    transition: opacity 0.25s ease, transform 0.15s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
   }
-  .pdp-v5-btn-atc:hover {
-    opacity: 0.88;
+  .pdp-v5-btn-atc:hover:not(:disabled) {
+    background: #25160f;
+    box-shadow: 0 4px 14px rgba(57, 35, 25, 0.2);
   }
-  .pdp-v5-btn-atc:active {
+  .pdp-v5-btn-atc:active:not(:disabled) {
     transform: scale(0.98);
   }
   .pdp-v5-btn-atc:disabled {
-    opacity: 0.4;
+    opacity: 0.45;
     cursor: not-allowed;
+  }
+  .pdp-v5-btn-atc.is-loading {
+    color: transparent !important;
+    pointer-events: none;
+  }
+  .pdp-v5-btn-atc.is-loading::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(248, 248, 240, 0.3);
+    border-top-color: var(--paper, #f8f8f0);
+    border-radius: 50%;
+    animation: pdpSpinner 0.6s linear infinite;
+  }
+  .pdp-v5-btn-atc.is-added {
+    background: #24160f;
+    animation: pdpAtcPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes pdpSpinner {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes pdpAtcPop {
+    0% { transform: scale(0.96); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
   }
 
   /* Trust lines */
@@ -1006,7 +1038,8 @@
     url.searchParams.set('variant', match.id);
     window.history.replaceState({}, '', url);
 
-    var formatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+    var activeCurrency = (window.Shopify && window.Shopify.currency && window.Shopify.currency.active) || 'IDR';
+    var formatter = new Intl.NumberFormat(undefined, { style: 'currency', currency: activeCurrency, minimumFractionDigits: 0 });
     if (priceEl) {
       if (match.compare_at_price && match.compare_at_price > match.price) {
         priceEl.innerHTML = '<s>' + formatter.format(match.compare_at_price / 100) + '</s> <span class="sale-price">' + formatter.format(match.price / 100) + '</span>';
@@ -1070,7 +1103,10 @@
   if (form) {
     form.addEventListener('submit', function(e){
       e.preventDefault();
-      atcBtn.textContent = 'Adding...';
+      
+      // 1. Loading state with spinner
+      atcBtn.classList.add('is-loading');
+      atcBtn.classList.remove('is-added');
       atcBtn.disabled = true;
 
       fetch('/cart/add.js', {
@@ -1078,19 +1114,45 @@
         body: new FormData(form)
       })
       .then(function(r){ return r.json(); })
-      .then(function(){
-        atcBtn.textContent = 'Added ✓';
-        setTimeout(function(){
-          atcBtn.textContent = 'Add to cart';
-          atcBtn.disabled = false;
-        }, 1800);
+      .then(function(data){
+        // 2. Success state on Button
+        atcBtn.classList.remove('is-loading');
+        atcBtn.classList.add('is-added');
+        atcBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Added to Bag';
+
+        // 3. Trigger Cart Pop Animation on Header
+        var cartIconLinks = document.querySelectorAll('.hdr-actions-v5 a[aria-label="Cart"]');
+        cartIconLinks.forEach(function(iconLink){
+          iconLink.classList.remove('cart-icon-pop');
+          void iconLink.offsetWidth; // trigger reflow
+          iconLink.classList.add('cart-icon-pop');
+        });
+
+        // 4. Update Cart Badge Count
         fetch('/cart.js').then(function(r){ return r.json(); }).then(function(cart){
-          document.querySelectorAll('.hdr-actions-v5 a[aria-label="Cart"] span span').forEach(function(el){
+          document.querySelectorAll('.cart-count-v5, .hdr-actions-v5 a[aria-label="Cart"] span span').forEach(function(el){
             el.textContent = cart.item_count;
           });
         });
+
+        // 5. Option A - Smoothly open Luxury Side Cart Drawer
+        setTimeout(function(){
+          if (typeof openCartDrawerV5 === 'function') {
+            openCartDrawerV5();
+          }
+        }, 350);
+
+        // Reset button state
+        setTimeout(function(){
+          atcBtn.classList.remove('is-added');
+          atcBtn.innerHTML = 'Add to cart';
+          atcBtn.disabled = false;
+        }, 2500);
       })
-      .catch(function(){
+      .catch(function(err){
+        console.error(err);
+        atcBtn.classList.remove('is-loading');
+        atcBtn.classList.remove('is-added');
         atcBtn.textContent = 'Add to cart';
         atcBtn.disabled = false;
       });

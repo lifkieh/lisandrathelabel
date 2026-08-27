@@ -48,9 +48,13 @@
       <div class="cd-cross-sell-v5">
         <p class="cd-cs-title-v5">YOU MAY ALSO LIKE</p>
         <div class="cd-cs-list-v5">
+          {% assign cart_product_ids = cart.items | map: 'product_id' %}
+          {% assign shown_count = 0 %}
           {% assign cs_collection = collections['best-sellers'] %}
           {% if cs_collection != blank %}
-            {% for prod in cs_collection.products limit: 2 %}
+            {% for prod in cs_collection.products %}
+              {% if shown_count >= 2 %}{% break %}{% endif %}
+              {% if cart_product_ids contains prod.id %}{% continue %}{% endif %}
               <div class="cd-cs-item-v5">
                 <a href="{{ prod.url }}"><img src="{{ prod.featured_media | img_url: '150x' }}" alt="{{ prod.title | escape }}"></a>
                 <div class="cd-cs-info-v5">
@@ -59,6 +63,7 @@
                   <a href="{{ prod.url }}">VIEW</a>
                 </div>
               </div>
+              {% assign shown_count = shown_count | plus: 1 %}
             {% endfor %}
           {% endif %}
         </div>
@@ -368,6 +373,11 @@
   }
 
   function changeCartItemQtyV5(key, qty) {
+    if (qty <= 0) {
+      if (!confirm('Are you sure you want to remove this item?')) return;
+      qty = 0;
+    }
+    
     fetch('/cart/change.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -415,21 +425,12 @@
     });
   }
 
-  // Hook into Quick Add submit success from other sections
-  const originalFetch = window.fetch;
-  window.fetch = async (...args) => {
-    let response = await originalFetch(...args);
-    if (args[0] && typeof args[0] === 'string' && args[0].includes('/cart/add.js')) {
-      const clonedRes = response.clone();
-      clonedRes.json().then(data => {
-        setTimeout(() => {
-          updateHeaderCartCount(); // this is from best-sellers-custom.liquid
-          openCartDrawerV5();
-        }, 500);
-      }).catch(e => console.error(e));
+  // Accessibility: Close drawer on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCartDrawerV5();
     }
-    return response;
-  };
+  });
 </script>
 
 {% schema %}

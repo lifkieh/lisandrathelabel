@@ -35,16 +35,28 @@
       </span>
     </div>
 
-    {%- comment -%} Quick Size Selector Buttons {%- endcomment -%}
-    {%- for option in product.options_with_values -%}
-      {%- assign opt_name = option.name | downcase -%}
-      {%- if opt_name == 'size' or opt_name == 'ukuran' -%}
-        <div class="v5-ymal-sizes-{{ card_sid }}">
-          {%- for value in option.values -%}
-            <button class="v5-ymal-size-btn-{{ card_sid }}" onclick="event.stopPropagation(); window.location.href='{{ product.url }}?variant={{ product.variants[forloop.index0].id }}'">{{ value }}</button>
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
+    {%- capture variants_json -%}
+      [
+        {%- for variant in product.variants -%}
+          {
+            "id": {{ variant.id }},
+            "title": {{ variant.title | json }},
+            "price": {{ variant.price | money_without_trailing_zeros | json }},
+            "available": {{ variant.available | json }}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    {%- endcapture -%}
+    <button type="button" class="v5-ymal-quick-add-btn" 
+      aria-haspopup="dialog"
+      data-title="{{ product.title | escape }}"
+      data-url="{{ product.url }}"
+      data-img="{{ product.featured_media | img_url: '400x' }}"
+      data-price="{{ product.price | money_without_trailing_zeros }}"
+      data-variants='{{ variants_json | strip_newlines }}'
+      onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, '{{ card_sid }}');"
+    >
+      QUICK ADD
+    </button>
   </div>
 </div>
