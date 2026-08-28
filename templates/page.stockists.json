@@ -1,0 +1,118 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-stockists-v5",
+      "blocks": {
+        "canggu_1": {
+          "type": "location",
+          "settings": {
+            "region": "Canggu",
+            "name": "Saint Tropez",
+            "address": "Jl. Pantai Batu Mejan No.12b, Canggu, Kec. Kuta Utara, Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Saint+Tropez+Jl.+Pantai+Batu+Mejan+No.12b+Canggu+Bali"
+          }
+        },
+        "canggu_2": {
+          "type": "location",
+          "settings": {
+            "region": "Canggu",
+            "name": "Awakened Dreamers",
+            "address": "Jl. Pantai Batu Bolong No.69c, Canggu, Kec. Kuta Utara, Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Awakened+Dreamers+Jl.+Pantai+Batu+Bolong+No.69c+Canggu+Bali"
+          }
+        },
+        "pererenan_1": {
+          "type": "location",
+          "settings": {
+            "region": "Pererenan",
+            "name": "Múse",
+            "address": "Jl. Pantai Pererenan No.116, Pererenan, Kec. Mengwi, Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Muse+Jl.+Pantai+Pererenan+No.116+Mengwi+Bali"
+          }
+        },
+        "pererenan_2": {
+          "type": "location",
+          "settings": {
+            "region": "Pererenan",
+            "name": "Uprising Boutique",
+            "address": "Jl. Dalem Lingsir No.9, Pererenan, Kec. Mengwi, Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Uprising+Boutique+Jl.+Dalem+Lingsir+No.9+Pererenan+Bali"
+          }
+        },
+        "seminyak_1": {
+          "type": "location",
+          "settings": {
+            "region": "Seminyak",
+            "name": "Arlo Archives",
+            "address": "Jl. Kayu Aya No.8, Seminyak, Kec. Kuta, Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Arlo+Archives+Jl.+Kayu+Aya+No.8+Seminyak+Bali"
+          }
+        },
+        "uluwatu_1": {
+          "type": "location",
+          "settings": {
+            "region": "Uluwatu",
+            "name": "The Find",
+            "address": "Jl. Labuansait Gg Mamo Uluwatu, Pecatu, Kec. Kuta Sel., Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=The+Find+Jl.+Labuansait+Gg+Mamo+Uluwatu+Bali"
+          }
+        },
+        "uluwatu_2": {
+          "type": "location",
+          "settings": {
+            "region": "Uluwatu",
+            "name": "Nou Nou",
+            "address": "Modjo villa shop, Jl. Pantai Bingin No.5, Pecatu, Kec. Kuta Sel., Uluwatu, Bali",
+            "maps_url": "https://maps.google.com/?q=Nou+Nou+Modjo+villa+shop+Jl.+Pantai+Bingin+No.5+Uluwatu+Bali"
+          }
+        },
+        "uluwatu_3": {
+          "type": "location",
+          "settings": {
+            "region": "Uluwatu",
+            "name": "Phenomena",
+            "address": "Jl. Pantai Bingin No.11, Pecatu, Kec. Kuta Sel., Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Phenomena+Jl.+Pantai+Bingin+No.11+Pecatu+Bali"
+          }
+        },
+        "uluwatu_4": {
+          "type": "location",
+          "settings": {
+            "region": "Uluwatu",
+            "name": "Alor",
+            "address": "Jl. Labuansait No. 39X, Pecatu, Kec. Kuta Sel., Kabupaten Badung, Bali",
+            "maps_url": "https://maps.google.com/?q=Alor+Jl.+Labuansait+No.+39X+Pecatu+Bali"
+          }
+        },
+        "lombok_1": {
+          "type": "location",
+          "settings": {
+            "region": "Lombok",
+            "name": "Dolci Donne",
+            "address": "Jl. Raya Kuta, Kuta, Kec. Pujut, Kabupaten Lombok Tengah, NTB",
+            "maps_url": "https://maps.google.com/?q=Dolci+Donne+Jl.+Raya+Kuta+Lombok+Tengah"
+          }
+        }
+      },
+      "block_order": [
+        "canggu_1",
+        "canggu_2",
+        "pererenan_1",
+        "pererenan_2",
+        "seminyak_1",
+        "uluwatu_1",
+        "uluwatu_2",
+        "uluwatu_3",
+        "uluwatu_4",
+        "lombok_1"
+      ],
+      "settings": {
+        "title": "Stockists",
+        "wholesale_note": "<p>If you would like to become a Lisandra The Label stockist, please email us <a href=\"mailto:lisandrathelabel@gmail.com\">lisandrathelabel@gmail.com</a></p>"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
