@@ -1,0 +1,18 @@
+{% capture children %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+{% render 'group', children: children, settings: block.settings, shopify_attributes: block.shopify_attributes %}
+
+{% schema %}
+{
+  "name": "t:names.content",
+  "tag": null,
+  "blocks": [
+    { "type": "@theme" },
+    { "type": "_inline-text" },
+    { "type": "_product-list-text" }
+  ],
+  "settings": []
+}
+{% endschema %}

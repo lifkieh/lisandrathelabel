@@ -1,0 +1,25 @@
+{% assign image = block.settings.image %}
+{% if image %}
+  <div class="image-block" {{ block.shopify_attributes }}>
+    {{ image | image_url: width: 1500 | image_tag: loading: 'lazy' }}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:names.image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.image"
+    }
+  ]
+}
+{% endschema %}

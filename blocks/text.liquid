@@ -1,0 +1,28 @@
+{% doc %}
+  Renders an inline text block (alias for _inline-text).
+{% enddoc %}
+
+{% render 'typography-style', preset: 'custom', settings: block.settings, type: 'heading' %}
+<span class="text-block" {{ block.shopify_attributes }}>
+  <span>{{ block.settings.text }}</span>
+</span>
+
+{% schema %}
+{
+  "name": "t:names.text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "<p>Text</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.text"
+    }
+  ]
+}
+{% endschema %}

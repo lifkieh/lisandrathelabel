@@ -1,0 +1,21 @@
+{% assign card_product = block.settings.product | default: closest.product %}
+{% render 'product-card-v5', product: card_product %}
+
+{% schema %}
+{
+  "name": "t:names.product_card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_card"
+    }
+  ]
+}
+{% endschema %}

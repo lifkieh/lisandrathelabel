@@ -1,0 +1,37 @@
+{% capture submit_button %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+{% render 'contact-form', settings: block.settings, submit_button: submit_button %}
+
+{% schema %}
+{
+  "name": "t:names.contact_form",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "contact-form-submit-button"
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.contact_form"
+    }
+  ]
+}
+{% endschema %}

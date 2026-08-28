@@ -193,7 +193,10 @@
 {
   "name": "t:names.product_recommendations",
   "disabled_on": {
-    "groups": ["header", "footer"]
+    "groups": [
+      "header",
+      "footer"
+    ]
   },
   "blocks": [
     {
@@ -500,10 +503,7 @@
             },
             "group": {
               "type": "group",
-              "settings": {
-                "content_direction": "column",
-                "gap": 4
-              },
+              "settings": {},
               "blocks": {
                 "text": {
                   "type": "product-title",
@@ -514,10 +514,7 @@
                 },
                 "price": {
                   "type": "price",
-                  "settings": {
-                    "product": "{{ closest.product }}",
-                    "show_tax_info": false
-                  }
+                  "settings": {}
                 },
                 "swatches": {
                   "type": "swatches",
@@ -526,13 +523,22 @@
                   }
                 }
               },
-              "block_order": ["text", "price", "swatches"]
+              "block_order": [
+                "text",
+                "price",
+                "swatches"
+              ]
             }
           },
-          "block_order": ["card-gallery", "group"]
+          "block_order": [
+            "card-gallery",
+            "group"
+          ]
         }
       },
-      "block_order": ["header"]
+      "block_order": [
+        "header"
+      ]
     }
   ]
 }
