@@ -116,9 +116,6 @@
 <section class="customer-reviews-{{ section.id }}" id="reviews">
   <div class="sec-top-{{ section.id }}">
     <h3>{{ section.settings.title }}</h3>
-    {%- if section.settings.link_label != blank -%}
-      <a href="{{ section.settings.link_url | default: '#' }}" class="more-{{ section.id }}">{{ section.settings.link_label }}</a>
-    {%- endif -%}
   </div>
 
   <div class="revs-{{ section.id }}">

@@ -55,8 +55,6 @@
     assign spec_label = 'Hand-knit'
   elsif product.tags contains 'Crochet' or product.tags contains 'crochet'
     assign spec_label = 'Crochet'
-  elsif product.type != blank
-    assign spec_label = product.type
   endif
 -%}
 

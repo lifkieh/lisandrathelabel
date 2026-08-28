@@ -96,3 +96,12 @@ h1, h2, h3, h4, h5, h6, .brand-heading {
   color: var(--cocoa, #392319) !important;
 }
 
+/* Override product card titles to use normal, readable font */
+.v5-card__title,
+[class*="v5-ymal-title-"],
+.product-card-gallery__title-placeholder,
+.card-gallery h4 {
+  font-family: var(--ui, "Inter", sans-serif) !important;
+  font-weight: 500 !important;
+}
+

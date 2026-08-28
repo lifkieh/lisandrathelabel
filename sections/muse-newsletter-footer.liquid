@@ -524,6 +524,11 @@
     <div class="foot-grid">
       <!-- Left: Minimalist Newsletter -->
       <div class="foot-news-col">
+        {%- if section.settings.footer_logo != blank -%}
+          <a href="/" class="foot-logo-link" style="display: block; width: fit-content; text-decoration: none;">
+            <img src="{{ section.settings.footer_logo | image_url: width: 300 }}" alt="{{ shop.name }}" class="foot-logo" style="height: auto; max-width: 140px; margin-bottom: 20px; display: block; opacity: 0.95;" />
+          </a>
+        {%- endif -%}
         <h3 class="foot-news-heading">{{ section.settings.muse_kicker | default: 'Sign Up to Get 10% Off Your First Order' }}</h3>
         <p class="foot-news-desc">{{ section.settings.muse_desc | default: 'Join our inner circle for private releases, secret artisan drops, and invitations.' }}</p>
         
@@ -774,6 +779,11 @@
       "label": "Enable Sticky Teaser & Popup Modal",
       "default": false,
       "info": "Turn off if using third-party email apps like Klaviyo."
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "Footer Logo Image"
     },
     {
       "type": "header",
