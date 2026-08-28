@@ -1,0 +1,246 @@
+{%- comment -%}
+  Lisandra The Label - Clean Minimal FAQs Page
+  - Pure, minimal accordion list matching the brand reference aesthetic
+  - Clean hairline borders, smooth accordion expansion, and zero visual clutter
+  - 100% Dynamic in Shopify Theme Editor
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+{%- assign page_title = section.settings.title | default: page.title | default: 'FAQs' -%}
+
+<style>
+  .v5-clean-faqs-{{ sid }} {
+    background-color: var(--paper, #f8f8f0);
+    color: var(--cocoa, #392319);
+    padding: clamp(48px, 6vw, 84px) clamp(20px, 4vw, 40px);
+    width: 100%;
+    min-height: 70vh;
+    box-sizing: border-box;
+  }
+
+  .v5-clean-faqs-container-{{ sid }} {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  /* Title */
+  .v5-clean-faqs-head-{{ sid }} {
+    text-align: center;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+
+  .v5-clean-faqs-title-{{ sid }} {
+    font-family: var(--display, 'Bodoni Moda', Georgia, serif);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  /* Minimal Accordion List */
+  .v5-clean-faqs-list-{{ sid }} {
+    border-top: 1px solid rgba(57, 35, 25, 0.18);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .v5-clean-faq-item-{{ sid }} {
+    border-bottom: 1px solid rgba(57, 35, 25, 0.18);
+    background: transparent;
+  }
+
+  /* Accordion Trigger */
+  .v5-clean-faq-btn-{{ sid }} {
+    width: 100%;
+    padding: 20px 0;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    gap: 16px;
+    transition: opacity 0.2s ease;
+  }
+
+  .v5-clean-faq-btn-{{ sid }}:hover {
+    opacity: 0.75;
+  }
+
+  .v5-clean-faq-question-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: clamp(13.5px, 1.5vw, 15px);
+    font-weight: 400;
+    color: var(--cocoa, #392319);
+    line-height: 1.45;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  .v5-clean-faq-icon-{{ sid }} {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    color: var(--cocoa, #392319);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .v5-clean-faq-item-{{ sid }}.is-open .v5-clean-faq-icon-{{ sid }} {
+    transform: rotate(180deg);
+  }
+
+  /* Accordion Expansion */
+  .v5-clean-faq-panel-{{ sid }} {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .v5-clean-faq-item-{{ sid }}.is-open .v5-clean-faq-panel-{{ sid }} {
+    grid-template-rows: 1fr;
+  }
+
+  .v5-clean-faq-inner-{{ sid }} {
+    overflow: hidden;
+  }
+
+  .v5-clean-faq-body-{{ sid }} {
+    padding: 0 0 24px 0;
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(57, 35, 25, 0.8);
+    margin: 0;
+  }
+
+  .v5-clean-faq-body-{{ sid }} p {
+    margin: 0 0 12px 0;
+  }
+
+  .v5-clean-faq-body-{{ sid }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .v5-clean-faq-body-{{ sid }} ul {
+    margin: 10px 0 14px 20px;
+    padding: 0;
+  }
+
+  .v5-clean-faq-body-{{ sid }} li {
+    margin-bottom: 6px;
+    line-height: 1.6;
+  }
+
+  .v5-clean-faq-body-{{ sid }} a {
+    color: var(--cocoa, #392319);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  .v5-clean-faq-body-{{ sid }} a:hover {
+    color: #634335;
+  }
+</style>
+
+<div class="v5-clean-faqs-{{ sid }}">
+  <div class="v5-clean-faqs-container-{{ sid }}">
+
+    <!-- Title Header -->
+    <header class="v5-clean-faqs-head-{{ sid }}">
+      <h1 class="v5-clean-faqs-title-{{ sid }}">{{ page_title }}</h1>
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="v5-clean-faqs-list-{{ sid }}">
+        {%- for block in section.blocks -%}
+          <div class="v5-clean-faq-item-{{ sid }}" {{ block.shopify_attributes }}>
+            <button 
+              type="button" 
+              class="v5-clean-faq-btn-{{ sid }}" 
+              onclick="toggleCleanFaq_{{ sid | replace: '-', '_' }}(this)" 
+              aria-expanded="false"
+            >
+              <span class="v5-clean-faq-question-{{ sid }}">{{ block.settings.question }}</span>
+              <span class="v5-clean-faq-icon-{{ sid }}" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="v5-clean-faq-panel-{{ sid }}">
+              <div class="v5-clean-faq-inner-{{ sid }}">
+                <div class="v5-clean-faq-body-{{ sid }}">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+  function toggleCleanFaq_{{ sid | replace: '-', '_' }}(btnEl) {
+    const item = btnEl.closest('.v5-clean-faq-item-{{ sid }}');
+    if (!item) return;
+
+    const isOpen = item.classList.contains('is-open');
+    if (isOpen) {
+      item.classList.remove('is-open');
+      btnEl.setAttribute('aria-expanded', 'false');
+    } else {
+      item.classList.add('is-open');
+      btnEl.setAttribute('aria-expanded', 'true');
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "FAQs Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page Title",
+      "default": "FAQs"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How to choose the right size?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>You can view our size guide <a href=\"/pages/size-guide\">here</a>.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQs Page"
+    }
+  ]
+}
+{% endschema %}
