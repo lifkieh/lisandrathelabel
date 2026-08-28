@@ -1,0 +1,382 @@
+{%- comment -%}
+  Lisandra The Label - Minimalist Luxury Size Guide
+  - Clean open layout (zero heavy box containers / zero emojis)
+  - Interactive CM / IN unit toggle
+  - High readability & authentic store text
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+{%- assign page_title = section.settings.title | default: page.title | default: 'Size Guide' -%}
+
+<style>
+  .v5-sg-page-{{ sid }} {
+    background-color: var(--paper, #f8f8f0);
+    color: var(--cocoa, #392319);
+    padding: clamp(40px, 5vw, 64px) clamp(20px, 4vw, 48px);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .v5-sg-container-{{ sid }} {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .v5-sg-header-{{ sid }} {
+    text-align: center;
+    margin-bottom: clamp(28px, 3.5vw, 40px);
+  }
+
+  .v5-sg-title-{{ sid }} {
+    font-family: var(--display, 'Bodoni Moda', Georgia, serif);
+    font-size: clamp(32px, 4vw, 44px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0 0 16px 0;
+    line-height: 1.1;
+  }
+
+  /* Minimal Unit Switcher */
+  .v5-sg-units-{{ sid }} {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .v5-sg-unit-btn-{{ sid }} {
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    color: rgba(57, 35, 25, 0.4);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    border-bottom: 1.5px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .v5-sg-unit-btn-{{ sid }}.is-active {
+    color: var(--cocoa, #392319);
+    border-bottom-color: var(--cocoa, #392319);
+  }
+
+  .v5-sg-unit-sep-{{ sid }} {
+    color: rgba(57, 35, 25, 0.25);
+  }
+
+  /* 2-Column Grid */
+  .v5-sg-grid-{{ sid }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(36px, 5vw, 64px);
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .v5-sg-grid-{{ sid }} {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* Section Headings */
+  .v5-sg-section-title-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    margin: 0 0 16px 0;
+  }
+
+  /* Minimal Tables */
+  .v5-sg-table-{{ sid }} {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12.5px;
+  }
+
+  .v5-sg-table-{{ sid }} th {
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--cocoa, #392319);
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(57, 35, 25, 0.25);
+    text-align: center;
+  }
+
+  .v5-sg-table-{{ sid }} th:first-child {
+    text-align: left;
+  }
+
+  .v5-sg-table-{{ sid }} td {
+    padding: 11px 8px;
+    border-bottom: 1px solid rgba(57, 35, 25, 0.12);
+    color: rgba(57, 35, 25, 0.85);
+    text-align: center;
+  }
+
+  .v5-sg-table-{{ sid }} td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--cocoa, #392319);
+  }
+
+  .v5-sg-table-{{ sid }} tr:last-child td {
+    border-bottom: 1px solid rgba(57, 35, 25, 0.25);
+  }
+
+  /* Fabric Stretch Note */
+  .v5-sg-note-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(57, 35, 25, 0.7);
+    margin: 12px 0 0 0;
+  }
+
+  /* Right Column: Assistance */
+  .v5-sg-assist-box-{{ sid }} {
+    margin-top: 28px;
+  }
+
+  .v5-sg-assist-title-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    margin: 0 0 10px 0;
+  }
+
+  .v5-sg-assist-text-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(57, 35, 25, 0.75);
+    margin: 0 0 10px 0;
+  }
+
+  .v5-sg-assist-text-{{ sid }} a {
+    color: var(--cocoa, #392319);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  .v5-sg-assist-text-{{ sid }} a:hover {
+    color: #634335;
+  }
+</style>
+
+<div class="v5-sg-page-{{ sid }}">
+  <div class="v5-sg-container-{{ sid }}">
+
+    <!-- Header & Minimal Unit Switcher -->
+    <header class="v5-sg-header-{{ sid }}">
+      <h1 class="v5-sg-title-{{ sid }}">{{ page_title }}</h1>
+      <div class="v5-sg-units-{{ sid }}">
+        <button 
+          type="button" 
+          class="v5-sg-unit-btn-{{ sid }} is-active" 
+          onclick="setSgUnit_{{ sid | replace: '-', '_' }}('cm', this)"
+        >
+          CM
+        </button>
+        <span class="v5-sg-unit-sep-{{ sid }}">/</span>
+        <button 
+          type="button" 
+          class="v5-sg-unit-btn-{{ sid }}" 
+          onclick="setSgUnit_{{ sid | replace: '-', '_' }}('in', this)"
+        >
+          INCHES
+        </button>
+      </div>
+    </header>
+
+    <!-- Two-Column Open Layout -->
+    <div class="v5-sg-grid-{{ sid }}">
+
+      <!-- Left Column: Body Measurements -->
+      <div>
+        <h2 class="v5-sg-section-title-{{ sid }}">
+          Size Guide (<span class="v5-unit-text-{{ sid }}">cm</span>)
+        </h2>
+
+        <!-- Table 1: Standard Sizing -->
+        <table class="v5-sg-table-{{ sid }}">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust</th>
+              <th>Waist</th>
+              <th>Hips</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>S</td>
+              <td><span class="v5-num-{{ sid }}" data-cm="86" data-in="33.9">86</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="71" data-in="28.0">71</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="94" data-in="37.0">94</span></td>
+            </tr>
+            <tr>
+              <td>M</td>
+              <td><span class="v5-num-{{ sid }}" data-cm="91" data-in="35.8">91</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="76" data-in="29.9">76</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="99" data-in="39.0">99</span></td>
+            </tr>
+            <tr>
+              <td>L</td>
+              <td><span class="v5-num-{{ sid }}" data-cm="97" data-in="38.2">97</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="81" data-in="31.9">81</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="104" data-in="40.9">104</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Table 2: Dual Sizing -->
+        <table class="v5-sg-table-{{ sid }}">
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>Bust</th>
+              <th>Waist</th>
+              <th>Hips</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>XS/S</td>
+              <td><span class="v5-num-{{ sid }}" data-cm="81" data-in="31.9">81</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="64" data-in="25.2">64</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="89" data-in="35.0">89</span></td>
+            </tr>
+            <tr>
+              <td>M/L</td>
+              <td><span class="v5-num-{{ sid }}" data-cm="91" data-in="35.8">91</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="74" data-in="29.1">74</span></td>
+              <td><span class="v5-num-{{ sid }}" data-cm="99" data-in="39.0">99</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="v5-sg-note-{{ sid }}">
+          Note: Our fabric stretches up to 15 cm.
+        </p>
+      </div>
+
+      <!-- Right Column: Universal Conversion & Assistance -->
+      <div>
+        <h2 class="v5-sg-section-title-{{ sid }}">
+          Universal Size Conversion Chart
+        </h2>
+
+        <!-- Conversion Table -->
+        <table class="v5-sg-table-{{ sid }}">
+          <thead>
+            <tr>
+              <th>Region</th>
+              <th>XS-S</th>
+              <th>M/L</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>EU</td>
+              <td>34-36</td>
+              <td>38-42</td>
+            </tr>
+            <tr>
+              <td>UK</td>
+              <td>6-8</td>
+              <td>10-14</td>
+            </tr>
+            <tr>
+              <td>USA</td>
+              <td>2-4</td>
+              <td>6-10</td>
+            </tr>
+            <tr>
+              <td>AUS</td>
+              <td>8-10</td>
+              <td>12-16</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Assistance Note -->
+        <div class="v5-sg-assist-box-{{ sid }}">
+          <h3 class="v5-sg-assist-title-{{ sid }}">Still Need Assistance?</h3>
+          <p class="v5-sg-assist-text-{{ sid }}">
+            Feel free to reach out to us by email at <a href="mailto:lisandrathelabel@gmail.com">lisandrathelabel@gmail.com</a> and let us know the styles you are interested in and your measurements.
+          </p>
+          <p class="v5-sg-assist-text-{{ sid }}">
+            Return shipping results in extra carbon emissions from transportation, so we encourage you to reach out to us if you are unsure about your size and help be a part of the solution.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function setSgUnit_{{ sid | replace: '-', '_' }}(unit, btnEl) {
+    const section = document.querySelector('.v5-sg-page-{{ sid }}');
+    if (!section) return;
+
+    // Button states
+    const buttons = section.querySelectorAll('.v5-sg-unit-btn-{{ sid }}');
+    buttons.forEach(btn => btn.classList.remove('is-active'));
+    if (btnEl) btnEl.classList.add('is-active');
+
+    // Update label
+    const unitLabels = section.querySelectorAll('.v5-unit-text-{{ sid }}');
+    unitLabels.forEach(label => {
+      label.textContent = unit === 'in' ? 'inches' : 'cm';
+    });
+
+    // Update values
+    const numbers = section.querySelectorAll('.v5-num-{{ sid }}');
+    numbers.forEach(num => {
+      const val = unit === 'in' ? num.getAttribute('data-in') : num.getAttribute('data-cm');
+      if (val) num.textContent = val;
+    });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Size Guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Size Guide"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Size Guide"
+    }
+  ]
+}
+{% endschema %}

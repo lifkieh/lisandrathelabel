@@ -1,0 +1,294 @@
+{%- comment -%}
+  Lisandra The Label - Compact Minimalist Refund Policy Page
+  - High Readability & Refined Typographic Structure
+  - Numberless Sleek Table of Contents
+  - Zero bloated whitespace (Compact & Elegant)
+  - 100% Dynamic in Shopify Theme Editor
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+{%- assign page_title = section.settings.title | default: page.title | default: 'Refund Policy' -%}
+
+<style>
+  .v5-policy-clean-{{ sid }} {
+    background-color: var(--paper, #f8f8f0);
+    color: var(--cocoa, #392319);
+    padding: clamp(36px, 4.5vw, 56px) clamp(20px, 4vw, 48px);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .v5-policy-inner-{{ sid }} {
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .v5-policy-title-{{ sid }} {
+    font-family: var(--display, 'Bodoni Moda', Georgia, serif);
+    font-size: clamp(32px, 4vw, 46px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    text-align: center;
+    margin: 0 0 clamp(28px, 3.5vw, 42px) 0;
+    line-height: 1.1;
+  }
+
+  /* 2-Column Grid */
+  .v5-policy-layout-{{ sid }} {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: clamp(28px, 4vw, 52px);
+    align-items: start;
+    border-top: 1px solid rgba(57, 35, 25, 0.15);
+    padding-top: clamp(24px, 3vw, 36px);
+  }
+
+  @media (max-width: 768px) {
+    .v5-policy-layout-{{ sid }} {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding-top: 20px;
+    }
+  }
+
+  /* Numberless Sleek Sticky TOC */
+  .v5-policy-toc-sidebar-{{ sid }} {
+    position: sticky;
+    top: 90px;
+  }
+
+  .v5-policy-toc-menu-{{ sid }} {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 1.5px solid rgba(57, 35, 25, 0.12);
+    padding-left: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .v5-policy-toc-sidebar-{{ sid }} {
+      position: static;
+    }
+    .v5-policy-toc-menu-{{ sid }} {
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-left: none;
+      padding-left: 0;
+      gap: 6px 10px;
+      border-bottom: 1px solid rgba(57, 35, 25, 0.12);
+      padding-bottom: 12px;
+    }
+  }
+
+  .v5-policy-toc-a-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(57, 35, 25, 0.5);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: block;
+    line-height: 1.35;
+  }
+
+  .v5-policy-toc-a-{{ sid }}:hover,
+  .v5-policy-toc-a-{{ sid }}.is-active {
+    color: var(--cocoa, #392319);
+    font-weight: 600;
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 768px) {
+    .v5-policy-toc-a-{{ sid }}:hover,
+    .v5-policy-toc-a-{{ sid }}.is-active {
+      transform: none;
+      color: var(--cocoa, #392319);
+      text-decoration: underline;
+    }
+  }
+
+  /* Policy Clauses */
+  .v5-policy-body-list-{{ sid }} {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .v5-policy-sec-{{ sid }} {
+    scroll-margin-top: 100px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(57, 35, 25, 0.1);
+  }
+
+  .v5-policy-sec-{{ sid }}:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .v5-policy-sec-title-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    margin: 0 0 10px 0;
+  }
+
+  .v5-policy-text-content-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12.5px;
+    line-height: 1.68;
+    color: rgba(57, 35, 25, 0.85);
+  }
+
+  .v5-policy-text-content-{{ sid }} p {
+    margin: 0 0 10px 0;
+  }
+
+  .v5-policy-text-content-{{ sid }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .v5-policy-text-content-{{ sid }} ul {
+    margin: 6px 0 10px 18px;
+    padding: 0;
+  }
+
+  .v5-policy-text-content-{{ sid }} li {
+    margin-bottom: 5px;
+    line-height: 1.6;
+  }
+
+  .v5-policy-text-content-{{ sid }} strong {
+    color: var(--cocoa, #392319);
+    font-weight: 600;
+  }
+
+  .v5-policy-text-content-{{ sid }} a {
+    color: var(--cocoa, #392319);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  .v5-policy-text-content-{{ sid }} a:hover {
+    color: var(--clay, #8a5a44);
+  }
+</style>
+
+<div class="v5-policy-clean-{{ sid }}">
+  <div class="v5-policy-inner-{{ sid }}">
+
+    <!-- Title -->
+    <h1 class="v5-policy-title-{{ sid }}">{{ page_title }}</h1>
+
+    <div class="v5-policy-layout-{{ sid }}">
+
+      <!-- Numberless Sticky Quick-Nav Sidebar -->
+      <aside class="v5-policy-toc-sidebar-{{ sid }}">
+        <ul class="v5-policy-toc-menu-{{ sid }}">
+          {%- for block in section.blocks -%}
+            {%- assign anchor_id = block.settings.heading | handleize -%}
+            <li>
+              <a class="v5-policy-toc-a-{{ sid }}" href="#section-{{ anchor_id }}">
+                {{ block.settings.nav_label | default: block.settings.heading }}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </aside>
+
+      <!-- Content Clauses -->
+      <div class="v5-policy-body-list-{{ sid }}">
+        {%- for block in section.blocks -%}
+          {%- assign anchor_id = block.settings.heading | handleize -%}
+          <section class="v5-policy-sec-{{ sid }}" id="section-{{ anchor_id }}" {{ block.shopify_attributes }}>
+            <h2 class="v5-policy-sec-title-{{ sid }}">{{ block.settings.heading }}</h2>
+            <div class="v5-policy-text-content-{{ sid }}">
+              {{ block.settings.content }}
+            </div>
+          </section>
+        {%- endfor -%}
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.v5-policy-sec-{{ sid }}');
+    const navLinks = document.querySelectorAll('.v5-policy-toc-a-{{ sid }}');
+
+    if (!sections.length || !navLinks.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('is-active');
+            } else {
+              link.classList.remove('is-active');
+            }
+          });
+        }
+      });
+    }, { rootMargin: '-15% 0px -75% 0px' });
+
+    sections.forEach(sec => observer.observe(sec));
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Refund Policy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Refund Policy"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "clause",
+      "name": "Policy Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_label",
+          "label": "Sidebar Menu Label",
+          "default": "Full-Price Orders"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Section Heading",
+          "default": "FULL-PRICE ORDERS"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Content goes here...</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Refund Policy"
+    }
+  ]
+}
+{% endschema %}

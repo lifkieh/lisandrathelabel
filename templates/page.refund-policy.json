@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-refund-policy-v5",
+      "blocks": {
+        "full_price": {
+          "type": "clause",
+          "settings": {
+            "nav_label": "Full-Price Orders",
+            "heading": "FULL-PRICE ORDERS",
+            "content": "<p>You deserve something you love! At Lisandra The Label, we want you to be completely satisfied with your purchase. If you change your mind, you may return your item(s) within 14 days of receiving your order for a store credit or exchange.</p><p>Our returns facility is located in Bali, and please note that <strong>Lisandra does not cover the cost of return shipping</strong>.</p><p><strong>Important:</strong></p><ul><li>Original shipping charges are non-refundable.</li><li>Returns are only accepted on items with original tags attached.</li><li>Items that have been worn, damaged, altered, have pulled threads, strong perfume odours, or missing tags will not be accepted and will be returned to you at your expense (re-shipping fee applies).</li></ul>"
+          }
+        },
+        "sale_items": {
+          "type": "clause",
+          "settings": {
+            "nav_label": "Sale Items",
+            "heading": "SALE ITEMS",
+            "content": "<p>All sale and promotional items—including those purchased using a discount code—are <strong>final sale</strong> and <strong>not eligible</strong> for return or exchange unless the item is deemed faulty. If your item is faulty, please contact us with proof.</p>"
+          }
+        },
+        "faulty_items": {
+          "type": "clause",
+          "settings": {
+            "nav_label": "Faulty or Missing Items",
+            "heading": "FAULTY OR MISSING ITEMS",
+            "content": "<p>All Lisandra garments are handmade in Bali by local artisans, making each piece beautifully unique. We take great pride in our craftsmanship and are truly sorry if you receive a product that isn’t perfect.</p><p>If you believe your item is defective, you must notify us within 48 hours of delivery by emailing <a href=\"mailto:lisandrathelabel@gmail.com\">lisandrathelabel@gmail.com</a> with video proof of you opening the parcel showing the fault.</p><p><strong>Please note:</strong></p><ul><li>Items that have been worn, washed, or had their tags removed cannot be assessed as defective.</li><li>All claims for faulty items must be made before the item is used.</li></ul><p><strong>Missing Item?</strong><br/>In the rare case that an item is missing from your order, please email us within 48 hours of delivery with video proof of you opening the parcel.</p><p>Lisandra is not responsible for lost parcels or theft after delivery.</p>"
+          }
+        },
+        "return_process": {
+          "type": "clause",
+          "settings": {
+            "nav_label": "Return Process",
+            "heading": "RETURN PROCESS",
+            "content": "<p>To request a return within 14 days of delivery, you can email us at <a href=\"mailto:lisandrathelabel@gmail.com\">lisandrathelabel@gmail.com</a> with the following:</p><ul><li>Your order number</li><li>List of items you wish to return</li><li>Reason for return</li></ul><p>Once approved, return instructions and address will be provided.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "full_price",
+        "sale_items",
+        "faulty_items",
+        "return_process"
+      ],
+      "settings": {
+        "title": "Refund Policy"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
