@@ -11,8 +11,6 @@
     border-top: 1px solid rgba(248, 248, 240, 0.12);
   }
 
-
-
   /* ---------- 2. Main Footer Grid ---------- */
   .foot-main-wrap {
     padding: clamp(56px, 7vw, 90px) clamp(20px, 4vw, 60px) clamp(40px, 5vw, 60px);
@@ -94,7 +92,6 @@
     outline: none !important;
     box-shadow: none !important;
   }
-  /* Prevent browser / Chrome autofill from making the input white */
   .foot-input-email:-webkit-autofill,
   .foot-input-email:-webkit-autofill:hover, 
   .foot-input-email:-webkit-autofill:focus, 
@@ -522,8 +519,6 @@
 </style>
 
 <footer class="foot-section">
-
-
   <!-- 2. Main Footer Grid -->
   <div class="foot-main-wrap">
     <div class="foot-grid">
@@ -570,7 +565,7 @@
           
           <p class="foot-privacy-note">
             By joining, you agree to our
-            <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>. Unsubscribe anytime.
+            <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}">Privacy Policy</a>. Unsubscribe anytime.
           </p>
         </div>
       </div>
@@ -593,34 +588,32 @@
             </div>
           {%- endfor -%}
         {%- else -%}
-          <!-- Default 3 Clean Columns -->
+          <!-- Default 3 Clean Columns matching Reference Image -->
           <div class="foot-nav-col">
             <h5>Lisandra World</h5>
             <ul>
               <li><a href="/pages/our-story">Our Story</a></li>
-              <li><a href="#artisans">Artisans &amp; Craft</a></li>
-              <li><a href="#contact">Contact Us</a></li>
-              <li><a href="#stockists">Stockists</a></li>
+              <li><a href="/pages/contact">Contact Us</a></li>
+              <li><a href="/pages/faqs">Stockists</a></li>
             </ul>
           </div>
           
           <div class="foot-nav-col">
             <h5>Customer Care</h5>
             <ul>
-              <li><a href="#faqs">FAQs</a></li>
-              <li><a href="javascript:void(0)" onclick="openSizeModal()">Size Guide</a></li>
-              <li><a href="#shipping">Shipping &amp; Duties</a></li>
-              <li><a href="#returns">Returns &amp; Exchanges</a></li>
+              <li><a href="/pages/faqs">FAQs</a></li>
+              <li><a href="/pages/size-guide">Size Guide</a></li>
+              <li><a href="{{ shop.shipping_policy.url | default: '/pages/faqs' }}">Shipping &amp; Duties</a></li>
+              <li><a href="{{ shop.refund_policy.url | default: '/pages/faqs' }}">Returns</a></li>
             </ul>
           </div>
           
           <div class="foot-nav-col">
-            <h5>Policies</h5>
+            <h5>Follow Us</h5>
             <ul>
-              <li><a href="{{ shop.privacy_policy.url | default: '#privacy' }}">Privacy Policy</a></li>
-              <li><a href="{{ shop.terms_of_service.url | default: '#terms' }}">Terms of Service</a></li>
-              <li><a href="{{ shop.refund_policy.url | default: '#refund' }}">Refund Policy</a></li>
-              <li><a href="#care">Garment Care</a></li>
+              <li><a href="https://instagram.com/lisandra.thelabel" target="_blank" rel="noopener">Instagram</a></li>
+              <li><a href="https://tiktok.com/@lisandra.thelabel" target="_blank" rel="noopener">Tiktok</a></li>
+              <li><a href="https://pinterest.com/lisandrathelabel" target="_blank" rel="noopener">Pinterest</a></li>
             </ul>
           </div>
         {%- endif -%}
@@ -686,7 +679,7 @@
         {% endform %}
         
         <p class="newsletter-privacy-note">
-          By joining, you agree to our <a href="{{ shop.privacy_policy.url | default: '#' }}" style="color:var(--cocoa); text-decoration:underline;">Privacy Policy</a>.
+          By joining, you agree to our <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" style="color:var(--cocoa); text-decoration:underline;">Privacy Policy</a>.
         </p>
       </div>
       

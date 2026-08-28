@@ -25,7 +25,7 @@
           "settings": {
             "image": "shopify://shop_images/5_5b15fabc-1f64-4330-95c3-5a2556cc49a1.jpg",
             "title": "Sets",
-            "link": "shopify://collections/top"
+            "link": "shopify://collections/all"
           }
         },
         "cat_swim": {
@@ -73,7 +73,7 @@
         "title": "BEST SELLERS",
         "subtitle": "",
         "link_label": "View all",
-        "link_url": "",
+        "link_url": "/collections/all",
         "collection": "best-sellers",
         "product_limit": 4,
         "columns_desktop": 4,
@@ -127,6 +127,28 @@
     },
     "editorial_rows": {
       "type": "editorial-rows",
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/2_34953080-8e76-4225-b7d0-3a776f32c85e.jpg",
+            "text": "\"Made for the woman who moves between the water, the sand, and the dinner table without ever changing who she is.\"",
+            "layout": "image_left"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg",
+            "text": "\"Twelve pieces at a time, hand-knit by artisans we know by name. When it's gone, the next batch takes its own time.\"",
+            "layout": "image_right"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2"
+      ],
       "settings": {}
     },
     "customer_reviews": {
@@ -177,7 +199,7 @@
       "settings": {
         "title": "Follow us on social",
         "handle": "@lisandra.thelabel",
-        "url": "shopify://products/zaye-dress"
+        "url": "https://instagram.com/lisandra.thelabel"
       }
     }
   },

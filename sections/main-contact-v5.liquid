@@ -1,0 +1,290 @@
+{%- comment -%}
+  Lisandra The Label - Clean V5 Luxury Contact Page
+  Strictly following 'STRIVE FOR CONSISTENCY':
+  - Palet warna V5: Paper (#f8f8f0), Cocoa (#392319), Sand (#e0d9b5)
+  - Tipografi: Bodoni Moda (Heading) & Inter (Body/Inputs)
+  - Informasi Otentik: contact@lisandrathelabel.com
+{%- endcomment -%}
+
+{%- assign sid = section.id -%}
+
+<style>
+  .v5-contact-page-{{ sid }} {
+    background-color: var(--paper, #f8f8f0);
+    color: var(--cocoa, #392319);
+    padding: clamp(48px, 6vw, 88px) clamp(20px, 4vw, 40px);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .v5-contact-container-{{ sid }} {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .v5-contact-head-{{ sid }} {
+    text-align: center;
+    margin-bottom: clamp(36px, 5vw, 56px);
+  }
+
+  .v5-contact-kicker-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--clay, #8a5a44);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .v5-contact-head-{{ sid }} h1 {
+    font-family: var(--display, 'Bodoni Moda', Georgia, serif);
+    font-size: clamp(34px, 4.5vw, 52px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0 0 16px 0;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .v5-contact-head-{{ sid }} p {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: rgba(57, 35, 25, 0.75);
+    margin: 0 auto;
+    max-width: 520px;
+  }
+
+  .v5-contact-head-{{ sid }} a {
+    color: var(--cocoa, #392319);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+
+  /* Form Wrap */
+  .v5-contact-form-wrap-{{ sid }} {
+    background: #ffffff;
+    border: 1px solid var(--sand, #e0d9b5);
+    padding: clamp(28px, 4vw, 48px);
+    border-radius: 2px;
+    box-shadow: 0 6px 24px rgba(57, 35, 25, 0.03);
+  }
+
+  .v5-form-grid-{{ sid }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 640px) {
+    .v5-form-grid-{{ sid }} {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  .v5-field-group-{{ sid }} {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .v5-field-label-{{ sid }} {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+  }
+
+  .v5-input-{{ sid }}, .v5-textarea-{{ sid }} {
+    width: 100%;
+    padding: 13px 16px;
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 13px;
+    color: var(--cocoa, #392319);
+    background: var(--paper, #f8f8f0);
+    border: 1px solid var(--sand, #e0d9b5);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+    box-sizing: border-box;
+  }
+
+  .v5-input-{{ sid }}:focus, .v5-textarea-{{ sid }}:focus {
+    border-color: var(--cocoa, #392319);
+    background-color: #ffffff;
+  }
+
+  .v5-input-{{ sid }}::placeholder, .v5-textarea-{{ sid }}::placeholder {
+    color: rgba(57, 35, 25, 0.4);
+  }
+
+  .v5-textarea-{{ sid }} {
+    min-height: 140px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  /* Submit Button */
+  .v5-submit-btn-{{ sid }} {
+    width: 100%;
+    padding: 15px 28px;
+    background: var(--cocoa, #392319);
+    color: #ffffff;
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: 1px solid var(--cocoa, #392319);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+  }
+
+  .v5-submit-btn-{{ sid }}:hover {
+    background: #23140e;
+    transform: translateY(-1px);
+  }
+
+  /* Success & Error Notice */
+  .v5-notice-success-{{ sid }} {
+    background: rgba(139, 157, 136, 0.14);
+    border: 1px solid rgba(139, 157, 136, 0.5);
+    padding: 20px 24px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .v5-notice-success-{{ sid }} h4 {
+    font-family: var(--display, 'Bodoni Moda', serif);
+    font-size: 20px;
+    font-style: italic;
+    color: var(--cocoa, #392319);
+    margin: 0 0 6px 0;
+  }
+
+  .v5-notice-success-{{ sid }} p {
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12.5px;
+    color: rgba(57, 35, 25, 0.8);
+    margin: 0;
+  }
+
+  .v5-notice-error-{{ sid }} {
+    color: #b91c1c;
+    font-family: var(--body, 'Inter', sans-serif);
+    font-size: 12.5px;
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="v5-contact-page-{{ sid }}">
+  <div class="v5-contact-container-{{ sid }}">
+    
+    <!-- Header -->
+    <header class="v5-contact-head-{{ sid }}">
+      <span class="v5-contact-kicker-{{ sid }}">Get In Touch</span>
+      <h1>Contact Us</h1>
+      <p>
+        We would love to hear from you. Please get in touch with us by emailing <a href="mailto:contact@lisandrathelabel.com">contact@lisandrathelabel.com</a> or using the form below.
+      </p>
+    </header>
+
+    <!-- Form Container -->
+    <div class="v5-contact-form-wrap-{{ sid }}">
+      {% form 'contact' %}
+        {%- if form.posted_successfully? -%}
+          <div class="v5-notice-success-{{ sid }}">
+            <h4>✦ Message Sent</h4>
+            <p>Thank you for reaching out to Lisandra. We will get back to you shortly.</p>
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="v5-notice-error-{{ sid }}">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="v5-form-grid-{{ sid }}">
+          <div class="v5-field-group-{{ sid }}" style="margin-bottom:0;">
+            <label class="v5-field-label-{{ sid }}" for="ContactName-{{ sid }}">Name</label>
+            <input 
+              type="text" 
+              class="v5-input-{{ sid }}" 
+              id="ContactName-{{ sid }}" 
+              name="contact[name]" 
+              placeholder="Your name" 
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" 
+              required
+            />
+          </div>
+
+          <div class="v5-field-group-{{ sid }}" style="margin-bottom:0;">
+            <label class="v5-field-label-{{ sid }}" for="ContactEmail-{{ sid }}">Email *</label>
+            <input 
+              type="email" 
+              class="v5-input-{{ sid }}" 
+              id="ContactEmail-{{ sid }}" 
+              name="contact[email]" 
+              placeholder="Your email address" 
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" 
+              required
+            />
+          </div>
+        </div>
+
+        <div class="v5-field-group-{{ sid }}">
+          <label class="v5-field-label-{{ sid }}" for="ContactPhone-{{ sid }}">Phone Number</label>
+          <input 
+            type="tel" 
+            class="v5-input-{{ sid }}" 
+            id="ContactPhone-{{ sid }}" 
+            name="contact[phone]" 
+            placeholder="Your phone number (optional)" 
+            value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          />
+        </div>
+
+        <div class="v5-field-group-{{ sid }}">
+          <label class="v5-field-label-{{ sid }}" for="ContactBody-{{ sid }}">Comment</label>
+          <textarea 
+            class="v5-textarea-{{ sid }}" 
+            id="ContactBody-{{ sid }}" 
+            name="contact[body]" 
+            placeholder="Write your message here..." 
+            required
+          >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+
+        <button type="submit" class="v5-submit-btn-{{ sid }}">
+          Send Message
+        </button>
+      {% endform %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Page V5",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Contact Page V5"
+    }
+  ]
+}
+{% endschema %}
