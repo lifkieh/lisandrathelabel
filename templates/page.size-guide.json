@@ -15,25 +15,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "text": ""
           },
           "blocks": {}
         },
@@ -62,22 +44,7 @@
         "image_Ren9T9": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/1_94174ed7-6b1c-458b-815c-929ca22b2bbb.jpg",
-            "link": "",
-            "image_ratio": "square",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "image": "shopify://shop_images/1_94174ed7-6b1c-458b-815c-929ca22b2bbb.jpg"
           },
           "blocks": {}
         },
@@ -85,22 +52,7 @@
           "type": "image",
           "name": "t:names.image",
           "settings": {
-            "image": "shopify://shop_images/2_e587f4c6-eb60-42a2-b009-a4d1cb46ea78.jpg",
-            "link": "",
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "image": "shopify://shop_images/2_e587f4c6-eb60-42a2-b009-a4d1cb46ea78.jpg"
           },
           "blocks": {}
         }

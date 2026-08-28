@@ -44,7 +44,6 @@
     "recommendations": {
       "type": "product-recommendations-v5",
       "settings": {
-        "heading": "You May Also Like",
         "limit": 4
       }
     }
