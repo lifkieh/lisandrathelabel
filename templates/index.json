@@ -125,32 +125,6 @@
       ],
       "settings": {}
     },
-    "editorial_rows": {
-      "type": "editorial-rows",
-      "blocks": {
-        "row_1": {
-          "type": "row",
-          "settings": {
-            "image": "shopify://shop_images/2_34953080-8e76-4225-b7d0-3a776f32c85e.jpg",
-            "text": "\"Made for the woman who moves between the water, the sand, and the dinner table without ever changing who she is.\"",
-            "layout": "image_left"
-          }
-        },
-        "row_2": {
-          "type": "row",
-          "settings": {
-            "image": "shopify://shop_images/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg",
-            "text": "\"Twelve pieces at a time, hand-knit by artisans we know by name. When it's gone, the next batch takes its own time.\"",
-            "layout": "image_right"
-          }
-        }
-      },
-      "block_order": [
-        "row_1",
-        "row_2"
-      ],
-      "settings": {}
-    },
     "customer_reviews": {
       "type": "customer-reviews",
       "blocks": {
@@ -209,7 +183,6 @@
     "best_sellers",
     "brand_essence",
     "sustainability_strip",
-    "editorial_rows",
     "customer_reviews",
     "social_feed"
   ]

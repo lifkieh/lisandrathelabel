@@ -1,3 +1,4 @@
+{% comment %} Social Feed Section V5 {% endcomment %}
 <style>
   /* ==========================================================================
      INSTAFEED AUTO-SYNC SOCIAL SECTION (V5 Editorial Luxury Style)
@@ -48,11 +49,6 @@
     display: block;
   }
 
-  /*
-    KEY FIX: Do NOT force display:grid on #insta-feed children.
-    Instafeed's own JavaScript engine handles grid layout internally.
-    We only ensure the outer container is full-width and block-level.
-  */
   #insta-feed {
     width: 100% !important;
     max-width: 100% !important;
@@ -62,11 +58,21 @@
     box-sizing: border-box !important;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     .social-header-{{ section.id }} {
       justify-content: center;
       gap: 16px;
       padding: 12px 14px;
+    }
+    
+    /* Allow the Instafeed app to use its default mobile layout */
+    #insta-feed {
+      width: 100% !important;
+      max-width: 100% !important;
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
     }
   }
 </style>
@@ -90,6 +96,8 @@
     <div id="insta-feed"></div>
   </div>
 </section>
+
+
 
 {% schema %}
 {
