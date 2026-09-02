@@ -216,8 +216,8 @@
   @media (max-width: 600px) {
     .hero-editorial-{{ section.id }} {
       margin-top: -51px;
-      height: 75vh;
-      min-height: 480px;
+      height: 82vh;
+      min-height: 600px;
     }
 
     .hero-editorial-{{ section.id }} .hero-in h1 {
@@ -240,11 +240,24 @@
     }
 
     .cats3-{{ section.id }} {
-      grid-template-columns: 1fr;
+      display: flex;
+      overflow-x: auto;
+      gap: 0;
+      padding: 0;
+      scroll-snap-type: x mandatory;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .cats3-{{ section.id }}::-webkit-scrollbar {
+      display: none;
     }
 
     .cat3-{{ section.id }} {
-      aspect-ratio: 3/2;
+      flex: 0 0 80vw; /* Peek effect without whitespace */
+      aspect-ratio: 3/4;
+      scroll-snap-align: start;
+      border-radius: 0;
     }
   }
 </style>
