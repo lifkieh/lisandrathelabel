@@ -31,8 +31,35 @@
 
   assign mf_fit_sizing = product.metafields.custom.fit_sizing
   assign mf_materials = product.metafields.custom.materials
+  assign mf_details = product.metafields.custom.details
   assign mf_care = product.metafields.custom.care
   assign mf_size_guide = product.metafields.custom.size_guide.value
+
+  assign main_desc = product.description
+  assign details_content = ''
+  assign fit_content = ''
+
+  if product.description contains 'Ethically handmade'
+    assign split1 = product.description | split: 'Ethically handmade'
+    assign main_desc = split1[0]
+    assign rest1 = split1[1] | prepend: 'Ethically handmade'
+
+    if rest1 contains 'Fitting notes:'
+      assign split2 = rest1 | split: 'Fitting notes:'
+      assign details_content = split2[0]
+      assign fit_content = split2[1] | prepend: 'Fitting notes:'
+    elsif rest1 contains 'Model Measurements:'
+      assign split2 = rest1 | split: 'Model Measurements:'
+      assign details_content = split2[0]
+      assign fit_content = split2[1] | prepend: 'Model Measurements:'
+    else
+      assign details_content = rest1
+    endif
+  elsif product.description contains 'Fabric:'
+    assign split1 = product.description | split: 'Fabric:'
+    assign main_desc = split1[0]
+    assign details_content = split1[1] | prepend: 'Fabric:'
+  endif
 -%}
 
 <style>
@@ -629,7 +656,11 @@
 
       {%- comment -%} Short description hook & bullet points {%- endcomment -%}
       <div class="pdp-v5-hook">
-        {{ product.description }}
+        {%- if main_desc != blank -%}
+          {{ main_desc }}
+        {%- else -%}
+          {{ product.description }}
+        {%- endif -%}
       </div>
 
       <!-- FORM & VARIANT PICKERS -->
@@ -720,21 +751,6 @@
         </div>
       </form>
 
-      <!-- Trust Assurances (Customizable in Theme Editor) -->
-      {%- if section.settings.show_trust_badges -%}
-        <div class="pdp-v5-assure-wrap">
-          {%- if section.settings.shipping_note_1 != blank -%}
-            <p class="pdp-v5-assure">{{ section.settings.shipping_note_1 }}</p>
-          {%- endif -%}
-          {%- if section.settings.shipping_note_2 != blank -%}
-            <p class="pdp-v5-assure">{{ section.settings.shipping_note_2 }}</p>
-          {%- endif -%}
-          {%- if section.settings.shipping_note_3 != blank -%}
-            <p class="pdp-v5-assure">{{ section.settings.shipping_note_3 }}</p>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
       <!-- Payment Icons (Customizable in Theme Editor) -->
       {%- if section.settings.show_payment_badges -%}
         {%- assign badges_arr = section.settings.payment_badges | split: ',' -%}
@@ -758,6 +774,31 @@
       {%- endif -%}
 
       <!-- ACCORDIONS (Dynamic via Metafield with Theme Editor Fallbacks) -->
+      {%- if details_content != blank or section.settings.show_details != false -%}
+        <details>
+          <summary>{{ section.settings.heading_details | default: 'Details' }}</summary>
+          <div>
+            {%- if mf_details != blank -%}
+              {%- if mf_details.type == 'rich_text_field' -%}
+                {{ mf_details | metafield_tag }}
+              {%- elsif mf_details.type == 'multi_line_text_field' -%}
+                <p>{{ mf_details.value | newline_to_br }}</p>
+              {%- else -%}
+                {{ mf_details | metafield_tag }}
+              {%- endif -%}
+            {%- elsif mf_materials != blank -%}
+              {{ mf_materials | metafield_tag }}
+            {%- elsif details_content != blank -%}
+              {{ details_content }}
+            {%- elsif section.settings.default_details != blank -%}
+              {{ section.settings.default_details }}
+            {%- else -%}
+              <p>Ethically handmade in Bali.<br>100% Rayon.</p>
+            {%- endif -%}
+          </div>
+        </details>
+      {%- endif -%}
+
       {%- if section.settings.show_fit_sizing -%}
         <details open>
           <summary>{{ section.settings.heading_fit_sizing | default: 'Fit & sizing' }}</summary>
@@ -770,6 +811,8 @@
               {%- else -%}
                 {{ mf_fit_sizing | metafield_tag }}
               {%- endif -%}
+            {%- elsif fit_content != blank -%}
+              {{ fit_content }}
             {%- elsif mf_size_guide != blank and mf_size_guide.fit_notes != blank -%}
               <p>{{ mf_size_guide.fit_notes | newline_to_br }}</p>
             {%- elsif section.settings.default_fit_sizing != blank -%}
@@ -818,7 +861,7 @@
             {%- if section.settings.shipping_returns_text != blank -%}
               {{ section.settings.shipping_returns_text }}
             {%- else -%}
-              <p>Free shipping across Indonesia. Worldwide free over USD 200. Ships in 1–2 business days in a reusable tote, no plastic. 14-day returns on unworn pieces.</p>
+              <p>Ships next day · Free shipping across Indonesia. Worldwide free over USD 200. 14-day returns on unworn pieces. Ships in a reusable tote bag and biodegradable polymailer.</p>
             {%- endif -%}
           </div>
         </details>
@@ -833,8 +876,26 @@
   <div class="pdp-v5-modal-card">
     <button type="button" class="pdp-v5-modal-close" onclick="document.getElementById('pdpSizeModal').classList.remove('open')" aria-label="Close">✕</button>
     
+    {%- assign raw_guide_title = mf_size_guide.name | default: product.title -%}
+    {%- assign clean_style_title = raw_guide_title -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign opt_lower = option.name | downcase -%}
+      {%- if opt_lower == 'color' or opt_lower == 'colour' or opt_lower == 'warna' -%}
+        {%- for val in option.values -%}
+          {%- if val != blank -%}
+            {%- assign clean_style_title = clean_style_title | replace: val, '' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign color_list = 'Cocoa,Beige,Sage,Ivory,Black,Sand,Caramel,White,Cream,Olive,Rust,Terracotta,Taupe,Nude,Clay,Blush,Navy,Yellow,Gold,Orange,Blue,Red,Pink,Grey,Gray' | split: ',' -%}
+    {%- for color_word in color_list -%}
+      {%- assign clean_style_title = clean_style_title | replace: color_word, '' -%}
+    {%- endfor -%}
+    {%- assign clean_style_title = clean_style_title | strip -%}
+
     {%- if mf_size_guide != blank -%}
-      <h2 class="pdp-v5-modal-title">{{ mf_size_guide.name | default: product.title | append: " Size Guide" }}</h2>
+      <h2 class="pdp-v5-modal-title">{{ clean_style_title }} Size Guide</h2>
       
       {%- assign conv_rows = mf_size_guide.conversion_json.value -%}
       {%- if conv_rows != blank and conv_rows.size > 0 -%}
@@ -865,7 +926,7 @@
       {%- assign meas_rows = mf_size_guide.measurements_json.value -%}
       {%- if meas_rows != blank and meas_rows.size > 0 -%}
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
-        <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Garment Measurements</h3>
+        <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Measurements</h3>
         <div class="pdp-v5-size-toggle">
           <button type="button" class="active" id="btn-cm-v5" onclick="pdpSetUnit('cm')">cm</button>
           <button type="button" id="btn-inch-v5" onclick="pdpSetUnit('inch')">inch</button>
@@ -905,7 +966,7 @@
       {%- endif -%}
 
     {%- else -%}
-      <h2 class="pdp-v5-modal-title">{{ product.title }} Size Guide</h2>
+      <h2 class="pdp-v5-modal-title">{{ clean_style_title }} Size Guide</h2>
       <h3 class="pdp-v5-modal-section-title">Size Conversion Chart</h3>
       <table class="pdp-v5-size-table">
         <thead>
@@ -924,7 +985,7 @@
       </table>
 
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
-        <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Garment Measurements</h3>
+        <h3 class="pdp-v5-modal-section-title" style="margin: 0;">Measurements</h3>
         <div class="pdp-v5-size-toggle">
           <button type="button" class="active" id="btn-cm-v5" onclick="pdpSetUnit('cm')">cm</button>
           <button type="button" id="btn-inch-v5" onclick="pdpSetUnit('inch')">inch</button>

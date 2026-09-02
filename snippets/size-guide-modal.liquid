@@ -79,8 +79,25 @@
 <dialog id="sizeModal" aria-labelledby="sizeModalTitle">
   <div class="size-modal-inner">
     <button class="modal-close" onclick="closeSizeModal()" aria-label="Close size guide">✕</button>
+    {%- assign raw_guide_title = product.title | default: 'Size Guide' -%}
+    {%- assign clean_style_title = raw_guide_title -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign opt_lower = option.name | downcase -%}
+      {%- if opt_lower == 'color' or opt_lower == 'colour' or opt_lower == 'warna' -%}
+        {%- for val in option.values -%}
+          {%- if val != blank -%}
+            {%- assign clean_style_title = clean_style_title | replace: val, '' -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- assign color_list = 'Cocoa,Beige,Sage,Ivory,Black,Sand,Caramel,White,Cream,Olive,Rust,Terracotta,Taupe,Nude,Clay,Blush,Navy,Yellow,Gold,Orange,Blue,Red,Pink,Grey,Gray' | split: ',' -%}
+    {%- for color_word in color_list -%}
+      {%- assign clean_style_title = clean_style_title | replace: color_word, '' -%}
+    {%- endfor -%}
+    {%- assign clean_style_title = clean_style_title | strip -%}
     <h2 id="sizeModalTitle" style="font-family: var(--display, serif); font-style: italic; margin-top: 0; margin-bottom: 24px; font-size: 24px; color: var(--cocoa, #392319);">
-      {{ product.title | default: 'Size Guide' }}
+      {%- if clean_style_title contains 'Size Guide' -%}{{ clean_style_title }}{%- else -%}{{ clean_style_title }} Size Guide{%- endif -%}
     </h2>
 
     <h3 style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink60, #666); margin-bottom: 8px;">
@@ -120,7 +137,7 @@
 
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px;">
       <h3 style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink60, #666); margin: 0;">
-        Garment Measurements
+        Measurements
       </h3>
       <div class="size-toggle">
         <button class="active" onclick="setSizeUnit('cm')" id="btn-cm">cm</button>

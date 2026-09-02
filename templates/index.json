@@ -176,7 +176,7 @@
           "type": "review",
           "settings": {
             "stars": 5,
-            "quote": "Beautiful silhouette! I wore this on my vacation and received so many compliments.",
+            "quote": "So beautiful!! I wore this on my trip to Tulum and received so many compliments.",
             "author": "Jessica R.",
             "verified": true
           }
@@ -188,7 +188,7 @@
         "rev_3"
       ],
       "settings": {
-        "title": "What people say",
+        "title": "What People Say",
         "link_label": "",
         "link_url": "",
         "columns_desktop": 3

@@ -72,7 +72,9 @@
       {%- endfor -%}
       {%- assign count_display = sale_actual_count -%}
     {%- endif -%}
-    <span class="plp-count">{{ count_display }} {{ section.settings.count_label | default: 'pieces' }}</span>
+    {%- if section.settings.show_product_count -%}
+      <span class="plp-count">{{ count_display }} {{ section.settings.count_label | default: 'pieces' }}</span>
+    {%- endif -%}
     <h1>{{ collection.title }}</h1>
     {%- if collection.description != blank -%}
       <p class="plp-desc">{{ collection.description | strip_html }}</p>
@@ -80,7 +82,9 @@
       <p class="plp-desc">{{ section.settings.default_description }}</p>
     {%- endif -%}
   {%- else -%}
-    <span class="plp-count">0 {{ section.settings.count_label | default: 'pieces' }}</span>
+    {%- if section.settings.show_product_count -%}
+      <span class="plp-count">0 {{ section.settings.count_label | default: 'pieces' }}</span>
+    {%- endif -%}
     <h1>{{ section.settings.fallback_title | default: 'Shop All' }}</h1>
   {%- endif -%}
 </div>
@@ -89,6 +93,12 @@
 {
   "name": "Collection Banner V5",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count label",
+      "default": false
+    },
     {
       "type": "text",
       "id": "count_label",

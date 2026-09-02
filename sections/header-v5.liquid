@@ -164,7 +164,7 @@
   }
   .nav-links-v5 a.sale, .mobile-nav-v5 a.sale {
     color: var(--clay, #8a5a44);
-    font-style: italic;
+    font-style: normal;
   }
 
   .hdr-actions-v5 a {
@@ -541,7 +541,7 @@
   }
   .mega-links a.mega-sale {
     color: var(--clay, #8a5a44);
-    font-style: italic;
+    font-style: normal;
   }
   .mega-links-divider {
     height: 1px;
@@ -1153,6 +1153,14 @@
       </button>
       <div class="nav-links-v5">
         {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
+          {%- assign has_new_arrivals = false -%}
+          {%- for link in nav_menu.links -%}
+            {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
+            {%- if link_title_lower contains 'new arrival' -%}
+              {%- assign has_new_arrivals = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+
           {%- for link in nav_menu.links -%}
             {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
             {%- assign link_url = link.url -%}
@@ -1170,6 +1178,9 @@
                   <span class="mega-caret" aria-hidden="true"></span>
                 </a>
               </div>
+              {%- unless has_new_arrivals -%}
+                <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
+              {%- endunless -%}
             {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
               <a href="/collections/sale" class="sale">SALE</a>
             {%- else -%}
@@ -1180,6 +1191,7 @@
           <div class="nav-item-v5" id="megaNavItem">
             <a href="/collections/all">Shop<span class="mega-caret" aria-hidden="true"></span></a>
           </div>
+          <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
           <a href="/collections/sale" class="sale">SALE</a>
           <a href="/pages/collections">Collections</a>
           <a href="/pages/our-story">Our Story</a>
@@ -1425,6 +1437,14 @@
 
   <nav class="mobile-nav-v5">
     {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
+      {%- assign has_new_arrivals = false -%}
+      {%- for link in nav_menu.links -%}
+        {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
+        {%- if link_title_lower contains 'new arrival' -%}
+          {%- assign has_new_arrivals = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+
       {%- for link in nav_menu.links -%}
         {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
         {%- assign link_url = link.url -%}
@@ -1434,7 +1454,12 @@
         {%- if link_title_lower == 'our story' -%}
           {%- assign link_url = '/pages/our-story' -%}
         {%- endif -%}
-        {%- if link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
+        {%- if link_title_lower == 'shop' -%}
+          <a href="{{ link_url }}">{{ link.title }}</a>
+          {%- unless has_new_arrivals -%}
+            <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
+          {%- endunless -%}
+        {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
           <a href="/collections/sale" class="sale">SALE</a>
         {%- else -%}
           <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' %}sale{% endif %}">{{ link.title }}</a>
@@ -1442,6 +1467,7 @@
       {%- endfor -%}
     {%- else -%}
       <a href="/collections/all">Shop</a>
+      <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
       <a href="/collections/sale" class="sale">SALE</a>
       <a href="/pages/collections">Collections</a>
       <a href="/pages/our-story">Our Story</a>
