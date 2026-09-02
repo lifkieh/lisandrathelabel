@@ -33,25 +33,20 @@
 
   /* === CENTERED EDITORIAL HEADER === */
   .v5-ugc-head-{{ sid }} {
-    text-align: center;
+    text-align: left;
     margin-bottom: clamp(20px, 3.5vw, 36px);
-    padding: 0 clamp(14px, 2vw, 26px);
+    padding: 0 clamp(16px, 3vw, 40px);
+    width: 100%;
+    box-sizing: border-box;
   }
   .v5-ugc-kicker-{{ sid }} {
-    font-family: var(--body, 'Inter', sans-serif);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #8a5a44;
-    display: block;
-    margin-bottom: 6px;
+    display: none;
   }
   .v5-ugc-head-{{ sid }} h3 {
     font-family: var(--display, 'Bodoni Moda', Georgia, serif);
-    font-size: clamp(26px, 3.8vw, 38px);
+    font-size: clamp(24px, 3.8vw, 32px);
     font-weight: 400;
-    font-style: italic;
+    font-style: normal;
     color: var(--cocoa, #392319);
     margin: 0;
     letter-spacing: -0.01em;
@@ -103,19 +98,13 @@
     text-align: left;
   }
   .v5-ugc-spotlight-tag-{{ sid }} {
-    font-family: var(--body, 'Inter', sans-serif);
-    font-size: 9.5px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #8a5a44;
-    margin-bottom: 8px;
+    display: none;
   }
   .v5-ugc-spotlight-title-{{ sid }} {
     font-family: var(--display, 'Bodoni Moda', Georgia, serif);
     font-size: clamp(22px, 2.8vw, 30px);
     font-weight: 400;
-    font-style: italic;
+    font-style: normal;
     color: var(--cocoa, #392319);
     margin: 0 0 14px;
     line-height: 1.2;

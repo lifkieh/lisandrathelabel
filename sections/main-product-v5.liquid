@@ -824,31 +824,24 @@
         </details>
       {%- endif -%}
 
-      {%- if section.settings.show_materials -%}
+      {%- if section.settings.show_fabric_care != false -%}
         <details>
-          <summary>{{ section.settings.heading_materials | default: 'Craft & materials' }}</summary>
+          <summary>{{ section.settings.heading_fabric_care | default: 'Fabric & Care' }}</summary>
           <div>
-            {%- if mf_materials != blank -%}
-              {{ mf_materials | metafield_tag }}
-            {%- elsif section.settings.default_materials != blank -%}
-              {{ section.settings.default_materials }}
+            {%- if mf_materials != blank or mf_care != blank -%}
+              {%- if mf_materials != blank -%}
+                {{ mf_materials | metafield_tag }}
+              {%- endif -%}
+              {%- if mf_care != blank -%}
+                <div style="margin-top: 8px;">
+                  {{ mf_care | metafield_tag }}
+                </div>
+              {%- endif -%}
+            {%- elsif section.settings.default_fabric_care != blank -%}
+              {{ section.settings.default_fabric_care }}
             {%- else -%}
               <p>100% rayon yarn, ethically handmade in Bali by one artisan.</p>
-            {%- endif -%}
-          </div>
-        </details>
-      {%- endif -%}
-
-      {%- if section.settings.show_care -%}
-        <details>
-          <summary>{{ section.settings.heading_care | default: 'Care' }}</summary>
-          <div>
-            {%- if mf_care != blank -%}
-              {{ mf_care | metafield_tag }}
-            {%- elsif section.settings.default_care != blank -%}
-              {{ section.settings.default_care }}
-            {%- else -%}
-              <p>Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>
+              <p style="margin-top: 8px;">Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>
             {%- endif -%}
           </div>
         </details>
@@ -1356,47 +1349,25 @@ function pdpSetUnit(unit) {
     },
     {
       "type": "header",
-      "content": "Accordion 2: Craft & Materials"
+      "content": "Accordion 2: Fabric & Care"
     },
     {
       "type": "checkbox",
-      "id": "show_materials",
-      "label": "Show Craft & Materials Accordion",
+      "id": "show_fabric_care",
+      "label": "Show Fabric & Care Accordion",
       "default": true
     },
     {
       "type": "text",
-      "id": "heading_materials",
+      "id": "heading_fabric_care",
       "label": "Heading",
-      "default": "Craft & materials"
+      "default": "Fabric & Care"
     },
     {
       "type": "richtext",
-      "id": "default_materials",
+      "id": "default_fabric_care",
       "label": "Default Content (Dipakai jika metafield produk kosong)",
-      "default": "<p>100% rayon yarn, ethically handmade in Bali by one artisan.</p>"
-    },
-    {
-      "type": "header",
-      "content": "Accordion 3: Care"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_care",
-      "label": "Show Care Accordion",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "heading_care",
-      "label": "Heading",
-      "default": "Care"
-    },
-    {
-      "type": "richtext",
-      "id": "default_care",
-      "label": "Default Content (Dipakai jika metafield produk kosong)",
-      "default": "<p>Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>"
+      "default": "<p>100% rayon yarn, ethically handmade in Bali by one artisan.</p><p>Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>"
     },
     {
       "type": "header",

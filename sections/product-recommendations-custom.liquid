@@ -6,24 +6,17 @@
     border-top: 1px solid var(--line, #e2e2e2);
   }
   .section-editorial-head {
-    text-align: center;
+    text-align: left;
     margin-bottom: 24px;
-    padding: 0 16px;
-  }
-  .section-editorial-head .editorial-kicker {
-    font-size: 10.5px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--cocoa, #392319);
-    display: block;
-    margin-bottom: 8px;
+    padding: 0 clamp(16px, 3vw, 40px);
+    width: 100%;
+    box-sizing: border-box;
   }
   .section-editorial-head h3 {
     font-family: var(--display, serif);
-    font-size: 32px;
+    font-size: clamp(24px, 4vw, 32px);
     font-weight: 400;
-    font-style: italic;
+    font-style: normal;
     color: var(--cocoa, #392319);
     margin: 0;
   }
@@ -172,7 +165,6 @@
 
 <section class="ymal-section" id="ymalSection-{{ section.id }}">
   <div class="section-editorial-head">
-    <span class="editorial-kicker">{{ section.settings.kicker }}</span>
     <h3>{{ section.settings.title }}</h3>
   </div>
   
@@ -322,12 +314,6 @@
 {
   "name": "You May Also Like",
   "settings": [
-    {
-      "type": "text",
-      "id": "kicker",
-      "label": "Kicker",
-      "default": "Curated Recommendations"
-    },
     {
       "type": "text",
       "id": "title",
