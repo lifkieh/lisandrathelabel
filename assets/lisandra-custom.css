@@ -105,5 +105,23 @@ h1, h2, h3, h4, h5, h6, .brand-heading {
   font-weight: 500 !important;
 }
 
+/* Product card photo gap: ensure product title has a clean gap from the photo */
+.v5-card__figure,
+[class*="v5-card__figure"] {
+  margin-bottom: 10px !important;
+}
 
+@media (max-width: 749px) {
+  .v5-card__figure,
+  [class*="v5-card__figure"] {
+    margin-bottom: 8px !important;
+  }
+}
 
+/* Collection & Catalog Headings: Normal font-style (not italic) */
+[class*="plp-head-"] h1,
+.plp-head h1,
+.main-collection-banner h1,
+.collection-hero__title {
+  font-style: normal !important;
+}
