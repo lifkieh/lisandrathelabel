@@ -1,0 +1,137 @@
+<style>
+  .hero-video-{{ section.id }} {
+    position: relative;
+    height: calc(100vh - 31px);
+    min-height: 600px;
+    margin-top: -69px; /* Presisi sama dengan tinggi navbar v5 */
+    overflow: hidden;
+    background: #000;
+  }
+  
+  .hero-video-{{ section.id }} video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  
+  .hero-video-{{ section.id }}::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
+    z-index: 1;
+  }
+  
+  .hero-video-{{ section.id }} .hero-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .hero-video-{{ section.id }} .kicker {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+  
+  .hero-video-{{ section.id }} h1 {
+    font-family: var(--display, "Bodoni Moda", serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px);
+    color: #fff;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  @media (max-width: 900px) {
+    .hero-video-{{ section.id }} {
+      margin-top: -59px;
+      height: 75vh;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-video-{{ section.id }} {
+      margin-top: -51px;
+      height: 75vh;
+    }
+    .hero-video-{{ section.id }} h1 {
+      font-size: clamp(32px, 8vw, 42px);
+    }
+  }
+</style>
+
+<section class="hero-video-{{ section.id }}">
+  {%- if section.settings.video != blank -%}
+    {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, image_size: '1200x' }}
+  {%- else -%}
+    <!-- Fallback Placeholder Video -->
+    <video autoplay loop muted playsinline>
+      <source src="https://cdn.shopify.com/videos/c/o/v/674d81fbd338428c89b7b9b1be4bc969.mp4" type="video/mp4">
+    </video>
+  {%- endif -%}
+
+  <div class="hero-content">
+    {%- if section.settings.kicker != blank -%}
+      <div class="kicker">{{ section.settings.kicker }}</div>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h1>{{ section.settings.title }}</h1>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Video (v5)",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video",
+      "info": "Upload an MP4 video to Shopify and select it here."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Darkness",
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Behind The Craft"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Headline",
+      "default": "See How It's Made"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Video (v5)"
+    }
+  ]
+}
+{% endschema %}

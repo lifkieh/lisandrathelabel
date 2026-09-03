@@ -1,0 +1,294 @@
+<style>
+  .story-split-{{ section.id }} {
+    background: transparent;
+    padding: clamp(60px, 6vw, 120px) clamp(24px, 5vw, 60px);
+    max-width: 1520px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .gestalt-split-wrapper {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr; /* Asymmetric: 56% Media, 44% Content */
+    align-items: center; /* Center the content vertically against the video */
+    gap: clamp(40px, 8vw, 120px);
+  }
+
+  .story-split-{{ section.id }}.media-right .gestalt-split-wrapper {
+    grid-template-columns: 1fr 1.25fr;
+  }
+  .story-split-{{ section.id }}.media-right .gestalt-media {
+    order: 2;
+  }
+  .story-split-{{ section.id }}.media-right .gestalt-content {
+    order: 1;
+  }
+
+  /* KIRI: VIDEO RAKSASA */
+  .gestalt-media {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #f7f6f2;
+    overflow: hidden;
+  }
+
+  .gestalt-media video,
+  .gestalt-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* KANAN: KONTEN PADAT (GESTALT) */
+  .gestalt-content {
+    width: 100%;
+    max-width: 520px;
+    margin-inline: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px; /* Proximity: Konsisten mengelompokkan elemen */
+  }
+
+  .story-split-{{ section.id }}.media-right .gestalt-content {
+    margin-inline: auto 0;
+  }
+
+  .gestalt-text h2 {
+    font-family: var(--display2, "Bodoni Moda", serif);
+    font-style: normal;
+    font-weight: 400;
+    font-size: clamp(32px, 3.5vw, 44px);
+    margin: 0 0 24px 0;
+    line-height: 1.2;
+    color: var(--cocoa, #392319);
+    text-align: left;
+    letter-spacing: -0.01em;
+  }
+
+  .gestalt-text p {
+    margin: 0 0 20px 0;
+    color: #4a382e;
+    font-size: clamp(14px, 1.25vw, 15.5px);
+    line-height: 1.85;
+    font-family: var(--ui, "Inter", sans-serif);
+    text-align: left;
+  }
+
+  .gestalt-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .gestalt-footer-tag {
+    margin-top: 24px;
+    font-family: var(--display2, "Bodoni Moda", serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--clay, #8a5a44);
+    text-align: left;
+  }
+
+  /* GESTALT HORIZONTAL GALLERY */
+  .gestalt-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Kunci efisiensi UX: Berdampingan */
+    gap: 16px;
+    width: 100%;
+  }
+
+  .gestalt-gallery img {
+    width: 100%;
+    aspect-ratio: 3/4; /* Similarity: Rasio sama memperkuat ilusi kelompok */
+    object-fit: cover;
+    display: block;
+    background: #f7f6f2;
+  }
+
+  /* Mobile Layout */
+  @media (max-width: 900px) {
+    .story-split-{{ section.id }} {
+      padding: 0 0 60px 0;
+    }
+
+    .gestalt-split-wrapper {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .story-split-{{ section.id }}.media-right .gestalt-media,
+    .gestalt-media {
+      order: 1;
+    }
+
+    .story-split-{{ section.id }}.media-right .gestalt-content,
+    .gestalt-content {
+      order: 2;
+      padding: 0 24px;
+      gap: 32px;
+      max-width: 100%;
+    }
+
+    .gestalt-text h2 {
+      font-size: 28px;
+    }
+
+    .gestalt-text p {
+      font-size: 14.5px;
+    }
+
+    .gestalt-gallery {
+      /* Pertahankan berdampingan di mobile untuk menghemat scrolling! */
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+  }
+</style>
+
+<section class="story-split-{{ section.id }} {% if section.settings.media_position == 'right' %}media-right{% endif %}">
+  <div class="gestalt-split-wrapper">
+    
+    <!-- KIRI: VIDEO RAKSASA -->
+    <div class="gestalt-media">
+      {%- if section.settings.video != blank -%}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, image_size: '1200x' }}
+      {%- elsif section.settings.image != blank -%}
+        <img src="{{ section.settings.image | img_url: '1200x' }}" alt="{{ section.settings.headline | escape }}" loading="lazy" />
+      {%- else -%}
+        <!-- Fallback Placeholder -->
+        <video autoplay loop muted playsinline>
+          <source src="https://cdn.shopify.com/videos/c/o/v/674d81fbd338428c89b7b9b1be4bc969.mp4" type="video/mp4">
+        </video>
+      {%- endif -%}
+    </div>
+
+    <!-- KANAN: GESTALT KONTEN -->
+    <div class="gestalt-content">
+      
+      <!-- Kelompok 1: Pengantar -->
+      <div class="gestalt-text">
+        {%- if section.settings.headline != blank -%}
+          <h2>{{ section.settings.headline }}</h2>
+        {%- endif -%}
+        
+        {%- if section.settings.paragraph_1 != blank -%}
+          <p>{{ section.settings.paragraph_1 }}</p>
+        {%- endif -%}
+        
+        {%- if section.settings.paragraph_2 != blank -%}
+          <p>{{ section.settings.paragraph_2 }}</p>
+        {%- endif -%}
+      </div>
+
+      <!-- Kelompok 2: Galeri Gambar Horizontal -->
+      {%- if section.settings.image_1 != blank or section.settings.image_2 != blank -%}
+        <div class="gestalt-gallery">
+          {%- if section.settings.image_1 != blank -%}
+            <img src="{{ section.settings.image_1 | img_url: '600x' }}" alt="Detail 1" loading="lazy" />
+          {%- endif -%}
+          
+          {%- if section.settings.image_2 != blank -%}
+            <img src="{{ section.settings.image_2 | img_url: '600x' }}" alt="Detail 2" loading="lazy" />
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      <!-- Kelompok 3: Penutup -->
+      <div class="gestalt-text">
+        {%- if section.settings.paragraph_3 != blank -%}
+          <p>{{ section.settings.paragraph_3 }}</p>
+        {%- endif -%}
+        
+        {%- if section.settings.footer_tag != blank -%}
+          <div class="gestalt-footer-tag">— {{ section.settings.footer_tag }}</div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gestalt Story Split",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Media (Video/Image)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Main Video",
+      "info": "Upload an MP4 video. It will autoplay silently."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Fallback Main Image",
+      "info": "Used if no video is selected."
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Media Position on Desktop",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Gestalt Gallery Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Gallery Image 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Gallery Image 2"
+    },
+    {
+      "type": "header",
+      "content": "Story Content"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Behind the craft"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_3",
+      "label": "Paragraph 3 (Use <br> for breaks)"
+    },
+    {
+      "type": "text",
+      "id": "footer_tag",
+      "label": "Footer Sign-off",
+      "default": "Made in Bali. Made slowly. Made to be lived in."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gestalt Story Split"
+    }
+  ]
+}
+{% endschema %}

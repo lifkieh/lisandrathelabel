@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "story_split": {
+      "type": "story-media-split-v5",
+      "settings": {
+        "video": "shopify://files/videos/IMG_1507 (1).MOV",
+        "media_position": "left",
+        "headline": "Behind the craft",
+        "paragraph_1": "Every Lisandra piece is hand-knitted or crocheted by Balinese artisans, working from their own homes across Bali. This allows them to work around their families, care for their children, and continue their craft within the rhythm of everyday life.",
+        "paragraph_2": "Nothing is rushed. Depending on the style, each piece takes between one and two days to complete. Every stitch is worked by hand, with time and attention given to the shape, texture, and smallest details. The result is something that carries the hands that made it.",
+        "paragraph_3": "We believe the people behind what we wear should be valued for their skill. Our artisans are paid fairly, and your purchase directly supports the families who make each piece.<br><br>By choosing Lisandra, you are helping keep a traditional craft passed down through generations alive, while giving it a place in the wardrobes of women around the world.",
+        "footer_tag": "Made in Bali. Made slowly. Made to be lived in."
+      }
+    }
+  },
+  "order": [
+    "story_split"
+  ]
+}
