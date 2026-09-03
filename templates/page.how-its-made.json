@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "story_split": {
@@ -5,6 +14,8 @@
       "settings": {
         "video": "shopify://files/videos/IMG_1507 (1).MOV",
         "media_position": "left",
+        "image_1": "shopify://shop_images/Obsessed_with_how_our_muse_maawl_styled_the_Baia_Top_Shorts_Final_few_pieces_left_tap_to_s.jpg",
+        "image_2": "shopify://shop_images/Escape_to_the_Maldives_with_megankilsch_in_Lisandra._Your_island_getaway_starts_here..jpg",
         "headline": "Behind the craft",
         "paragraph_1": "Every Lisandra piece is hand-knitted or crocheted by Balinese artisans, working from their own homes across Bali. This allows them to work around their families, care for their children, and continue their craft within the rhythm of everyday life.",
         "paragraph_2": "Nothing is rushed. Depending on the style, each piece takes between one and two days to complete. Every stitch is worked by hand, with time and attention given to the shape, texture, and smallest details. The result is something that carries the hands that made it.",
