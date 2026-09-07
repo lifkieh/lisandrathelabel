@@ -1,0 +1,45 @@
+<style>
+  .ct-intro-{{ section.id }} {
+    background-color: var(--paper, #f8f8f0);
+    padding: clamp(60px, 8vw, 100px) clamp(20px, 4vw, 40px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .ct-intro-{{ section.id }} p {
+    font-family: var(--body, "Inter", sans-serif);
+    font-size: clamp(14px, 1.5vw, 16px);
+    line-height: 1.6;
+    color: var(--cocoa, #392319);
+    max-width: 60ch;
+    margin: 0;
+  }
+</style>
+
+<div class="ct-intro-{{ section.id }}">
+  <div class="reveal">
+    {%- if section.settings.text != blank -%}
+      <p>{{ section.settings.text | newline_to_br }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT Intro Text",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Introduction Text",
+      "default": "Cielo Trópico is inspired by the rhythm of island life and our home in Bali, where sun-drenched days give way to slow evenings and nights that linger..."
+    }
+  ],
+  "presets": [
+    {
+      "name": "CT Intro Text"
+    }
+  ]
+}
+{% endschema %}

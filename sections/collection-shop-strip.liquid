@@ -112,6 +112,38 @@
     transform: translateY(0);
   }
 
+  /* View All Link */
+  .shop-strip-view-all-{{ section.id }} {
+    text-align: center;
+    padding: 0 20px clamp(40px, 6vw, 60px);
+    background: var(--paper, #f8f8f0);
+  }
+  .view-all-link-{{ section.id }} {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(57, 35, 25, 0.2);
+    padding-bottom: 4px;
+    transition: border-color 0.3s ease;
+  }
+  .view-all-link-{{ section.id }}:hover {
+    border-color: var(--cocoa, #392319);
+  }
+  .view-all-link-{{ section.id }} .arrow {
+    margin-left: 8px;
+    font-size: 14px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+  .view-all-link-{{ section.id }}:hover .arrow {
+    transform: translateX(4px);
+  }
+
   @media (max-width: 768px) {
     .shop-strip-{{ section.id }} .quick-add-btn {
       display: none; /* Hide on mobile for simpler UI or replace with tap logic */
@@ -186,6 +218,14 @@
   {%- endfor -%}
 </div>
 
+{%- if section.settings.view_all_label != blank and section.settings.view_all_link != blank -%}
+  <div class="shop-strip-view-all-{{ section.id }} reveal">
+    <a href="{{ section.settings.view_all_link }}" class="view-all-link-{{ section.id }}">
+      {{ section.settings.view_all_label }} <span class="arrow">&rarr;</span>
+    </a>
+  </div>
+{%- endif -%}
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const observer = new IntersectionObserver((entries, obs) => {
@@ -204,7 +244,19 @@
 {% schema %}
 {
   "name": "Collection Shop Strip",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All Label",
+      "default": "Explore Chapter I"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View All Link"
+    }
+  ],
   "blocks": [
     {
       "type": "product",

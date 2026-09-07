@@ -9,42 +9,159 @@
  */
 {
   "sections": {
-    "campaign-hero": {
-      "type": "campaign-hero",
+    "ct_hero": {
+      "type": "ct-hero",
       "settings": {
-        "image": "shopify://shop_images/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg",
-        "kicker": "New Collection",
-        "heading": "Woven for the Sun-Drenched",
+        "image": "shopify://shop_images/NEW_COLLECTION_02eb6348-8cf5-4624-9af5-cc1cb8337405.jpg",
+        "focal_point": "center center",
+        "mobile_focal_point": "center center",
         "height": "full"
       }
     },
-    "editorial-rows": {
-      "type": "editorial-rows",
+    "ct_intro": {
+      "type": "ct-intro",
+      "settings": {
+        "text": "Cielo Tropico is inspired by the rhythm of island life and our home in Bali, where sun-drenched days give way to slow evenings and nights that linger. Across two chapters, the collection moves from the ease of after-sun dressing to the allure of after-dark moments, bringing together soft sculpted knits, hand-crocheted textures and warm, sun-washed tones. Each piece is handmade in Bali and designed to be worn with ease, from barefoot mornings by the water to dinners under open skies. A collection made for the woman who travels for feeling and carries the warmth of the island wherever she goes."
+      }
+    },
+    "ct_divider": {
+      "type": "ct-photo-divider",
+      "settings": {
+        "image_1": "shopify://shop_images/5_7e5e7dc8-6194-460a-9571-4ee85accb3d6.jpg",
+        "image_2": "shopify://shop_images/2_34953080-8e76-4225-b7d0-3a776f32c85e.jpg"
+      }
+    },
+    "chapter_1_header": {
+      "type": "ct-chapter-header",
+      "settings": {
+        "kicker": "CHAPTER ONE",
+        "heading": "SUNLIT",
+        "description": "This chapter captures the ease of island days, with soft sculpted knits, hand-crocheted textures and sun-washed tones. Made for barefoot mornings, afternoons by the water and slow days spent under the tropical sun. Easy silhouettes, tactile details and pieces designed to move with you, wherever the day takes you."
+      }
+    },
+    "chapter_1_gallery": {
+      "type": "ct-editorial-gallery",
       "blocks": {
-        "row_1": {
-          "type": "row",
+        "pattern_a": {
+          "type": "pattern_a",
           "settings": {
-            "image": "shopify://shop_images/2_34953080-8e76-4225-b7d0-3a776f32c85e.jpg",
-            "text": "\"Made for the woman who moves between the water, the sand, and the dinner table without ever changing who she is.\"",
-            "layout": "image_left"
+            "img_1": "shopify://shop_images/2_44e0f206-fd88-4ce0-aeb9-7f73e337a9e8.jpg",
+            "img_2": "shopify://shop_images/Untitled_design-12_dbc2da6e-89ab-411d-9f89-d56e1dfaaab0.jpg",
+            "img_3": "shopify://shop_images/7_848febae-728a-4f2c-8a66-14f38010a649.jpg"
           }
         },
-        "row_2": {
-          "type": "row",
+        "pattern_b_1": {
+          "type": "pattern_b",
           "settings": {
-            "image": "shopify://shop_images/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg",
-            "text": "\"Twelve pieces at a time, hand-knit by artisans we know by name. When it's gone, the next batch takes its own time.\"",
-            "layout": "image_right"
+            "img_1": "shopify://shop_images/MTR4703_2.jpg"
+          }
+        },
+        "pattern_e_1": {
+          "type": "pattern_e",
+          "settings": {
+            "img_1": "shopify://shop_images/Untitled_design-7_0c524ec6-1351-45d9-8388-304a021f77b5.jpg",
+            "img_2": "shopify://shop_images/Untitleddesign-8_3cade976-b1e1-4c21-8677-28e37effd477.jpg"
+          }
+        },
+        "pattern_d": {
+          "type": "pattern_d",
+          "settings": {
+            "img_1": "shopify://shop_images/5_820a1ea0-6541-4b3d-a0eb-94d1e38b4590.jpg",
+            "img_2": "shopify://shop_images/2_d2e9db0d-d40e-4d84-a78e-f2c3ca429b29.jpg",
+            "img_3": "shopify://shop_images/Untitled_design_f72cf4ce-1f68-4c79-82e5-ac82da9e926c.jpg"
           }
         }
       },
       "block_order": [
-        "row_1",
-        "row_2"
+        "pattern_a",
+        "pattern_b_1",
+        "pattern_e_1",
+        "pattern_d"
       ],
       "settings": {}
     },
-    "collection-shop-strip": {
+    "chapter_1_shop": {
+      "type": "collection-shop-strip",
+      "blocks": {
+        "prod_1": {
+          "type": "product",
+          "settings": {
+            "product": "baia-crochet-top"
+          }
+        },
+        "prod_2": {
+          "type": "product",
+          "settings": {
+            "product": "orla-bikini-top"
+          }
+        },
+        "prod_3": {
+          "type": "product",
+          "settings": {
+            "product": "tala-top"
+          }
+        },
+        "prod_4": {
+          "type": "product",
+          "settings": {
+            "product": "cieli-top"
+          }
+        }
+      },
+      "block_order": [
+        "prod_1",
+        "prod_2",
+        "prod_3",
+        "prod_4"
+      ],
+      "settings": {
+        "view_all_label": "Discover Chapter I Collection",
+        "view_all_link": "/collections/cielo-tropico-collection-1"
+      }
+    },
+    "chapter_2_header": {
+      "type": "ct-chapter-header",
+      "settings": {
+        "kicker": "CHAPTER TWO",
+        "heading": "AFTER DARK",
+        "description": "The second chapter moves into warm tropical nights, with deeper tones and considered silhouettes made for dinner under open skies, moonlit escapes and celebrations that linger. A little more allure, while keeping the effortless ease of island dressing."
+      }
+    },
+    "chapter_2_gallery": {
+      "type": "ct-editorial-gallery",
+      "blocks": {
+        "pattern_f_1": {
+          "type": "pattern_f",
+          "settings": {
+            "img_1": "shopify://shop_images/3_f8b99036-a8db-4059-8263-73d65bff5876.jpg",
+            "img_2": "shopify://shop_images/4_e7c2fe34-5640-40ad-af15-6609f16d3fa8.jpg"
+          }
+        },
+        "pattern_a": {
+          "type": "pattern_a",
+          "settings": {
+            "img_1": "shopify://shop_images/2_6bb81c5b-b387-44f4-9fe2-416846c90311.jpg",
+            "img_2": "shopify://shop_images/4_cbd04f63-cb64-4402-96c9-267559f19e19.jpg",
+            "img_3": "shopify://shop_images/3_a3bbde81-e3de-4323-8fc5-90f21b7db7db.jpg"
+          }
+        },
+        "pattern_d": {
+          "type": "pattern_d",
+          "settings": {
+            "img_1": "shopify://shop_images/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg",
+            "img_2": "shopify://shop_images/4_57b9362f-ec3d-4348-8230-ccbffa8d11e6.jpg",
+            "img_3": "shopify://shop_images/3_7ed70468-ce70-4900-b5d5-bc9e10c7262a.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "pattern_f_1",
+        "pattern_a",
+        "pattern_d"
+      ],
+      "settings": {}
+    },
+    "chapter_2_shop": {
       "type": "collection-shop-strip",
       "blocks": {
         "prod_1": {
@@ -56,19 +173,19 @@
         "prod_2": {
           "type": "product",
           "settings": {
-            "product": "tala-top"
+            "product": "maia-top"
           }
         },
         "prod_3": {
           "type": "product",
           "settings": {
-            "product": "amara-top"
+            "product": "sira-tank-top"
           }
         },
         "prod_4": {
           "type": "product",
           "settings": {
-            "product": "kayu-bikini-set"
+            "product": "alana-dress"
           }
         }
       },
@@ -78,12 +195,21 @@
         "prod_3",
         "prod_4"
       ],
-      "settings": {}
+      "settings": {
+        "view_all_label": "Discover Chapter II Collection",
+        "view_all_link": "/collections/cielo-tropico-collection-2"
+      }
     }
   },
   "order": [
-    "campaign-hero",
-    "editorial-rows",
-    "collection-shop-strip"
+    "ct_hero",
+    "ct_intro",
+    "ct_divider",
+    "chapter_1_header",
+    "chapter_1_gallery",
+    "chapter_1_shop",
+    "chapter_2_header",
+    "chapter_2_gallery",
+    "chapter_2_shop"
   ]
 }

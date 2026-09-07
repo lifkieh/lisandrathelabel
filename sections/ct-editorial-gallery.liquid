@@ -1,0 +1,318 @@
+<style>
+  .ct-gallery-{{ section.id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 3px; /* Micro-gap */
+    background: transparent;
+    width: 100%;
+  }
+  
+  .ct-gallery-block {
+    display: grid;
+    gap: 3px;
+    width: 100%;
+  }
+  
+  .ct-img-wrap {
+    position: relative;
+    background: var(--sand, #e0d9b5);
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .ct-img-wrap img,
+  .ct-img-wrap svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .ct-img-wrap:hover img {
+    transform: scale(1.03);
+  }
+
+  /* =========================================
+     Desktop Patterns 
+     We set aspect-ratio on the container 
+     and let grid items stretch to 100%. 
+     This completely eliminates whitespace gaps.
+     ========================================= */
+
+  /* Pattern A: 1 large left, 2 small stacked right */
+  .pattern-a {
+    aspect-ratio: 6/5;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .pattern-a .img-1 {
+    grid-row: span 2;
+  }
+
+  /* Pattern B: 1 landscape full width */
+  .pattern-b {
+    aspect-ratio: 16/9;
+    grid-template-columns: 1fr;
+  }
+
+  /* Pattern C: 2 small stacked left, 1 large right */
+  .pattern-c {
+    aspect-ratio: 6/5;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  .pattern-c .img-3 {
+    grid-row: span 2;
+    grid-column: 2;
+  }
+
+  /* Pattern D: 3 equal columns */
+  .pattern-d {
+    aspect-ratio: 9/4;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  /* Pattern E: 2 Equal Portraits */
+  .pattern-e {
+    aspect-ratio: 8/5;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Pattern F: 2 Equal Portraits (Alternative) */
+  .pattern-f {
+    aspect-ratio: 8/5;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Pattern G: Centered Portrait (1 Image) */
+  .pattern-g {
+    aspect-ratio: 16/9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+  }
+  .pattern-g .img-1 {
+    aspect-ratio: 4/5;
+    height: 100%;
+    width: auto;
+  }
+
+  /* =========================================
+     Mobile Patterns (max-width: 768px)
+     ========================================= */
+  @media (max-width: 768px) {
+    .ct-gallery-{{ section.id }}, .ct-gallery-block {
+      gap: 2px;
+    }
+
+    /* Pattern A: Large image on top, 2 small images below */
+    .pattern-a {
+      aspect-ratio: 8/15;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 2fr 1fr;
+    }
+    .pattern-a .img-1 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    /* Pattern B: Slightly taller landscape for mobile */
+    .pattern-b {
+      aspect-ratio: 4/3;
+    }
+
+    /* Pattern C: Large image on top, 2 small images below */
+    .pattern-c {
+      aspect-ratio: 8/15;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 2fr 1fr;
+    }
+    .pattern-c .img-3 {
+      grid-column: span 2;
+      grid-row: span 1;
+      order: -1; /* Force to the top of the grid visually */
+    }
+
+    /* Pattern D: Show 2 columns (aspect ratio 3/4 each), hide 3rd image */
+    .pattern-d {
+      aspect-ratio: 3/2; 
+      grid-template-columns: 1fr 1fr;
+    }
+    .pattern-d .img-wrap:last-child {
+      display: none;
+    }
+
+    /* Pattern E & F: 2 Equal Columns on Mobile */
+    .pattern-e, .pattern-f {
+      aspect-ratio: 6/5; 
+    }
+
+    /* Pattern G: Centered Portrait on Mobile (Full width) */
+    .pattern-g {
+      aspect-ratio: 4/5; 
+      display: block; /* Removes flex centering so it spans full width */
+    }
+    .pattern-g .img-1 {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+
+<div class="ct-gallery-{{ section.id }}">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'pattern_a' -%}
+        <div class="ct-gallery-block pattern-a reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-1">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '1200x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-2">
+            {%- if block.settings.img_2 != blank -%}<img src="{{ block.settings.img_2 | img_url: '800x' }}" width="{{ block.settings.img_2.width }}" height="{{ block.settings.img_2.height }}" alt="{{ block.settings.img_2.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-3">
+            {%- if block.settings.img_3 != blank -%}<img src="{{ block.settings.img_3 | img_url: '800x' }}" width="{{ block.settings.img_3.width }}" height="{{ block.settings.img_3.height }}" alt="{{ block.settings.img_3.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pattern_b' -%}
+        <div class="ct-gallery-block pattern-b reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-1">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '2000x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pattern_c' -%}
+        <div class="ct-gallery-block pattern-c reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-1">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '800x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-2">
+            {%- if block.settings.img_2 != blank -%}<img src="{{ block.settings.img_2 | img_url: '800x' }}" width="{{ block.settings.img_2.width }}" height="{{ block.settings.img_2.height }}" alt="{{ block.settings.img_2.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-3">
+            {%- if block.settings.img_3 != blank -%}<img src="{{ block.settings.img_3 | img_url: '1200x' }}" width="{{ block.settings.img_3.width }}" height="{{ block.settings.img_3.height }}" alt="{{ block.settings.img_3.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pattern_d' -%}
+        <div class="ct-gallery-block pattern-d reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-wrap">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '800x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-wrap">
+            {%- if block.settings.img_2 != blank -%}<img src="{{ block.settings.img_2 | img_url: '800x' }}" width="{{ block.settings.img_2.width }}" height="{{ block.settings.img_2.height }}" alt="{{ block.settings.img_2.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-wrap">
+            {%- if block.settings.img_3 != blank -%}<img src="{{ block.settings.img_3 | img_url: '800x' }}" width="{{ block.settings.img_3.width }}" height="{{ block.settings.img_3.height }}" alt="{{ block.settings.img_3.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pattern_e' -%}
+        <div class="ct-gallery-block pattern-e reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-1">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '800x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-2">
+            {%- if block.settings.img_2 != blank -%}<img src="{{ block.settings.img_2 | img_url: '800x' }}" width="{{ block.settings.img_2.width }}" height="{{ block.settings.img_2.height }}" alt="{{ block.settings.img_2.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pattern_f' -%}
+        <div class="ct-gallery-block pattern-f reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-1">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '800x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+          <div class="ct-img-wrap img-2">
+            {%- if block.settings.img_2 != blank -%}<img src="{{ block.settings.img_2 | img_url: '1200x' }}" width="{{ block.settings.img_2.width }}" height="{{ block.settings.img_2.height }}" alt="{{ block.settings.img_2.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pattern_g' -%}
+        <div class="ct-gallery-block pattern-g reveal" {{ block.shopify_attributes }}>
+          <div class="ct-img-wrap img-1">
+            {%- if block.settings.img_1 != blank -%}<img src="{{ block.settings.img_1 | img_url: '1200x' }}" width="{{ block.settings.img_1.width }}" height="{{ block.settings.img_1.height }}" alt="{{ block.settings.img_1.alt | default: 'Editorial Gallery' | escape }}" loading="lazy">{%- else -%}{{ 'image' | placeholder_svg_tag }}{%- endif -%}
+          </div>
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "CT Editorial Gallery",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "pattern_a",
+      "name": "Pattern A (1L, 2R)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Image 1 (Large Left)" },
+        { "type": "image_picker", "id": "img_2", "label": "Image 2 (Top Right)" },
+        { "type": "image_picker", "id": "img_3", "label": "Image 3 (Bottom Right)" }
+      ]
+    },
+    {
+      "type": "pattern_b",
+      "name": "Pattern B (1 Full)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Image (Landscape)" }
+      ]
+    },
+    {
+      "type": "pattern_c",
+      "name": "Pattern C (2L, 1R)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Image 1 (Top Left)" },
+        { "type": "image_picker", "id": "img_2", "label": "Image 2 (Bottom Left)" },
+        { "type": "image_picker", "id": "img_3", "label": "Image 3 (Large Right)" }
+      ]
+    },
+    {
+      "type": "pattern_d",
+      "name": "Pattern D (3 Equal)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Image 1" },
+        { "type": "image_picker", "id": "img_2", "label": "Image 2" },
+        { "type": "image_picker", "id": "img_3", "label": "Image 3" }
+      ]
+    },
+    {
+      "type": "pattern_e",
+      "name": "Pattern E (2 Equal)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Left Image" },
+        { "type": "image_picker", "id": "img_2", "label": "Right Image" }
+      ]
+    },
+    {
+      "type": "pattern_f",
+      "name": "Pattern F (2 Equal)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Left Image" },
+        { "type": "image_picker", "id": "img_2", "label": "Right Image" }
+      ]
+    },
+    {
+      "type": "pattern_g",
+      "name": "Pattern G (1 Portrait)",
+      "settings": [
+        { "type": "image_picker", "id": "img_1", "label": "Centered Portrait Image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CT Editorial Gallery",
+      "blocks": [
+        { "type": "pattern_a" },
+        { "type": "pattern_b" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,107 @@
+<style>
+  .ct-cta-{{ section.id }} {
+    background-color: var(--paper, #f8f8f0);
+    padding: clamp(60px, 10vw, 120px) clamp(20px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .ct-cta-{{ section.id }} .heading {
+    font-family: var(--heading, "Bodoni Moda", serif);
+    font-size: clamp(28px, 4vw, 42px);
+    margin: 0 0 40px 0;
+    color: var(--cocoa, #392319);
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+  .ct-cta-{{ section.id }} .btn-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ct-cta-{{ section.id }} .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 32px;
+    border: 1px solid var(--cocoa, #392319);
+    background: transparent;
+    color: var(--cocoa, #392319);
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .ct-cta-{{ section.id }} .btn-outline:hover {
+    background: var(--cocoa, #392319);
+    color: #fff;
+  }
+</style>
+
+<div class="ct-cta-{{ section.id }}">
+  <div class="reveal">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    
+    <div class="btn-group">
+      {%- if section.settings.btn_1_label != blank and section.settings.btn_1_link != blank -%}
+        <a href="{{ section.settings.btn_1_link }}" class="btn-outline">{{ section.settings.btn_1_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.btn_2_label != blank and section.settings.btn_2_link != blank -%}
+        <a href="{{ section.settings.btn_2_link }}" class="btn-outline">{{ section.settings.btn_2_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CT Closing CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop Cielo Trópico"
+    },
+    {
+      "type": "text",
+      "id": "btn_1_label",
+      "label": "Button 1 Label",
+      "default": "Shop Chapter I"
+    },
+    {
+      "type": "url",
+      "id": "btn_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "btn_2_label",
+      "label": "Button 2 Label",
+      "default": "Shop Chapter II"
+    },
+    {
+      "type": "url",
+      "id": "btn_2_link",
+      "label": "Button 2 Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CT Closing CTA"
+    }
+  ]
+}
+{% endschema %}
