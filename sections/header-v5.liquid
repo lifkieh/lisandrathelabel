@@ -1178,6 +1178,9 @@
             {%- if link_title_lower == 'our story' -%}
               {%- assign link_url = '/pages/our-story' -%}
             {%- endif -%}
+            {%- if link_title_lower contains 'new arrival' -%}
+              {%- assign link_url = '/collections/new-arrivals' -%}
+            {%- endif -%}
 
             {%- if link_title_lower == 'shop' -%}
               <div class="nav-item-v5" id="megaNavItem">
@@ -1187,7 +1190,7 @@
                 </a>
               </div>
               {%- unless has_new_arrivals -%}
-                <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
+                <a href="/collections/new-arrivals">NEW ARRIVALS</a>
               {%- endunless -%}
             {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
               <a href="/collections/sale" class="sale">SALE</a>
@@ -1199,7 +1202,7 @@
           <div class="nav-item-v5" id="megaNavItem">
             <a href="/collections/all">Shop<span class="mega-caret" aria-hidden="true"></span></a>
           </div>
-          <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
+          <a href="/collections/new-arrivals">NEW ARRIVALS</a>
           <a href="/collections/sale" class="sale">SALE</a>
           <a href="/pages/collections">Collections</a>
           <a href="/pages/our-story">Our Story</a>
@@ -1211,7 +1214,7 @@
         <div class="mega-links">
           <p class="mega-links-label">Browse by</p>
           <a href="/collections/all">Shop All</a>
-          <a href="/collections/all?sort_by=created-descending">New Arrivals</a>
+          <a href="/collections/new-arrivals">New Arrivals</a>
           <div class="mega-links-divider"></div>
           <a href="/collections/all?filter.v.option.product_type=Dress">Dresses</a>
           <a href="/collections/all?filter.v.option.product_type=Top">Tops</a>
@@ -1227,8 +1230,8 @@
           assign auto_new_prod = collections['new-arrivals'].products.first | default: collections['all'].products.first
           assign card1_label = section.settings.mega_card1_label | default: 'New Arrivals'
           assign card1_url = section.settings.mega_card1_url
-          if card1_url == blank or card1_url contains 'new-arrivals'
-            assign card1_url = '/collections/all?sort_by=created-descending'
+          if card1_url == blank
+            assign card1_url = '/collections/new-arrivals'
           endif
           assign card1_img_src = ''
           if section.settings.mega_card1_image != blank
@@ -1462,10 +1465,13 @@
         {%- if link_title_lower == 'our story' -%}
           {%- assign link_url = '/pages/our-story' -%}
         {%- endif -%}
+        {%- if link_title_lower contains 'new arrival' -%}
+          {%- assign link_url = '/collections/new-arrivals' -%}
+        {%- endif -%}
         {%- if link_title_lower == 'shop' -%}
           <a href="{{ link_url }}">{{ link.title }}</a>
           {%- unless has_new_arrivals -%}
-            <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
+            <a href="/collections/new-arrivals">NEW ARRIVALS</a>
           {%- endunless -%}
         {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
           <a href="/collections/sale" class="sale">SALE</a>
@@ -1475,7 +1481,7 @@
       {%- endfor -%}
     {%- else -%}
       <a href="/collections/all">Shop</a>
-      <a href="/collections/all?sort_by=created-descending">NEW ARRIVALS</a>
+      <a href="/collections/new-arrivals">NEW ARRIVALS</a>
       <a href="/collections/sale" class="sale">SALE</a>
       <a href="/pages/collections">Collections</a>
       <a href="/pages/our-story">Our Story</a>

@@ -9,6 +9,9 @@
     background: var(--paper, #f8f8f0);
   }
 
+  {%- assign focal_desktop = section.settings.image_desktop.presentation.focal_point | default: section.settings.image_position_desktop | default: 'center 15%' -%}
+  {%- assign focal_mobile = section.settings.image_mobile.presentation.focal_point | default: section.settings.image_position_mobile | default: 'center center' -%}
+
   .hero-editorial-{{ section.id }} figure {
     margin: 0;
     height: 100%;
@@ -17,14 +20,31 @@
     overflow: hidden;
   }
 
+  .hero-editorial-{{ section.id }} figure picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
   .hero-editorial-{{ section.id }} figure img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: {{ focal_desktop }};
     display: block;
     {% if section.settings.enable_ken_burns %}
     animation: kenBurns-{{ section.id }} 25s ease-out forwards;
+    transform-origin: {{ focal_desktop }};
     {% endif %}
+  }
+
+  @media (max-width: 749px) {
+    .hero-editorial-{{ section.id }} figure img {
+      object-position: {{ focal_mobile }};
+      {% if section.settings.enable_ken_burns %}
+      transform-origin: {{ focal_mobile }};
+      {% endif %}
+    }
   }
 
   @keyframes kenBurns-{{ section.id }} {
@@ -264,18 +284,22 @@
 
 <section class="hero-editorial-{{ section.id }}">
   <figure>
-    {%- if section.settings.image_desktop != blank -%}
-      <img
-        src="{{ section.settings.image_desktop | img_url: '2000x' }}"
-        alt="{{ section.settings.title | escape }}"
-        loading="eager"
-        class="desktop-only" />
-    {%- else -%}
-      <img
-        src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=1800"
-        alt="Lisandra Campaign Hero"
-        loading="eager" />
-    {%- endif -%}
+    <picture>
+      {%- if section.settings.image_mobile != blank -%}
+        <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | img_url: '1200x' }}">
+      {%- endif -%}
+      {%- if section.settings.image_desktop != blank -%}
+        <img
+          src="{{ section.settings.image_desktop | img_url: '2200x' }}"
+          alt="{{ section.settings.title | escape }}"
+          loading="eager" />
+      {%- else -%}
+        <img
+          src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=2200"
+          alt="Lisandra Campaign Hero"
+          loading="eager" />
+      {%- endif -%}
+    </picture>
   </figure>
 
   <div class="hero-in">
@@ -326,8 +350,39 @@
     {
       "type": "image_picker",
       "id": "image_desktop",
-      "label": "Hero Image (Desktop & Mobile)",
-      "info": "Recommended: High resolution 2000x1200 landscape or portrait."
+      "label": "Hero Image (Desktop)",
+      "info": "Recommended: High resolution 2000x1200 landscape."
+    },
+    {
+      "type": "select",
+      "id": "image_position_desktop",
+      "label": "Desktop Image Focus Position",
+      "info": "Controls which part of the photo stays visible on wide screens.",
+      "options": [
+        { "value": "center top", "label": "Top (Keep full head/face visible)" },
+        { "value": "center 15%", "label": "Upper Center (Recommended for models)" },
+        { "value": "center 25%", "label": "Upper-Mid" },
+        { "value": "center center", "label": "Center" },
+        { "value": "center bottom", "label": "Bottom" }
+      ],
+      "default": "center 15%"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Hero Image (Mobile - Optional)",
+      "info": "Recommended: Portrait 4:5 or 9:16 optimized for smartphone screens."
+    },
+    {
+      "type": "select",
+      "id": "image_position_mobile",
+      "label": "Mobile Image Focus Position",
+      "options": [
+        { "value": "center top", "label": "Top" },
+        { "value": "center center", "label": "Center" },
+        { "value": "center bottom", "label": "Bottom" }
+      ],
+      "default": "center center"
     },
     {
       "type": "checkbox",
