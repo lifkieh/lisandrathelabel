@@ -260,25 +260,27 @@
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
   }
 
-  /* === DESKTOP ADAPTIVE GRIDS === */
+  /* === DESKTOP ADAPTIVE GRIDS (Edge-to-Edge Full Bleed) === */
   @media (min-width: 900px) {
-    /* 2 Photos: Centered Duo */
+    /* 2 Photos: Full-Width Duo (Identical gap with Recommendations) */
     .v5-ugc-grid-{{ sid }}.is-count-2 {
       display: grid !important;
       grid-template-columns: repeat(2, 1fr) !important;
-      max-width: 740px !important;
-      margin: 0 auto !important;
-      gap: 4px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      gap: 2px !important;
       overflow-x: visible !important;
       padding: 0 !important;
     }
-    /* 3 Photos: Centered Trio */
+    /* 3 Photos: Full-Width Trio (Identical gap with Recommendations) */
     .v5-ugc-grid-{{ sid }}.is-count-3 {
       display: grid !important;
       grid-template-columns: repeat(3, 1fr) !important;
-      max-width: 1100px !important;
-      margin: 0 auto !important;
-      gap: 4px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      gap: 2px !important;
       overflow-x: visible !important;
       padding: 0 !important;
     }
@@ -286,6 +288,9 @@
     .v5-ugc-grid-{{ sid }}.is-count-multi {
       display: grid !important;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
       gap: 2px !important;
       overflow-x: visible !important;
       padding: 0 !important;
