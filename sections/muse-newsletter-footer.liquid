@@ -536,33 +536,52 @@
         
         <div class="foot-form-wrap">
           <div id="museFormWrap">
-            {% form 'customer', id: 'museForm', class: 'foot-form-underline' %}
-              <input type="hidden" name="contact[tags]" value="newsletter">
-              
-              {%- if form.posted_successfully? -%}
-                <script>document.addEventListener("DOMContentLoaded", function() { showMuseSuccess(); });</script>
-              {%- else -%}
-                <input 
-                  type="email" 
-                  name="contact[email]" 
-                  class="foot-input-email" 
-                  id="museEmail" 
-                  placeholder="Enter your email address" 
-                  required 
-                  autocomplete="email"
-                  autocapitalize="off"
-                  autocorrect="off"
-                  spellcheck="false"
-                  aria-label="Email address"
-                />
-                <button type="submit" class="foot-btn-arrow" aria-label="Submit newsletter">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                  </svg>
-                </button>
-              {%- endif -%}
-            {% endform %}
+            <form id="museForm" class="foot-form-underline klaviyo_standard_embed_LIST_ID" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+              <input type="hidden" name="g" value="LIST_ID"> <!-- Ganti LIST_ID dengan ID List Klaviyo Anda -->
+              <input 
+                type="email" 
+                name="email" 
+                class="foot-input-email" 
+                id="museEmail" 
+                placeholder="Enter your email address" 
+                required 
+                autocomplete="email"
+                autocapitalize="off"
+                autocorrect="off"
+                spellcheck="false"
+                aria-label="Email address"
+              />
+              <button type="submit" class="foot-btn-arrow" aria-label="Submit newsletter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </form>
+            <script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js" defer></script>
+            <script type="text/javascript">
+              function initKlaviyoFooter() {
+                if (typeof KlaviyoSubscribe !== 'undefined') {
+                  KlaviyoSubscribe.attachToForms('#museForm', {
+                    hide_form_on_success: true,
+                    success_message: "",
+                    extra_properties: {
+                      $source: 'Footer'
+                    },
+                    success: function() {
+                      showMuseSuccess();
+                    }
+                  });
+                } else {
+                  setTimeout(initKlaviyoFooter, 100);
+                }
+              }
+              if (document.readyState === 'loading') {
+                document.addEventListener("DOMContentLoaded", initKlaviyoFooter);
+              } else {
+                initKlaviyoFooter();
+              }
+            </script>
           </div>
           
           <div class="foot-news-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
@@ -672,18 +691,36 @@
         <h2 id="newsletterModalTitle" class="newsletter-modal-title">{{ section.settings.modal_title }}</h2>
         <p class="newsletter-modal-desc">{{ section.settings.modal_desc }}</p>
         
-        {% form 'customer', id: 'newsletterModalForm', class: 'newsletter-modal-form' %}
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          
-          {%- if form.posted_successfully? -%}
-            <script>document.addEventListener("DOMContentLoaded", function() { showModalSuccess(); });</script>
-          {%- else -%}
-            <div class="newsletter-input-group">
-              <input type="email" name="contact[email]" placeholder="Your email address" required />
-            </div>
-            <button type="submit" class="newsletter-submit-btn">{{ section.settings.modal_btn_label }}</button>
-          {%- endif -%}
-        {% endform %}
+        <form id="newsletterModalForm" class="newsletter-modal-form klaviyo_standard_embed_LIST_ID" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+          <input type="hidden" name="g" value="LIST_ID"> <!-- Ganti LIST_ID dengan ID List Klaviyo Anda -->
+          <div class="newsletter-input-group">
+            <input type="email" name="email" placeholder="Your email address" required />
+          </div>
+          <button type="submit" class="newsletter-submit-btn">{{ section.settings.modal_btn_label }}</button>
+        </form>
+        <script type="text/javascript">
+          function initKlaviyoModal() {
+            if (typeof KlaviyoSubscribe !== 'undefined') {
+              KlaviyoSubscribe.attachToForms('#newsletterModalForm', {
+                hide_form_on_success: true,
+                success_message: "",
+                extra_properties: {
+                  $source: 'Popup Modal'
+                },
+                success: function() {
+                  showModalSuccess();
+                }
+              });
+            } else {
+              setTimeout(initKlaviyoModal, 100);
+            }
+          }
+          if (document.readyState === 'loading') {
+            document.addEventListener("DOMContentLoaded", initKlaviyoModal);
+          } else {
+            initKlaviyoModal();
+          }
+        </script>
         
         <p class="newsletter-privacy-note">
           By joining, you agree to our <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" style="color:var(--cocoa); text-decoration:underline;">Privacy Policy</a>.

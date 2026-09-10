@@ -341,6 +341,27 @@
       return response.json();
     })
     .then(data => {
+      // Klaviyo Add to Cart Tracking
+      var _learnq = window._learnq || [];
+      if (data && data.items && data.items.length > 0) {
+        var item = data.items[0];
+        _learnq.push(['track', 'Added to Cart', {
+          'ProductName': item.title,
+          'ProductID': item.product_id,
+          'URL': window.location.origin + item.url,
+          'ImageURL': item.image,
+          'Price': (item.price / 100).toFixed(2)
+        }]);
+      } else if (data && data.id) {
+        _learnq.push(['track', 'Added to Cart', {
+          'ProductName': data.title,
+          'ProductID': data.product_id,
+          'URL': window.location.origin + data.url,
+          'ImageURL': data.image,
+          'Price': (data.price / 100).toFixed(2)
+        }]);
+      }
+
       closeQuickAddModal(sectionId);
       
       if (typeof openCartDrawerV5 === 'function' && typeof refreshCartDrawerV5 === 'function') {

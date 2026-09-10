@@ -17,7 +17,7 @@
         {% for item in cart.items %}
           <div class="cd-item-v5" data-key="{{ item.key }}">
             <a href="{{ item.url }}" class="cd-item-img-wrapper-v5">
-              <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}" loading="lazy">
+              <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}" loading="lazy" width="{{ item.image.width | default: 200 }}" height="{{ item.image.height | default: 200 }}">
             </a>
             <div class="cd-item-info-v5">
               <div class="cd-item-title-row-v5">
@@ -56,7 +56,7 @@
               {% if shown_count >= 2 %}{% break %}{% endif %}
               {% if cart_product_ids contains prod.id %}{% continue %}{% endif %}
               <div class="cd-cs-item-v5">
-                <a href="{{ prod.url }}"><img src="{{ prod.featured_media | img_url: '150x' }}" alt="{{ prod.title | escape }}"></a>
+                <a href="{{ prod.url }}"><img src="{{ prod.featured_media | img_url: '150x' }}" alt="{{ prod.title | escape }}" loading="lazy" width="{{ prod.featured_media.width | default: 150 }}" height="{{ prod.featured_media.height | default: 150 }}"></a>
                 <div class="cd-cs-info-v5">
                   <h5>{{ prod.title }}</h5>
                   <p>{{ prod.price | money_without_trailing_zeros }}</p>

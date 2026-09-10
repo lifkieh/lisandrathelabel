@@ -74,6 +74,103 @@
       }
     {% endif %}
   }
+
+  /* Interactive Button Overlay */
+  .ct-hero-action-{{ section.id }} {
+    position: absolute;
+    top: {{ section.settings.button_top_desktop }}%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    text-align: center;
+    pointer-events: auto;
+  }
+
+  .ct-hero-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Style: Underline (Editorial Classic) */
+  .ct-hero-btn--underline {
+    color: #ffffff;
+    padding: 6px 4px;
+    position: relative;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  }
+  .ct-hero-btn--underline .ct-btn-line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: #ffffff;
+    margin-top: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    transition: transform 0.35s ease, opacity 0.3s ease, background-color 0.3s ease;
+    transform-origin: center;
+  }
+  .ct-hero-btn--underline:hover {
+    color: #f8f8f0;
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  .ct-hero-btn--underline:hover .ct-btn-line {
+    transform: scaleX(1.18);
+    background-color: #f8f8f0;
+  }
+
+  /* Style: Outline */
+  .ct-hero-btn--outline {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    padding: 12px 28px;
+    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.18);
+  }
+  .ct-hero-btn--outline:hover {
+    background: #ffffff;
+    color: #392319;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Style: Solid */
+  .ct-hero-btn--solid {
+    background: #ffffff;
+    color: #392319;
+    padding: 12px 28px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  .ct-hero-btn--solid:hover {
+    background: var(--sand, #e0d9b5);
+    color: #392319;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (max-width: 768px) {
+    .ct-hero-action-{{ section.id }} {
+      top: {{ section.settings.button_top_mobile }}%;
+    }
+    .ct-hero-btn {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+    }
+    .ct-hero-btn--outline,
+    .ct-hero-btn--solid {
+      padding: 10px 22px;
+    }
+  }
 </style>
 
 <div class="ct-hero-{{ section.id }}">
@@ -99,6 +196,18 @@
       height="{{ section.settings.mobile_image.height }}"
       class="mobile-img"
     />
+  {%- endif -%}
+
+  {%- assign hero_btn_link = section.settings.button_link | default: '/collections/cielo-tropico-collection' -%}
+  {%- if section.settings.button_label != blank -%}
+    <div class="ct-hero-action ct-hero-action-{{ section.id }}">
+      <a href="{{ hero_btn_link }}" class="ct-hero-btn ct-hero-btn--{{ section.settings.button_style }}">
+        <span>{{ section.settings.button_label }}</span>
+        {%- if section.settings.button_style == 'underline' -%}
+          <span class="ct-btn-line"></span>
+        {%- endif -%}
+      </a>
+    </div>
   {%- endif -%}
 </div>
 
@@ -183,13 +292,63 @@
         }
       ],
       "default": "full"
+    },
+    {
+      "type": "header",
+      "content": "Action Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        { "value": "underline", "label": "Underline (Editorial)" },
+        { "value": "outline", "label": "Outline Box" },
+        { "value": "solid", "label": "Solid Button" }
+      ],
+      "default": "underline"
+    },
+    {
+      "type": "range",
+      "id": "button_top_desktop",
+      "min": 40,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "label": "Desktop Button Position Y",
+      "default": 63
+    },
+    {
+      "type": "range",
+      "id": "button_top_mobile",
+      "min": 40,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "label": "Mobile Button Position Y",
+      "default": 63
     }
   ],
   "presets": [
     {
       "name": "CT Hero",
       "settings": {
-        "height": "full"
+        "height": "full",
+        "button_label": "SHOP NOW",
+        "button_style": "underline",
+        "button_top_desktop": 63,
+        "button_top_mobile": 63
       }
     }
   ]

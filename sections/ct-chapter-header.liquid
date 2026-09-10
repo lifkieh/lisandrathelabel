@@ -1,7 +1,7 @@
 <style>
   .ct-chapter-header-{{ section.id }} {
     position: relative;
-    padding: clamp(80px, 10vw, 140px) clamp(20px, 4vw, 40px);
+    padding: clamp(40px, 5vw, 60px) clamp(20px, 4vw, 40px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,12 +35,21 @@
     align-items: center;
   }
 
-  .ct-chapter-header-{{ section.id }} .kicker {
+  .ct-chapter-header-{{ section.id }} .chapter-title-inline {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 0 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .ct-chapter-header-{{ section.id }} .kicker-inline {
     font-family: var(--ui, "Inter", sans-serif);
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    margin-bottom: 24px;
     {% if section.settings.bg_image == blank %}
       color: var(--cocoa, #392319);
     {% else %}
@@ -48,13 +57,23 @@
     {% endif %}
   }
 
-  .ct-chapter-header-{{ section.id }} .heading {
+  .ct-chapter-header-{{ section.id }} .separator {
+    font-family: var(--ui, "Inter", sans-serif);
+    font-size: 11px;
+    font-weight: 400;
+    {% if section.settings.bg_image == blank %}
+      color: var(--cocoa, #392319);
+    {% else %}
+      color: rgba(255, 255, 255, 0.6);
+    {% endif %}
+  }
+
+  .ct-chapter-header-{{ section.id }} .heading-inline {
     font-family: var(--heading, "Bodoni Moda", serif);
     font-style: normal;
-    font-size: clamp(32px, 5vw, 64px);
+    font-size: 28px;
     line-height: 1.1;
-    margin: 0 0 32px 0;
-    font-weight: 400;
+    font-weight: 600;
     {% if section.settings.bg_image == blank %}
       color: var(--cocoa, #392319);
     {% else %}
@@ -62,20 +81,10 @@
     {% endif %}
   }
 
-  .ct-chapter-header-{{ section.id }} .divider {
-    width: 40px;
-    height: 1px;
-    margin: 0 auto 32px;
-    {% if section.settings.bg_image == blank %}
-      background: var(--cocoa, #392319);
-    {% else %}
-      background: rgba(255, 255, 255, 0.5);
-    {% endif %}
-  }
-
   .ct-chapter-header-{{ section.id }} .desc {
     font-family: var(--body, "Inter", sans-serif);
-    font-size: clamp(14px, 1.5vw, 15px);
+    font-size: 13px;
+    max-width: 50ch;
     line-height: 1.6;
     {% if section.settings.bg_image == blank %}
       color: var(--cocoa, #392319);
@@ -88,19 +97,29 @@
 
 <div class="ct-chapter-header-{{ section.id }}">
   {%- if section.settings.bg_image != blank -%}
-    <img src="{{ section.settings.bg_image | img_url: '2000x' }}" alt="" class="bg-img" loading="lazy">
+    <img 
+      src="{{ section.settings.bg_image | img_url: '2000x' }}" 
+      alt="{{ section.settings.bg_image.alt | default: section.settings.heading | default: 'Chapter Header Background' | escape }}" 
+      class="bg-img" 
+      loading="lazy"
+      width="{{ section.settings.bg_image.width }}"
+      height="{{ section.settings.bg_image.height }}"
+    >
   {%- endif -%}
 
   <div class="content reveal">
-    {%- if section.settings.kicker != blank -%}
-      <div class="kicker">{{ section.settings.kicker }}</div>
-    {%- endif -%}
-    
-    {%- if section.settings.heading != blank -%}
-      <h2 class="heading">{{ section.settings.heading }}</h2>
-    {%- endif -%}
-
-    <div class="divider"></div>
+    <h2 class="chapter-title-inline">
+      {%- if section.settings.kicker != blank -%}
+        <span class="kicker-inline">{{ section.settings.kicker }}</span>
+        {%- if section.settings.heading != blank -%}
+          <span class="separator">—</span>
+        {%- endif -%}
+      {%- endif -%}
+      
+      {%- if section.settings.heading != blank -%}
+        <span class="heading-inline">{{ section.settings.heading }}</span>
+      {%- endif -%}
+    </h2>
 
     {%- if section.settings.description != blank -%}
       <p class="desc">{{ section.settings.description | newline_to_br }}</p>

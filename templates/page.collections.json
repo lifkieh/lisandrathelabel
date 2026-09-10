@@ -12,23 +12,40 @@
     "ct_hero": {
       "type": "ct-hero",
       "settings": {
-        "image": "shopify://shop_images/NEW_COLLECTION_02eb6348-8cf5-4624-9af5-cc1cb8337405.jpg",
+        "image": "shopify://shop_images/cielotropico.png",
         "focal_point": "center center",
         "mobile_focal_point": "center center",
-        "height": "full"
+        "height": "full",
+        "button_label": "SHOP NOW",
+        "button_link": "/collections/cielo-tropico-collection",
+        "button_style": "underline",
+        "button_top_desktop": 63,
+        "button_top_mobile": 63
       }
     },
     "ct_intro": {
       "type": "ct-intro",
       "settings": {
-        "text": "Cielo Tropico is inspired by the rhythm of island life and our home in Bali, where sun-drenched days give way to slow evenings and nights that linger. Across two chapters, the collection moves from the ease of after-sun dressing to the allure of after-dark moments, bringing together soft sculpted knits, hand-crocheted textures and warm, sun-washed tones. Each piece is handmade in Bali and designed to be worn with ease, from barefoot mornings by the water to dinners under open skies. A collection made for the woman who travels for feeling and carries the warmth of the island wherever she goes."
+        "image": "shopify://shop_images/5_7e5e7dc8-6194-460a-9571-4ee85accb3d6.jpg",
+        "kicker": "CIELO TRÓPICO",
+        "text": "Cielo Tropico is inspired by the rhythm of island life and our home in Bali, where sun-drenched days give way to slow evenings and nights that linger.<br>Across two chapters, the collection moves from the ease of after-sun dressing to the allure of after-dark moments, bringing together soft sculpted knits, hand-crocheted textures and warm, sun-washed tones.<br>Each piece is handmade in Bali and designed to be worn with ease, from barefoot mornings by the water to dinners under open skies. A collection made for the woman who travels for feeling and carries the warmth of the island wherever she goes."
       }
     },
     "ct_divider": {
       "type": "ct-photo-divider",
       "settings": {
-        "image_1": "shopify://shop_images/5_7e5e7dc8-6194-460a-9571-4ee85accb3d6.jpg",
-        "image_2": "shopify://shop_images/2_34953080-8e76-4225-b7d0-3a776f32c85e.jpg"
+        "image": "shopify://shop_images/MTR5770_3.jpg",
+        "layout_style": "full",
+        "image_fit": "cover",
+        "aspect_ratio": "16/9",
+        "frame_max_width": 580,
+        "focal_point": "center center",
+        "mobile_image": "shopify://shop_images/MTR5770_3.jpg",
+        "mobile_focal_point": "center center",
+        "mobile_aspect_ratio": "16/9",
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "chapter_1_header": {
@@ -42,12 +59,11 @@
     "chapter_1_gallery": {
       "type": "ct-editorial-gallery",
       "blocks": {
-        "pattern_a": {
-          "type": "pattern_a",
+        "pattern_e_1": {
+          "type": "pattern_e",
           "settings": {
-            "img_1": "shopify://shop_images/2_44e0f206-fd88-4ce0-aeb9-7f73e337a9e8.jpg",
-            "img_2": "shopify://shop_images/Untitled_design-12_dbc2da6e-89ab-411d-9f89-d56e1dfaaab0.jpg",
-            "img_3": "shopify://shop_images/7_848febae-728a-4f2c-8a66-14f38010a649.jpg"
+            "img_1": "shopify://shop_images/MTR4627_2.jpg",
+            "img_2": "shopify://shop_images/Untitleddesign-8_3cade976-b1e1-4c21-8677-28e37effd477.jpg"
           }
         },
         "pattern_b_1": {
@@ -56,27 +72,34 @@
             "img_1": "shopify://shop_images/MTR4703_2.jpg"
           }
         },
-        "pattern_e_1": {
-          "type": "pattern_e",
+        "pattern_b_dqErPq": {
+          "type": "pattern_b",
+          "disabled": true,
           "settings": {
-            "img_1": "shopify://shop_images/Untitled_design-7_0c524ec6-1351-45d9-8388-304a021f77b5.jpg",
-            "img_2": "shopify://shop_images/Untitleddesign-8_3cade976-b1e1-4c21-8677-28e37effd477.jpg"
+            "img_1": "shopify://shop_images/2_44e0f206-fd88-4ce0-aeb9-7f73e337a9e8.jpg"
           }
         },
-        "pattern_d": {
-          "type": "pattern_d",
+        "pattern_e_rEHhUy": {
+          "type": "pattern_e",
           "settings": {
-            "img_1": "shopify://shop_images/5_820a1ea0-6541-4b3d-a0eb-94d1e38b4590.jpg",
-            "img_2": "shopify://shop_images/2_d2e9db0d-d40e-4d84-a78e-f2c3ca429b29.jpg",
-            "img_3": "shopify://shop_images/Untitled_design_f72cf4ce-1f68-4c79-82e5-ac82da9e926c.jpg"
+            "img_1": "shopify://shop_images/2_44e0f206-fd88-4ce0-aeb9-7f73e337a9e8.jpg",
+            "img_2": "shopify://shop_images/5_5b15fabc-1f64-4330-95c3-5a2556cc49a1.jpg"
+          }
+        },
+        "pattern_b_eGz9bX": {
+          "type": "pattern_b",
+          "disabled": true,
+          "settings": {
+            "img_1": "shopify://shop_images/5_5b15fabc-1f64-4330-95c3-5a2556cc49a1.jpg"
           }
         }
       },
       "block_order": [
-        "pattern_a",
-        "pattern_b_1",
         "pattern_e_1",
-        "pattern_d"
+        "pattern_b_1",
+        "pattern_b_dqErPq",
+        "pattern_e_rEHhUy",
+        "pattern_b_eGz9bX"
       ],
       "settings": {}
     },
@@ -130,8 +153,15 @@
     "chapter_2_gallery": {
       "type": "ct-editorial-gallery",
       "blocks": {
+        "pattern_b_UweqNt": {
+          "type": "pattern_b",
+          "settings": {
+            "img_1": "shopify://shop_images/MTR5836_1.jpg"
+          }
+        },
         "pattern_f_1": {
           "type": "pattern_f",
+          "disabled": true,
           "settings": {
             "img_1": "shopify://shop_images/3_f8b99036-a8db-4059-8263-73d65bff5876.jpg",
             "img_2": "shopify://shop_images/4_e7c2fe34-5640-40ad-af15-6609f16d3fa8.jpg"
@@ -141,12 +171,13 @@
           "type": "pattern_a",
           "settings": {
             "img_1": "shopify://shop_images/2_6bb81c5b-b387-44f4-9fe2-416846c90311.jpg",
-            "img_2": "shopify://shop_images/4_cbd04f63-cb64-4402-96c9-267559f19e19.jpg",
-            "img_3": "shopify://shop_images/3_a3bbde81-e3de-4323-8fc5-90f21b7db7db.jpg"
+            "img_2": "shopify://shop_images/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg",
+            "img_3": "shopify://shop_images/3_7ed70468-ce70-4900-b5d5-bc9e10c7262a.jpg"
           }
         },
         "pattern_d": {
           "type": "pattern_d",
+          "disabled": true,
           "settings": {
             "img_1": "shopify://shop_images/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg",
             "img_2": "shopify://shop_images/4_57b9362f-ec3d-4348-8230-ccbffa8d11e6.jpg",
@@ -155,6 +186,7 @@
         }
       },
       "block_order": [
+        "pattern_b_UweqNt",
         "pattern_f_1",
         "pattern_a",
         "pattern_d"

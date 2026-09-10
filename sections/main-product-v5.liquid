@@ -1169,6 +1169,16 @@
       })
       .then(function(r){ return r.json(); })
       .then(function(data){
+        // Klaviyo Add to Cart Tracking
+        var _learnq = window._learnq || [];
+        _learnq.push(['track', 'Added to Cart', {
+          'ProductName': data.title,
+          'ProductID': data.product_id,
+          'URL': window.location.origin + data.url,
+          'ImageURL': data.image,
+          'Price': (data.price / 100).toFixed(2)
+        }]);
+
         // 2. Success state on Button
         atcBtn.classList.remove('is-loading');
         atcBtn.classList.add('is-added');
