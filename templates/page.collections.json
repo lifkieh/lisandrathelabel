@@ -161,14 +161,14 @@
         },
         "pattern_f_1": {
           "type": "pattern_f",
-          "disabled": true,
           "settings": {
-            "img_1": "shopify://shop_images/3_f8b99036-a8db-4059-8263-73d65bff5876.jpg",
-            "img_2": "shopify://shop_images/4_e7c2fe34-5640-40ad-af15-6609f16d3fa8.jpg"
+            "img_1": "shopify://shop_images/2_6bb81c5b-b387-44f4-9fe2-416846c90311.jpg",
+            "img_2": "shopify://shop_images/Untitled_design-21.jpg"
           }
         },
         "pattern_a": {
           "type": "pattern_a",
+          "disabled": true,
           "settings": {
             "img_1": "shopify://shop_images/2_6bb81c5b-b387-44f4-9fe2-416846c90311.jpg",
             "img_2": "shopify://shop_images/3_67c8a530-c8ab-48c0-9490-2594ccddf6ce.jpg",

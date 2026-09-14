@@ -536,8 +536,8 @@
         
         <div class="foot-form-wrap">
           <div id="museFormWrap">
-            <form id="museForm" class="foot-form-underline klaviyo_standard_embed_LIST_ID" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
-              <input type="hidden" name="g" value="LIST_ID"> <!-- Ganti LIST_ID dengan ID List Klaviyo Anda -->
+            <form id="museForm" class="foot-form-underline" novalidate="novalidate">
+              <input type="hidden" name="g" value="UPmK3F">
               <input 
                 type="email" 
                 name="email" 
@@ -558,34 +558,44 @@
                 </svg>
               </button>
             </form>
-            <script type="text/javascript" src="//www.klaviyo.com/media/js/public/klaviyo_subscribe.js" defer></script>
             <script type="text/javascript">
-              function initKlaviyoFooter() {
-                if (typeof KlaviyoSubscribe !== 'undefined') {
-                  KlaviyoSubscribe.attachToForms('#museForm', {
-                    hide_form_on_success: true,
-                    success_message: "",
-                    extra_properties: {
-                      $source: 'Footer'
+              document.addEventListener("DOMContentLoaded", function() {
+                var form = document.getElementById("museForm");
+                if (!form) return;
+                form.addEventListener("submit", function(e) {
+                  e.preventDefault();
+                  var emailInput = document.getElementById("museEmail");
+                  var email = emailInput ? emailInput.value.trim() : "";
+                  if (!email) return;
+
+                  var submitBtn = form.querySelector('button[type="submit"]');
+                  if (submitBtn) submitBtn.disabled = true;
+
+                  var formData = new URLSearchParams();
+                  formData.append("g", "UPmK3F");
+                  formData.append("email", email);
+                  formData.append("$source", "Footer");
+
+                  fetch("https://manage.kmail-lists.com/ajax/subscriptions/subscribe", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded"
                     },
-                    success: function() {
-                      showMuseSuccess();
-                    }
+                    body: formData.toString()
+                  })
+                  .then(function() {
+                    showMuseSuccess();
+                  })
+                  .catch(function() {
+                    showMuseSuccess();
                   });
-                } else {
-                  setTimeout(initKlaviyoFooter, 100);
-                }
-              }
-              if (document.readyState === 'loading') {
-                document.addEventListener("DOMContentLoaded", initKlaviyoFooter);
-              } else {
-                initKlaviyoFooter();
-              }
+                });
+              });
             </script>
           </div>
           
           <div class="foot-news-success" id="museSuccess" {% if form.posted_successfully? %}style="display:flex; opacity:1;"{% endif %}>
-            <span>✦ Welcome to the inner circle.</span>
+            <span>Welcome to the inner circle.</span>
             <small>Your 10% code is on its way to your inbox.</small>
           </div>
           
@@ -691,8 +701,8 @@
         <h2 id="newsletterModalTitle" class="newsletter-modal-title">{{ section.settings.modal_title }}</h2>
         <p class="newsletter-modal-desc">{{ section.settings.modal_desc }}</p>
         
-        <form id="newsletterModalForm" class="newsletter-modal-form klaviyo_standard_embed_LIST_ID" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
-          <input type="hidden" name="g" value="LIST_ID"> <!-- Ganti LIST_ID dengan ID List Klaviyo Anda -->
+        <form id="newsletterModalForm" class="newsletter-modal-form klaviyo_standard_embed_UPmK3F" action="//manage.kmail-lists.com/subscriptions/subscribe" data-ajax-submit="//manage.kmail-lists.com/ajax/subscriptions/subscribe" method="GET" target="_blank" novalidate="novalidate">
+          <input type="hidden" name="g" value="UPmK3F"> <!-- Ganti LIST_ID dengan ID List Klaviyo Anda -->
           <div class="newsletter-input-group">
             <input type="email" name="email" placeholder="Your email address" required />
           </div>
