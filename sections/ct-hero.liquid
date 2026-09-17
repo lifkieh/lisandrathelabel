@@ -8,7 +8,7 @@
     {% endif %}
     position: relative;
     width: 100%;
-    {% if section.settings.pull_under_header %}
+    {% if section.settings.pull_under_header or section.index == 1 %}
       margin-top: -69px; /* Presisi sama dengan tinggi navbar untuk transparent hero */
     {% else %}
       margin-top: 0;
@@ -52,7 +52,7 @@
   }
   
   /* Gradien halus tipis agar header putih transparan tetap terlihat */
-  {% if section.settings.pull_under_header %}
+  {% if section.settings.pull_under_header or section.index == 1 %}
   .ct-hero-{{ section.id }}::after {
     content: "";
     position: absolute;
@@ -60,9 +60,10 @@
     pointer-events: none;
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.15) 0%,
-      transparent 15%
+      rgba(0, 0, 0, 0.25) 0%,
+      transparent 18%
     );
+    z-index: 3;
   }
   {% endif %}
 
@@ -78,7 +79,7 @@
       {% else %}
         aspect-ratio: 3/4;
       {% endif %}
-      {% if section.settings.pull_under_header %}
+      {% if section.settings.pull_under_header or section.index == 1 %}
         margin-top: -69px;
       {% else %}
         margin-top: 0;
@@ -254,10 +255,10 @@
   </div>
 </div>
 
-{%- if section.settings.pull_under_header -%}
+{%- if section.settings.pull_under_header or section.index == 1 -%}
 <script>
   // Script untuk mengatur header v5 menjadi transparan saat berada di posisi paling atas hero full-bleed
-  document.addEventListener("DOMContentLoaded", () => {
+  function initCtHeroHeader() {
     const siteHeader = document.getElementById('siteHeader') || document.querySelector('.hdr-v5');
     if (siteHeader) {
       function checkHeaderTransparency() {
@@ -270,7 +271,14 @@
       checkHeaderTransparency();
       window.addEventListener('scroll', checkHeaderTransparency);
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", initCtHeroHeader);
+  } else {
+    initCtHeroHeader();
+  }
+  document.addEventListener('shopify:section:load', initCtHeroHeader);
 </script>
 {%- endif -%}
 

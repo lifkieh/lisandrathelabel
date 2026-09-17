@@ -1,6 +1,13 @@
 {%- liquid
   assign transparent = section.settings.transparent_on_home
-  if template.name != 'index' and template.suffix != 'collections'
+  assign is_transparent_template = false
+  if template.name == 'index'
+    assign is_transparent_template = true
+  elsif template.suffix == 'collections' or template == 'page.collections' or page.handle == 'collections' or request.path contains 'collections'
+    assign is_transparent_template = true
+  endif
+
+  if is_transparent_template == false
     assign transparent = false
   endif
   assign nav_menu = section.settings.menu | default: linklists['main-menu']
@@ -1758,21 +1765,30 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function setupHeaderScroll() {
     const header = document.getElementById('siteHeader');
     const isTransparentConfig = {{ transparent | json }};
     
     // Scroll logic for transparent header
     if (isTransparentConfig && header) {
-      window.addEventListener('scroll', () => {
+      const updateHeader = () => {
         if (window.scrollY > 50) {
           header.classList.remove('is-transparent');
         } else {
           header.classList.add('is-transparent');
         }
-      });
+      };
+      updateHeader();
+      window.addEventListener('scroll', updateHeader);
     }
-  });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupHeaderScroll);
+  } else {
+    setupHeaderScroll();
+  }
+  document.addEventListener('shopify:section:load', setupHeaderScroll);
   /* ===== Search Drawer & Predictive Search ===== */
   function positionSearchDrawer() {
     const header = document.getElementById('siteHeader');

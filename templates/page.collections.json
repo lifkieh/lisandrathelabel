@@ -13,6 +13,7 @@
       "type": "ct-hero",
       "settings": {
         "image": "shopify://shop_images/cielotropico.png",
+        "pull_under_header": true,
         "focal_point": "center center",
         "mobile_focal_point": "center center",
         "height": "full",
