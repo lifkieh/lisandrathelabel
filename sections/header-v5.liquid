@@ -397,6 +397,66 @@
     width: 100%;
   }
 
+  .mobile-nav-accordion-v5 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .mobile-nav-accordion-trigger-v5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 6px 0;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cocoa, #392319);
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+  }
+  .mobile-nav-accordion-trigger-v5 svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+  .mobile-nav-accordion-v5.is-open .mobile-nav-accordion-trigger-v5 svg {
+    transform: rotate(180deg);
+  }
+  .mobile-nav-accordion-content-v5 {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease, margin-top 0.3s ease;
+    overflow: hidden;
+  }
+  .mobile-nav-accordion-v5.is-open .mobile-nav-accordion-content-v5 {
+    grid-template-rows: 1fr;
+    margin-top: 4px;
+  }
+  .mobile-nav-accordion-inner-v5 {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 12px;
+    border-left: 1px solid rgba(57, 35, 25, 0.15);
+    margin-left: 4px;
+  }
+  .mobile-nav-v5 .mobile-nav-accordion-inner-v5 a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    padding: 6px 0;
+    color: rgba(57, 35, 25, 0.7);
+  }
+  .mobile-nav-v5 .mobile-nav-accordion-inner-v5 a:hover {
+    color: var(--cocoa, #392319);
+  }
+
   .drawer-footer-v5 {
     display: flex;
     flex-direction: column;
@@ -1448,14 +1508,6 @@
 
   <nav class="mobile-nav-v5">
     {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
-      {%- assign has_new_arrivals = false -%}
-      {%- for link in nav_menu.links -%}
-        {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
-        {%- if link_title_lower contains 'new arrival' -%}
-          {%- assign has_new_arrivals = true -%}
-        {%- endif -%}
-      {%- endfor -%}
-
       {%- for link in nav_menu.links -%}
         {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
         {%- assign link_url = link.url -%}
@@ -1466,13 +1518,29 @@
           {%- assign link_url = '/pages/our-story' -%}
         {%- endif -%}
         {%- if link_title_lower contains 'new arrival' -%}
-          {%- assign link_url = '/collections/new-arrivals' -%}
+          {%- continue -%}
         {%- endif -%}
         {%- if link_title_lower == 'shop' -%}
-          <a href="{{ link_url }}">{{ link.title }}</a>
-          {%- unless has_new_arrivals -%}
-            <a href="/collections/new-arrivals">NEW ARRIVALS</a>
-          {%- endunless -%}
+          <div class="mobile-nav-accordion-v5 is-open">
+            <button type="button" class="mobile-nav-accordion-trigger-v5" onclick="this.parentElement.classList.toggle('is-open')">
+              {{ link.title }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="mobile-nav-accordion-content-v5">
+              <div class="mobile-nav-accordion-inner-v5">
+                <a href="/collections/all">Shop All</a>
+                <a href="/collections/new-arrivals">New Arrivals</a>
+                <a href="/collections/all?filter.v.option.product_type=Dress">Dresses</a>
+                <a href="/collections/all?filter.v.option.product_type=Top">Tops</a>
+                <a href="/collections/all?filter.v.option.product_type=Skirt">Skirts</a>
+                <a href="/collections/all?filter.v.option.product_type=Set">Sets</a>
+                <a href="/collections/all?filter.v.option.product_type=Bikini">Swim & Bikini</a>
+                <a href="/collections/best-sellers">Best Sellers</a>
+              </div>
+            </div>
+          </div>
         {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
           <a href="/collections/sale" class="sale">SALE</a>
         {%- else -%}
@@ -1480,8 +1548,26 @@
         {%- endif -%}
       {%- endfor -%}
     {%- else -%}
-      <a href="/collections/all">Shop</a>
-      <a href="/collections/new-arrivals">NEW ARRIVALS</a>
+      <div class="mobile-nav-accordion-v5 is-open">
+        <button type="button" class="mobile-nav-accordion-trigger-v5" onclick="this.parentElement.classList.toggle('is-open')">
+          Shop
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <div class="mobile-nav-accordion-content-v5">
+          <div class="mobile-nav-accordion-inner-v5">
+            <a href="/collections/all">Shop All</a>
+            <a href="/collections/new-arrivals">New Arrivals</a>
+            <a href="/collections/all?filter.v.option.product_type=Dress">Dresses</a>
+            <a href="/collections/all?filter.v.option.product_type=Top">Tops</a>
+            <a href="/collections/all?filter.v.option.product_type=Skirt">Skirts</a>
+            <a href="/collections/all?filter.v.option.product_type=Set">Sets</a>
+            <a href="/collections/all?filter.v.option.product_type=Bikini">Swim & Bikini</a>
+            <a href="/collections/best-sellers">Best Sellers</a>
+          </div>
+        </div>
+      </div>
       <a href="/collections/sale" class="sale">SALE</a>
       <a href="/pages/collections">Collections</a>
       <a href="/pages/our-story">Our Story</a>
@@ -1667,6 +1753,8 @@
       drawerOverlay.classList.add('active');
       if (navToggle) navToggle.classList.add('open');
       document.body.style.overflow = 'hidden';
+      const accordion = mobileDrawer.querySelector('.mobile-nav-accordion-v5');
+      if (accordion) accordion.classList.add('is-open');
     }
   }
 
