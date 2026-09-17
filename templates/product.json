@@ -13,10 +13,6 @@
       "type": "main-product-v5",
       "settings": {
         "low_stock_threshold": 10,
-        "show_trust_badges": true,
-        "shipping_note_1": "Ships next day · Free shipping across Indonesia",
-        "shipping_note_2": "14-day returns on unworn pieces",
-        "shipping_note_3": "Ships in a reusable tote bag and biodegradable polymailer",
         "show_payment_badges": false,
         "payment_badges": "QRIS, VA, GoPay, Visa, Mastercard",
         "show_specbar": true,
@@ -24,12 +20,6 @@
         "show_fit_sizing": true,
         "heading_fit_sizing": "Fit & sizing",
         "default_fit_sizing": "<p>True to size with generous stretch, the knit adapts to your shape.</p>",
-        "show_materials": true,
-        "heading_materials": "Craft & materials",
-        "default_materials": "<p>100% rayon yarn, ethically handmade in Bali by one artisan.</p>",
-        "show_care": true,
-        "heading_care": "Care",
-        "default_care": "<p>Hand wash cold. Don't wring, don't tumble dry. Dry flat, store folded rather than hanging.</p>",
         "show_shipping_returns": true,
         "heading_shipping_returns": "Shipping & returns",
         "shipping_returns_text": "<p>Free shipping across Indonesia. Worldwide free over USD 200. Ships in 1–2 business days in a reusable tote, no plastic. 14-day returns on unworn pieces.</p>"
