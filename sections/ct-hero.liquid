@@ -16,6 +16,15 @@
     overflow: hidden;
     background: #000;
   }
+  
+  .ct-hero-{{ section.id }}::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
+    z-index: 2;
+  }
   .ct-hero-{{ section.id }} img {
     width: 100%;
     height: 100%;
@@ -85,8 +94,8 @@
     {% endif %}
   }
 
-  /* Interactive Button Overlay */
-  .ct-hero-action-{{ section.id }} {
+  /* Interactive Overlay Content */
+  .ct-hero-content-{{ section.id }} {
     position: absolute;
     top: {{ section.settings.button_top_desktop }}%;
     left: 50%;
@@ -94,6 +103,22 @@
     z-index: 5;
     text-align: center;
     pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 90%;
+    max-width: 800px;
+  }
+
+  .ct-hero-heading {
+    font-family: var(--heading, "Playfair Display", serif);
+    font-size: 42px;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
   }
 
   .ct-hero-btn {
@@ -104,9 +129,9 @@
     text-decoration: none;
     cursor: pointer;
     font-family: var(--ui, "Inter", sans-serif);
-    font-size: 20px;
+    font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -169,8 +194,12 @@
   }
 
   @media (max-width: 768px) {
-    .ct-hero-action-{{ section.id }} {
+    .ct-hero-content-{{ section.id }} {
       top: {{ section.settings.button_top_mobile }}%;
+      gap: 16px;
+    }
+    .ct-hero-heading {
+      font-size: 28px;
     }
     .ct-hero-btn {
       font-size: 11px;
@@ -209,16 +238,20 @@
   {%- endif -%}
 
   {%- assign hero_btn_link = section.settings.button_link | default: '/collections/cielo-tropico-collection' -%}
-  {%- if section.settings.button_label != blank -%}
-    <div class="ct-hero-action ct-hero-action-{{ section.id }}">
+  <div class="ct-hero-content ct-hero-content-{{ section.id }}">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ct-hero-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
       <a href="{{ hero_btn_link }}" class="ct-hero-btn ct-hero-btn--{{ section.settings.button_style }}">
         <span>{{ section.settings.button_label }}</span>
         {%- if section.settings.button_style == 'underline' -%}
           <span class="ct-btn-line"></span>
         {%- endif -%}
       </a>
-    </div>
-  {%- endif -%}
+    {%- endif -%}
+  </div>
 </div>
 
 {%- if section.settings.pull_under_header -%}
@@ -239,6 +272,7 @@
     }
   });
 </script>
+{%- endif -%}
 
 {% schema %}
 {
@@ -305,6 +339,31 @@
       "default": "full"
     },
     {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Image Overlay Opacity",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "pull_under_header",
+      "label": "Pull under header (Transparent header)",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
       "type": "header",
       "content": "Action Button"
     },
@@ -333,22 +392,22 @@
     {
       "type": "range",
       "id": "button_top_desktop",
-      "min": 40,
+      "min": 20,
       "max": 90,
       "step": 1,
       "unit": "%",
       "label": "Desktop Button Position Y",
-      "default": 63
+      "default": 50
     },
     {
       "type": "range",
       "id": "button_top_mobile",
-      "min": 40,
+      "min": 20,
       "max": 90,
       "step": 1,
       "unit": "%",
       "label": "Mobile Button Position Y",
-      "default": 63
+      "default": 50
     }
   ],
   "presets": [
@@ -358,8 +417,8 @@
         "height": "full",
         "button_label": "SHOP NOW",
         "button_style": "underline",
-        "button_top_desktop": 63,
-        "button_top_mobile": 63
+        "button_top_desktop": 50,
+        "button_top_mobile": 50
       }
     }
   ]
