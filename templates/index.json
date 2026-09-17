@@ -92,13 +92,11 @@
         "mobile_image": "shopify://shop_images/Coming_Soon-5.jpg",
         "mobile_focal_point": "center center",
         "height": "ratio",
-        "overlay_opacity": 15,
-        "heading": "",
         "button_label": "DISCOVER CIELO TRÓPICO",
         "button_link": "https://lisandrathelabel.com/pages/collections",
         "button_style": "underline",
-        "button_top_desktop": 85,
-        "button_top_mobile": 85
+        "button_top_desktop": 50,
+        "button_top_mobile": 50
       }
     },
     "brand_essence": {
