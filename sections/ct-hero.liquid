@@ -8,7 +8,11 @@
     {% endif %}
     position: relative;
     width: 100%;
-    margin-top: -69px; /* Presisi sama dengan tinggi navbar untuk transparent hero */
+    {% if section.settings.pull_under_header %}
+      margin-top: -69px; /* Presisi sama dengan tinggi navbar untuk transparent hero */
+    {% else %}
+      margin-top: 0;
+    {% endif %}
     overflow: hidden;
     background: #000;
   }
@@ -39,6 +43,7 @@
   }
   
   /* Gradien halus tipis agar header putih transparan tetap terlihat */
+  {% if section.settings.pull_under_header %}
   .ct-hero-{{ section.id }}::after {
     content: "";
     position: absolute;
@@ -50,6 +55,7 @@
       transparent 15%
     );
   }
+  {% endif %}
 
   .ct-hero-{{ section.id }} .mobile-img {
     display: none;
@@ -63,7 +69,11 @@
       {% else %}
         aspect-ratio: 3/4;
       {% endif %}
-      margin-top: -69px;
+      {% if section.settings.pull_under_header %}
+        margin-top: -69px;
+      {% else %}
+        margin-top: 0;
+      {% endif %}
     }
     {% if section.settings.mobile_image != blank %}
       .ct-hero-{{ section.id }} .desktop-img {
@@ -211,6 +221,7 @@
   {%- endif -%}
 </div>
 
+{%- if section.settings.pull_under_header -%}
 <script>
   // Script untuk mengatur header v5 menjadi transparan saat berada di posisi paling atas hero full-bleed
   document.addEventListener("DOMContentLoaded", () => {
