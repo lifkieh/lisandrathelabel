@@ -136,7 +136,7 @@
 <section class="spotlight spotlight-{{ section.id }} layout-{{ section.settings.layout }} reveal-stagger">
   <figure>
     {%- if section.settings.image != blank -%}
-      <img src="{{ section.settings.image | img_url: '1000x' }}" alt="{{ section.settings.image.alt | escape | default: section.settings.title }}" loading="lazy" />
+      <img src="{{ section.settings.image | image_url: width: 1000 }}" alt="{{ section.settings.image.alt | escape | default: section.settings.title }}" loading="lazy" />
     {%- else -%}
       <img src="https://cdn.shopify.com/s/images/themes/product-1.png" alt="Signature Piece" loading="lazy" />
     {%- endif -%}

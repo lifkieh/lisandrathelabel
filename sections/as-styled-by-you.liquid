@@ -310,7 +310,7 @@
     
     <div class="ugc-grid" id="ugcGrid-{{ section.id }}">
       {% for block in section.blocks %}
-        {%- assign image_url = block.settings.image | img_url: '800x' -%}
+        {%- assign image_url = block.settings.image | image_url: width: 800 -%}
         {%- if block.settings.image == blank -%}
           {%- assign image_url = 'https://cdn.shopify.com/s/images/themes/product-1.png' -%}
         {%- endif -%}
@@ -382,14 +382,14 @@
     {% for block in section.blocks %}
       {
         id: {{ block.id | json }},
-        image: {{ block.settings.image | img_url: '800x' | default: 'https://cdn.shopify.com/s/images/themes/product-1.png' | json }},
+        image: {{ block.settings.image | image_url: width: 800 | default: 'https://cdn.shopify.com/s/images/themes/product-1.png' | json }},
         username: {{ block.settings.username | json }},
         {% if block.settings.product != blank %}
           product: {
             title: {{ block.settings.product.title | json }},
             price: {{ block.settings.product.price | money | json }},
             url: {{ block.settings.product.url | json }},
-            image: {{ block.settings.product.featured_image | img_url: '600x' | json }},
+            image: {{ block.settings.product.featured_image | image_url: width: 600 | json }},
             variants: [
               {% for variant in block.settings.product.variants %}
                 { id: {{ variant.id | json }}, title: {{ variant.title | json }}, available: {{ variant.available | json }} }{% unless forloop.last %},{% endunless %}

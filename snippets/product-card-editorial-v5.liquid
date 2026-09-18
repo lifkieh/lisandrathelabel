@@ -51,7 +51,7 @@
       aria-haspopup="dialog"
       data-title="{{ product.title | escape }}"
       data-url="{{ product.url }}"
-      data-img="{{ product.featured_media | img_url: '400x' }}"
+      data-img="{{ product.featured_media | image_url: width: 400 }}"
       data-price="{{ product.price | money_without_trailing_zeros }}"
       data-variants='{{ variants_json | strip_newlines }}'
       onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, '{{ card_sid }}');"

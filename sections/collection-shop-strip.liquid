@@ -159,14 +159,14 @@
         <figure>
           {%- if product != blank and product.featured_media -%}
             <img 
-              src="{{ product.featured_media | img_url: '600x' }}" 
+              src="{{ product.featured_media | image_url: width: 600 }}" 
               alt="{{ product.featured_media.alt | escape }}" 
               class="main-img"
               loading="lazy"
             />
             {%- if product.media[1] != blank -%}
               <img 
-                src="{{ product.media[1] | img_url: '600x' }}" 
+                src="{{ product.media[1] | image_url: width: 600 }}" 
                 alt="{{ product.media[1].alt | escape }}" 
                 class="hover-img"
                 loading="lazy"
@@ -193,7 +193,7 @@
               aria-haspopup="dialog"
               data-title="{{ product.title | escape }}"
               data-url="{{ product.url }}"
-              data-img="{{ product.featured_media | img_url: '400x' }}"
+              data-img="{{ product.featured_media | image_url: width: 400 }}"
               data-price="{{ product.price | money_without_trailing_zeros }}"
               data-variants='{{ variants_json | strip_newlines }}'
               onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, '{{ section.id }}');"

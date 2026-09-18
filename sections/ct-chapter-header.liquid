@@ -98,7 +98,7 @@
 <div class="ct-chapter-header-{{ section.id }}">
   {%- if section.settings.bg_image != blank -%}
     <img 
-      src="{{ section.settings.bg_image | img_url: '2000x' }}" 
+      src="{{ section.settings.bg_image | image_url: width: 2000 }}" 
       alt="{{ section.settings.bg_image.alt | default: section.settings.heading | default: 'Chapter Header Background' | escape }}" 
       class="bg-img" 
       loading="lazy"

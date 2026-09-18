@@ -198,7 +198,7 @@
       {%- else -%}
         {%- for product in products -%}
           <div class="ymal-card" onclick="window.location.href='{{ product.url }}'">
-            <img src="{{ product.featured_image | img_url: '700x' }}" alt="{{ product.title | escape }}" loading="lazy" />
+            <img src="{{ product.featured_image | image_url: width: 700 }}" alt="{{ product.title | escape }}" loading="lazy" />
             <div class="ymal-info-panel">
               <div class="ymal-info-row">
                 <span class="ymal-info-name">{{ product.title }}</span>
@@ -233,7 +233,7 @@
     {%- if products != blank -%}
       {%- for product in products -%}
         {
-          src: {{ product.featured_image | img_url: '700x' | json }},
+          src: {{ product.featured_image | image_url: width: 700 | json }},
           name: {{ product.title | json }},
           price: {{ product.price | money | json }},
           url: {{ product.url | json }},

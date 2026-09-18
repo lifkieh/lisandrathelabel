@@ -290,7 +290,9 @@
       {%- endif -%}
       {%- if section.settings.image_desktop != blank -%}
         <img
-          src="{{ section.settings.image_desktop | image_url: width: 2200 }}"
+          src="{{ section.settings.image_desktop | image_url: width: 1800 }}"
+          srcset="{{ section.settings.image_desktop | image_url: width: 800 }} 800w, {{ section.settings.image_desktop | image_url: width: 1200 }} 1200w, {{ section.settings.image_desktop | image_url: width: 1800 }} 1800w, {{ section.settings.image_desktop | image_url: width: 2200 }} 2200w"
+          sizes="100vw"
           alt="{{ section.settings.title | escape }}"
           loading="eager"
           fetchpriority="high" />
@@ -335,7 +337,7 @@
     {%- for block in section.blocks -%}
       <a class="cat3-{{ section.id }}" href="{{ block.settings.link | default: '#shop' }}" {{ block.shopify_attributes }}>
         {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | img_url: '800x' }}" alt="{{ block.settings.title | escape }}" loading="lazy" />
+          <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}" loading="lazy" />
         {%- else -%}
           <img src="https://lisandrathelabel.com/cdn/shop/collections/Untitled_design-18.jpg?width=700" alt="Category" loading="lazy" />
         {%- endif -%}

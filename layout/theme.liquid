@@ -4,8 +4,9 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
-    {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
-    {{ 'lisandra-custom.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="{{ 'lisandra-custom.css' | asset_url }}" media="print" onload="this.media='all'">
+    <noscript>{{ 'lisandra-custom.css' | asset_url | stylesheet_tag }}</noscript>
 
     {%- if settings.favicon != blank -%}
       <link
@@ -24,10 +25,7 @@
     >
 
     {%- render 'meta-tags' -%}
-    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}

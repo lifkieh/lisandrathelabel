@@ -689,7 +689,7 @@
     <button class="newsletter-modal-close" onclick="closeNewsletterModal()" aria-label="Close modal">✕</button>
     <div class="newsletter-image-wrap">
       {%- if section.settings.modal_image != blank -%}
-        <img src="{{ section.settings.modal_image | img_url: '800x' }}" alt="Newsletter" loading="lazy" />
+        <img src="{{ section.settings.modal_image | image_url: width: 800 }}" alt="Newsletter" loading="lazy" />
       {%- else -%}
         <img src="https://cdn.shopify.com/s/images/themes/product-1.png" alt="Newsletter" loading="lazy" />
       {%- endif -%}

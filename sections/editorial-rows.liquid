@@ -104,7 +104,7 @@
     <div class="editorial-row-{{ section.id }} layout-{{ block.settings.layout }} reveal" {{ block.shopify_attributes }}>
       <figure>
         {%- if block.settings.image != blank -%}
-          <img src="{{ block.settings.image | img_url: '900x' }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" />
+          <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" />
         {%- else -%}
           <img src="https://cdn.shopify.com/s/images/themes/product-{{ forloop.index | modulo: 6 | plus: 1 }}.png" alt="Editorial Placeholder" loading="lazy" />
         {%- endif -%}

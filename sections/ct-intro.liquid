@@ -93,7 +93,7 @@
     {%- if section.settings.image != blank -%}
       <div class="ct-intro-image">
         <img 
-          src="{{ section.settings.image | img_url: '800x' }}" 
+          src="{{ section.settings.image | image_url: width: 800 }}" 
           alt="{{ section.settings.image.alt | default: section.settings.kicker | default: 'Intro Image' | escape }}" 
           loading="lazy"
           width="{{ section.settings.image.width }}"

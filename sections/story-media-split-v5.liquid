@@ -153,7 +153,7 @@
       {%- if section.settings.video != blank -%}
         {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, image_size: '1200x' }}
       {%- elsif section.settings.image != blank -%}
-        <img src="{{ section.settings.image | img_url: '1200x' }}" alt="{{ section.settings.headline | escape }}" loading="lazy" />
+        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.headline | escape }}" loading="lazy" />
       {%- else -%}
         <!-- Fallback Placeholder -->
         <video autoplay loop muted playsinline>
@@ -184,11 +184,11 @@
       {%- if section.settings.image_1 != blank or section.settings.image_2 != blank -%}
         <div class="gestalt-gallery">
           {%- if section.settings.image_1 != blank -%}
-            <img src="{{ section.settings.image_1 | img_url: '600x' }}" alt="Detail 1" loading="lazy" />
+            <img src="{{ section.settings.image_1 | image_url: width: 600 }}" alt="Detail 1" loading="lazy" />
           {%- endif -%}
           
           {%- if section.settings.image_2 != blank -%}
-            <img src="{{ section.settings.image_2 | img_url: '600x' }}" alt="Detail 2" loading="lazy" />
+            <img src="{{ section.settings.image_2 | image_url: width: 600 }}" alt="Detail 2" loading="lazy" />
           {%- endif -%}
         </div>
       {%- endif -%}

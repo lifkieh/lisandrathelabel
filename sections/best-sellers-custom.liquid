@@ -467,9 +467,9 @@
             {%- endif -%}
             
             <a href="{{ product.url }}">
-              <img class="main-img" src="{{ product.featured_media | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy" />
+              <img class="main-img" src="{{ product.featured_media | image_url: width: 600 }}" alt="{{ product.title | escape }}" loading="lazy" />
               {%- if product.media.size > 1 -%}
-                <img class="hover-img" src="{{ product.media[1] | img_url: '600x' }}" alt="{{ product.title | escape }}" loading="lazy" />
+                <img class="hover-img" src="{{ product.media[1] | image_url: width: 600 }}" alt="{{ product.title | escape }}" loading="lazy" />
               {%- endif -%}
             </a>
             
@@ -480,7 +480,7 @@
                 aria-haspopup="dialog"
                 data-title="{{ product.title | escape }}"
                 data-url="{{ product.url }}"
-                data-img="{{ product.featured_media | img_url: '400x' }}"
+                data-img="{{ product.featured_media | image_url: width: 400 }}"
                 data-price="{{ product.price | money_without_trailing_zeros }}"
                 data-variants='{{ variants_json | strip_newlines }}'
                 onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, '{{ section.id }}');"
@@ -511,7 +511,7 @@
                   {%- assign variant_image = '' -%}
                   {%- for variant in product.variants -%}
                     {%- if variant.options contains value and variant.image -%}
-                      {%- assign variant_image = variant.image | img_url: '600x' -%}
+                      {%- assign variant_image = variant.image | image_url: width: 600 -%}
                       {%- break -%}
                     {%- endif -%}
                   {%- endfor -%}
