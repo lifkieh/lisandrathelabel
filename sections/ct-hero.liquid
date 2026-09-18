@@ -216,9 +216,10 @@
 <div class="ct-hero-{{ section.id }}">
   {%- if section.settings.image != blank -%}
     <img 
-      src="{{ section.settings.image | img_url: '2000x' }}" 
+      src="{{ section.settings.image | image_url: width: 2000 }}" 
       alt="Cielo Tropico Campaign"
       loading="eager"
+      fetchpriority="high"
       width="{{ section.settings.image.width }}"
       height="{{ section.settings.image.height }}"
       class="desktop-img"
@@ -229,9 +230,10 @@
 
   {%- if section.settings.mobile_image != blank -%}
     <img 
-      src="{{ section.settings.mobile_image | img_url: '1000x' }}" 
+      src="{{ section.settings.mobile_image | image_url: width: 1000 }}" 
       alt="Cielo Tropico Campaign"
       loading="eager"
+      fetchpriority="high"
       width="{{ section.settings.mobile_image.width }}"
       height="{{ section.settings.mobile_image.height }}"
       class="mobile-img"

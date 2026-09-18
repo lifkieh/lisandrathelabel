@@ -79,9 +79,10 @@
 <div class="campaign-hero-{{ section.id }}">
   {%- if section.settings.image != blank -%}
     <img 
-      src="{{ section.settings.image | img_url: '2000x' }}" 
+      src="{{ section.settings.image | image_url: width: 2000 }}" 
       alt="{{ section.settings.image.alt | escape | default: section.settings.heading }}"
       loading="eager"
+      fetchpriority="high"
       width="{{ section.settings.image.width }}"
       height="{{ section.settings.image.height }}"
     />
@@ -90,6 +91,7 @@
       src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=1800" 
       alt="Placeholder Campaign Hero" 
       loading="eager"
+      fetchpriority="high"
     />
   {%- endif -%}
   <div class="cap">

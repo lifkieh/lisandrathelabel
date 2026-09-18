@@ -286,18 +286,20 @@
   <figure>
     <picture>
       {%- if section.settings.image_mobile != blank -%}
-        <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | img_url: '1200x' }}">
+        <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 1200 }}">
       {%- endif -%}
       {%- if section.settings.image_desktop != blank -%}
         <img
-          src="{{ section.settings.image_desktop | img_url: '2200x' }}"
+          src="{{ section.settings.image_desktop | image_url: width: 2200 }}"
           alt="{{ section.settings.title | escape }}"
-          loading="eager" />
+          loading="eager"
+          fetchpriority="high" />
       {%- else -%}
         <img
           src="https://lisandrathelabel.com/cdn/shop/files/NEW_COLLECTION-3_9934ceb5-60f5-4a8d-b332-e375f525e03c.jpg?width=2200"
           alt="Lisandra Campaign Hero"
-          loading="eager" />
+          loading="eager"
+          fetchpriority="high" />
       {%- endif -%}
     </picture>
   </figure>

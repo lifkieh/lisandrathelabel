@@ -1302,9 +1302,9 @@
           endif
           assign card1_img_src = ''
           if section.settings.mega_card1_image != blank
-            assign card1_img_src = section.settings.mega_card1_image | img_url: '600x'
+            assign card1_img_src = section.settings.mega_card1_image | image_url: width: 600
           elsif auto_new_prod.featured_image != blank
-            assign card1_img_src = auto_new_prod.featured_image | img_url: '600x'
+            assign card1_img_src = auto_new_prod.featured_image | image_url: width: 600
           else
             assign card1_img_src = 'https://lisandrathelabel.com/cdn/shop/files/Untitled_design-17.jpg?width=600'
           endif
@@ -1318,9 +1318,9 @@
           endif
           assign card2_img_src = ''
           if section.settings.mega_card2_image != blank
-            assign card2_img_src = section.settings.mega_card2_image | img_url: '600x'
+            assign card2_img_src = section.settings.mega_card2_image | image_url: width: 600
           elsif auto_best_prod.featured_image != blank
-            assign card2_img_src = auto_best_prod.featured_image | img_url: '600x'
+            assign card2_img_src = auto_best_prod.featured_image | image_url: width: 600
           else
             assign card2_img_src = 'https://lisandrathelabel.com/cdn/shop/files/MEGAN_8.jpg?width=600'
           endif
@@ -1349,9 +1349,9 @@
           endif
           assign card3_img_src = ''
           if section.settings.mega_card3_image != blank
-            assign card3_img_src = section.settings.mega_card3_image | img_url: '600x'
+            assign card3_img_src = section.settings.mega_card3_image | image_url: width: 600
           elsif auto_sale_prod.featured_image != blank
-            assign card3_img_src = auto_sale_prod.featured_image | img_url: '600x'
+            assign card3_img_src = auto_sale_prod.featured_image | image_url: width: 600
           else
             assign card3_img_src = 'https://lisandrathelabel.com/cdn/shop/files/1_e758ea44-ebb1-49e2-a498-63c71f459410.jpg?width=600'
           endif
@@ -1506,7 +1506,7 @@
 <div class="mobile-drawer-v5" id="mobileDrawer">
   <div class="nav-drawer-head-v5">
     {%- if section.settings.logo_dark != blank -%}
-      <img src="{{ section.settings.logo_dark | img_url: '200x' }}" class="nav-drawer-logo-v5" alt="Lisandra The Label" />
+      <img src="{{ section.settings.logo_dark | image_url: width: 200 }}" class="nav-drawer-logo-v5" alt="Lisandra The Label" />
     {%- else -%}
       <span class="wordmark-v5-text" style="font-size: 16px;">Lisandra</span>
     {%- endif -%}
@@ -1671,7 +1671,7 @@
           <a href="{{ product.url }}" class="search-predictive-item-v5">
             <div class="search-item-img-wrap-v5">
               <img 
-                src="{{ product.featured_image | img_url: '400x' }}" 
+                src="{{ product.featured_image | image_url: width: 400 }}" 
                 alt="{{ product.featured_image.alt | default: product.title | escape }}" 
                 width="{{ product.featured_image.width | default: 400 }}" 
                 height="{{ product.featured_image.height | default: 533 }}" 
