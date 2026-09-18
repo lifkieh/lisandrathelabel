@@ -3,7 +3,7 @@
   assign is_transparent_template = false
   if template.name == 'index'
     assign is_transparent_template = true
-  elsif template.suffix == 'collections' or template == 'page.collections' or page.handle == 'collections' or request.path contains 'collections'
+  elsif template.suffix == 'collections' or template == 'page.collections' or page.handle == 'collections'
     assign is_transparent_template = true
   endif
 
