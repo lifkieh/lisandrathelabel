@@ -318,6 +318,55 @@
     font-weight: 500;
     color: #392319;
   }
+  .filter-price-range-{{ sid }} {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+  }
+  .filter-price-field-{{ sid }} {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(57, 35, 25, 0.35);
+    border-radius: 2px;
+    background: transparent;
+    padding: 7px 10px;
+    flex: 1;
+    transition: border-color 0.2s ease;
+  }
+  .filter-price-field-{{ sid }}:focus-within {
+    border-color: #392319;
+  }
+  .filter-price-prefix-{{ sid }} {
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(57, 35, 25, 0.65);
+    margin-right: 6px;
+    user-select: none;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .filter-price-input-{{ sid }} {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 13px;
+    color: #392319;
+    padding: 0;
+    outline: none;
+    min-width: 0;
+  }
+  .filter-price-input-{{ sid }}::placeholder {
+    color: rgba(57, 35, 25, 0.35);
+  }
+  .filter-price-sep-{{ sid }} {
+    color: #392319;
+    font-size: 14px;
+    user-select: none;
+    flex-shrink: 0;
+  }
   .filter-checkbox-{{ sid }} {
     display: flex;
     align-items: center;
@@ -883,21 +932,51 @@
             {%- endfor -%}
 
           {%- when 'price_range' -%}
-            <div style="display:flex;gap:10px;align-items:center;">
-              <input
-                type="number"
-                name="{{ filter.min_value.param_name }}"
-                value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
-                min="0"
-                placeholder="Min"
-                style="width:80px;padding:6px 8px;border:1px solid #392319;font-size:12px;background:transparent;" />
-              <span style="color:#392319;">–</span>
-              <input
-                type="number"
-                name="{{ filter.max_value.param_name }}"
-                value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
-                placeholder="Max"
-                style="width:80px;padding:6px 8px;border:1px solid #392319;font-size:12px;background:transparent;" />
+            {%- liquid
+              if filter.min_value.value
+                assign min_clean_val = filter.min_value.value | divided_by: 100
+              else
+                assign min_clean_val = ''
+              endif
+
+              if filter.max_value.value
+                assign max_clean_val = filter.max_value.value | divided_by: 100
+              else
+                assign max_clean_val = ''
+              endif
+
+              if filter.range_max
+                assign max_clean_placeholder = filter.range_max | divided_by: 100
+              else
+                assign max_clean_placeholder = ''
+              endif
+            -%}
+            <div class="filter-price-range-{{ sid }}">
+              <div class="filter-price-field-{{ sid }}">
+                <span class="filter-price-prefix-{{ sid }}">Rp</span>
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  name="{{ filter.min_value.param_name }}"
+                  id="filterPriceMin-{{ sid }}"
+                  value="{{ min_clean_val }}"
+                  placeholder="0"
+                  class="filter-price-input-{{ sid }}"
+                  autocomplete="off" />
+              </div>
+              <span class="filter-price-sep-{{ sid }}">–</span>
+              <div class="filter-price-field-{{ sid }}">
+                <span class="filter-price-prefix-{{ sid }}">Rp</span>
+                <input
+                  type="text"
+                  inputmode="numeric"
+                  name="{{ filter.max_value.param_name }}"
+                  id="filterPriceMax-{{ sid }}"
+                  value="{{ max_clean_val }}"
+                  placeholder="{% if max_clean_placeholder != '' %}{{ max_clean_placeholder }}{% else %}Max{% endif %}"
+                  class="filter-price-input-{{ sid }}"
+                  autocomplete="off" />
+              </div>
             </div>
         {%- endcase -%}
       </div>
@@ -1031,6 +1110,41 @@
       window['v5CloseFilter_' + sid]();
     }
   });
+
+  /* ===== Filter Form Submit Handler (IDR Sanitization & Clean URL) ===== */
+  var filterForm = document.getElementById('filterDrawer-{{ sid }}');
+  if (filterForm) {
+    filterForm.addEventListener('submit', function() {
+      var minInput = document.getElementById('filterPriceMin-{{ sid }}');
+      var maxInput = document.getElementById('filterPriceMax-{{ sid }}');
+
+      function cleanNumber(str) {
+        if (!str) return null;
+        var s = str.toString().replace(/[^0-9]/g, '').trim();
+        if (!s) return null;
+        var n = parseInt(s, 10);
+        return isNaN(n) ? null : n;
+      }
+
+      if (minInput) {
+        var minVal = cleanNumber(minInput.value);
+        if (minVal !== null && minVal >= 0) {
+          minInput.value = minVal;
+        } else {
+          minInput.removeAttribute('name');
+        }
+      }
+
+      if (maxInput) {
+        var maxVal = cleanNumber(maxInput.value);
+        if (maxVal !== null && maxVal > 0) {
+          maxInput.value = maxVal;
+        } else {
+          maxInput.removeAttribute('name');
+        }
+      }
+    });
+  }
 })();
 </script>
 
