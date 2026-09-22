@@ -661,7 +661,13 @@
     {%- if current_tags.size > 0 or collection.filters.size > 0 -%}
       {%- assign active_filter_count = 0 -%}
       {%- for filter in collection.filters -%}
-        {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+            {%- assign active_filter_count = active_filter_count | plus: 1 -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+        {%- endif -%}
       {%- endfor -%}
       {%- if active_filter_count > 0 -%}
         <span class="filter-active-count-{{ sid }}">{{ active_filter_count }}</span>

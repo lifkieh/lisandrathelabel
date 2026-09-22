@@ -925,8 +925,15 @@
       method: 'POST',
       body: formData
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(function(response) {
+      if (!response.ok) {
+        return response.json().then(function(errData) {
+          throw new Error(errData.description || 'Could not add to bag');
+        });
+      }
+      return response.json();
+    })
+    .then(function(data) {
       // Klaviyo Add to Cart Tracking
       var _learnq = window._learnq || [];
       if (data && data.items && data.items.length > 0) {
@@ -948,14 +955,43 @@
         }]);
       }
 
+      // Update Cart Badge Count & Header Icon
+      fetch('/cart.js')
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          // 1. Update all badge elements (.cart-count-v5 and header links)
+          document.querySelectorAll('.cart-count-v5, .hdr-actions-v5 a[aria-label="Cart"] span span').forEach(function(el) {
+            el.textContent = cart.item_count;
+          });
+
+          // 2. Trigger header cart pop animation
+          var cartIconLinks = document.querySelectorAll('.hdr-actions-v5 a[aria-label="Cart"]');
+          cartIconLinks.forEach(function(iconLink) {
+            iconLink.classList.remove('cart-icon-pop');
+            void iconLink.offsetWidth;
+            iconLink.classList.add('cart-icon-pop');
+          });
+
+          // 3. If cart drawer helpers exist, refresh drawer content
+          if (typeof refreshCartDrawerV5 === 'function') {
+            refreshCartDrawerV5();
+          }
+          if (typeof updateHeaderCartCountV5 === 'function') {
+            updateHeaderCartCountV5(cart.item_count);
+          }
+        })
+        .catch(function(err) {
+          console.error('Error fetching cart:', err);
+        });
+
       btn.textContent = 'ADDED!';
-      setTimeout(() => {
+      setTimeout(function() {
         btn.textContent = originalText;
         btn.disabled = false;
         window.dispatchEvent(new Event('cart:refresh'));
       }, 1800);
     })
-    .catch(error => {
+    .catch(function(error) {
       console.error('Error:', error);
       btn.textContent = 'ERROR';
       btn.disabled = false;

@@ -720,7 +720,13 @@
     {%- if current_tags.size > 0 or search.filters.size > 0 -%}
       {%- assign active_filter_count = 0 -%}
       {%- for filter in search.filters -%}
-        {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+        {%- if filter.type == 'price_range' -%}
+          {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+            {%- assign active_filter_count = active_filter_count | plus: 1 -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+        {%- endif -%}
       {%- endfor -%}
       {%- if active_filter_count > 0 -%}
         <span class="filter-active-count-{{ sid }}">{{ active_filter_count }}</span>
@@ -730,6 +736,7 @@
 
   <form action="{{ routes.search_url }}" method="get" role="search" class="filterbar-search-form-{{ sid }}">
     <input type="hidden" name="type" value="product" />
+    <input type="hidden" name="options[prefix]" value="last" />
     <div class="filterbar-search-wrap-{{ sid }}">
       <svg class="filterbar-search-icon-{{ sid }}" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"></circle>
@@ -832,6 +839,9 @@
   method="get"
   action="{{ routes.search_url }}">
 
+  <input type="hidden" name="q" value="{{ search.terms | escape }}" />
+  <input type="hidden" name="type" value="product" />
+  <input type="hidden" name="options[prefix]" value="last" />
   <input type="hidden" name="sort_by" id="filterSortInput-{{ sid }}" value="{{ current_sort }}" />
 
   <div class="filter-drawer-header-{{ sid }}">
@@ -999,8 +1009,13 @@
       {%- endfor -%}
     {%- else -%}
       <div class="v5-empty-{{ sid }}" style="grid-column: 1/-1;">
-        <p>No products found for "{{ search.terms }}".</p>
-        <a href="{{ routes.search_url }}?q={{ search.terms | escape }}&type=product" style="color:#392319;text-decoration:underline;font-size:12px;">Clear all filters</a>
+        {%- if search.terms != blank -%}
+          <p>No products found for "{{ search.terms }}".</p>
+          <a href="{{ routes.search_url }}?q={{ search.terms | escape }}&type=product" style="color:#392319;text-decoration:underline;font-size:12px;">Clear all filters</a>
+        {%- else -%}
+          <p>No search term entered. Please type a keyword to search products.</p>
+          <a href="{{ routes.all_products_collection_url }}" style="color:#392319;text-decoration:underline;font-size:12px;">Browse all products</a>
+        {%- endif -%}
       </div>
     {%- endif -%}
   </div>

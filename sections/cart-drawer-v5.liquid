@@ -22,7 +22,7 @@
             <div class="cd-item-info-v5">
               <div class="cd-item-title-row-v5">
                 <a href="{{ item.url }}"><h4>{{ item.product.title }}</h4></a>
-                <button type="button" class="cd-remove-btn-v5" onclick="removeCartItemV5('{{ item.key }}')">
+                <button type="button" class="cd-remove-btn-v5" onclick="removeCartItemV5('{{ item.key }}', this)" aria-label="Remove item">
                   <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 3.5h12M4.5 3.5v-2c0-.55.45-1 1-1h3c.55 0 1 .45 1 1v2M2.5 3.5l.5 9c.05.55.5 1 1.05 1h5.9c.55 0 1-.45 1.05-1l.5-9"/></svg>
                 </button>
               </div>
@@ -31,9 +31,9 @@
               {% endunless %}
               <div class="cd-item-bottom-row-v5">
                 <div class="cd-qty-wrapper-v5">
-                  <button type="button" onclick="changeCartItemQtyV5('{{ item.key }}', {{ item.quantity | minus: 1 }})">−</button>
-                  <input type="text" value="{{ item.quantity }}" readonly>
-                  <button type="button" onclick="changeCartItemQtyV5('{{ item.key }}', {{ item.quantity | plus: 1 }})">+</button>
+                  <button type="button" onclick="changeCartItemQtyV5('{{ item.key }}', {{ item.quantity | minus: 1 }}, this)" aria-label="Decrease quantity">−</button>
+                  <input type="text" value="{{ item.quantity }}" readonly aria-label="Quantity">
+                  <button type="button" onclick="changeCartItemQtyV5('{{ item.key }}', {{ item.quantity | plus: 1 }}, this)" aria-label="Increase quantity">+</button>
                 </div>
                 <p class="cd-item-price-v5">{{ item.final_line_price | money_without_trailing_zeros }}</p>
               </div>
@@ -55,34 +55,14 @@
             {% for prod in cs_collection.products %}
               {% if shown_count >= 2 %}{% break %}{% endif %}
               {% if cart_product_ids contains prod.id %}{% continue %}{% endif %}
-              <div class="cd-cs-item-v5">
-                <a href="{{ prod.url }}"><img src="{{ prod.featured_media | image_url: width: 150 }}" alt="{{ prod.title | escape }}" loading="lazy" width="{{ prod.featured_media.width | default: 150 }}" height="{{ prod.featured_media.height | default: 150 }}"></a>
+              <a href="{{ prod.url }}" class="cd-cs-item-v5">
+                <img src="{{ prod.featured_media | image_url: width: 150 }}" alt="{{ prod.title | escape }}" loading="lazy" width="{{ prod.featured_media.width | default: 150 }}" height="{{ prod.featured_media.height | default: 150 }}">
                 <div class="cd-cs-info-v5">
                   <h5>{{ prod.title }}</h5>
                   <p>{{ prod.price | money_without_trailing_zeros }}</p>
-                  {%- capture variants_json -%}
-                    [
-                      {%- for variant in prod.variants -%}
-                        {
-                          "id": {{ variant.id }},
-                          "title": {{ variant.title | json }},
-                          "price": {{ variant.price | money_without_trailing_zeros | json }},
-                          "available": {{ variant.available | json }}
-                        }{%- unless forloop.last -%},{%- endunless -%}
-                      {%- endfor -%}
-                    ]
-                  {%- endcapture -%}
-                  <a href="#" 
-                    onclick="event.preventDefault(); event.stopPropagation(); openQuickAddModal(this, 'cart_drawer_cs');"
-                    data-title="{{ prod.title | escape }}"
-                    data-url="{{ prod.url }}"
-                    data-img="{{ prod.featured_media | image_url: width: 400 }}"
-                    data-price="{{ prod.price | money_without_trailing_zeros }}"
-                    data-variants='{{ variants_json | strip_newlines }}'
-                    class="cd-cs-add-btn"
-                  >+ QUICK ADD</a>
+                  <span class="cd-cs-view-btn">VIEW PRODUCT</span>
                 </div>
-              </div>
+              </a>
               {% assign shown_count = shown_count | plus: 1 %}
             {% endfor %}
           {% endif %}
@@ -111,12 +91,13 @@
     position: fixed;
     inset: 0;
     background: rgba(20, 12, 8, 0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: 2147483646;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s;
+    will-change: opacity;
+    transition: opacity 0.25s ease, visibility 0.25s;
   }
   .cd-overlay-v5.is-open {
     opacity: 1;
@@ -134,6 +115,7 @@
     display: flex;
     flex-direction: column;
     transform: translateX(100%);
+    will-change: transform;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: -10px 0 30px rgba(0,0,0,0.1);
     color: var(--cocoa, #392319);
@@ -311,26 +293,39 @@
     padding: 8px;
     border-radius: 4px;
     border: 1px solid var(--line, #e5dfd3);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .cd-cs-item-v5:hover {
+    border-color: var(--cocoa, #392319);
+    box-shadow: 0 2px 8px rgba(57, 35, 25, 0.06);
   }
   .cd-cs-item-v5 img {
     width: 48px;
     height: 64px;
     object-fit: cover;
     border-radius: 2px;
+    flex-shrink: 0;
   }
-  .cd-cs-info-v5 { flex: 1; }
-  .cd-cs-info-v5 h5 { margin: 0 0 4px 0; font-size: 11px; font-weight: 500; }
+  .cd-cs-info-v5 { flex: 1; min-width: 0; }
+  .cd-cs-info-v5 h5 { margin: 0 0 4px 0; font-size: 11px; font-weight: 500; color: var(--cocoa, #392319); }
   .cd-cs-info-v5 p { margin: 0 0 8px 0; font-size: 11px; color: var(--clay, #8a5a44); }
-  .cd-cs-info-v5 a {
+  .cd-cs-info-v5 .cd-cs-view-btn {
     display: inline-block;
     font-size: 9px;
     font-weight: 600;
+    letter-spacing: 0.05em;
     border: 1px solid var(--cocoa, #392319);
     padding: 4px 10px;
-    text-decoration: none;
     color: var(--cocoa, #392319);
     border-radius: 2px;
     text-transform: uppercase;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .cd-cs-item-v5:hover .cd-cs-view-btn {
+    background: var(--cocoa, #392319);
+    color: #fff;
   }
   
   /* Footer */
@@ -398,55 +393,88 @@
     document.body.style.overflow = '';
   }
 
-  function changeCartItemQtyV5(key, qty) {
-    if (qty <= 0) {
-      if (!confirm('Are you sure you want to remove this item?')) return;
-      qty = 0;
-    }
+  function updateCartDrawerFromHtml(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
     
-    fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: key, quantity: qty })
-    })
-    .then(res => res.json())
-    .then(cart => {
-      refreshCartDrawerV5();
-      updateHeaderCartCountV5(cart.item_count);
-    })
-    .catch(err => console.error(err));
+    // Update header
+    const newHeader = doc.querySelector('.cd-header-v5');
+    if (newHeader) document.querySelector('.cd-header-v5').innerHTML = newHeader.innerHTML;
+    
+    // Update body
+    const newBody = doc.querySelector('#cdBodyV5');
+    if (newBody) document.getElementById('cdBodyV5').innerHTML = newBody.innerHTML;
+    
+    // Update footer
+    const newFooter = doc.querySelector('.cd-footer-v5');
+    if (newFooter) document.querySelector('.cd-footer-v5').innerHTML = newFooter.innerHTML;
   }
 
-  function removeCartItemV5(key) {
-    changeCartItemQtyV5(key, 0);
+  function changeCartItemQtyV5(key, qty, btn) {
+    if (qty < 0) qty = 0;
+
+    // 1. Instant Optimistic UI feedback (0ms delay)
+    var itemEl = btn ? btn.closest('.cd-item-v5') : null;
+    if (itemEl) {
+      itemEl.style.transition = 'opacity 0.15s ease';
+      itemEl.style.opacity = '0.45';
+      itemEl.style.pointerEvents = 'none';
+
+      var inputEl = itemEl.querySelector('.cd-qty-wrapper-v5 input');
+      if (inputEl && qty > 0) {
+        inputEl.value = qty;
+      }
+    }
+
+    // 2. High-speed single-request bundled section rendering
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: key,
+        quantity: qty,
+        sections: 'cart-drawer-v5'
+      })
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Cart update failed');
+      return res.json();
+    })
+    .then(function(data) {
+      if (data.sections && data.sections['cart-drawer-v5']) {
+        updateCartDrawerFromHtml(data.sections['cart-drawer-v5']);
+      } else {
+        refreshCartDrawerV5();
+      }
+      if (typeof data.item_count !== 'undefined') {
+        updateHeaderCartCountV5(data.item_count);
+      }
+    })
+    .catch(function(err) {
+      console.error('Cart change error:', err);
+      // Revert/refresh on error
+      refreshCartDrawerV5();
+    });
+  }
+
+  function removeCartItemV5(key, btn) {
+    changeCartItemQtyV5(key, 0, btn);
   }
 
   function refreshCartDrawerV5() {
     fetch('/?section_id=cart-drawer-v5')
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        // Update header
-        const newHeader = doc.querySelector('.cd-header-v5');
-        if (newHeader) document.querySelector('.cd-header-v5').innerHTML = newHeader.innerHTML;
-        
-
-        
-        // Update body
-        const newBody = doc.querySelector('#cdBodyV5');
-        if (newBody) document.getElementById('cdBodyV5').innerHTML = newBody.innerHTML;
-        
-        // Update footer
-        const newFooter = doc.querySelector('.cd-footer-v5');
-        if (newFooter) document.querySelector('.cd-footer-v5').innerHTML = newFooter.innerHTML;
+      .then(function(res) { return res.text(); })
+      .then(function(html) {
+        updateCartDrawerFromHtml(html);
       })
-      .catch(err => console.error('Failed to fetch cart drawer:', err));
+      .catch(function(err) { console.error('Failed to fetch cart drawer:', err); });
   }
 
   function updateHeaderCartCountV5(count) {
-    document.querySelectorAll('.cart-count-v5').forEach(el => {
+    document.querySelectorAll('.cart-count-v5').forEach(function(el) {
       el.textContent = count;
     });
   }
