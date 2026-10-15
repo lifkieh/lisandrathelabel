@@ -8,6 +8,7 @@
     "check": "npx shopify theme check",
     "pull:live": "npx shopify theme pull --store r8zqsk-xj.myshopify.com --live",
     "push:wip": "npx shopify theme push --unpublished --store r8zqsk-xj.myshopify.com",
+    "push:live": "npx shopify theme push --live --store r8zqsk-xj.myshopify.com",
     "share": "npx shopify theme share --store r8zqsk-xj.myshopify.com"
   },
   "devDependencies": {
