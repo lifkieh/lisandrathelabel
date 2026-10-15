@@ -1256,26 +1256,9 @@
       </button>
       <div class="nav-links-v5">
         {%- if nav_menu != blank and nav_menu.links.size > 0 -%}
-          {%- assign has_new_arrivals = false -%}
-          {%- for link in nav_menu.links -%}
-            {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
-            {%- if link_title_lower contains 'new arrival' -%}
-              {%- assign has_new_arrivals = true -%}
-            {%- endif -%}
-          {%- endfor -%}
-
           {%- for link in nav_menu.links -%}
             {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
             {%- assign link_url = link.url -%}
-            {%- if link_title_lower == 'collections' -%}
-              {%- assign link_url = '/pages/collections' -%}
-            {%- endif -%}
-            {%- if link_title_lower == 'our story' -%}
-              {%- assign link_url = '/pages/our-story' -%}
-            {%- endif -%}
-            {%- if link_title_lower contains 'new arrival' -%}
-              {%- assign link_url = '/collections/new-arrivals' -%}
-            {%- endif -%}
 
             {%- if forloop.index == shop_link_index -%}
               <div class="nav-item-v5" id="megaNavItem">
@@ -1284,13 +1267,8 @@
                   <span class="mega-caret" aria-hidden="true"></span>
                 </a>
               </div>
-              {%- unless has_new_arrivals -%}
-                <a href="/collections/new-arrivals">NEW ARRIVALS</a>
-              {%- endunless -%}
-            {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
-              <a href="/collections/sale" class="sale">SALE</a>
             {%- else -%}
-              <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' %}sale{% endif %}">{{ link.title }}</a>
+              <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' or link_url contains 'sale' %}sale{% endif %}">{{ link.title }}</a>
             {%- endif -%}
           {%- endfor -%}
         {%- else -%}
@@ -1553,15 +1531,6 @@
       {%- for link in nav_menu.links -%}
         {%- assign link_title_lower = link.title | downcase | strip | replace: '-', ' ' -%}
         {%- assign link_url = link.url -%}
-        {%- if link_title_lower == 'collections' -%}
-          {%- assign link_url = '/pages/collections' -%}
-        {%- endif -%}
-        {%- if link_title_lower == 'our story' -%}
-          {%- assign link_url = '/pages/our-story' -%}
-        {%- endif -%}
-        {%- if link_title_lower contains 'new arrival' -%}
-          {%- continue -%}
-        {%- endif -%}
         {%- if forloop.index == shop_link_index -%}
           <div class="mobile-nav-accordion-v5 is-open">
             <button type="button" class="mobile-nav-accordion-trigger-v5" onclick="this.parentElement.classList.toggle('is-open')">
@@ -1588,10 +1557,8 @@
               </div>
             </div>
           </div>
-        {%- elsif link_title_lower contains 'best seller' or link_title_lower contains 'bestseller' or link_url contains 'best-seller' or link_url contains 'bestseller' -%}
-          <a href="/collections/sale" class="sale">SALE</a>
         {%- else -%}
-          <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' %}sale{% endif %}">{{ link.title }}</a>
+          <a href="{{ link_url }}" class="{% if link_title_lower == 'sale' or link_url contains 'sale' %}sale{% endif %}">{{ link.title }}</a>
         {%- endif -%}
       {%- endfor -%}
     {%- else -%}
