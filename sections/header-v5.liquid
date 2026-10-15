@@ -11,6 +11,34 @@
     assign transparent = false
   endif
   assign nav_menu = section.settings.menu | default: linklists['main-menu']
+
+  # Resolve the SHOP link (mega menu trigger) from the Admin menu.
+  # 1) Link titled "shop"; 2) otherwise the first top-level link that has sub-items.
+  assign shop_link = nil
+  assign shop_link_index = 0
+  if nav_menu != blank
+    for l in nav_menu.links
+      assign l_title = l.title | downcase | strip
+      if l_title == 'shop'
+        assign shop_link = l
+        assign shop_link_index = forloop.index
+        break
+      endif
+    endfor
+    if shop_link == nil
+      for l in nav_menu.links
+        if l.links.size > 0
+          assign shop_link = l
+          assign shop_link_index = forloop.index
+          break
+        endif
+      endfor
+    endif
+  endif
+  assign shop_has_children = false
+  if shop_link != nil and shop_link.links.size > 0
+    assign shop_has_children = true
+  endif
 -%}
 
 <style>
@@ -1249,7 +1277,7 @@
               {%- assign link_url = '/collections/new-arrivals' -%}
             {%- endif -%}
 
-            {%- if link_title_lower == 'shop' -%}
+            {%- if forloop.index == shop_link_index -%}
               <div class="nav-item-v5" id="megaNavItem">
                 <a href="{{ link_url }}">
                   {{ link.title }}
@@ -1280,15 +1308,23 @@
       <div class="mega-menu" id="megaMenu" role="region" aria-label="Shop categories">
         <div class="mega-links">
           <p class="mega-links-label">Browse by</p>
-          <a href="/collections/all">Shop All</a>
-          <a href="/collections/new-arrivals">New Arrivals</a>
-          <div class="mega-links-divider"></div>
-          <a href="/collections/all?filter.p.product_type=Dress">Dresses</a>
-          <a href="/collections/all?filter.p.product_type=Top">Tops</a>
-          <a href="/collections/all?filter.p.product_type=Skirt">Skirts</a>
-          <a href="/collections/all?filter.p.product_type=Bikini">Swim & Bikini</a>
-          <div class="mega-links-divider"></div>
-          <a href="/collections/best-sellers">Best Sellers</a>
+          {%- if shop_has_children -%}
+            {%- comment -%} Dynamic: sub-items of SHOP in Admin → Navigation → Main menu {%- endcomment -%}
+            {%- for child in shop_link.links -%}
+              <a href="{{ child.url }}">{{ child.title }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            {%- comment -%} Fallback when SHOP has no sub-items in Admin {%- endcomment -%}
+            <a href="/collections/all">Shop All</a>
+            <a href="/collections/new-arrivals">New Arrivals</a>
+            <div class="mega-links-divider"></div>
+            <a href="/collections/all?filter.p.product_type=Dress">Dresses</a>
+            <a href="/collections/all?filter.p.product_type=Top">Tops</a>
+            <a href="/collections/all?filter.p.product_type=Skirt">Skirts</a>
+            <a href="/collections/all?filter.p.product_type=Bikini">Swim & Bikini</a>
+            <div class="mega-links-divider"></div>
+            <a href="/collections/best-sellers">Best Sellers</a>
+          {%- endif -%}
         </div>
         {%- comment -%} ===== SMART DYNAMIC PRODUCT RESOLUTION ===== {%- endcomment -%}
         {%- liquid
@@ -1526,7 +1562,7 @@
         {%- if link_title_lower contains 'new arrival' -%}
           {%- continue -%}
         {%- endif -%}
-        {%- if link_title_lower == 'shop' -%}
+        {%- if forloop.index == shop_link_index -%}
           <div class="mobile-nav-accordion-v5 is-open">
             <button type="button" class="mobile-nav-accordion-trigger-v5" onclick="this.parentElement.classList.toggle('is-open')">
               {{ link.title }}
@@ -1536,13 +1572,19 @@
             </button>
             <div class="mobile-nav-accordion-content-v5">
               <div class="mobile-nav-accordion-inner-v5">
-                <a href="/collections/all">Shop All</a>
-                <a href="/collections/new-arrivals">New Arrivals</a>
-                <a href="/collections/all?filter.p.product_type=Dress">Dresses</a>
-                <a href="/collections/all?filter.p.product_type=Top">Tops</a>
-                <a href="/collections/all?filter.p.product_type=Skirt">Skirts</a>
-                <a href="/collections/all?filter.p.product_type=Bikini">Swim & Bikini</a>
-                <a href="/collections/best-sellers">Best Sellers</a>
+                {%- if shop_has_children -%}
+                  {%- for child in shop_link.links -%}
+                    <a href="{{ child.url }}">{{ child.title }}</a>
+                  {%- endfor -%}
+                {%- else -%}
+                  <a href="/collections/all">Shop All</a>
+                  <a href="/collections/new-arrivals">New Arrivals</a>
+                  <a href="/collections/all?filter.p.product_type=Dress">Dresses</a>
+                  <a href="/collections/all?filter.p.product_type=Top">Tops</a>
+                  <a href="/collections/all?filter.p.product_type=Skirt">Skirts</a>
+                  <a href="/collections/all?filter.p.product_type=Bikini">Swim & Bikini</a>
+                  <a href="/collections/best-sellers">Best Sellers</a>
+                {%- endif -%}
               </div>
             </div>
           </div>
